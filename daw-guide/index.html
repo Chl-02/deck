@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Band AI DAW 사용법</title>
+    <meta
+      name="description"
+      content="chl02.com/daw Band AI DAW 사용법: 추천 시스템, 드럼 비트, 기타 스트럼, 피아노 롤, 단축키, MIDI export 안내"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #11120f;
+        --panel: #191a17;
+        --panel-2: #20211d;
+        --line: #33342f;
+        --line-strong: #47483e;
+        --text: #f1efe7;
+        --muted: #b9b3a1;
+        --subtle: #8f8a7b;
+        --gold: #d6a94c;
+        --green: #77c9af;
+        --red: #de766b;
+        --cyan: #73c7d6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #0f100d;
+        color: var(--text);
+        font-family:
+          Arial,
+          "Noto Sans KR",
+          sans-serif;
+        letter-spacing: 0;
+        line-height: 1.65;
+      }
+
+      a {
+        color: #f1cf78;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: #171813;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 58px;
+        gap: 18px;
+      }
+
+      .brand {
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding: 38px 0 28px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, #171813 0%, #11120f 100%);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(360px, 1fr);
+        gap: 28px;
+        align-items: center;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      h1 {
+        font-size: clamp(34px, 4vw, 58px);
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-top: 42px;
+        font-size: 26px;
+      }
+
+      h3 {
+        margin-top: 24px;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 10px 0 0;
+        color: var(--muted);
+      }
+
+      .lead {
+        max-width: 700px;
+        font-size: 17px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #5b4b23;
+        border-radius: 4px;
+        background: #4a3512;
+        color: #fff4ce;
+        padding: 0 14px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .button.secondary {
+        border-color: var(--line-strong);
+        background: #24251f;
+        color: var(--text);
+      }
+
+      .app-map {
+        border: 1px solid var(--line-strong);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--panel);
+        box-shadow: 0 24px 54px rgba(0, 0, 0, 0.3);
+      }
+
+      .transport {
+        display: grid;
+        grid-template-columns: 92px 92px 1fr 100px;
+        gap: 8px;
+        border-bottom: 1px solid var(--line);
+        background: var(--panel-2);
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      .pill {
+        border: 1px solid var(--line-strong);
+        border-radius: 3px;
+        background: #11120f;
+        padding: 7px 9px;
+        color: var(--muted);
+      }
+
+      .map-body {
+        display: grid;
+        grid-template-columns: 150px 1fr 150px;
+        min-height: 260px;
+      }
+
+      .map-side,
+      .map-inspector {
+        background: #151612;
+        padding: 12px;
+        font-size: 11px;
+      }
+
+      .map-side {
+        border-right: 1px solid var(--line);
+      }
+
+      .map-inspector {
+        border-left: 1px solid var(--line);
+      }
+
+      .timeline {
+        position: relative;
+        overflow: hidden;
+        background:
+          repeating-linear-gradient(90deg, #20211d 0 1px, transparent 1px 56px),
+          repeating-linear-gradient(180deg, transparent 0 52px, #2d2e29 52px 53px),
+          #1a1b17;
+      }
+
+      .clip {
+        position: absolute;
+        height: 34px;
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 5px 7px;
+        font-size: 11px;
+        line-height: 1.2;
+      }
+
+      .clip.guitar {
+        left: 32%;
+        top: 88px;
+        width: 42%;
+        border-color: #d6a94c;
+        background: rgba(214, 169, 76, 0.25);
+      }
+
+      .clip.drums {
+        left: 18%;
+        top: 190px;
+        width: 55%;
+        border-color: #de766b;
+        background: rgba(222, 118, 107, 0.22);
+      }
+
+      .bottom-map {
+        display: grid;
+        grid-template-columns: 1fr 230px;
+        gap: 10px;
+        border-top: 1px solid var(--line);
+        padding: 10px;
+      }
+
+      .grid-preview {
+        height: 112px;
+        border: 1px solid var(--line);
+        background:
+          repeating-linear-gradient(90deg, rgba(214, 169, 76, 0.24) 0 1px, transparent 1px 32px),
+          repeating-linear-gradient(180deg, transparent 0 22px, #2d2e29 22px 23px),
+          #11120f;
+      }
+
+      .knobs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .knob {
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        background: #1d1e1a;
+      }
+
+      main {
+        padding: 0 0 58px;
+      }
+
+      .section-note {
+        margin-top: 14px;
+        border-left: 3px solid var(--gold);
+        background: #191a17;
+        padding: 12px 14px;
+        color: #e8dfc8;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--panel);
+        padding: 16px;
+      }
+
+      .card h3 {
+        margin-top: 0;
+      }
+
+      .step-list,
+      .plain-list {
+        margin: 12px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+      }
+
+      .step-list li,
+      .plain-list li {
+        margin: 8px 0;
+      }
+
+      .kbd-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .shortcut {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #171813;
+        padding: 9px 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      kbd {
+        border: 1px solid #5b5c53;
+        border-bottom-color: #2e2f2a;
+        border-radius: 4px;
+        background: #24251f;
+        color: var(--text);
+        padding: 2px 7px;
+        font-family:
+          Consolas,
+          "Courier New",
+          monospace;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .flow-item {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #171813;
+        padding: 12px;
+        min-height: 86px;
+      }
+
+      .flow-item strong {
+        display: block;
+        color: var(--green);
+      }
+
+      .table {
+        width: 100%;
+        margin-top: 14px;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+
+      .table th,
+      .table td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .table th {
+        background: #20211d;
+        color: #e8dfc8;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .table td {
+        color: var(--muted);
+      }
+
+      .mono {
+        font-family:
+          Consolas,
+          "Courier New",
+          monospace;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: #151612;
+        padding: 22px 0;
+        color: var(--subtle);
+        font-size: 13px;
+      }
+
+      @media (max-width: 940px) {
+        .hero-grid,
+        .grid,
+        .bottom-map,
+        .flow {
+          grid-template-columns: 1fr;
+        }
+
+        .map-body {
+          grid-template-columns: 110px 1fr;
+        }
+
+        .map-inspector {
+          display: none;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .shell {
+          width: min(100% - 20px, 1180px);
+        }
+
+        .topbar,
+        nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .transport {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .map-body {
+          grid-template-columns: 1fr;
+        }
+
+        .map-side {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .kbd-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="shell topbar">
+        <div class="brand">Band AI DAW 사용법</div>
+        <nav>
+          <a href="#quick-start">처음 5분</a>
+          <a href="#recommend">추천 시스템</a>
+          <a href="#editors">편집</a>
+          <a href="#shortcuts">단축키</a>
+          <a href="https://chl02.com/daw/">앱 열기</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <h1>Band AI DAW</h1>
+          <p class="lead">
+            `chl02.com/daw/`에서 드럼 비트 추천, 기타 스트럼 렌더, 피아노 롤 편집, Web Audio 미리듣기,
+            MIDI export를 쓰는 방법입니다. 현재 시스템은 LLM API 없이 로컬 규칙/모델 기반으로 동작합니다.
+          </p>
+          <div class="actions">
+            <a class="button" href="https://chl02.com/daw/">Band AI DAW 열기</a>
+            <a class="button secondary" href="#recommend">추천 사용법 보기</a>
+          </div>
+        </div>
+
+        <div class="app-map" aria-label="Band AI DAW interface map">
+          <div class="transport">
+            <div class="pill">Play / Stop</div>
+            <div class="pill">Loop / Metro</div>
+            <div class="pill">BPM · Key · Style · Snap</div>
+            <div class="pill">Suggest</div>
+          </div>
+          <div class="map-body">
+            <div class="map-side">
+              <strong>Project</strong><br />
+              Focus Section<br />
+              Chords<br />
+              Track Controls
+            </div>
+            <div class="timeline">
+              <div class="clip guitar">guitar_1 · wide_chorus_strum</div>
+              <div class="clip drums">drums · editable groove</div>
+            </div>
+            <div class="map-inspector">
+              <strong>Inspector</strong><br />
+              Apply<br />
+              Reject<br />
+              Render<br />
+              Preview
+            </div>
+          </div>
+          <div class="bottom-map">
+            <div class="grid-preview"></div>
+            <div class="knobs">
+              <div class="knob"></div>
+              <div class="knob"></div>
+              <div class="knob"></div>
+              <div class="knob"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="shell">
+      <section id="quick-start">
+        <h2>처음 5분</h2>
+        <div class="flow">
+          <div class="flow-item">
+            <strong>1. 곡 조건</strong>
+            BPM, Key, Style을 정합니다.
+          </div>
+          <div class="flow-item">
+            <strong>2. 구간</strong>
+            Focus Section을 verse/chorus 등으로 고릅니다.
+          </div>
+          <div class="flow-item">
+            <strong>3. 코드</strong>
+            Chords에 `E - B - C#m - A`처럼 입력합니다.
+          </div>
+          <div class="flow-item">
+            <strong>4. 추천</strong>
+            Suggest 또는 Drum Recommend를 누릅니다.
+          </div>
+          <div class="flow-item">
+            <strong>5. 확인</strong>
+            Space로 듣고 MIDI/JSON으로 내보냅니다.
+          </div>
+        </div>
+        <p class="section-note">
+          입력창에 포커스가 있을 때는 Space, Delete 같은 단축키가 작동하지 않습니다. 숫자나 코드를 편집한 뒤 작업면을 한 번 클릭하면 단축키가 다시 작동합니다.
+        </p>
+      </section>
+
+      <section id="recommend">
+        <h2>추천 시스템 사용법</h2>
+        <p>
+          추천은 완성곡을 자동 생성하는 기능이 아니라, 현재 구간과 코드에 맞는 편곡 초안을 만들어 주는 기능입니다.
+          추천 결과는 반드시 타임라인과 하단 편집기에서 직접 수정할 수 있습니다.
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <h3>전체 편곡 추천</h3>
+            <ol class="step-list">
+              <li>왼쪽 Project에서 Focus Section을 선택합니다.</li>
+              <li>Chords에 코드 진행을 입력합니다.</li>
+              <li>상단 BPM, Key, Style을 확인합니다.</li>
+              <li>상단 Suggest를 누릅니다.</li>
+              <li>타임라인에 생긴 추천 클립을 클릭합니다.</li>
+              <li>Inspector에서 Apply 또는 Reject를 선택합니다.</li>
+            </ol>
+          </article>
+
+          <article class="card">
+            <h3>드럼 비트 추천</h3>
+            <ol class="step-list">
+              <li>하단 Drum Groove에서 Energy, Density, Sync, Fill을 조절합니다.</li>
+              <li>Kick Lock으로 베이스/기타 악센트에 킥을 얼마나 맞출지 정합니다.</li>
+              <li>Open Hat으로 오픈 하이햇 양을 정합니다.</li>
+              <li>Recommend를 누르면 현재 Focus Section 마디에 드럼 그리드가 생성됩니다.</li>
+              <li>K, Sn, HH, OH, Cr 셀을 클릭해 마디 단위로 수정합니다.</li>
+              <li>Space로 듣고 Drum MIDI로 내보냅니다.</li>
+            </ol>
+          </article>
+
+          <article class="card">
+            <h3>기타 스트럼 추천/렌더</h3>
+            <ol class="step-list">
+              <li>상단 Suggest를 눌러 guitar_1 또는 guitar_2 추천 클립을 받습니다.</li>
+              <li>추천 기타 클립을 클릭하고 Apply합니다.</li>
+              <li>하단 Performance에서 Speed, Human, Swing, Mute, Accent를 조절합니다.</li>
+              <li>Inspector의 Render를 누르면 WAV/MIDI가 생성됩니다.</li>
+              <li>Inspector의 Preview 오디오 플레이어에서 기타 스트럼을 듣습니다.</li>
+            </ol>
+          </article>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>컨트롤</th>
+              <th>영향</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Focus Section</td>
+              <td>추천이 적용될 마디 범위를 결정합니다. 예: chorus는 17-24마디.</td>
+            </tr>
+            <tr>
+              <td>Chords</td>
+              <td>기타/피아노/베이스 편곡과 드럼 악센트 문맥의 기준이 됩니다.</td>
+            </tr>
+            <tr>
+              <td>Style</td>
+              <td>패턴 검색, 드럼 프로필, 기타 스트럼 성향에 영향을 줍니다.</td>
+            </tr>
+            <tr>
+              <td>Energy / Density</td>
+              <td>강도와 음표/히트 밀도를 조절합니다.</td>
+            </tr>
+            <tr>
+              <td>Kick Lock</td>
+              <td>드럼 킥을 베이스/다른 파트 악센트에 맞추는 정도입니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="editors">
+        <h2>편집과 미리듣기</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>피아노 롤</h3>
+            <ul class="plain-list">
+              <li>Draw로 빈 칸을 클릭하면 노트가 추가됩니다.</li>
+              <li>Select로 노트를 드래그하면 위치와 피치를 바꿀 수 있습니다.</li>
+              <li>노트 오른쪽 끝을 드래그하면 길이가 바뀝니다.</li>
+              <li>선택 노트는 Pitch, Velocity, Length, Instrument 입력값으로도 수정할 수 있습니다.</li>
+              <li>MIDI 버튼은 현재 섹션의 편집 노트를 `.mid` 파일로 렌더합니다.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>드럼 그리드</h3>
+            <ul class="plain-list">
+              <li>K는 킥, Sn은 스네어, HH는 클로즈 하이햇, OH는 오픈 하이햇, Cr은 크래시입니다.</li>
+              <li>셀을 클릭하면 해당 히트가 켜지거나 꺼집니다.</li>
+              <li>추천을 받기 전에도 빈 그리드에 직접 찍어서 미리듣기할 수 있습니다.</li>
+              <li>Drum MIDI 버튼은 현재 드럼 그리드를 MIDI로 렌더합니다.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>미리듣기와 믹서</h3>
+            <ul class="plain-list">
+              <li>상단 Play 또는 Space로 현재 루프 구간을 듣습니다.</li>
+              <li>Loop가 켜져 있으면 Focus Section만 반복 재생합니다.</li>
+              <li>Metro를 켜면 메트로놈 클릭이 같이 납니다.</li>
+              <li>M/S/R, Vol, Pan은 Web Audio 미리듣기에 반영됩니다.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="shortcuts">
+        <h2>단축키</h2>
+        <div class="kbd-grid">
+          <div class="shortcut"><span>재생/정지</span><kbd>Space</kbd></div>
+          <div class="shortcut"><span>정지 + 선택 해제</span><kbd>Esc</kbd></div>
+          <div class="shortcut"><span>선택 노트 삭제</span><kbd>Delete</kbd></div>
+          <div class="shortcut"><span>선택 노트 삭제</span><kbd>Backspace</kbd></div>
+          <div class="shortcut"><span>Undo</span><kbd>Ctrl/Cmd + Z</kbd></div>
+          <div class="shortcut"><span>Redo</span><kbd>Ctrl/Cmd + Y</kbd></div>
+          <div class="shortcut"><span>Redo</span><kbd>Ctrl/Cmd + Shift + Z</kbd></div>
+          <div class="shortcut"><span>선택 노트 복제</span><kbd>Ctrl/Cmd + D</kbd></div>
+          <div class="shortcut"><span>Select/Draw 전환</span><kbd>B</kbd></div>
+          <div class="shortcut"><span>퀀타이즈</span><kbd>Q</kbd></div>
+          <div class="shortcut"><span>루프 켜기/끄기</span><kbd>L</kbd></div>
+          <div class="shortcut"><span>메트로놈 켜기/끄기</span><kbd>M</kbd></div>
+          <div class="shortcut"><span>Snap 1/16</span><kbd>1</kbd></div>
+          <div class="shortcut"><span>Snap 1/8</span><kbd>2</kbd></div>
+          <div class="shortcut"><span>Snap 1/4</span><kbd>3</kbd></div>
+        </div>
+      </section>
+
+      <section id="export">
+        <h2>산출물</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>버튼</th>
+              <th>결과</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Export</td>
+              <td>프로젝트 JSON을 내려받습니다. 피아노 롤 노트, 드럼 그리드, 믹서, 루프/스냅 상태가 포함됩니다.</td>
+            </tr>
+            <tr>
+              <td>Piano Roll MIDI</td>
+              <td>현재 섹션의 피아노 롤 노트를 `data/processed/renders/piano_roll/`의 MIDI 파일로 렌더합니다.</td>
+            </tr>
+            <tr>
+              <td>Drum MIDI</td>
+              <td>현재 드럼 그리드를 `data/processed/renders/drums/`의 MIDI 파일로 렌더합니다.</td>
+            </tr>
+            <tr>
+              <td>Guitar Render</td>
+              <td>선택한 기타 클립의 MIDI와 WAV 미리듣기 파일을 생성합니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="troubleshooting">
+        <h2>문제 해결</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>소리가 안 날 때</h3>
+            <p>브라우저가 첫 사용자 입력 전 오디오를 막을 수 있습니다. 앱 화면을 한 번 클릭한 뒤 Space 또는 Play를 다시 누릅니다.</p>
+          </article>
+          <article class="card">
+            <h3>추천/렌더가 실패할 때</h3>
+            <p>현재 백엔드는 임시 터널입니다. 로컬 백엔드나 Cloudflare 터널이 꺼지면 API 기능이 실패할 수 있습니다.</p>
+          </article>
+          <article class="card">
+            <h3>단축키가 안 먹을 때</h3>
+            <p>입력창, 셀렉트, 숫자 필드에 포커스가 있으면 단축키를 의도적으로 무시합니다. 빈 작업면을 클릭한 뒤 다시 누릅니다.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell">
+        <span>Band AI DAW Guide</span>
+        <span class="mono"> · https://chl02.com/daw-guide/</span>
+        <span> · 앱: <a href="https://chl02.com/daw/">https://chl02.com/daw/</a></span>
+      </div>
+    </footer>
+  </body>
+</html>
