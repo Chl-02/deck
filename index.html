@@ -864,7 +864,22 @@ exports.init = init;
             const templateConfig = {
                 rememberExpirationKey: "staticrypt_expiration",
                 rememberPassphraseKey: "staticrypt_passphrase",
-                replaceHtmlCallback: null,
+                replaceHtmlCallback: function (plainHTML) {
+                    const injection = '<scr' + 'ipt id="staticrypt-daw-guide-injector">(function(){' +
+                        'function normalizePath(anchor){try{return new URL(anchor.getAttribute("href"),location.href).pathname}catch(error){return ""}}' +
+                        'function isKnownProjectLink(anchor){var path=normalizePath(anchor);return ["/calib","/hd","/xai","/daw"].some(function(prefix){return path===prefix||path.indexOf(prefix+"/")===0})}' +
+                        'function findCardContainer(){var links=Array.prototype.slice.call(document.querySelectorAll("a[href]")).filter(isKnownProjectLink);var first=links[0];if(!first)return document.querySelector("main")||document.body;var node=first.parentElement;for(var depth=0;node&&depth<7;depth++,node=node.parentElement){var count=Array.prototype.slice.call(node.querySelectorAll("a[href]")).filter(isKnownProjectLink).length;var style=window.getComputedStyle(node);if(count>=2&&(style.display==="grid"||style.display==="flex"||style.display==="block"))return node}return document.querySelector("main")||document.body}' +
+                        'function createCard(){var card=document.createElement("a");card.href="/daw-guide/";card.setAttribute("data-main-card","daw-guide");card.setAttribute("aria-label","Band AI DAW Guide");card.style.cssText="display:block;min-height:168px;border:1px solid rgba(214,169,76,.42);border-radius:18px;padding:22px;background:linear-gradient(135deg,#111827,#20211d);color:#f8f1dd;text-decoration:none;box-shadow:0 18px 40px rgba(0,0,0,.16)";card.innerHTML=\'<div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#d6a94c;margin-bottom:12px">Guide</div><div style="font-size:22px;font-weight:800;line-height:1.2;margin-bottom:10px">Band AI DAW 사용법</div><div style="font-size:14px;line-height:1.55;color:#d5cfbe">추천 시스템, 드럼 비트, 기타 스트럼, 피아노 롤, 단축키를 한 페이지에서 확인합니다.</div><div style="margin-top:18px;font-size:13px;font-weight:700;color:#f1cf78">가이드 열기</div>\';return card}' +
+                        'function inject(){if(document.querySelector("[data-main-card=\\"daw-guide\\"]")||document.querySelector("a[href=\\"/daw-guide/\\"]"))return;var container=findCardContainer();var card=createCard();container.appendChild(card)}' +
+                        'if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",inject,{once:true})}else{inject()}' +
+                        '})();</scr' + 'ipt>';
+                    const output = /<\/body>/i.test(plainHTML)
+                        ? plainHTML.replace(/<\/body>/i, injection + "</body>")
+                        : plainHTML + injection;
+                    document.open();
+                    document.write(output);
+                    document.close();
+                },
                 clearLocalStorageCallback: null,
             };
 
