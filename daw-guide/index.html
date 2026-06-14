@@ -6,7 +6,7 @@
     <title>Band AI DAW 사용법</title>
     <meta
       name="description"
-      content="chl02.com/daw Band AI DAW를 처음 여는 사람이 드럼 추천, 기타 스트럼, 피아노 롤, 미리듣기, MIDI 내보내기를 바로 따라 할 수 있는 사용 가이드"
+      content="chl02.com/daw Band AI DAW를 처음 여는 사람이 마디별 코드 후보, 기타 스트로크 후보, 드럼 후보를 들어보고 선택하는 사용 가이드"
     />
     <style>
       :root {
@@ -701,8 +701,9 @@
           <div class="eyebrow">처음 켠 사람 기준</div>
           <h1>8마디 코러스를 만들면서 익히는 Band AI DAW</h1>
           <p class="lead">
-            이 페이지는 기능 목록이 아니라 작업 순서입니다. 앱을 열고, 코러스를 고르고, 드럼을 추천받고,
-            기타 스트럼을 렌더하고, 피아노 롤을 고친 뒤 MIDI로 빼는 흐름만 먼저 따라가면 됩니다.
+            이 페이지는 기능 목록이 아니라 작업 순서입니다. 앱을 열면 먼저 마디별 선택 스케치에서
+            코드 후보, 기타 스트로크 후보, 드럼 후보를 하나씩 들어보고 고릅니다. 한 마디를 고른 뒤
+            다음 마디로 넘어가며 같은 코드 유지, 다음 코드 선택, 비슷한 스트로크 선택을 반복하면 됩니다.
           </p>
           <div class="actions">
             <a class="button" href="https://chl02.com/daw/">Band AI DAW 열기</a>
@@ -755,18 +756,18 @@
       </div>
 
       <div class="shell legend">
-        <div class="legend-item"><strong>1 Project</strong><br />어느 마디를 고칠지 먼저 고릅니다.</div>
-        <div class="legend-item"><strong>2 Timeline</strong><br />추천 클립을 클릭해서 선택합니다.</div>
-        <div class="legend-item"><strong>3 Editors</strong><br />드럼 그리드, 피아노 롤, 기타 노브를 직접 만집니다.</div>
+        <div class="legend-item"><strong>1 Bar Sketch</strong><br />코드, 스트로크, 드럼 후보를 들어보고 고릅니다.</div>
+        <div class="legend-item"><strong>2 Timeline</strong><br />선택한 마디와 클립 흐름을 확인합니다.</div>
+        <div class="legend-item"><strong>3 Editors</strong><br />드럼 그리드, 피아노 롤, 기타 노브로 세부 수정합니다.</div>
       </div>
     </section>
 
     <main class="shell">
       <section id="start">
-        <h2>처음 10분: 코러스 8마디 만들기</h2>
+        <h2>처음 10분: 마디별로 고르며 코러스 만들기</h2>
         <p class="section-intro">
-          아래 값은 앱 기본값과 거의 같습니다. 처음에는 창작하려고 하지 말고, 이 값 그대로 눌러서
-          “어디에 결과가 생기는지”부터 확인하세요.
+          아래 값은 앱 기본값과 거의 같습니다. 처음에는 창작하려고 하지 말고,
+          마디별 선택 스케치에서 후보를 듣고 선택하는 감각부터 확인하세요.
         </p>
 
         <div class="recipe">
@@ -790,45 +791,45 @@
           <article class="step">
             <div class="step-num">1</div>
             <div>
-              <h3>앱을 열고 조건을 맞춥니다</h3>
+              <h3>앱을 열고 첫 마디를 듣습니다</h3>
               <ol>
                 <li><a href="https://chl02.com/daw/">chl02.com/daw/</a>를 엽니다.</li>
                 <li>상단에서 <strong>BPM</strong>을 <code>148</code>로 둡니다.</li>
                 <li><strong>Key</strong>는 <code>E major</code>, <strong>Style</strong>은 <code>modern rock</code>을 둡니다.</li>
                 <li>왼쪽 <strong>Focus Section</strong>을 <code>chorus</code>로 둡니다.</li>
-                <li><strong>Chords</strong>에는 <code>E - B - C#m - A</code>를 입력합니다.</li>
+                <li>상단 바로 아래 <strong>마디별 선택 스케치</strong>에서 <strong>현재 조합 듣기</strong>를 누릅니다.</li>
               </ol>
-              <div class="what-happens">결과: 앞으로 누르는 추천과 편집은 chorus, 즉 17-24마디 기준으로 움직입니다.</div>
+              <div class="what-happens">결과: 현재 마디의 코드, 기타 스트로크, 드럼 비트 조합을 바로 듣습니다.</div>
             </div>
           </article>
 
           <article class="step">
             <div class="step-num">2</div>
             <div>
-              <h3>드럼을 먼저 만듭니다</h3>
+              <h3>코드와 스트로크를 고릅니다</h3>
               <ol>
-                <li>하단 <strong>Drum Groove</strong>에서 <strong>Energy</strong>와 <strong>Density</strong>를 0.7-0.8 근처로 둡니다.</li>
-                <li><strong>Kick Lock</strong>은 0.7 이상으로 둡니다.</li>
-                <li><strong>Recommend</strong>를 누릅니다.</li>
-                <li>왼쪽 그리드의 <strong>K</strong>, <strong>Sn</strong>, <strong>HH</strong> 셀을 클릭해 한두 개만 바꿔봅니다.</li>
-                <li><kbd>Space</kbd>를 눌러 듣습니다.</li>
+                <li><strong>코드 후보</strong>에서 <strong>듣기</strong>를 눌러 같은 코드 유지와 다음 코드 후보를 비교합니다.</li>
+                <li>마음에 드는 코드에서 <strong>선택</strong>을 누릅니다.</li>
+                <li><strong>스트로크 후보</strong>에서도 후보별 <strong>듣기</strong>를 누릅니다.</li>
+                <li>가장 맞는 스트로크를 <strong>선택</strong>합니다.</li>
+                <li>선택하면 해당 마디의 기타/베이스 노트가 피아노 롤에 반영됩니다.</li>
               </ol>
-              <div class="what-happens">결과: 추천된 드럼은 전체 곡이 아니라 현재 섹션의 마디 그리드에 들어갑니다. 바로 셀 단위로 고칠 수 있습니다.</div>
+              <div class="what-happens">결과: 완성곡이 아니라 현재 마디의 코드와 스트로크만 결정됩니다.</div>
             </div>
           </article>
 
           <article class="step">
             <div class="step-num">3</div>
             <div>
-              <h3>기타 스트럼을 들어봅니다</h3>
+              <h3>드럼 후보를 고르고 다음 마디로 갑니다</h3>
               <ol>
-                <li>타임라인에서 <strong>guitar_1</strong> 클립을 클릭합니다.</li>
-                <li>오른쪽 <strong>Inspector</strong>에서 <strong>Render</strong>를 누릅니다.</li>
-                <li><strong>Preview</strong> 오디오 플레이어가 나타나면 재생합니다.</li>
-                <li>오른쪽 아래 <strong>Performance</strong>의 <strong>Speed</strong>, <strong>Human</strong>, <strong>Swing</strong>, <strong>Mute</strong>, <strong>Accent</strong>를 바꿉니다.</li>
-                <li>다시 <strong>Render</strong>를 눌러 차이를 듣습니다.</li>
+                <li><strong>드럼 후보</strong>에서 스트레이트, 오픈 코러스, 하프타임, 필 후보를 들어봅니다.</li>
+                <li>마음에 드는 드럼에서 <strong>선택</strong>을 누릅니다.</li>
+                <li><strong>현재 조합 듣기</strong>로 코드/스트로크/드럼을 같이 확인합니다.</li>
+                <li><strong>다음 마디</strong>를 누릅니다.</li>
+                <li>다음 마디에서도 같은 방식으로 코드, 스트로크, 드럼을 고릅니다.</li>
               </ol>
-              <div class="what-happens">결과: 기타는 코드가 동시에 나는 느낌이 아니라, 줄을 쓸어내리는 시간차와 세기 차이를 넣어 렌더합니다.</div>
+              <div class="what-happens">결과: 한 마디씩 들어보고 선택하는 방식으로 코러스를 쌓습니다.</div>
             </div>
           </article>
         </div>
