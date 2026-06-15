@@ -1,1 +1,930 @@
-<!DOCTYPE html><!--Tp_j_8wPYiPGRQ44Yjp_j--><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/daw/_next/static/css/c10ca77a8473b62c.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/daw/_next/static/chunks/webpack-370f17fca9142b72.js"/><script src="/daw/_next/static/chunks/4bd1b696-c023c6e3521b1417.js" async=""></script><script src="/daw/_next/static/chunks/493-f04f4e46ac0cbeca.js" async=""></script><script src="/daw/_next/static/chunks/main-app-ca9b7b8046f3ebc1.js" async=""></script><script src="/daw/_next/static/chunks/app/layout-bec5fdd8cf5f7cb8.js" async=""></script><script src="/daw/_next/static/chunks/463-cf7703884a3ea3e3.js" async=""></script><script src="/daw/_next/static/chunks/app/page-abcc256d8e832b10.js" async=""></script><title>Band AI DAW</title><meta name="description" content="Band-focused AI composition assistant"/><link rel="icon" href="/daw/favicon.svg"/><script src="/daw/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><div hidden=""><!--$--><!--/$--></div><header class="border-b border-[#33342f] bg-[#171813] text-[#f1efe7]"><div class="mx-auto flex max-w-[1680px] items-center justify-between px-3 py-2"><a class="text-sm font-semibold text-[#f1efe7]" href="/daw/">Band AI DAW</a><nav class="flex flex-wrap items-center gap-1"><a class="rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]" href="/daw/">Editor</a><a class="rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]" href="/daw/patterns/">Patterns</a><a class="rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]" href="/daw/tones/">Tones</a><a class="rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]" href="/daw/review/">Review</a></nav></div></header><main class="mx-auto max-w-[1680px] px-2 py-2"><div class="h-[calc(100vh-82px)] min-h-[720px] overflow-hidden rounded-md border border-[#3b3b35] bg-[#191a17] text-[#f1efe7] shadow-xl"><div class="flex h-[52px] items-center gap-2 bg-[#20211d] px-3"><div class="flex shrink-0 items-center gap-1"><button type="button" class="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border px-3 text-sm border-[#3d3e38] bg-[#292a25] text-[#f0eadb] hover:bg-[#33342f]" title="Play"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg><span class="hidden sm:inline">Play</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border px-3 text-sm border-[#3d3e38] bg-[#292a25] text-[#f0eadb] hover:bg-[#33342f]" title="Stop"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg><span class="hidden sm:inline">Stop</span></button><div class="ml-2 rounded-sm border border-[#3d3e38] bg-[#11120f] px-3 py-1.5 font-mono text-sm text-[#d9c27a]">001.1.1</div></div><div class="flex min-w-0 flex-1 items-center gap-2"><input class="daw-input h-9 min-h-9 w-20" title="BPM" type="number" value="148"/><input class="daw-input h-9 min-h-9 w-28" title="Key" value="E major"/><select class="daw-input h-9 min-h-9 w-40" title="Style"><option>indie rock</option><option selected="">modern rock</option><option>pop punk</option><option>j-rock</option><option>britpop</option><option>band ballad</option></select></div><div class="flex shrink-0 items-center justify-end gap-1"><button type="button" class="min-h-9 rounded-sm border px-2 text-xs border-[#d6a94c] bg-[#5b4318] text-white" title="Loop focused section">Loop</button><button type="button" class="min-h-9 rounded-sm border px-2 text-xs border-[#3d3e38] bg-[#292a25] text-[#f0eadb]" title="Metronome">Metro</button><select class="daw-input h-9 min-h-9 w-24 text-xs" title="Snap grid"><option value="1" selected="">Snap 1/16</option><option value="2">Snap 1/8</option><option value="4">Snap 1/4</option></select><button type="button" class="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border px-3 text-sm border-[#3d3e38] bg-[#292a25] text-[#f0eadb] hover:bg-[#33342f]" title="Suggest"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg><span class="hidden sm:inline">Suggest</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border px-3 text-sm border-[#3d3e38] bg-[#292a25] text-[#f0eadb] hover:bg-[#33342f]" title="Render"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg><span class="hidden sm:inline">Render</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-2 rounded-sm border px-3 text-sm border-[#3d3e38] bg-[#292a25] text-[#f0eadb] hover:bg-[#33342f]" title="Export"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg><span class="hidden sm:inline">Export</span></button><div class="max-w-36 truncate rounded-sm border border-[#3d3e38] bg-[#11120f] px-2 py-1.5 text-xs text-[#c7c3b6]">ready</div></div></div><div class="grid h-[calc(100%-52px)] min-h-0 grid-rows-[minmax(0,1fr)_minmax(230px,32vh)] border-t border-[#33342f]"><div class="relative min-h-0 overflow-hidden"><section class="h-full overflow-auto bg-[#1a1b17]"><div class="min-w-[1240px]"><div class="sticky top-0 z-20 border-b border-[#33342f] bg-[#20211d]"><div class="grid h-8 items-center text-[11px] text-[#a9a493]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="border-r border-[#33342f] px-3">Tracks</div><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono bg-[#4c3914] text-[#ffe39a]">1</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">2</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">3</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">4</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">5</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">6</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">7</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">8</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">9</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">10</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">11</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">12</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">13</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">14</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">15</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">16</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">17</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">18</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">19</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">20</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">21</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">22</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">23</button><button type="button" class="h-8 border-r border-[#34352f] px-1 text-center font-mono hover:bg-[#2a2b25]">24</button></div><div class="grid h-8 items-center text-xs" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="border-r border-[#33342f] px-3 text-[#a9a493]">Sections</div><div class="mx-0.5 rounded-sm border px-2 py-1 text-center border-[#d6a94c] bg-[#4b3915] text-[#ffe39a]" style="grid-column:2 / 6">intro</div><div class="mx-0.5 rounded-sm border px-2 py-1 text-center border-[#4a4738] bg-[#302c1f] text-[#ead28d]" style="grid-column:6 / 14">verse</div><div class="mx-0.5 rounded-sm border px-2 py-1 text-center border-[#4a4738] bg-[#302c1f] text-[#ead28d]" style="grid-column:14 / 18">pre_chorus</div><div class="mx-0.5 rounded-sm border px-2 py-1 text-center border-[#4a4738] bg-[#302c1f] text-[#ead28d]" style="grid-column:18 / 26">chorus</div></div><div class="grid h-9 items-center border-t border-[#33342f] text-xs" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="border-r border-[#33342f] px-3 text-[#a9a493]">Chords</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:2 / 4">E</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:4 / 6">B</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:6 / 8">C#m</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:8 / 10">A</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:10 / 12">E</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:12 / 14">B</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:14 / 16">C#m</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:16 / 18">A</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:18 / 20">E</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:20 / 22">B</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:22 / 24">C#m</div><div class="mx-0.5 rounded-sm border border-[#2f5147] bg-[#16352f] px-2 py-1 text-center font-semibold text-[#bde9dc]" style="grid-column:24 / 26">A</div></div></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music2 text-[#77c9af]"><circle cx="8" cy="18" r="4"></circle><path d="M12 18V2l7 4"></path></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">vocal</div><div class="truncate text-[11px] text-[#9e9a8c]">guide_melody</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"></button></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-guitar text-[#d6a94c]"><path d="m11.9 12.1 4.514-4.514"></path><path d="M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z"></path><path d="m6 16 2 2"></path><path d="M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2z"></path><circle cx="11.5" cy="12.5" r=".5" fill="currentColor"></circle></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">guitar_1</div><div class="truncate text-[11px] text-[#9e9a8c]">rhythm</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">다운업 오픈</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">8비트 다운</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">뮤트 드라이브</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#735a22] bg-[#493817] text-[#ffe39a]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">싱코페이션</span></span></button></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-guitar text-[#d6a94c]"><path d="m11.9 12.1 4.514-4.514"></path><path d="M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z"></path><path d="m6 16 2 2"></path><path d="M8.2 9.9C8.7 8.8 9.8 8 11 8c2.8 0 5 2.2 5 5 0 1.2-.8 2.3-1.9 2.8l-.9.4A2 2 0 0 0 12 18a4 4 0 0 1-4 4c-3.3 0-6-2.7-6-6a4 4 0 0 1 4-4 2 2 0 0 0 1.8-1.2z"></path><circle cx="11.5" cy="12.5" r=".5" fill="currentColor"></circle></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">guitar_2</div><div class="truncate text-[11px] text-[#9e9a8c]">counter</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"></button></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music2 text-[#77c9af]"><circle cx="8" cy="18" r="4"></circle><path d="M12 18V2l7 4"></path></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">piano</div><div class="truncate text-[11px] text-[#9e9a8c]">harmony</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"></button></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music2 text-[#77c9af]"><circle cx="8" cy="18" r="4"></circle><path d="M12 18V2l7 4"></path></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">bass</div><div class="truncate text-[11px] text-[#9e9a8c]">low_end</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">E</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">B</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">C#m</span><span class="block truncate opacity-80">root</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#315968] bg-[#16343d] text-[#bdefff]"><span class="block truncate font-semibold">A</span><span class="block truncate opacity-80">root</span></span></button></div><div class="grid min-h-[74px] border-b border-[#2d2e29]" style="grid-template-columns:178px repeat(24, minmax(42px, 1fr))"><div class="flex items-center gap-2 border-r border-[#33342f] bg-[#171813] px-3"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-drum text-[#de766b]"><path d="m2 2 8 8"></path><path d="m22 2-8 8"></path><ellipse cx="12" cy="9" rx="10" ry="5"></ellipse><path d="M7 13.4v7.9"></path><path d="M12 14v8"></path><path d="M17 13.4v7.9"></path><path d="M2 9v8a10 5 0 0 0 20 0V9"></path></svg><div class="min-w-0 flex-1"><div class="truncate text-sm font-semibold text-[#f0eadb]">drums</div><div class="truncate text-[11px] text-[#9e9a8c]">groove</div></div><div class="grid grid-cols-3 gap-1 text-[10px]"><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Mute">M</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Solo">S</button><button type="button" class="h-6 w-6 rounded-sm border border-[#3b3c35] bg-[#22231f] text-[#b9b3a1]" title="Record arm">R</button></div></div><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-100 bg-[#3c3016] shadow-[inset_0_0_0_2px_#d6a94c] " title="B1"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span><span class="absolute bottom-1 left-1 right-1 h-1 rounded-full bg-[#d6a94c]"></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B2"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B3"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-100 hover:bg-[#272820] " title="B4"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B5"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B6"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B7"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B8"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B9"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B10"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B11"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B12"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B13"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B14"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B15"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B16"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B17"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B18"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B19"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B20"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#20211d] opacity-70 hover:bg-[#272820] " title="B21"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B22"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">스트레이트 록</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B23"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">오픈 코러스</span><span class="block truncate opacity-80">beat</span></span></button><button type="button" draggable="true" class="group relative border-r border-[#2b2c27] px-1 text-left bg-[#1b1c18] opacity-70 hover:bg-[#272820] " title="B24"><span class="absolute left-1 right-1 top-3 overflow-hidden rounded-sm border px-1.5 py-1 text-[10px] leading-4 border-[#74413b] bg-[#4a211d] text-[#ffd0c9]"><span class="block truncate font-semibold">푸시 필</span><span class="block truncate opacity-80">beat</span></span></button></div></div></section></div><section class="grid min-h-0 border-t border-[#33342f] bg-[#151612] xl:grid-cols-[minmax(0,1fr)_300px]"><div class="min-h-0 border-b border-[#33342f] p-2 xl:border-b-0 xl:border-r"><div class="mb-2 flex flex-wrap items-center justify-between gap-2"><div class="min-w-0"><h2 class="text-xs font-semibold uppercase tracking-normal text-[#c8bea3]">Piano Roll</h2><div class="mt-0.5 truncate text-xs text-[#8f8a7b]">intro<!-- --> <!-- -->1<!-- -->-<!-- -->4<!-- --> · <!-- -->E - B - C#m - A</div></div><div class="flex items-center gap-1"><button type="button" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Play"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg><span>Play</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Seed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wand-sparkles"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg><span>Seed</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Q"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg><span>Q</span></button><button type="button" disabled="" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Undo"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo2"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"></path></svg><span>Undo</span></button><button type="button" disabled="" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Redo"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-redo2"><path d="m15 14 5-5-5-5"></path><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"></path></svg><span>Redo</span></button><button type="button" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="MIDI"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg><span>MIDI</span></button><button type="button" class="min-h-9 rounded-sm border border-[#46302d] bg-[#2a1b19] px-2 text-xs text-[#f0b4ac]" title="Clear">Clear</button></div></div><div class="min-h-0 overflow-hidden"><div class="rounded-sm border border-[#33342f] bg-[#11120f]"><div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#33342f] bg-[#191a17] px-2 py-2"><div class="flex items-center gap-1"><button type="button" class="inline-flex h-8 items-center gap-1 rounded-sm border px-2 text-xs border-[#d6a94c] bg-[#5b4318] text-white" title="Select and move notes"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer2"><path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z"></path></svg>Select</button><button type="button" class="inline-flex h-8 items-center gap-1 rounded-sm border px-2 text-xs border-[#34352f] bg-[#20211d] text-[#c7c3b6]" title="Draw notes on the grid"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-line"><path d="M12 20h9"></path><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"></path></svg>Draw</button></div><div class="flex items-center gap-1"><button type="button" disabled="" class="inline-flex h-8 items-center gap-1 rounded-sm border border-[#34352f] bg-[#20211d] px-2 text-xs text-[#c7c3b6] disabled:opacity-40" title="Duplicate selected note"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Duplicate</button><button type="button" disabled="" class="inline-flex h-8 items-center gap-1 rounded-sm border border-[#46302d] bg-[#2a1b19] px-2 text-xs text-[#f0b4ac] disabled:opacity-40" title="Delete selected note"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>Delete</button></div></div><div class="max-h-[360px] overflow-auto"><div class="grid" style="grid-template-columns:58px 1664px;grid-template-rows:500px"><div class="sticky left-0 z-20 bg-[#141510]"><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">C5</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">B4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">A#4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">A4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">G#4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">G4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">F#4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">F4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">E4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">D#4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">D4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">C#4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">C4</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">B3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">A#3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">A3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">G#3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">G3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">F#3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">F3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">E3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">D#3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">D3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">C#3</div><div class="flex h-5 items-center border-b border-[#242520] px-2 text-[10px] text-[#9e9a8c]">C3</div></div><div class="relative outline-none" style="width:1664px;height:500px;background-image:linear-gradient(to right, rgba(208,162,60,0.28) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);background-size:416px 100%, 104px 100%, 100% 20px"><div class="absolute top-0 flex h-5 items-center px-1 font-mono text-[10px] text-[#d8bd6b]" style="left:0;width:416px">B<!-- -->1</div><div class="absolute top-0 flex h-5 items-center px-1 font-mono text-[10px] text-[#d8bd6b]" style="left:416px;width:416px">B<!-- -->2</div><div class="absolute top-0 flex h-5 items-center px-1 font-mono text-[10px] text-[#d8bd6b]" style="left:832px;width:416px">B<!-- -->3</div><div class="absolute top-0 flex h-5 items-center px-1 font-mono text-[10px] text-[#d8bd6b]" style="left:1248px;width:416px">B<!-- -->4</div><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:1px;top:161px;width:206px" title="E4 B1.1 velocity 92">E4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:53px;top:81px;width:154px" title="G#4 B1.3 velocity 78">G#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:105px;top:21px;width:154px" title="B4 B1.5 velocity 78">B4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:417px;top:21px;width:206px" title="B4 B2.1 velocity 92">B4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:469px;top:181px;width:154px" title="D#4 B2.3 velocity 78">D#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:521px;top:121px;width:154px" title="F#4 B2.5 velocity 78">F#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:833px;top:221px;width:206px" title="C#4 B3.1 velocity 92">C#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:885px;top:161px;width:154px" title="E4 B3.3 velocity 78">E4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:937px;top:81px;width:154px" title="G#4 B3.5 velocity 78">G#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:1249px;top:61px;width:206px" title="A4 B4.1 velocity 92">A4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:1301px;top:221px;width:154px" title="C#4 B4.3 velocity 78">C#4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button><button type="button" class="absolute h-[18px] rounded-sm border px-1 text-left text-[10px] leading-[16px] border-[#78c4aa] bg-[#2f8f83]/70 text-[#e6fff4]" style="left:1353px;top:161px;width:154px" title="E4 B4.5 velocity 78">E4<span role="presentation" class="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-[#f4d06d]/55"></span></button></div></div></div></div></div></div><aside class="hidden min-h-0 overflow-auto p-2 xl:block"><div class="mb-2 rounded-sm border border-[#33342f] bg-[#1d1e1a] p-2"><div class="mb-2 text-xs font-semibold uppercase tracking-normal text-[#c8bea3]">Note</div><div class="grid grid-cols-2 gap-2"><label class="block"><span class="mb-1 block text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]">Pitch</span><input class="daw-input" disabled="" type="number" min="36" max="84" value="60"/></label><label class="block"><span class="mb-1 block text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]">Vel</span><input class="daw-input" disabled="" type="number" min="1" max="127" value="88"/></label><label class="block"><span class="mb-1 block text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]">Len</span><input class="daw-input" disabled="" type="number" min="1" max="64" value="1"/></label><label class="block"><span class="mb-1 block text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]">Inst</span><select class="daw-input" disabled=""><option selected="">piano</option><option>bass</option><option>guitar_1</option><option>guitar_2</option><option>vocal</option></select></label></div></div><div class="mb-2 rounded-sm border border-[#33342f] bg-[#1d1e1a] p-2"><div class="mb-2 text-xs font-semibold uppercase tracking-normal text-[#c8bea3]">Guitar Feel</div><div class="space-y-2"><label class="block rounded-sm border border-[#30312c] bg-[#1d1e1a] p-2"><span class="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]"><span>Speed</span><span class="font-mono text-[#e0cb7f]">18</span></span><input class="w-full accent-[#d0a23c]" type="range" min="8" max="45" step="1" value="18"/></label><label class="block rounded-sm border border-[#30312c] bg-[#1d1e1a] p-2"><span class="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]"><span>Human</span><span class="font-mono text-[#e0cb7f]">8</span></span><input class="w-full accent-[#d0a23c]" type="range" min="0" max="35" step="1" value="8"/></label><label class="block rounded-sm border border-[#30312c] bg-[#1d1e1a] p-2"><span class="mb-1 flex items-center justify-between text-[10px] font-semibold uppercase tracking-normal text-[#a9a493]"><span>Swing</span><span class="font-mono text-[#e0cb7f]">0.04</span></span><input class="w-full accent-[#d0a23c]" type="range" min="0" max="0.35" step="0.01" value="0.04"/></label></div></div><div class="rounded-sm border border-[#33342f] bg-[#1d1e1a] p-2"><div class="mb-2 truncate text-sm font-semibold text-[#f1efe7]">No clip</div><div class="grid grid-cols-3 gap-1"><button type="button" disabled="" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Apply"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg><span>Apply</span></button><button type="button" disabled="" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg><span>Delete</span></button><button type="button" disabled="" class="inline-flex min-h-9 items-center justify-center gap-1 rounded-sm border border-[#3d3e38] bg-[#292a25] px-2 text-xs text-[#f0eadb] hover:bg-[#33342f] disabled:cursor-not-allowed disabled:opacity-40" title="Render"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg><span>Render</span></button></div></div></aside></section></div></div><!--$--><!--/$--></main><script src="/daw/_next/static/chunks/webpack-370f17fca9142b72.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[2619,[\"177\",\"static/chunks/app/layout-bec5fdd8cf5f7cb8.js\"],\"\"]\n3:I[9766,[],\"\"]\n4:I[8924,[],\"\"]\n5:I[6715,[\"463\",\"static/chunks/463-cf7703884a3ea3e3.js\",\"974\",\"static/chunks/app/page-abcc256d8e832b10.js\"],\"ProjectEditor\"]\n6:I[4431,[],\"OutletBoundary\"]\n8:I[5278,[],\"AsyncMetadataOutlet\"]\na:I[4431,[],\"ViewportBoundary\"]\nc:I[4431,[],\"MetadataBoundary\"]\nd:\"$Sreact.suspense\"\nf:I[7150,[],\"\"]\n:HL[\"/daw/_next/static/css/c10ca77a8473b62c.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"Tp_j-8wPYiPGRQ44Yjp_j\",\"p\":\"/daw\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/daw/_next/static/css/c10ca77a8473b62c.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[[\"$\",\"header\",null,{\"className\":\"border-b border-[#33342f] bg-[#171813] text-[#f1efe7]\",\"children\":[\"$\",\"div\",null,{\"className\":\"mx-auto flex max-w-[1680px] items-center justify-between px-3 py-2\",\"children\":[[\"$\",\"$L2\",null,{\"href\":\"/\",\"className\":\"text-sm font-semibold text-[#f1efe7]\",\"children\":\"Band AI DAW\"}],[\"$\",\"nav\",null,{\"className\":\"flex flex-wrap items-center gap-1\",\"children\":[[\"$\",\"$L2\",\"/\",{\"href\":\"/\",\"className\":\"rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]\",\"children\":\"Editor\"}],[\"$\",\"$L2\",\"/patterns\",{\"href\":\"/patterns\",\"className\":\"rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]\",\"children\":\"Patterns\"}],[\"$\",\"$L2\",\"/tones\",{\"href\":\"/tones\",\"className\":\"rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]\",\"children\":\"Tones\"}],[\"$\",\"$L2\",\"/review\",{\"href\":\"/review\",\"className\":\"rounded-sm px-2 py-1.5 text-xs text-[#aaa492] hover:bg-[#252620] hover:text-[#f1efe7]\",\"children\":\"Review\"}]]}]]}]}],[\"$\",\"main\",null,{\"className\":\"mx-auto max-w-[1680px] px-2 py-2\",\"children\":[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]]}]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L5\",null,{}],null,[\"$\",\"$L6\",null,{\"children\":[\"$L7\",[\"$\",\"$L8\",null,{\"promise\":\"$@9\"}]]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[[\"$\",\"$La\",null,{\"children\":\"$Lb\"}],null],[\"$\",\"$Lc\",null,{\"children\":[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$d\",null,{\"fallback\":null,\"children\":\"$Le\"}]}]}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$f\",[]],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"b:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n7:null\n"])</script><script>self.__next_f.push([1,"10:I[622,[],\"IconMark\"]\n9:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"Band AI DAW\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Band-focused AI composition assistant\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/daw/favicon.svg\"}],[\"$\",\"$L10\",\"3\",{}]],\"error\":null,\"digest\":\"$undefined\"}\n"])</script><script>self.__next_f.push([1,"e:\"$9:metadata\"\n"])</script></body></html>
+<!DOCTYPE html>
+<html class="staticrypt-html" lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <title>DAW</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- do not cache this page -->
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+        <meta http-equiv="pragma" content="no-cache" />
+
+        <style>
+            :root {
+                --bg: #f3f4f6;
+                --accent: #2563eb;
+                --accent-hover: #1d4ed8;
+                --ink: #111827;
+                --muted: #6b7280;
+                --field: #f9fafb;
+                --field-focus: #ffffff;
+                --border: #e5e7eb;
+            }
+
+            * { box-sizing: border-box; }
+
+            .staticrypt-html { height: 100%; }
+
+            .staticrypt-body {
+                height: 100%;
+                margin: 0;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "맑은 고딕",
+                    "Apple SD Gothic Neo", Roboto, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .staticrypt-content {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                background: var(--bg);
+            }
+
+            .staticrypt-page {
+                width: 100%;
+                max-width: 380px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .staticrypt-form {
+                position: relative;
+                z-index: 1;
+                background: #ffffff;
+                border-radius: 18px;
+                padding: 40px 36px 34px;
+                text-align: center;
+                border: 1px solid var(--border);
+                box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06),
+                    0 8px 24px -12px rgba(17, 24, 39, 0.12);
+            }
+
+            .staticrypt-lock {
+                width: 56px;
+                height: 56px;
+                margin: 0 auto 18px;
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--accent);
+            }
+            .staticrypt-lock svg { width: 26px; height: 26px; fill: #fff; }
+
+            .staticrypt-instructions { margin: 0 0 4px; }
+
+            .staticrypt-title {
+                font-size: 1.35em;
+                font-weight: 700;
+                color: var(--ink);
+                margin: 0 0 6px;
+                letter-spacing: -0.01em;
+            }
+            .staticrypt-instructions p:not(.staticrypt-title) {
+                font-size: 0.9em;
+                color: var(--muted);
+                margin: 0;
+                line-height: 1.5;
+            }
+
+            .staticrypt-hr {
+                margin: 22px 0;
+                border: 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .staticrypt-password-container {
+                position: relative;
+                background: var(--field);
+                width: 100%;
+                border: 1.5px solid var(--border);
+                border-radius: 12px;
+                margin: 0 0 16px;
+                transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+            }
+            .staticrypt-password-container:focus-within {
+                border-color: var(--accent);
+                background: var(--field-focus);
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+            }
+
+            .staticrypt-form input[type="password"],
+            .staticrypt-form input[type="text"] {
+                background: transparent;
+                border: 0;
+                font-size: 15px;
+                outline: 0;
+                padding: 15px 46px 15px 16px;
+                width: 100%;
+                color: var(--ink);
+                border-radius: 12px;
+            }
+            .staticrypt-form input::placeholder { color: var(--muted); }
+
+            .staticrypt-toggle-password-visibility {
+                cursor: pointer;
+                height: 20px;
+                width: 20px;
+                opacity: 0.5;
+                padding: 14px;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: opacity 0.15s;
+            }
+            .staticrypt-toggle-password-visibility:hover { opacity: 0.85; }
+
+            label.staticrypt-remember {
+                display: flex;
+                align-items: center;
+                margin-bottom: 18px;
+                font-size: 0.88em;
+                color: var(--muted);
+                cursor: pointer;
+            }
+            .staticrypt-remember input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                margin-right: 10px;
+                accent-color: var(--accent);
+                cursor: pointer;
+            }
+
+            .staticrypt-form .staticrypt-decrypt-button {
+                outline: 0;
+                background: var(--accent);
+                width: 100%;
+                border: 0;
+                border-radius: 12px;
+                padding: 15px;
+                color: #ffffff;
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                cursor: pointer;
+                transition: background 0.15s, transform 0.05s;
+            }
+            .staticrypt-form .staticrypt-decrypt-button:hover {
+                background: var(--accent-hover);
+            }
+            .staticrypt-form .staticrypt-decrypt-button:active { transform: translateY(1px); }
+
+            .hidden { display: none !important; }
+
+            .staticrypt-spinner-container {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--bg);
+            }
+            .staticrypt-spinner {
+                display: inline-block;
+                width: 2.4rem;
+                height: 2.4rem;
+                border: 0.28em solid rgba(37, 99, 235, 0.25);
+                border-right-color: var(--accent);
+                border-radius: 50%;
+                animation: spinner-border 0.75s linear infinite;
+            }
+            @keyframes spinner-border {
+                100% { transform: rotate(360deg); }
+            }
+
+            @media screen and (-webkit-min-device-pixel-ratio: 0) {
+                .staticrypt-form input[type="password"],
+                .staticrypt-form input[type="text"] { font-size: 16px; }
+            }
+        </style>
+    </head>
+
+    <body class="staticrypt-body">
+        <div id="staticrypt_loading" class="staticrypt-spinner-container">
+            <div class="staticrypt-spinner"></div>
+        </div>
+
+        <div id="staticrypt_content" class="staticrypt-content hidden">
+            <div class="staticrypt-page">
+                <div class="staticrypt-form">
+                    <div class="staticrypt-lock">
+                        <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M144 144v48h160v-48a80 80 0 1 0-160 0zM80 192v-48a144 144 0 1 1 288 0v48h16c35.3 0 64 28.7 64 64v160c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64h16z"/>
+                        </svg>
+                    </div>
+
+                    <div class="staticrypt-instructions">
+                        <p class="staticrypt-title">DAW</p>
+                        <p>비밀번호를 입력하세요.</p>
+                    </div>
+
+                    <hr class="staticrypt-hr" />
+
+                    <form id="staticrypt-form" action="#" method="post">
+                        <div class="staticrypt-password-container">
+                            <input
+                                id="staticrypt-password"
+                                type="password"
+                                name="password"
+                                placeholder="비밀번호"
+                                autofocus
+                            />
+
+                            <img
+                                class="staticrypt-toggle-password-visibility"
+                                alt="Show password"
+                                title="Show password"
+                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg=="
+                            />
+                        </div>
+
+                        <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
+                            <input id="staticrypt-remember" type="checkbox" name="remember" checked />
+                            로그인 유지
+                        </label>
+
+                        <input type="submit" class="staticrypt-decrypt-button" value="로그인" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // these variables will be filled when generating the file - the template format is 'variable_name'
+            const staticryptInitiator = ((function(){
+  const exports = {};
+  const cryptoEngine = ((function(){
+  const exports = {};
+  const { subtle } = crypto;
+
+const IV_BITS = 16 * 8;
+const HEX_BITS = 4;
+const ENCRYPTION_ALGO = "AES-CBC";
+
+/**
+ * Translates between utf8 encoded hexadecimal strings
+ * and Uint8Array bytes.
+ */
+const HexEncoder = {
+    /**
+     * hex string -> bytes
+     * @param {string} hexString
+     * @returns {Uint8Array}
+     */
+    parse: function (hexString) {
+        if (hexString.length % 2 !== 0) throw "Invalid hexString";
+        const arrayBuffer = new Uint8Array(hexString.length / 2);
+
+        for (let i = 0; i < hexString.length; i += 2) {
+            const byteValue = parseInt(hexString.substring(i, i + 2), 16);
+            if (isNaN(byteValue)) {
+                throw "Invalid hexString";
+            }
+            arrayBuffer[i / 2] = byteValue;
+        }
+        return arrayBuffer;
+    },
+
+    /**
+     * bytes -> hex string
+     * @param {Uint8Array} bytes
+     * @returns {string}
+     */
+    stringify: function (bytes) {
+        const hexBytes = [];
+
+        for (let i = 0; i < bytes.length; ++i) {
+            let byteString = bytes[i].toString(16);
+            if (byteString.length < 2) {
+                byteString = "0" + byteString;
+            }
+            hexBytes.push(byteString);
+        }
+        return hexBytes.join("");
+    },
+};
+
+/**
+ * Translates between utf8 strings and Uint8Array bytes.
+ */
+const UTF8Encoder = {
+    parse: function (str) {
+        return new TextEncoder().encode(str);
+    },
+
+    stringify: function (bytes) {
+        return new TextDecoder().decode(bytes);
+    },
+};
+
+/**
+ * Salt and encrypt a msg with a password.
+ */
+async function encrypt(msg, hashedPassword) {
+    // Must be 16 bytes, unpredictable, and preferably cryptographically random. However, it need not be secret.
+    // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#parameters
+    const iv = crypto.getRandomValues(new Uint8Array(IV_BITS / 8));
+
+    const key = await subtle.importKey("raw", HexEncoder.parse(hashedPassword), ENCRYPTION_ALGO, false, ["encrypt"]);
+
+    const encrypted = await subtle.encrypt(
+        {
+            name: ENCRYPTION_ALGO,
+            iv: iv,
+        },
+        key,
+        UTF8Encoder.parse(msg)
+    );
+
+    // iv will be 32 hex characters, we prepend it to the ciphertext for use in decryption
+    return HexEncoder.stringify(iv) + HexEncoder.stringify(new Uint8Array(encrypted));
+}
+exports.encrypt = encrypt;
+
+/**
+ * Decrypt a salted msg using a password.
+ *
+ * @param {string} encryptedMsg
+ * @param {string} hashedPassword
+ * @returns {Promise<string>}
+ */
+async function decrypt(encryptedMsg, hashedPassword) {
+    const ivLength = IV_BITS / HEX_BITS;
+    const iv = HexEncoder.parse(encryptedMsg.substring(0, ivLength));
+    const encrypted = encryptedMsg.substring(ivLength);
+
+    const key = await subtle.importKey("raw", HexEncoder.parse(hashedPassword), ENCRYPTION_ALGO, false, ["decrypt"]);
+
+    const outBuffer = await subtle.decrypt(
+        {
+            name: ENCRYPTION_ALGO,
+            iv: iv,
+        },
+        key,
+        HexEncoder.parse(encrypted)
+    );
+
+    return UTF8Encoder.stringify(new Uint8Array(outBuffer));
+}
+exports.decrypt = decrypt;
+
+/**
+ * Salt and hash the password so it can be stored in localStorage without opening a password reuse vulnerability.
+ *
+ * @param {string} password
+ * @param {string} salt
+ * @returns {Promise<string>}
+ */
+async function hashPassword(password, salt) {
+    // we hash the password in multiple steps, each adding more iterations. This is because we used to allow less
+    // iterations, so for backward compatibility reasons, we need to support going from that to more iterations.
+    let hashedPassword = await hashLegacyRound(password, salt);
+
+    hashedPassword = await hashSecondRound(hashedPassword, salt);
+
+    return hashThirdRound(hashedPassword, salt);
+}
+exports.hashPassword = hashPassword;
+
+/**
+ * This hashes the password with 1k iterations. This is a low number, we need this function to support backwards
+ * compatibility.
+ *
+ * @param {string} password
+ * @param {string} salt
+ * @returns {Promise<string>}
+ */
+function hashLegacyRound(password, salt) {
+    return pbkdf2(password, salt, 1000, "SHA-1");
+}
+exports.hashLegacyRound = hashLegacyRound;
+
+/**
+ * Add a second round of iterations. This is because we used to use 1k, so for backwards compatibility with
+ * remember-me/autodecrypt links, we need to support going from that to more iterations.
+ *
+ * @param hashedPassword
+ * @param salt
+ * @returns {Promise<string>}
+ */
+function hashSecondRound(hashedPassword, salt) {
+    return pbkdf2(hashedPassword, salt, 14000, "SHA-256");
+}
+exports.hashSecondRound = hashSecondRound;
+
+/**
+ * Add a third round of iterations to bring total number to 600k. This is because we used to use 1k, then 15k, so for
+ * backwards compatibility with remember-me/autodecrypt links, we need to support going from that to more iterations.
+ *
+ * @param hashedPassword
+ * @param salt
+ * @returns {Promise<string>}
+ */
+function hashThirdRound(hashedPassword, salt) {
+    return pbkdf2(hashedPassword, salt, 585000, "SHA-256");
+}
+exports.hashThirdRound = hashThirdRound;
+
+/**
+ * Salt and hash the password so it can be stored in localStorage without opening a password reuse vulnerability.
+ *
+ * @param {string} password
+ * @param {string} salt
+ * @param {int} iterations
+ * @param {string} hashAlgorithm
+ * @returns {Promise<string>}
+ */
+async function pbkdf2(password, salt, iterations, hashAlgorithm) {
+    const key = await subtle.importKey("raw", UTF8Encoder.parse(password), "PBKDF2", false, ["deriveBits"]);
+
+    const keyBytes = await subtle.deriveBits(
+        {
+            name: "PBKDF2",
+            hash: hashAlgorithm,
+            iterations,
+            salt: UTF8Encoder.parse(salt),
+        },
+        key,
+        256
+    );
+
+    return HexEncoder.stringify(new Uint8Array(keyBytes));
+}
+
+function generateRandomSalt() {
+    const bytes = crypto.getRandomValues(new Uint8Array(128 / 8));
+
+    return HexEncoder.stringify(new Uint8Array(bytes));
+}
+exports.generateRandomSalt = generateRandomSalt;
+
+async function signMessage(hashedPassword, message) {
+    const key = await subtle.importKey(
+        "raw",
+        HexEncoder.parse(hashedPassword),
+        {
+            name: "HMAC",
+            hash: "SHA-256",
+        },
+        false,
+        ["sign"]
+    );
+    const signature = await subtle.sign("HMAC", key, UTF8Encoder.parse(message));
+
+    return HexEncoder.stringify(new Uint8Array(signature));
+}
+exports.signMessage = signMessage;
+
+function getRandomAlphanum() {
+    const possibleCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    let byteArray;
+    let parsedInt;
+
+    // Keep generating new random bytes until we get a value that falls
+    // within a range that can be evenly divided by possibleCharacters.length
+    do {
+        byteArray = crypto.getRandomValues(new Uint8Array(1));
+        // extract the lowest byte to get an int from 0 to 255 (probably unnecessary, since we're only generating 1 byte)
+        parsedInt = byteArray[0] & 0xff;
+    } while (parsedInt >= 256 - (256 % possibleCharacters.length));
+
+    // Take the modulo of the parsed integer to get a random number between 0 and totalLength - 1
+    const randomIndex = parsedInt % possibleCharacters.length;
+
+    return possibleCharacters[randomIndex];
+}
+
+/**
+ * Generate a random string of a given length.
+ *
+ * @param {int} length
+ * @returns {string}
+ */
+function generateRandomString(length) {
+    let randomString = "";
+
+    for (let i = 0; i < length; i++) {
+        randomString += getRandomAlphanum();
+    }
+
+    return randomString;
+}
+exports.generateRandomString = generateRandomString;
+
+  return exports;
+})());
+const codec = ((function(){
+  const exports = {};
+  /**
+ * Initialize the codec with the provided cryptoEngine - this return functions to encode and decode messages.
+ *
+ * @param cryptoEngine - the engine to use for encryption / decryption
+ */
+function init(cryptoEngine) {
+    const exports = {};
+
+    /**
+     * Top-level function for encoding a message.
+     * Includes password hashing, encryption, and signing.
+     *
+     * @param {string} msg
+     * @param {string} password
+     * @param {string} salt
+     *
+     * @returns {string} The encoded text
+     */
+    async function encode(msg, password, salt) {
+        const hashedPassword = await cryptoEngine.hashPassword(password, salt);
+
+        const encrypted = await cryptoEngine.encrypt(msg, hashedPassword);
+
+        // we use the hashed password in the HMAC because this is effectively what will be used a password (so we can store
+        // it in localStorage safely, we don't use the clear text password)
+        const hmac = await cryptoEngine.signMessage(hashedPassword, encrypted);
+
+        return hmac + encrypted;
+    }
+    exports.encode = encode;
+
+    /**
+     * Encode using a password that has already been hashed. This is useful to encode multiple messages in a row, that way
+     * we don't need to hash the password multiple times.
+     *
+     * @param {string} msg
+     * @param {string} hashedPassword
+     *
+     * @returns {string} The encoded text
+     */
+    async function encodeWithHashedPassword(msg, hashedPassword) {
+        const encrypted = await cryptoEngine.encrypt(msg, hashedPassword);
+
+        // we use the hashed password in the HMAC because this is effectively what will be used a password (so we can store
+        // it in localStorage safely, we don't use the clear text password)
+        const hmac = await cryptoEngine.signMessage(hashedPassword, encrypted);
+
+        return hmac + encrypted;
+    }
+    exports.encodeWithHashedPassword = encodeWithHashedPassword;
+
+    /**
+     * Top-level function for decoding a message.
+     * Includes signature check and decryption.
+     *
+     * @param {string} signedMsg
+     * @param {string} hashedPassword
+     * @param {string} salt
+     * @param {int} backwardCompatibleAttempt
+     * @param {string} originalPassword
+     *
+     * @returns {Object} {success: true, decoded: string} | {success: false, message: string}
+     */
+    async function decode(signedMsg, hashedPassword, salt, backwardCompatibleAttempt = 0, originalPassword = "") {
+        const encryptedHMAC = signedMsg.substring(0, 64);
+        const encryptedMsg = signedMsg.substring(64);
+        const decryptedHMAC = await cryptoEngine.signMessage(hashedPassword, encryptedMsg);
+
+        if (decryptedHMAC !== encryptedHMAC) {
+            // we have been raising the number of iterations in the hashing algorithm multiple times, so to support the old
+            // remember-me/autodecrypt links we need to try bringing the old hashes up to speed.
+            originalPassword = originalPassword || hashedPassword;
+            if (backwardCompatibleAttempt === 0) {
+                const updatedHashedPassword = await cryptoEngine.hashThirdRound(originalPassword, salt);
+
+                return decode(signedMsg, updatedHashedPassword, salt, backwardCompatibleAttempt + 1, originalPassword);
+            }
+            if (backwardCompatibleAttempt === 1) {
+                let updatedHashedPassword = await cryptoEngine.hashSecondRound(originalPassword, salt);
+                updatedHashedPassword = await cryptoEngine.hashThirdRound(updatedHashedPassword, salt);
+
+                return decode(signedMsg, updatedHashedPassword, salt, backwardCompatibleAttempt + 1, originalPassword);
+            }
+
+            return { success: false, message: "Signature mismatch" };
+        }
+
+        return {
+            success: true,
+            decoded: await cryptoEngine.decrypt(encryptedMsg, hashedPassword),
+        };
+    }
+    exports.decode = decode;
+
+    return exports;
+}
+exports.init = init;
+
+  return exports;
+})());
+const decode = codec.init(cryptoEngine).decode;
+
+/**
+ * Initialize the staticrypt module, that exposes functions callbable by the password_template.
+ *
+ * @param {{
+ *  staticryptEncryptedMsgUniqueVariableName: string,
+ *  isRememberEnabled: boolean,
+ *  rememberDurationInDays: number,
+ *  staticryptSaltUniqueVariableName: string,
+ * }} staticryptConfig - object of data that is stored on the password_template at encryption time.
+ *
+ * @param {{
+ *  rememberExpirationKey: string,
+ *  rememberPassphraseKey: string,
+ *  replaceHtmlCallback: function,
+ *  clearLocalStorageCallback: function,
+ * }} templateConfig - object of data that can be configured by a custom password_template.
+ */
+function init(staticryptConfig, templateConfig) {
+    const exports = {};
+
+    /**
+     * Decrypt our encrypted page, replace the whole HTML.
+     *
+     * @param {string} hashedPassword
+     * @returns {Promise<boolean>}
+     */
+    async function decryptAndReplaceHtml(hashedPassword) {
+        const { staticryptEncryptedMsgUniqueVariableName, staticryptSaltUniqueVariableName } = staticryptConfig;
+        const { replaceHtmlCallback } = templateConfig;
+
+        const result = await decode(
+            staticryptEncryptedMsgUniqueVariableName,
+            hashedPassword,
+            staticryptSaltUniqueVariableName
+        );
+        if (!result.success) {
+            return false;
+        }
+        const plainHTML = result.decoded;
+
+        // if the user configured a callback call it, otherwise just replace the whole HTML
+        if (typeof replaceHtmlCallback === "function") {
+            replaceHtmlCallback(plainHTML);
+        } else {
+            document.write(plainHTML);
+            document.close();
+        }
+
+        return true;
+    }
+
+    /**
+     * Attempt to decrypt the page and replace the whole HTML.
+     *
+     * @param {string} password
+     * @param {boolean} isRememberChecked
+     *
+     * @returns {Promise<{isSuccessful: boolean, hashedPassword?: string}>} - we return an object, so that if we want to
+     *   expose more information in the future we can do it without breaking the password_template
+     */
+    async function handleDecryptionOfPage(password, isRememberChecked) {
+        const { staticryptSaltUniqueVariableName } = staticryptConfig;
+
+        // decrypt and replace the whole page
+        const hashedPassword = await cryptoEngine.hashPassword(password, staticryptSaltUniqueVariableName);
+        return handleDecryptionOfPageFromHash(hashedPassword, isRememberChecked);
+    }
+    exports.handleDecryptionOfPage = handleDecryptionOfPage;
+
+    async function handleDecryptionOfPageFromHash(hashedPassword, isRememberChecked) {
+        const { isRememberEnabled, rememberDurationInDays } = staticryptConfig;
+        const { rememberExpirationKey, rememberPassphraseKey } = templateConfig;
+
+        const isDecryptionSuccessful = await decryptAndReplaceHtml(hashedPassword);
+
+        if (!isDecryptionSuccessful) {
+            return {
+                isSuccessful: false,
+                hashedPassword,
+            };
+        }
+
+        // remember the hashedPassword and set its expiration if necessary
+        if (isRememberEnabled && isRememberChecked) {
+            window.localStorage.setItem(rememberPassphraseKey, hashedPassword);
+
+            // set the expiration if the duration isn't 0 (meaning no expiration)
+            if (rememberDurationInDays > 0) {
+                window.localStorage.setItem(
+                    rememberExpirationKey,
+                    (new Date().getTime() + rememberDurationInDays * 24 * 60 * 60 * 1000).toString()
+                );
+            }
+        }
+
+        return {
+            isSuccessful: true,
+            hashedPassword,
+        };
+    }
+    exports.handleDecryptionOfPageFromHash = handleDecryptionOfPageFromHash;
+
+    /**
+     * Clear localstorage from staticrypt related values
+     */
+    function clearLocalStorage() {
+        const { clearLocalStorageCallback, rememberExpirationKey, rememberPassphraseKey } = templateConfig;
+
+        if (typeof clearLocalStorageCallback === "function") {
+            clearLocalStorageCallback();
+        } else {
+            localStorage.removeItem(rememberPassphraseKey);
+            localStorage.removeItem(rememberExpirationKey);
+        }
+    }
+
+    async function handleDecryptOnLoad() {
+        let isSuccessful = await decryptOnLoadFromUrl();
+
+        if (!isSuccessful) {
+            isSuccessful = await decryptOnLoadFromRememberMe();
+        }
+
+        return { isSuccessful };
+    }
+    exports.handleDecryptOnLoad = handleDecryptOnLoad;
+
+    /**
+     * Clear storage if we are logging out
+     *
+     * @returns {boolean} - whether we logged out
+     */
+    function logoutIfNeeded() {
+        const logoutKey = "staticrypt_logout";
+
+        // handle logout through query param
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.has(logoutKey)) {
+            clearLocalStorage();
+            return true;
+        }
+
+        // handle logout through URL fragment
+        const hash = window.location.hash.substring(1);
+        if (hash.includes(logoutKey)) {
+            clearLocalStorage();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * To be called on load: check if we want to try to decrypt and replace the HTML with the decrypted content, and
+     * try to do it if needed.
+     *
+     * @returns {Promise<boolean>} true if we derypted and replaced the whole page, false otherwise
+     */
+    async function decryptOnLoadFromRememberMe() {
+        const { rememberDurationInDays } = staticryptConfig;
+        const { rememberExpirationKey, rememberPassphraseKey } = templateConfig;
+
+        // if we are login out, terminate
+        if (logoutIfNeeded()) {
+            return false;
+        }
+
+        // if there is expiration configured, check if we're not beyond the expiration
+        if (rememberDurationInDays && rememberDurationInDays > 0) {
+            const expiration = localStorage.getItem(rememberExpirationKey),
+                isExpired = expiration && new Date().getTime() > parseInt(expiration);
+
+            if (isExpired) {
+                clearLocalStorage();
+                return false;
+            }
+        }
+
+        const hashedPassword = localStorage.getItem(rememberPassphraseKey);
+
+        if (hashedPassword) {
+            // try to decrypt
+            const isDecryptionSuccessful = await decryptAndReplaceHtml(hashedPassword);
+
+            // if the decryption is unsuccessful the password might be wrong - silently clear the saved data and let
+            // the user fill the password form again
+            if (!isDecryptionSuccessful) {
+                clearLocalStorage();
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    async function decryptOnLoadFromUrl() {
+        const passwordKey = "staticrypt_pwd";
+        const rememberMeKey = "remember_me";
+
+        // try to get the password from the query param (for backward compatibility - we now want to avoid this method,
+        // since it sends the hashed password to the server which isn't needed)
+        const queryParams = new URLSearchParams(window.location.search);
+        const hashedPasswordQuery = queryParams.get(passwordKey);
+        const rememberMeQuery = queryParams.get(rememberMeKey);
+
+        const urlFragment = window.location.hash.substring(1);
+        // get the password from the url fragment
+        const hashedPasswordRegexMatch = urlFragment.match(new RegExp(passwordKey + "=([^&]*)"));
+        const hashedPasswordFragment = hashedPasswordRegexMatch ? hashedPasswordRegexMatch[1] : null;
+        const rememberMeFragment = urlFragment.includes(rememberMeKey);
+
+        const hashedPassword = hashedPasswordFragment || hashedPasswordQuery;
+        const rememberMe = rememberMeFragment || rememberMeQuery;
+
+        if (hashedPassword) {
+            return handleDecryptionOfPageFromHash(hashedPassword, rememberMe);
+        }
+
+        return false;
+    }
+
+    return exports;
+}
+exports.init = init;
+
+  return exports;
+})());
+            const templateError = "비밀번호가 올바르지 않습니다",
+                templateToggleAltShow = "Show password",
+                templateToggleAltHide = "Hide password",
+                isRememberEnabled = true,
+                staticryptConfig = {"staticryptEncryptedMsgUniqueVariableName":"0c7b3a69190e33024ee3de9bf66311a078f00bbe6395e49d496b6428c63f8010a4d9e3385333543437004c08f2f72304e2799787ea4deff4cd907d7b0e8a1f0a52a98ec433c3d056d1577a170f152bdbeccffb31525d8dde4bd907fa916056751f7ae6c7ba3f5884b68ed84a30f07e385ec15b58825547ef4250552d201f2988d27c588b60e317b519dc0900457fc6225df4d7da1df7d8e281ca89acd65481565063bc9fe4e63cdee97446757988a7e6d807a5accdad0fa2d5507236a6797a56a5dec4f5b74f796fc803f0f168a5823442a0e780d9d829d3e98d5aa5dadea8c2f5b535c1a66bcdef32f1acb9707527202460de6ab4c4e517cf561f437400a2be415937874e764c45489baaa6ea816fb132beaaa86323caf629c99ebef61d5b0fd2f92afcab65a2d79f487e6ecbcf73ba29002aaf1dba68a0f2dd13341b812878524eefbc75a86ec93c02525c62a4365b3c13b85814b69145fde4f2ab584282718ff56ec5d6be51b79243a94ee5b9fbb6e3bfe0e6d6f995b62f6004f497991f3ebafcaf97e41db04425bce263ee94b794bccef9478b9ecc230214317502c3c92b98d004fbab0591e06504aa817ed9d302ab90619da8e1150ea3ac0ffd71487588dd0ea890be5ceb03024a50e486b302e21440fad1478234208944054553370d4878e2bddf1756ccdeeb41ebdb4a8ac051935c4e4f1fc6ee8ed877e45db3bf5c2386c0ef7c98f9deee8e329931d567eb5bef01fac3bfffaa7f6b02f9099ade9ece1fded128f12c3da2341962b2d84f3f4f8503fd502bb1fc54c2e7d8b8beffbdff88802f9d9a6c4116120501e788fd0b4cb175143f90c4f3593c59f1937ed639da78d034138207c57a24bce14c9afaa189d19552140c98dacf84e1747b40cc22e252618d808cfeec4f33e568759923051e0f997834c45844a73e0fb55b922bff2902ea79b3f54e44b151e020b123ceee997aab91a526f8440fd8c95cc2a8e1eb29e7f88a8ecc3ff56de0a117a7d982c254bfdbf48aea6765e5d82a902b73d31d0a69cf160a860c358133f136a985fcca5901dc67c26dd311689207349a392b53e9be0de2e9dc424801ccd6269c79dacc3a23477e94435d9f48b2c2776e14c846d9749fc309d10916daa2eb371bfe4200a91d4b804bf0ca89039e2a95cae60370b70dd1af8dd4e4d4eceeef508cb3f9c4c1169420e59fd70e031084b50de7eaffac0b7e4838d7a43c69ed588e0a454d4f713d0158d558a099edd708b7bd3c4f56103f75d1d9ae32b0d1c1844169f780ac796abebbe84a9076f6d3cef024efbfb0b9abb4452e2a18a04916c304d450bb7221025479a9711d0ede165831431d3390a5f98768eef6ccc9ac5e4697ebe08e1b4406554d8cbfd49bff71511f2822d1903ab95cc8b69ef33f85798b54a697dc4cac848d25968afebed399d01bccd4998562a830c5ae47d56eb919a5599eeb908603b6c3e0a53bf49349f0857f76bfe6e1279c97583c7512acab0a9aeac0f1212a44b5fd5344a8bef7cfcad21b8633e4bf30c2e85737d132372bdc5333825429a65d563fe3805fc90b2d78c4c9d6746833033110e98084635c6fdc3a6cd3161920864f555fdfe60438cb29061a7e6fc4497cb8c2cf2e9da520f4c0e22fe5f25fd5d30a6ec5caac0af81567531c8de1da7505e989516c0e90be0a96df330ffc720ee1d8b9e567666458c7dfbc6cbbad7b4e7cecaeb781aa3b0bff507f711e8c04a5f1494e3a24ce2e6cdbe662c9d9319bf4a40cee3949e76de98e46f6f30b476a2e4601947ef2b449717f81f669b892d62eaaf589890a9d50c9c322a6ab78fd058f167aa9135ff3ab86d6dbfcdfa4db12ef891e6cf5440b3ea4ea4b897162abfe71114e3b3c5897bcbfe9fdddeb035836de58105f827fc4242103cbb9082c593d65a1bf073a28b12d9778febb4abf0a0dccaea8fff084fa5b0e1c49e1c229b0aa03b885824d572f0ccf6f4e385e806be052378c198f413420a892ab53fd3f05ba29a8bcf22641c3d50338439affe5aa87ee7e0eb17add0592fd9657c106179a5e6d682f299ee4e17ccfde3827534c524d5c625b607d5575f223d4cdb1e8b65f15f05a48f79cf91b3dc58405174c43203192c7a6364bb4b04aa7917360ee670e1eff670bb68f7f93ed4adca37b80b204a29fcf01946a8cc254282c2aa5e8f17f94917fc50c2983587e6c4787f4002415763bfe2e21af8b1d8d6fedd87f91fb2b2010c3c61de538d3a985808fbb01d9121e257e64e40b15ee35bafeb8aa7e5ed6274aace79db3febc085a9860288bc4a2838cd9300b7b40aca15b7df22e0d7d4273b5dc899d28a7b0179704e84ad407fac65f02398cab354a99fc0755770a5150b4ba9ac004a43f7199add849b61626a27cd05fb5db7efeea4d7bfeaaf0ce606abf70f512e88b1feea7a10f92aa2227b03b8654e41718dfa160e47a3b5d3cead8ac63c278198119b6ab9d3929d132ac91d843252a4f392651d29476be9b717add1375f0c94b36df87987407ec632092da0449f6fe7674a7ae9cc07be60ff7df1d736c64e54de074c0e1c771b991a96505a7108fabeeb63beeba6f643469fd4f7ab8baadd7a42e58ac25b638553ada7293273510ed15f2b93cad7387958a7179162266a32662f28751bb539117d74b12b87ef37643e74246236af4619285fa35a68d4cec377f6967e49a5546719c1db13691a8f5b69eb172d082083037f9d35dac66e85fa67611ac06ef152a650b4ddc5fde7eaf80feedd6fd6cdacafd6e903577647a4d2725131b68d6ca2066514e2df9b1b182cae8d779ce701d21aa7523ef218939618fc0eee070ccb87e9f5cc662c41c0064d58130922c7bfda9cb4b0d3c7c2da3e013e63856f63a4d6632b4853e1a1518d8f7364251320cc30468e6f654a887ff71909b284434d49517889eb20e1322031bcd1120118e38e516000e5c9e3aff28dbe6270bb1b23ccb85160ca71173decf0579b5a7053ff729b43b347fae347222bbd34b56e723ec20fff01fd67adad1173b276ca871f817f537f9c1512e2daeb14e815394e2ae25e927da6903ba81ba05a4267ae4e1727a17b0ba3f6cf1e1d73cdc1738e236a3673926fee16ce6bd6464ae2ac67a1003f650486280bcc02e8556b3d41e11c86edddb8ecd471e53b61dc34b569956b85bb3d9752bd5bce65bdf1a956e3e05fa425c96369c7a80e8f36d2f9aa8de50ac33c43c9a9e28ed91ae8420bc812275bd7794cf548518fb4bb902de2ccfc32aedf819277e279e563a9e7ea09853d5359b722524c77069d43b7fc099c48a9bc7c811d36d89ae83db27df5bdaf748eb1a69360a37e303289c7f97135abc886f0b5ac3c1d6eae09ce02ccc4cd915d8990ded91a611bc38b8ccb4a591ff0806f0831436688a9738b2d5f692a57603dab9a7b1d19eb076057deea9bd5d0e8bc5b676ccae609a57cb8f81243931ce74d0df4cc5aa6317daaf01a5bec75ad85cca02da75088c0ef8db54449b199993f1f1e7a6dd9e30ac62b9e3d052f273b4d7916f3c3114ece585811c373d9c20830e96131b5c1666213781adf52cbef7ca061971ad03bb8c16cd12e32ed28f06222d70ecb61e16a77f2c4405ec6f03c06f189d8d517e9af13c7fe6e5888892681baafaee8bd738724865f300e4ce1073103db8bbc54df8026a5c992f8e9484bfe2a9fbf48905e8ef84c03b049663ccf8c25e6768b9199e5a4174313e0d59bee420ddd18783165120e1dcaf595252e01c06bcdd0957d5dc8477169e1fe7ede657a83c8b60c96e6d54d0ce669a9d6f33ea0a02eb233919ed02461a87a2e598f90f76e842018f8d8663148995a5dbc43c696f71cce32106d681ce8829fe4e3eed7d20b3cf6ac26b4bdac2b98434ba0f587284ce71752d80637b767b12857d5ab7df5e4f4936f142f10777435f151067028eb5ce768219d53ed883a63ac6fe81f7a5ad6f37c7bb2a2092688572a8223574079cdf63c4f12eb8d19f74130465710ce04e6866d46fb35f0c012d71bf075568c0879c24b7a9fdcf48f0ca20ac3d514bac2d5c1a0a3289d7f55d3a414079bca720142eca4c169661785ab3f321581a08a20288bdadaa680fc097931a445e0963a26af8e6c81011e50a39483427459e6fd864d13f5ca260aaa1703314ae42fc311845ad42e088750972d5cd842b27d13a7e280250f204f668ae80f17827d222bd12bea9a50c0c02a0583145d9a14ca674dc03de52d237000288ecba1a5ea53bcc6b6563629e7eb564eb97c3a85ec82d4cfd8806ff4c0fc7c4a412fe9fdeabd2f573a69c7bfe49e6d03eb7f982317c472a9850a5f5e3da302452f5fa9ddac44c4bc8c05f451c2cdc1f76932f6eba30be647bd8857f7d62bf4947bd4bb42e90b873478252c3d2fce6ea6086208cf3e77983b538c77c6539c6769d904188ca16c2d6b0a727807cd847b3e06f8f1caa95df351cf4381db09d41275ccb3bc87da39ccfb67add94ddcdc324261eb94bc4086604f2c3507347a38ac711541f6bc2e3b678eeb37ed664ea9c5ff3ccafede648cc5d98cb1bd7d674d5fcb6e8c38569c1d36b876e7a7211478c657c5a2cd70369b83dc937394c171a70eee0052063e7e4fd0269d266848e5d3fcd5b75865979d41ea4b6fda2a5b48da9603f95fe817fe7fff46a2ad9caa724e9a1ed852d1f3216d0b5333c776746388aae1e38c6212792ccc8f953555b35dd2c92db45296c3573592333a98da0d9cc9a3786dd5813e49cc0faedb73560958281b9bdfd77af15230219f6d427e06be5ead85f00afcd65151d37bcdc67d6e529b991a24fc930e11d2c84bf23e6df94e11b488be637b84fb865420599ba4483193eb712439d5491c2a26eb54e4d380f6752572d986600f75a2ff82587a9ef362d1bfb9ab4d190477343c5a54f1497f9f9d0a011a40ec734acd141d3c690734747fe38735bd2f2c705784e1f661fc0190082bb4649a2d7c880641facbc58ab47d807315bd3e1b5436036cd51be9b1850d72d4cb7ad76f5ad2d1fd743047a93b45b7608737771e10b0c310158300079e1a485a56c8a09fb0200be151773bce3f3d6be5c004addd3ce4a3cf9e6ebf7406400563a7624a67fc6f6a98536b809765f82275bb27f58a148dfca546e20b08728bea406a5f2f3efe5364c57f4d17268e0cae35566fc27822da5e87e12f9efd6dbcbbe22aa19928965a5233b96adaa829a0eee6c975f520ca3c85fa343dfdbc62296e77fba170dc1f2c23ee8b4a5a7e418552cf326f26f27a9136b94f84eb0ef00c9f44f99d003a2809d3b23f68b478a2de2203dd1d3f7c66012dadb9fb210965eca5d92df4cb068d5c1e370c91169db9ad1784b9e3fd8a94daa67822e566afc32f35a545a848710ff783f814c78924549ab997662b9159aec024721cfff2174a7c2e89196e1366d1d0e3264e34cdbd03c33d13ab3493dbfe1598b6fc155bd80ddca880e32c09555435876bc1109bf1cf9e9c85e3a5b624eb88f415d20c0a236ae6259b6e3e0ff61957749adda199668e4d1d69193c1293c7bdac9936fee5c6e35930ad5d947474167f4c7a5ac726ddd27af410cc7266618ccbdcff4297a2231c447b535ac26c53959909979899b5db20e656a7c25781c51b9d8367361a856fa0f4c177730ef1592ccd23c5f80901e43aaf0a8f6d4e44d7ca6a47460824ff73d45a6fcdac8de0074b79c26a64fc3e828e7163fe81a86b1bcd2262b1930f9551638d04334b4257013f805e742301326625d23ee6db65c98b63d2bdc832f20fcb53d94a0f36fc39e38169fa2b7b0e15d7b5a88a406f9792556b4406d808ed3edd55ed02490a186082929e0de6fad6f08ef3518007758534650fc1e89d2eb923b07b0ca142cc4eff69ff0a2570033765ac0220a037d1832868c77931234ba20fdf1fd62f729d3b54ecde5fa86bcc2364b454d4a52f83aa78dbb25a0891a664e04411ec113b5c4179c475e80cad8812179f20da51d8c9a37b4971e028aa0d7e36f4ecb2b4c71f341d5ecf15b0f55332bfd0a90ce59acd5f4b9899c8590df529e5abe3299a8e06e2777482966e2ef6102a6e61f5345f000d590843350e0632550a74607087ed21f048cb7bd25f2958772948986ee3ac19916e2e14199375e5294adc97372ecd6dd3d1f0ff0e64c07d2acc8dcf55aecc869a39b41bb19d8e6f4dbaae3ae1c4e0ef95fe7501f94422d2f04d9b4b6305822b6976408d8a11ba4f435fd80f453321c20ba29faa115b5830101c71e215290485f2c960d49527cf53d46e109e08216f210af6fe527dfda3944d3e911ba8b17302b34d7cc8bb4291c324bbdcdab040251e32c8e0653f3519a4815c9fbd382ecc4977ae2cd9577f55eea7023dedb510fa80dc0ed342feb31cab1725cb863ba7079e66b61b3b889307cc41b58d0dc38edc81fbaff80be3efa71b2a9eaccb4be5c86a5f64124b2b9a40c9317812b348423181a733e3502a66a7d1f1c3e4ae4f9eee36478c3d1b58bf981cfa50805f534857a2268a7788a0d31078ef69de67571837cd8e012524fd6cba1743a91b1614e56b6d3acc6ade790c9e601ccdf3714ba09dbb27ff0f7dfc41fcc57434766a6624488d716adc6f83b0ee0855323f877ee0865c74cf8d092256a268b1e4f6ebb3033f112c34caab7fd3311f24f7b623b4ec673022e7a8a9a9df8b2c83336bc38f7781358dcfdb857481ab70f06e9f14d65cdc0582b923d119aca9b4e2843110ebad318aabc79cc7dea7c9a2c12f11af5ec3ff07d0a206887e2a356f3d0df48c8d25ba078a34be5dd317ece784ea9fd65e896a167295a3b784e7cb670635695f9c1079f4ae030a378dba50d41751340b27404ca3823b3f7a00a79f558f2f9cd7158885183dcd4b54b7aa782ae227cbc53a24cda2a72a7fe90e02baef63a9752db5b669b33d58cfc710a22e4f02daf595b2a8634f4f5d0fef30c8287b45cdbe2e69adf21cc04809fd0afd787794feaeb13561a2178f9708b3392495eb5628fb31ab0a9f1d764036eb532eab72f0c0b43b071d6d44df825d74548e9c6e1ace7ec9b4b281b2ee3e97c328146b89cffcb1f7c886f01da4f89a9f5cfe5f114a3910e10a45430795517ce9aff55d2332425e7f718560005e9e20566ab2fd852e983dccbe532c22a8f8e24e70de0e360ae3f1246806d52fc26db4fcf7ac8fe1862f395d3aae164525d83bfbc79e9d7fc99ce0513a3b363bf71760d45aad3b73cd1fe5f87d846b6c3ad4fcb1c90bd1f24c9539737ec3d692a501ea697faa7d6c2fe4e782719ff9fbdb4b8a62f153e16b894c98331357fa514b8606423293ce69a7709e3688b93d7903894e2240e3c07c8df2a9d1d70551e3c6866c1b3c1154016c135186fa46847295eb88c5f3e3b66c9f653d0806d0a75c8e0bc61748f031e36f1d49778ea96857c0204cb4597dbc990c2f4d192ca205cd5389c8392b000a36a765fa3d7a13c5007c07f90e7263bba41601198a03926b38b0db99a384d87f0388c5490bdee39fe0eafd0d0dbd083456b0c6486d120583407506d961ec11b148d1f97e8f74b74d7ea143ba4b2ab91a1824d1bd653697d9b5a41560ec65fe42c876e2fd1abd068fbc7900e8a6eb28037a1d9e76280f6243d2eade7db1a6f9ce84efbeb7764fbd5ba70023231939ccfc8b0c2b315c2f07ca267c0b1428ddc0f8fd1b150e7462cf8af9df2312e8016d76d0a242b59bd21de83827beeec0a11b6abf3716d786e73fef5c433353649c3afa11e64b1556856c450cd8a2cfd418aab2bb9a294c9c60578a5c0e2ab2f411a73a92d2cf2412468b285205424f894efd54aa15fff1bd400fc2aabe7527f5af048362d25fe2ddcbe2b6a05d0c70cff2c30df9c65339945e6d2a03e68c6a147a037b2f47b4658232d6a70fbf2e7611ea96128d3f6a31909b230f272aae4ed7865df161ca1c50e548c936d975fe09c0402f203827b8a01a4e2a0b94bf26252f0d0585a3b34cb802891bdbc2b1aa572d87bdd4cab409e340c8b8bea7e9c86e8478af58133e8daabecfc1e1cb3b659586a05c2890cbbaeb5f9b13d50993f212521c0b330513dff575f83615e07fdf2c6c1d47b3bde5dd19d3f7361dcb048302381d9a86017719659bd0adf6a4b1bd23f963ef62b20b16e2c98dc49d160a59970c380e5743128f0643e08ebff616dfa9cd0eed236890e3d1666b807d831c69f4b7989ac5c7f781cb568c3ed4f89db53a091019c813b1608c3f50b71e50e94c09a59d1fdd79e0ab522d55bc096660a46a5bcb06d44c24fd14406b38b3b212e1d07f9bde6c47321b0f4af01e748146b099497dae625c6e69fcc43d0ed4d79dc2b6de32b29c321e7c60fbfeb7b3a67934563d302be2becceb6b044ec462931a86a5d6a450fe00a08deea94c30adce15cf7460962f10d0c52320b756d83e892f3009040a5519115112e667b134adfc2cfdc8a0c575d510bf9e0997a251b7933987e0aec6d22492973c571b704cbb1687093f5a439009cf074de38522adc4f3473c0f1f685e29d654d607fe35c194eeff5575cf72379bf51823c3680f456b50a873409a2d25163be6ef02333ae016dce3e33bec995df39490cafe9bd8bdc6826f2e6fe9d1bb9717d3000ba3d780d4f31d16cffe0224b018ef5fa361b85a2215756ec17d60faeeea73890a7141f2a6676ee701839a68f26edd19e1c22ea3d840e184bdab3ae58b346581ea635354e98528a66ab90464d23fddf3fa163820344894b8256a1bb4c40f419320baf8b68dec6621b8bb236273dcd925b6606249926394b1bad644a46770e3fa83ee306d86ee1c3e407f3deff4a7eb7ccc712c314ec1d598ffe591f2785baacdacff9ccd3e4eb970c824c8fd04027291883efbd267220ea15d1c98e53bac8235c6ae9464b91e5bd3ae2d1c0bad8f31051acfba588e1ff392d896d374ae3dbd939a456ecd16db9c094c15c2f60ba12fd103bfad7475043fd8b5bc5943ce08f1f29c3bd4d035de4238799fdff034342922c5c0204ff45ffe7236e2e61ee8adfb4124c42f5e59a23a91b3d15d1cc1d301388e1ef9359ed97eea53efe123758ea40511dc42c129c3a597da9f6fb310782a064fa6687d08324d05afee4cf881caff1e0e6f89cfb34732c5b0baa63028b9797abdbc9e1e625d1d7fbe220b32eaa152bdd61c3e1c1308fc85327c864729fa2fc0265d1d09fa6770a3fe104df666d32561f343aa038701e16ee3a479db3939ef151c0db6003d872bd97e35503e6fd84e1aa7e41c4c39742005d81394a71615688c1b0adcb7aacc66cbe27916e3f543c814bb86423e2552bf865ce42ccc6fcc20a3fe32956748420065a4012e09583bf6b4fb2627720609cd5781b67fa4b17af99f5de37f7e5555e79befb410a82aae109c1a3d783dc5c536cc474e97a8d089e2eda47cbe2fef54417082ddb0e13800cf732081dd5d2a6e1de5f4b0750e7331a8d8e2f379b6aa9bc2024e3f935d1bb2997403928d96ad0b480fa58def5102a9e85aeb9eb9667ffea86af420bcf4d8827a8578b3b124bd4726b2609866a10fe23fe38366777065187a149a41679b5190b7056e4c5fe813ba5fa2a7bf8c23d96c1f9ea3b5aa857e0c930b6def8920540d78c5ee685c2e990fe271629c6eee459cd9a910d6ffcc95aedd6d3e806654f69505cdf3b2d7926b9f9f5a708d4953bf859827c3ae3232fb3ed376a185f05ba0f6952693b87e1da2a73d4d2d0d459abde82dce73f999d2cb386c05f6606a55cf81cb0315ed0c97cc2b3b7d2c4757271ed007eb4ffa96f12b841bb92da99fcb4a2adb391e08bc4e4a2955f0125baf4d567567df4141c229d9348cf87967dfc050eeeb50234a7542700ae0f836975c679e82ebd6edb776948a8ce8fb4e68d426610f84a4c9b1392531de1df4b683f32fa5d98eeba343a8e64192c8f31e89588d3fb498c11a8dd7bd3de83db9a761a53431d871934a3f074802c36d204056695cc4bb2894fc620489ec7fd65538a1e2912a543a44664490dbc4c97a02bdcd00620db5f693fe06d7520e4d4162af0ef1305b2ed577cf63c848fe01aeb37efab6e697d55b7d0b88a0a8c365700a54830b8689febf22a1e4c75f1171b90bee8076ea1da10b17368efe53559e8f69ef568ca08f9c34e80660381699d5d82813ab3f893ab43a4e6412d41fd952e9a53a3d24ace034b749f341021abc1758aa3561b3355059e238d7e9e1e3669237362b4fffbe6a906fb732dcd341ec393f22c21876c6f2de94fa53be297da89bc9724f3016070de79363d73938be2b0b6ac1be77fa8d0256e69081939d2b74a6e6cf12697a521b475514877734d5f82ec5333c1703b3b39fc28ab995fbc70a3bd0b74196048d695cca6c01eb4bf7e161b5c787eacedab856bfb04efecbef04058dd1e1caeec17440b4ccc32f9547dfb13854928985bd3f5697faef48e5ca09ac1dc56578ff9114f85e587ebad6e630b47a2269881176f41bd4e58fbfc2b3c9c732ce3ac05e592ae8441ef308b0e704a59aafba60904f12dec6e5269a53bd6e25586a1d4a53e33bcb2cf5359a9e6a44dc4410fb9e1ecf0e7cb631998ba33dccb1db627d341c757d8ea4ab5687e2fe77e5ed6f821e2fe6eda2f4696aa3a3353343294bbc25497d0a5764d517227de395790b67919f23e81cecd03aa4beadcf7abadc4324b87d8f2e8777d069832d38fea30e1fcfa2f2542557b6c4ba39ab0cd952acc78cb252226ef0fa093ea80ce65cc84fb6731a013b3fdc1c2404b132f878841ec9e4eab9f6ba875345ec720fbf90d7b866708ba96c2821200fcf0af283f7513d57716ca09653638f00aec9550a28a26be6c3329bc01679f51c6b1cd4acb381e39131e9bc844a7f37174b901efdcb03b1f26cff55571300d36b6df63d4164b628ee3df607b9059c58cd7df5c6523cc76647205171e795208467865269a7414284b3c66881d293be1e781e18bda1cb39b45a8064d1d5020e674a14bb4e239c9e37a2a3d4cba7376c7830ea2b257acb72038b5d92d47dc0ee1be6dc52834d34da0bceaf289839ac5d8d4b187e13c92dc5098a2f937a1705a6c7ef1af230bcd7d5239ebc1dca385a5c7b1f2f9f90b6ea61ab862de49c9b380153088face5a8113a3803c0da309f1815e0d37632c7fa1d1fff69259e47a83ee1c07859df5cc68f3910b8325dcd61ac539a48fe8da6e68c97fb84e5d838a2bb82e72374db7e08fdc689452e2db346e330e1f6f1570f1e0b46029261f08fbec17859504fb5ccf9409928f99b56126f8fd986a18a06721d0659048e2a2450360bbbf88379f545f1e3398ed6f91e411eaad4029c4730392cffb2626d00d2c6e64c81e475af25871199b18a8bbd038c5bac75d507bf505fb0e5e7d08f8d7bf36254c75a6d0a5845b070dd3c51b182563e78ab29fd1d0aa05a33b175e08e801285d2b4b08da2059dac3241b13727d588cbfafcaaf09d2612c182c981dbadc6e68b034278e3aef56eb1abe79c3a74f14f2ade5bea6bbc43f3bf1190622f609a3123ef002e953eff24d60baa0cc685e4adc32a144135a2a708fb50a4c1b1f54d18595672ccfeed5bb54b0c6f66d58093530fd266fbb0279faf223068ace59a493d79fcb0134fcf5626b3f3f99eec2fcf25596362ab60c7e4c20242072c71cfbb75ba4613f01b3e8af64ec2327680088279b02fa78d2cb0a80ad270bcdc8cd6d8b50466eb51c94b7cf024be289aa80627e011f3adbac9af4755c99e43a0d88fec5334d91e52539e24a7be32c0847540d3dc2c000de277d2b2cf7aefb0dda1ba17229df4180f6403ee43ad135517b54fff9cfa36a7aef948257131bdbb0f557be09ec10e93ea5d5c46f30aa0777f3fea61d777c3a8c1ca31a36a1d3b775c6aed33b4a252b5b0b372595a82e9b9066ba2e8c4e26cf5db1f7db41b414dc6fe2263792a5eb5402e3119ba843f2b550b84d7841e090f60c96a175ee74ae648d539b14b5d5b5210a9f122713f665c9fd82608db66c0e9afeb5968864bbd55b7be7c86b8a33e028c1b706a304c640ababbaa7bf0fb5a32c7da6ad35e0d23a763328905f9cec4bcc37bbe5e95d96d2b598ce95357a67fda21bd53afca3ffd26856e8c66f8f60e519be057a4a50cd82c924ade6e484b2685830cf4f07fb819797ee66389021fb7cb052c54f1508e468a0a9fe842b8b161cba29f2e0538c69e3726220cc981333ecd1b3d7dfcf37db39738e177556f3850dd04a0c98fb7b2e880a08876559a68d925a911341b1ecd93091880d44f6cafffceb967ce8073d20aed9725c40fe4e44792cff4a5ae35261981dca8db8f5875481693f0e911f20383f36566f3daf30d9d32c020716790ed15a3cffa2320ee004d22159f43f8fae6757a95e0dbe1054ed24cfcc67c6f2bdedaae3e353a0871b63569db04f6d75793932490d92e4281bff83f29403fbb4c92f99863c5b46f292a7fa9cfe7363e8dfe1a752553451c1d3b5eae496fc7ca0103222742f464840d3d31327af23f4ce6b0f471c2fc11c0103bc82423edadd5cf4705b273d268d2cc5631973cd18b931b5a8b4d0fd138c88a31b9250949c188928faed692730b38e5fb4a83190caae861a8c8bf615641ec98c5b8571d6c9c48e64a22b0afd11b1c1e987fa0b2fba5182f5fc9ce3775a730be64f88707333b842022951e7dfa4648f6906f295698e8ee28e2c6116af29249bb72f6b0285a5566acc98f091cda3dd8099dab0a731223578f95a80c2a4f5eb539f3391e55493a65d5929ce38c16a73f0213ae257f81cce11fb901c31bdf8d7e073bd0c2864813cddaeba52eb8c6b1dd72850e14d1387d609ade7835bdf5bd905c23cda43ab04cd73bf8efe58404921b2fbcd3f265a37ee25b48badd938b54a3914e15de9f36297b67c2d86c12aaa933f62d0fa3a39163ed805294cc7793225847e76ab18876e51453c9f2fb1f0d4dde54d7b0a7595ff963a5d9831ba600fa1310cc9454761c3216377436891755c582b7cdb18fb9e53da22b55756bb79b2ce2209417500c9b6d75b65cd823d46d4b7f959691641f7708c63a1ee084b757a687fedcf0419aa7d3f4916625bf29dce611db3b77f5f34d81a134c1b272fcf6487fc9060a4f99ff682479b3a118a2564628d3c14bce088d28c6d80e5abb47e24df13e587329d8cc1cebe7aca721f828c0a053b0264eaaacdfdf635b64330a5ba2a4b9142456107e1d5f8d0a273d9633e9f613c680807d0b5041a7c8fe602bfe88d658d9bbde0e792f392af0e707a736a0f0951943ec5e171b9bd985b53b4a6021877ebb5c7b769c1bb00d0257dffdf578b0240119cac0c9cda31e9a4b3fb910fc4df2be3d7c03d17c05c738f9f30e978830efa66ca48996b7b32aa866ff5efc8a01a42f5a69e2ab3a0b6fddd5c50d8f165e937e3314674e19013d2d6a97a1bd7ab6a9e32cf644ac486adf1a3da85680f94a10c839720660fa67185a3a527d64734504ff86de5df131aa5719287d7125c91838dcffe54fd511da031b0f3013ee1df254b21a9884d49dd98a0937d574d3b352a767562ee07106bbd4ff5493ae31d8f7b4280f69d4db898f6bcd6a595f7343c425a45101bf4a64342416ee2fffd5cde0866625e4896a1eb93a9a1222f610a4ff6abc65d19e959d62f6ecff69d219eaaf78477083b6470c5973237a959b6b8696df3e3925bd6944e803c1e18df63b3bf84f931dc12fce225c2e4c004970e766508f1968c99f9d06692e24181a572aef2ce3e37d8aa6b2639f6456256abdb35b3098d0dda4787b5b0541a21992750844aca9c0987eb69275d0d2f053daeefe683af1ff205c89a27cc193d350ded0ad2b00c7f515acc197b85234eca5e98ec1f51b7cfd9b1b692b8551286dea060df3bb1f6b736a25b6767a23520d5e299d919b903ad3085ab8b1b156b8f978c10a5acae907512b5bc7351a39d2b57b516954759e633c26bd372c779f609679b220392039cce9d5e6c918bd54140daa993c59986d544e43170267e9d91f2fafbd8a0c1539de95dcee30a764c1e6db29c078f4b3c1dd51a7da1d85b9a315a08143303bef1c1100a3fda28dd184194c4f8a65e32171c8b6033ae2f110732f6c28d49ba060c7c7dcabcbeae860a6f02e90e312ac4802e0fa3152094c83f8132257d42013b37ad6a95cb206c594afc2a96c96a449d22c1430307c9caa3729b19ece54051ec0377a1145d7076032a623cfb4a5a6a64799484ebbabfa9dbf10a2b8912cebe2b302fce754cb1656c6be61c1baee4817488213e6e9b3b68ee811dcbd7147bf12864baa2511b72f5348dbbeff2c606d36ac2cdf0f9ebd9f394d2c819464ef4404b4561a11bcc6b7089f30678da6a829c6425481865191c55780df16ae40a202a993eb27a953445dcc75152efed57870563f65c1b67d850b9e95442421730c847d95093362aa4b22285e34627a0c4517a739667d526380e561c90dbca2b7cbec2f557e72f24cc6083c05836a5414b4565ba0443d5edd451f90762dbecbfeaba8f7aa5b15f5afd29f1a652eaa6db10c33f84bbd4ac1d927273b1662e032e58272ce08ff70dc6fe09cbdfbf060475f99eac5df7348e7818f7aebaa73ded96627cb0c057430277763b85570f27bf20d62dfd254af9cbe7d018e301328333abb3fd231cb979c3ee34bfaaeb2334136a6becacd266ac4193aa28c15bf97ff9b4a48abf168b218763971b1a55a83a99b1d4977f427651c8c05212e6b41669f8fd67a4d076bc0a55ac3f47507f04ba0bad9baf5fba41a302750b5ad297982586453c8f74888978af4431e57ab79fb3cac9c377254419011336838deb70355dd49f528f877f6bd1b1f1e38bbad1a29dff345e69ce212335fefed13de1dc83cbbb15743ee4c29c5e6285d74bfbe9fac2dc3a074e822a8d85409f149c4c9350d2dfbaecd68ce79b1abdb2373fafd890452b74f71bd761eca36b04d12e62e0a9dbb7bf1a9e57d50541284a2c0fe3782b1b92b0f4ddee267b12169438166dad2643b5edc3cd774f96f2c2baa5748305e78fee0289319108195564f35dc20c948a3717c8641035762c2e74023357d3360a7c99c478f9383a79aba74a4a6e7d3d9f402bfea7e59a9c771030e77b5aa5340412afd2f07d9aae365831da6280f264496417862102e3363441d758d06ee6ebbf565771f577ed95ec19c4cff4591f305fe5931a7313c71575b708faf8a24f17b70007c2276eae6f734b78c6e6da83be520691e86da4e5aa7bbd243023bcb7a8fd1b15396955df78ece2b376d0874113b06d9e10c3adbf9d90b58711e4df333bb7600490ace35f3dac0798624ec134f99aa624439885f0010f439dbeb6b93f980ebe9dd5e307b2aa51f65f414c193d460c509813c92f0c9b7331d4989415ced94a77d798c2b6df101fd18195175717eedf6788550d58564cf1aca525c313bb5d8256f29a17a9ff7f321975855fccf30cb29312af878fd4774d718a229350e7885315698ffb8ebb3848fcafd7dbe2bb49b3996fa86eb6eaa0b8f11bc63356d521b11934a437c51fc5de0760768599e9d7ed0dd5695057e9f521e38b030e17cc66976bf620178492a6fa84c720bc317cda1f017f340808c9f45810b4cd85a9ac82f08df3a41641ca15ba48f3f32a2b218c6d9326a4dc25a6d537049ea899a3a8a57631a1f72603af2c98a38c5373f3c7d98f9bb1fd2e9ae59d69acec7ace74468286b9148515654d4d1306bac0c8817b14ded9d5477f69f5abca830de37826477d3b4e0827962e10cd386966978a94337a25f513d7136fa2c45ef94194cbc99b0e4a215c7ab9386950a3038588c35711829a8c630ee32a37226a2302493b02ff4365042c033648c931bfada4405bac817165c88d58cd01cf9758590c40011f63c656f6f455ac867b58678843d46afa927552ddad008dae44bf6ee6ac9d7cb0446e5fb9aa268848ba228483d1f4e8a6daa9f47b6d72e945c4201eebfc77c13fef7d40ce8a0b45acec65d18dea0a5bb3a50abe997dde3aac8e091a1e7abb6e21d8bd8abbaffa2e08a5fe353e2ef11a1b60f2767efca09460fad4f3d9c8386723e7f3971ab3df2e7410aaba3098e28ae60128277499591ba34ee38a1d5b0f8c31190b502cbb8cc405d6f953b4259f60e3963bf996d4eee3f3f8912ccc66cceb8f4f277620d1a39af595e4c0334e6feb1d68949a71e7f6858d5eba8e5f5fc1a702f6a562476cc44517ef686ac3137e03f5682c12735ce60d5595645b6b3ba8a75e07c9ae9a521f8f45aa8152ab366d392c9a2791c7984ba10689a90870494b12f1f8bc1c26f47e26f69f01abf860e532f8b4b385870c56d49a30888fe53ded01f92f5b67d0150cffe3c2ff9685f389a14829b224389967e29084d54dc28c9c2c37e5f2de2cbedb72da3041126a63c2db853fedfcdb635a7f0374236cfc5c9f264c4927a10d5db952bee1431abb88f29729fc036d32bdc34668cb57de98993aea6b898f6cd869d6c523ab20dcb8008f0d676eae6b1d536239f0ef6b5451287e401b521dcf5514abfa8647667016c03e1393bc5a9d6f411f4f550c8cfe70e3b334e409fb514400d88c29f428bc552002fdcd074636f12ccd978429270ceaa40b08779bed35d722e8d964d0306d3de104013decd9e238b8ede8679eb38f99429d0ac503a8b04ca9fd1cfed421a81b60dce2a300359149e43ccd0ca9c050dd78d864638cb37e3837da776cdc918419a72912228ec49a3f024b695936e812bf47cbaaf4ff24cb432a69d3d960a52bcb616ce8e57df0bcbcbc86202b8da501db28521bebc9b104c44e239bd6cc6fea4abcbd1ecd103d17a20ca1564b22276dad8e69f820083e4a13e9087fb5e942a4efd11ee72d3ecede31a4a84cff6b393119017ce5ee25a3b147a42e4b1ec84eedd454a5777582361fc02d3565f62ff9d6d357106e9c15d3431c7f1816830fc91e6c618edff4ba7b89a49add053d384989c3b50f5362ff7f58fab2af135dbb9484342507c71fdb14c1f6e590cfa3068fff0991998ab570bc1c5efec3065fc8302ad7db94f54398d334f3e54831a90b93cedb5831c798f70ba734b5e5f031414f172cbd4f33f5f7eee5b905ad914ab27ddbbfa84e91856900ad05a2d22b491179bb74e3e9cfa5dbcbeafb182241220957a2f6273c3105fa725347b28270cac5ef238ea5500d0da239cf4088b9159b50a5c912f1d48ea8afd9e2bd69d593fc2936e5e0de419c8b836b36d05ac52e1b68cf29dd80a1b8d3ffaa109ff4c805e279ff1fa5560b5531f61deeafa493e7e14daa25279e32f396a372d8d1c381bdd5f27f9bf764709c8c8b1468b9140e46717e5b2136b8d93a58bcc53937b12b814f33308bab37870e46f14696835d84e3b862c8700f5f5e003f590ee0929ca9bc55c1c386f067f83175c473829b189495a97ed93a4ac04fbdb1de78d97c8aa522b177c8608a0bfadab261c74292c314edd953297add58f56bcaf6e1a4e039bb6173e5aa258974019b8d8f98dbb3bae49acfc4aeb373c29f4a8e2fdd2e3c02ba3d83a156db20a0da68611ae245e577e75f3f7720cda1640db5ce7ba67e476dfdadf5f4af556d809117e20804353cb465a490799bcb3fe4b14bdf26cfff07092f7786a9235ccb01266c91c393b340b52efcf3491e590252c8927e4a82a75b6a54b8340366029f25c648d6ea60c09c7a0a4419a913914e0bdfea1da350d46fc948d0d5dd529feda999aedb0d41bd78b39e77f0b3e86e121a2bba249f497048a6c7e504daefd9c07c3a640901b0ca65fb751230fba91e68ec7a684df0c5fe4e364a167ab2f078ef2091d1e8c37c94a4b95a915403548a540ebf36a497d3bb642be1423c5e0e13890d07d2234fa63b94cbd69ced9df86687c3d28627da4752196b96f75a3efd698e3c29354d5aa7005811affd41db97b995ed0eb21d475405f4b8fdad854df1618162d34b20cb814ba8f3e7aa2c02822341caf7aea2015d512e7177f8ce68bff9dee26f0a46ca9f5083ceba807886b961513fc87f55f7a173bb09413138e8c0d48b028df42691c3596d126953d6606684f8b842ee427e5de5ba52495d284b5b65247daee0ac7473e23a375a22372d895f98c8291a0c194f7a91d08394851160da7b7f45a7223d60f54ef0428749484061bd6250f44f1404670e9889d7a96cbb687c629a5ef6bb855050e41dc8e05a66bceffe80c5a96146deac2c1989fd0b9b5f647a1d58da6056d264350ac768c5d6c26885008810812b70f15f4fb3a8d8c516c79fc41519e7a46652bbb5ec3280b869c303adf18c4da3c6cc533b0240cf507e5b5871e8276225c44a6a341d09881ca4827f69a934dd7f56c9bff1b7baf36e464224b25b635eb16f89d7d86dab4b7ba0f76814722b738b534b23401627564b45581b5f59a0a53586d52412314c59a3bd6fcca8621e793f9ee15fc5fb0d81bae927e9697f93b3cd3b9e78d110abc3a465645e57e1504514d66bf5eeda5fa58bcd2fa78a7ca75f1189af2d70a084bd02f7c2f4565afbe25930e57f3f28eba4105a92b252b8032470f65c5271ef1e4c6a7b0288050af2df82db4f6d73bb3502d8afeb16e1972c4122a1d59ac14875c173371bbd0a1ba7b198e14f51235750fe55e4fe8650e4e25574e1970b1b189c8c9d0fcd5926bbd58883c4363c0a7df7caf39cd0332306dcd819ee75ebece0bc57d03f41626571fe42b7ec009a285ecc2d5f8a8df7f72984b52b241ccccaa177ab2ea1af4e50bfe3c7cc8cb63d2f1b389838b009fc4c6a7c5457d1a5aa25c0870405613c5ff1dc9e89e1011abe4707d037629336cb20fcee5290ffd77b4123c339fd8d20f5d0b2f08b86b9328c4b14330996518aa7bd8f862f105171f893f938e1703b7255bce9533b662e502844b202f095277e0e9a5e6b3a006aba3e3af63125cf6f838340a5978a7e70673daa0d0f129179dd8578aa0941e4ec83360107efc86e226d5f806ce16575110116ced2a5bc4ae82eab51352584264124745ef0c30b46239dc5735269ce4c34b0df7a4d67522414cad3a8583655cf1d6632b64ceefee4d42682c1dcbaa307e0e905b6565737ece05b90c1c9fdc02cd8716cf88dbf6c2b8233591787288e17d721c460f206e97b67e64d3fb65ce36007262e789e80609a06fb493c79afe6f7687c5c5beb201cddc075290ad0eb85c79c88a54e352f30fb88a3030df92132d6d63432c145cd8c6e0ab52952f90762d8314a15923bbd5646f4655344f98aff000eaa8e880fee7cfe0d8d7f87216386f2f3473ab479784bb14ac6423fde180b42b117992544a52e72f3fc196120b9701969ce172f221cdd7b7a2c3db807e6ad317e67fc5e50b54be7bf19aac3a5480f5bd7832830fb769a93ea490d097659158abcdbde2b168ac9cca9f3ead019423479ff8d29e008c3ff8a54c9cbef32732b88fb5a6a24529500cb5a930fa7c381395c0bd49f07ad95c7f8ab1273cb689061e7da2098a69daa020825c4a9987fd0055a1d88f9be0b2ba12b21a79b3dd5ffffd8fb7e5e0a0d63c7add05fd21d459b178741dd3f19303142dd54497bd84a4516e0d9914c020b92946fdd04e35ec171e5cd7ecac5deea0f0efa7d7d794979c0d214c0787d849817fb0c1c8b6afa466b8f228cbe0ac7eba49e8f81b8e891885ee1463dfd4293b555ff9c590347dc4e9129b0f92e133e0366cc38136c65a4b3f4578c80107c353336e1770cd828f74d7094f7bfa0a6928bfd0fd362efdc8cdaa01310b9eb5233a4e737bf52a8701fda044699886bee888f63adf388ae924c6d9b2b23a71513d696939510e02a2f570ff3516d6131cd5e5f2ebad81694cbf2f989228726a17b7e29045d05e53bf697d13f9df0825b2ae33ab03f574cacef2f1bed738a92d96de299b0993651c2328d65f3de02de0fbb3f92f9ae45014c01da6ad10bf609ce57ae26bcabeb555fab43324635948279541b5d67c1902b640c231714c33d9d607f0b6d7ad8fb1a7a5b6e538bea015c8c810b3fcd18e1898f922fffd6b886d544263df5141ab533ac7cb29d3025c668563b1f74cbd1c97124c15047b74b6eb1d84877ca713f637e03fd9243d06ebe72466c4745bce3c5ece7fe8f691c94504ac4060e3b9409e47382fd7d7a6ac3f4232b55a9f03565d4da100c8a6da4fa9b3efea129b7c8a2828f668f133a941c5a5d07e169ec40dd710712c2aa1bce6cddbcfd6c9ada9be3a1d194fb08c0ee5922130339a5fcc9d59aece8d02d1167b53b0da663e1246e882ceca7a59c0e465092f115d91e749a4c574c22da0c31ca9475fd91147222e903d7f640ac903a94cd94728f62a5686735f45f3a59ba08da583c69788f70bc6642a3eb080802a0659637ca7172ac742746681ad0a31c2c624e96524558210bc8b3a3cf119a9f3541c356939d2fdeca29c553cc4ce9f0c42909d54283409033a06539c95f90922a7efcd704cff1432a69466e952731d5f61414221449e9154a5bacf6c0158a6ccedcc5a082d5ecee7b204641a51e2471b4e808fdf904a6d1144ad596e5dda6fe01832613d16d4adb3c28d6de35d13d60f385e4382398ca294d5d3bac01e05ac4011ccc02601819f97c85149df635d4d51cf6bec6e3ddae5097139f576a18579cd0be4157996f68c610869ffd18fe9565e87fe2efc66d811f2b29104afdd82d92985ea30d80801fe188c90ddfc49a839513d0f3e2e7e582ef745b34bf789622cb842b6d7c5287dc9b676ecabaa2d31b5a81d3050067a328ec0db428c9fa80bd71a28ecda929b1a969d3cec240a882c775670ad18ed620288a42fe1861c5187819ec4c20e655610f2e07f8ecf318091ac452999ae3bdb0388aacd1e86bbefd1bafaa7749b22185d0bd7f0e13e0e3107123212c45838fc947d4c79a4b3d7d8fee978d2766af2a6a33d981541fdc6cd96e71951129bd94847916956a33a5b451a8b911f144bdc44e8ffb8764b9d79a138cb05bcf08b5b2fadc7ffdbdf2cbcf720fa3c89cfcc7aa5840093f7e529ae578ca0a0b79e66355fcd183c9c0b87f1cc1529963185fc56b741b38698232aeefef4d32c767ded7f6cef74bf5292397a1f54484dec79f31d5ef3ed063328b5565006774bba45496b79f3801a308ea982fc49e2cac7c9eaadf7d9d0bc4faf1d6e1135437216ed7c1e6cf909f68427e3396935774a03b33bdaef02d3e41621ce5ec3fc89be273968a5c6ec64c79355179f9ddce891e2b6bc8ad87ebf4f39d1771d24e8c4d26566134c9e7c09135f6f4cd72a3df733f02d388bde925da38b0365d7e3aaeb2ff9cc34112440f18faeff83bbbee88cdd9786885d5c770bd6e6988321a6a0788d9aecfa47c0e1f98cda240a0a9c7dec422c37c101c1384fa4d5dc0b246614776c20edc727d2804d7b13b91cc2884730e79b0651c30a77b9e2b118ae3772c5ea01b46bc2037ac33028d9e14b6a14508d960e922f8ce3f560d0e4195a3047144b0cbe2e60278125cfd7779b6a74394321931bf9c215efeed6780e714162b1c7de2654258ea4dc2c6d2e308a8a81fedda3416e2951e3a18ea972fd7274577e2c7e172853c3befaafdf86afb1817ee80b4950d12a307afea318b894a6cd1ac957a1ff16e9d77583795f80b43a2ca3fc69b763a8360d3dc0a6e57fbc4285340e0c95d046030100bd3aa35627d8a689190879f15567931befe39cc3ceefc9f2952df9a6196de15a6146129f6b13aca260dc4665cd883f47e8b93db37c8049250d9d7ee8e74bc4115eced3323472ee0dec36098abc30980a70840b4601b472fbe75e427627e00214bd3fcc0d4087889e1c329009a78d9d0d7ad40c173e379a8ede6ec3e31859af8c5717e4a7ff6dbd0a6634d87dff73b84895d6a74059ea9239ebb174a43ca123eee0623117b4a8facad82966949db113a9e1ec8deb6bd772d7ce3a1a0f850703a2f594c6ec7aa15a82f0821e6243f5f86a56c67ab22aa7bb141ce7faffce518346e0a75a3f0d45b8434a5a4dd095e72e5b766200b8d2c4a6f90ae199eadb3688485f999538ba96977465bf46fce5f20e217dd85a75308ec618bf3ab046a50130eb84206d18f4faa193da3c17e8be2edd970e356e0ff60746d83dc16add622dbc4a1ccb8f51ee2d625a897fc04177610fe9eae2cc5d4ec49c6af48e387fb8f522ffc5bbab43c5aa5f8b621d0b44287671a2f03268eb3e3b4b51b891b0a2657608f4196a9c5e7e8df4882a6af79dd2207fb22384edc147410c31b0c89acca6e0e12e34436448fb963e2b5747f7042feff1ca0e3c9c0b083b5bd2570605ffd48988b8dae7fb59d87b39668424393a37bfa00cbdde86a757eac953ca431d7d64c6bc2a0e2e43a097fa061b1ac3cd54a9f90ccd6c5f987daf991894acb6d0745724e54cc4c4d803911e86a14c2a049d7ab7f7b0f0e1525934a84c728b5593134a6d57689d13b170836e801bd1a7da394c299b8914b206f60fd86d4b4744cf31be3aa3dbb385ce4097fa9e6c51899d65507a62c479ee9c95cdcf863d77c9bbeaa59d683bc37c9e2869f2a015c33b6b53e44075eb201a1a8ed9a15f7c3a7caffa121dab1ddb16ab917986c9b1b54aa1dd0562b8a16c127f49035d396109836617fa3c830b25f03aa8eca544909ccd49cc3d6dc083a8c147d32755d2be88829eb9215d61850f4292b06b384d1f2d92b67ffaf74ea7d6a220af1119af67aa5f0414807d89353d5114147e741ad793f629cafc3acff09a24d33bd016f850deb9ce68d5788da00d428bc98c10f3db80dc7def1796406e0c67f01f5326feab930e75b241de1b0fa49b346e80bd22a247b8dd90504fbd8d7b03d6144225c0f583cd49d22cc0de5f0b2e748a5657aa67747002eb219fdf380b1adb7570e4555cbf1470458aa46c597609ad639f0d668bbb0d2d0cd0192e33d23c4ba555994b8c786dc2c2c455f8d29793826592627a989ac7b3a1b23e8d558409a672a8f4f9e015894bd4327175f16b2bb07addfccaeb77670070c6e5b280f74d6dcf01686b3b206b5238b933b8e5455b708b3be2e57cb74fd98412a39918b672566486f19ab0e1f6fe64ec97c7c3a07fc8db7dab0040eeb20d691c759b22148471d15c85f2ed76c2dd58f1dc1e5dcfaf8c06bbcb9af95573b3947cac1021732be38fe8b7f384d7dd9005d34b6339b916b6ba13994bd02d2be90a3171e1fa2718dfb934f64f54d08e5d88dd56c22f25fad2651a4b23951e9bc0797344c2ad1520b43e8c741cb65f8ce881724462e83dbfa50592ce968e7b51d65d881ccda908e66dda25aeeaa6c4d68c13f99108e0597d902f00506cd6b29ee6770416128f02dbd3794f07c9c78a6e0e50e28da9c4e01e3684a901819cfd42021065466dfb954b6f7827e2cc4b8368daccaaeabc70aa02ddcb67597e7af76cd94fcebd06ae665b749a817bd117f1efc0fef0d91e1e88f4c6225c75546d9155f3ab7662e894a312e5fadb956c1e17cd8384821e0b1a0414329bce6c1901eb024861668569b876367d2b60132116c78b02d70d41faf2fc417ca969e292833dc9109b8d862259f34b6cb1bc7af076a3ae3e4b4036b332346b937ee36988ae58c9733452c3e6874aa4c3bcaa0f1ee46f9ebfe3d83281f864db26dc776c43b0f4634043607aebe91b05eaf3bfc110fb12ca7cabdf8dc0876ae85787c9dd3c610c93a5d5d2b4d6344b25952fc769e8927cd2e605b1210e12edc3359257efa22b79333b77edc60cea20e6e8381acfc1fa674069fe4bee0e044d146b7af45f72a74d5e8ffb1b52d3e3d0433f20062b673c40df5dbf4e5a915243e9b54a311d3115ce76e1a734da3d4d1691ef7ce083e5e36d3d96b8cec57154b882c17dfd692673167e38f66b800aa567807402cbb0d3868ab6870e27ac32fe4b5f75aa0d3679dd8546e8a551b229a604216cc28568c7394d9b5add7420529bb8c8268d64dd4fae812ad1528bbce19fc54ce96be761f4be13022b7e0a09863ccf34eb847712d868e77390810f9f7ac359f771f10bf902031861f5ff9fd59802710deae76a4746df9c4549c1ad70c03d57a85b3c84d74f714e304e9f2f6c243ef91debf857a2fb632b6cd0f4f3442fa225784921c8fc1c9c64528cc4ff984c49ada9602fcae7fa0b7eacdf2d81965e2e0adf808adbef289621378ee8078813e2bf2547e4a9eded5eb80b8ef391cd91d00506ebb22fbccf0296c798eaca4b014bfcba6cde1328ff8513a4613f5e9a82644df82d4d7724f0ff6e894041a9007eb594b85a2a0028f96b03732cc22a65000811a45734794db42ac0cef103a9f7ab44f20d8db0258b4536219f2a3c325521667ff3bd0d4f7f5ca9ea48c8a067e8d991ef3f0a304f310b095e2dc7e753da540eeb3a18dcd1dae3c1c76493115c8ef5efbeb807c4b8d184bcd0711acb104edb7059355a5669d4b12813216c7ba3c6adaf9d21d539d464272660ee462131475e38250faffd9da940a0ee8a6ea4c32e5d3f5a89cd88d61430212e4dee2bfc76a7a2dd7b81ab9a678f041c7b11f39f5069f5222aa194ee8852c69ab918f1d223c8fb5fde0f71fc339606bdb33f4be5f40e00d99da23c8f4e42ab266bcd7b558e52c8a385f58e3bc790b977472d7a1299efa3a1412f9e5ed56d121586cb5c5dbae52692d588b4de6721abfeda9b93ea661de6439666dd82ab92bae222938138da8f14f380892ecf1f1ca973f53795e97238257ec1bf3736d1016cd5b71de0a8abdb40561ad915d6ee81dec1454aa49136cee96c26e92268d46b18b5252c4fb8c14144a74efe79e6b6d66f56994cd37860d37c82bff00096f65f8ce0bc2afa75c9bedc609ed23ed1cc42e320b5b7e75f8d7dfdffd94ac9fbce3e016f9a68a9e17f56847956c1bc77db37cc2c623b878edaaf5359c09787e3b5c09bb77bb82c5c8f58971fb4b704f6d7d78358b6c649f7fc0d78a85274b429bfb8adcf5d3a171ba73e896678364acc2f28a924b64b2253c4483b48cf96750e0500fc28b0dfad5dd63c2d85a6b4c3de8099da4b2313156b343048840c357384e3e5f97a8a7650ffa401b5143971979ff859d20f5e1bdf45c3b9216f3984af5b970d4d6a3d2e8ffcc07bdae654cebb0b22d7d9bf81719559bf10b46e74211e24e6c7e07b005bed7a2d1bed25776597a2d0acaa48787ec5b3307aa083106bfb04f178d80d60a3d6312f82be42269a94b07b57d132c40e32dda45840bbaa9674a902eda05ff79f20e8ed8f7a867d76287c98b0363938913a5ac7d4984803d509ef280fe6cdf8157ffc126ec6ee255bc4d6eb65f776e534b8b13de2493aa1b4821e099d824fe7d0c3810a64091b197fa42f71d29d70f9becd25d8745c60c3c34e590105fdd9c7809c0cddd290655546fcfa608de5b1b72cd1df8867b3d001660224fa7f9ce01bcb7435315691ee93ddabe89eaef6bbc8334df525c457028a5359cf08da7737d976d064fa4da6bed60d285e2dd3647bf4121742717920b35913ed88f82712fdd54906ac75cd62cbab78aac3452b804d88e6243c9602230d262d7c395a50232d8eb7539262e5b43531e61d8c3f82d8fdb6db177306d4624490231f58c7c78a813b6531cd5023aa66a19afbc09e9c3250f20592cbab5877a4939df5f446987eff6a8c51f7e31dbb6fa55a3f63c040212ed1e182a651aa504a1656e290a3a3e1c1ff76c4515162f870b84b8b176d0902f2c854752ced9d060de9fc84f3f458a272d268f05ac68777ab2b4766d205e5d44e40012c23ab754e1051b64045d6339431c05e83dce9322436d6e1abddce11cf401b052759b92a8c862a3dcd3d2aa8eafd076fc9618f075b385ceec4f6b924b4b1b21c172c24be31d9a03e5683cc91095dea308dbd974edc340f0d02c29db2004f052b4a7cb213a21a73c00153dbe550f79d830b83fa64f7174eb282641b43080c82263aae135350ff32f91e090451a13e240d967edb9fca26e7f9d656c1e96ea18a4b2b1538b1ca205b28451ac953172396401f4c0680baafa6801f60e86113401b5dbc65f3ac0dd19901e1d94b09b0d63b1f059b4031fee51290d4a11550988aed747a4624c9f76de29b95f35b5d27d9bdf2b26e56254dd362c9e444d9f31d2b8571fc5ef11103c919f99a820333f466e2f40f039452998b03f188fc5f70d8729680d2573781bf283d2bafe25196b7db17d1407934f1b67c1cff2bb99e1041fceebf7b59b6a40f3d7930c4e79d8ae67f934d25e6836be6c4dd2f64626d1471bdf0f05fc0ea36b7a1d3fd45ac4628f182154c2a5831b566f805503038638f8bd23890090d0ce5b46d23aaf9570de6e6dade883eb509b4df3d76e8a0679735f2fbc33451cbe7b39902ce18d508744da07c4d9822541776f0de8ec44d590bdbb09b53d8a3b4aa9f940c17c9205b7845d6699f90e68531a161924756012797a83987f5f74035cebef49c0e89146de32a4d011f62ec213b04453b5c82a823a33f8f9ee8cf600a32d0e1e0efef15ac6b53a1f4fcb5ad4f5bbabadf5fac5518795a59de8d5255cfc114ac9a7d269642498d33830cd0db10b61d5cafc7f69f92dc2f5273851219edebca503134e52f4a8005372069c468edde8723dce45c4bb6209316591ed0283c3e3914b16071cf8051d67dac5bc8a166322853f422b4a1adf847956cdc632b3c2ce9f3a89596b337d157fb07a2d3506fc30f0e25c7279890f6301c633915f1fc9c60f788a8e0f0a866d0acf46e1aa5e2e84162e0627139026f093c1d3f1f4615ffe7d0e6510b358a1ee646fe48d0ba9524d125fbec2b57cc4c34bb5987ebd7c4c8a4ca13ac86f63d0d95333a2f467ab580bffb33c5e3d54a25937d30a6811360f4380b0b96526fa10775ed49d32123a437a013bdbd2a0b81d9f68c7f23095bd7aae2ecd04ddb8b990498a2df6ff1337cdae58887bf575cd32996c70d9619d4da3b0d2c5292aa8f9f59d13df0d006dd3d6e175c482f0efbacd4154259054d33257608517d3d1a87acd5e02491c9eae7118f9f44f85fe13c172e9cce1aa11c2373958e8632448359afa5099c546675fc3f21b7d4eded4300c9110df1d24712e22cb73740e3182c4013fd2ad7ac9614a1ed17d242e48ac24b1bdc0ae07dab04d45c1d9cdc550debdb471d6e802c4ea518e8ccc22c8539dce66af3900c368389a8b2e2b01a2572d1ee5d488a447b9831aa0af3ea08252c1fcaeeace576fec85b9565540de3899b8c42f1ee4c66c15c03c151e790fba8bd561ea12c6b75bced34d3c44d5f817cff3deb2f977f0207ac10c792ea092c97c3590135163ec6af7aa8f98d6a39dd92f57e98a66d6631a9655ca1c3e07bba2b84bcb8b1f73ca3eb9cfe3c6abf3b1bb0e007471d61c1297d37c65b82bc5ca47c7df06fc6b8c3763b992c6d2e9fa7cb9e393c8fe0e0949e2533e8b1c5075496a8e0ebef0da7c37c0f7b248a70b2d21077d096dd5cea986d9ecc5b13f5ae00d5f758c7e14913e9f5502a3a61a44cf9b9a0fd4eeed5e6abc421d6663d133d6d72f1b5269d098c1f53f13ac909aa39d3f5bbe4ba39ac61c5647599703761280479dc69e801482f955e0f006ab6e39fbfb322e5ca933c061ea3ea94767f4dfee0ea0a54e8af1eb09267c8af97a44718b71ba44b3dc21f3a908037dffbe1ead629c1f0ce36ebd72a9c534ba3a6729076df30740156543de321a98af08bb4c84d5aba6091d5778d58a6ce30aa72ccad5d55ee33d9e28a533072776417f3befe9c49845559907036ecf8408e4d5db4711fbaf776bded8a986f2fed3db45a0a7a859d288d2710b655cdcd1c8a9b99649ec8cd79ab6f2ec402447116c061025a5cbd3e925e138daf219305754c6c918469a38319ab906e329710be30d70267369d7738b2f35eb6ce70fb537c273604b09e48125091f0bb7f6be12d4acb5340ddf9646870e66d438662912bdefeb6db3c220c42a86d545e1e0479b136a5e83df9a0f1b9990dbb6424f68ee88cc99b41189015a944743cc5dcc4b51e7081f1f1d0492632ef89584baf5322400e1cd9e088ebc3cffb3ce76f23c75a63bd4ae7c5d551dfc4d859f0c3a7e436e32a14dd4ed871553b1e538b8561c5ad94dcbb1dc7f39f578f40522b9316137a9c53605344d664a3be30a40d87d538961961332406222eb7ff4cebb42839f34313433fa44d6fd43749abb58295dee3e6fb2186a6a61a523c2ada55e39d12f490f1056050816a4653c49ff7975b60afeff3ef2ba5c823f70eafdbf0d296721cb4e040b51dde57a314d0e77319893752a732e79689e628f85e746cdfbc8a4b63187155047e6b2c3effd5d88065bb60ea4738eeec53b7645786cf35532143890c6696e8bb62360788877db689de0a58f21c728ee14bbd3edaa48810f4065069d273b19a4fa90597212024102f1ae912ee87fddf2a910d4cabc2a26bcbda0d86b0f4842cb6ce9589fa9b4afa578f29a31a50ff75a65bd994221c038b4507e0b4b4edb808cbadf0013e34b21725d47ef3d1cb5228c906f7085086614cb51350c8c811cb55cd6d9859c0ada69241a34a9d697332076aea347b16923d7ee5492e72061ff1f71ea0828066dc7a3b818023dc7a6bcee7b013fd4f851b78160143e9407f4b5d0e2153c9f631be0690d6affc1f14f01917d3d99986cba3b2e029a52fd1642e588337865a3f2feae993ddd2b80018a5eb040adaaabbdfa111a167244640797c5a91404b6aa72ecc270fe268562774a76bc2391aedeea41697756cf03616403c5a514536ea6c06770d868cc3e7afb10a6f6dce1deeb3da20db6768686b0154ac834d6fab4b63e70bc928cf6c0bb1a43b2ca362bcafdc891bbbd9e5e772c0b56b9a26b54114cddc458e7904258f96190884eb6e0986849ebf9a0fed9a921cf0d89ec18f92246cf8b40a2c2c66625bd8f0f176a8c155ee439435005dbb29ea33afb79bf0a200e9e6d8b64c054af995c64d3deb5e185b3be7deb3320bc5d17fcffa3b58a8cb66985525648b9efc078a86b6665ebca7d42c505df4fa52c8e03825cbff50ac3ab08e3eb4f245a9b0075599daa6d766fef9867cc4c5b723c2d61919d600865891c33200d98cfd5febab47619783c615daf998370813a03329bb9f2b22c420a9677858438f11f5b89c822d12129aa28624c8896aff0fe605b6a0c5d8e2f4f3e9fb143ce0d58b2aecc319c76582bc96abc3138237ea4ec55dcfc447f86d702fe4084d5e1927404398b05952eda7f2b613baabb3bb53cab6938cb46c37c9de85f30cfd9e62d0426dadc118c9bd1111903f2b6f87b1ff0dbd6bc76d180d3c8a0e3484169d556675c5553370549722dd4def7d616b9a727cb5d95b21550b481cf4bb4ef11218d5fe67556d5f54eb3419e28eee4bfcbbd5590712f71ed06ad97506cec5c13ecc61bc1ccb41715f8d7382a59e01f7aa953fbd8cd6d74af4455aaa9e9f7b4f1684ae843aa013df7ce05bb7ce3eb377cef4d25ddb22c9843b7bf631f25f95f588d3decb27974e4412d873a32d858c0b479ef87c51b256d0a368ed897a8b2cf52cee4ade543ed6a241518e37a6fba24c303762e8494152911900b752ffa4eb4624e369cfa3ee4231148dbfb8b534cb0ba0e8cc3eefa4a9aec14e7c7f23ae44215ec877fcf1696dce15782f7ea10cf76ab3bf6c5783e6d7b1caa4b3a7300d3821037f4fb6b7ea917da81fd4818b0a55d138623d506fba0e1491febb0e58eb12d99a1715a3a79c2f58b4847a646a8b268145b3a7b3301034ec6b756e7b64ecd268b228b3b8db7436a493e0647c09a5b6ddefe2efabd58744fefcb38b16e799d9679ea4994ea4ff115b039df6bdfb47b3d1c5bec6461fc5dbcbbab4049591ad0f185ed51b3a2c32bd565630d1c41803bc56f25194f23b4cfa3923b15506525d406a0fe47777662bd12b79612d829082ad292b2bd65253701d42a75cb2c68a526a2bc3bb594480f5a097edce6ad9e05eeed5c0ac52d4f19881aaf9cf7e277ed3c914c9d247fb26e777038ab3b73607956f01511d88566f5acd50b2164a2dd4df19055f7beef3e5fc71567e7408f6e77c49f799898aff380587e39d9267493ee1905a31e834e941a8ea8e7d784e128bbe0686923822c677bb30b65cd561e656aae3e4c078db7c9418c91522ccac382b15261d7c07a6667bbaa9a63a3f949fccc5bebe8647e32c5a804e48021c925646aea53cd5687c1a3d2ce981f0d60c5ac130b8d9027cf2357366ab3ec94bbb398dbdb0beecb6382ca38b0a0d36f0eae97408bf5d0438faefefeabed5a7893ee214006454ca9deac21465cbf5ac852bf9098220d539918e53d36f6dd6febf204d60a1ef7102673b731df464cd5997f2dde5aba2469e619803673adf18fed2c8a73f83d3d807da1b85c1c683bd3e5878a10cb0c27e6f9421fd8b63ebb3c98c27b3354a0fba592e85d53973f74e4447d26e1032a44930defda644d17a8a8bb288c63640df36954062e13722e66cc0a1b6f063948f89967e7a7ae7f74d0afb4ea8e90dbf57d954442fe77af99300240900c6962120f27ad23d4fcecea1e91438a7e22eda353846836b6057da99d3f11924583a3eb8201af78ecf599eadc406d65faaaa58accb6b1f71e12f1face59edffa03b78b64571fd54e3e6cd2e67c90d2044e98eb9c9d2a329270d801a906df7a4264ee4468fe35fde5913b6da952405185f720926d3b98ea8c9719f1cfacadaa0f82270692488a779e54d5b5ac077af94d0905b1f53672da0c18228e326448cfc6c382615aa58b1e79f8f6929d8d524e2a39ef817a90a276b30ea123944c94e6d4672b090960c71b1e277bc23c61c71702c6c5d2a62b8d17dc10511360c7b29be9ce4dddffd3129048a2c8eab48c47bf9de79fc5b7ecb2685a6ba0b9f58c60ca5e6b4e103f85154de44fc05154504f4586efa78686893e4b0b5607108d9767b2e771ce2dc266ca140b6ee652bf75f3ad3a91c741565fc077af8c7a4db4780c4bcddca3b7e6ffd845db7733cb1a4ea28382080dee3d23f56d0aaff6b83c3abd3b2845d9dc1f2a9edc21218f2d39ffae319f6e41eae3e0a513e7e3297d0886a27cbb51bb99b2470fd7ed65ac4f9eaabd2b4ad4315866651b07add1f24878b6f044927d1e895e95ef9ea5f686e7a4690e984d1e2e88d78e49e893972d009e848b5b10c6d045aa4da669386a5b2d168f0326bff6e3f0e8c4b2a96bd816bfe25903f6998d9dc5b8debddc80b32210d3b8f684f68faca6b252df090a91126d7a5a13891873624ac0e3622d0c869cc8b5603e9393015f7692d3a12f89379812435f16ebd313a69a490d3f33161ed552d4b97c95983b31a9e37f9fd6a48b63195591a7cfe265447b4b4f0cf2ac229693d97e6a1d6cbfeb2d95bebecba439e9a3c2d5bda1ea04582b1bf9267b77b4a78e3e3084102110280c8389d5b4872e80619acc47d480b9059aea7ab329a7896bca7ca0fd2af4d98ada5ff96d6bf79f090c76daf709611afcb19750022cc2aa5b6153f36dc2144cc3d3d2dd963fd610b7812cef3f60e8573cea6eb36cd7e7ede651c2bc5380ac4fb7db97e499c4099f682ec02d090e4a7f9678070798444f2e5da73629c3652fe0ea766ea6c819ff1143f96a43095275119ca6c3f99ff254626f806caa444fcdabcf460b9f65fc018741dd8102d183ecada187de5855292beb83d081983affd871a2c1080261e8bd4ff5609d6744a1e9c08d6e52241fecc5cbdd79b6b1ab3bf88478a2b2b816293165ad8545e65dcc8b3247befaf4f2cd8817e4cbf596b118aad660227c76ae90a9a551f473ea13d6b9d994358354e6d80f5db0e4ae9230ff7f4ac36ee6eea5f0f6fa9fb0fb18a55face4058b05120ef4dc7fb9981187c6ea5e841f17c6c00516f59071e9062046dc6be8f7918afdb1271cfca86a4e54b083ed4251f3bb8746decbdb4294e168ccf4202a4178a0f8cc3717e8b9b37ffa2771e04273ea9a027e9983b047ff9b3742390e1649a1db93af64a513e3c8f03ce879d5fe2f0bfd0d626d70ce028977ab64e1154a5a59c0706916f3e123f616b47f8170882c4ccbaa6f723496ec204a06aa6b6ac5150aadf0a7a9fd0901825dff30d8257fc653a6c9b8a00c485413e1976f04fdbd96a745dcfa48c4b06850689d31c9430a7a3fc54cc60574dfa43f6a3c39a0149706361770266f4313a0c6bafde37a90baede5381ea6ee8009ee699ccdd647ccf56d0058b983afc0a47a45bb05ecb52c989d4a92a505fde4c0e9710416f0f9a0bdc1f18d4b99c9fd0bd037c7e6ef62a5bbb368327f7b69ac103ce7b0331d64220491cd10b04e8906924ae9c4c6da65f4cc19b4abb2a8fde114f7e80610abb239fb9a9f23278f0dca6c7bef9ef52c6b566063b35e5d388079f8698b153f17ab691e02ef89ebbb8b866ec18cb7b0bd1a8e174ca044860f6b0112d54f972d13af6288012476f03dba87ab80dd5007c5b0d1e58f23b655a6bd509d31a02da2ce0a8f2fd35e1aa69b49bd1ff3ae4419cba090c280b961e0847c95adec6e6888b9a1d3bed9d3a27d4fcfda67eb9e5abdb6b9207f31b82bf7361ae64b4db1e9a393949d53b0be955d5e0ea579bb1ce55e106bfe23133bdb4b9067a6a40e67689e05720941d955ede53a00688baa686103e4983429bc6c87c08132da96bc0ab042312630df71e1e74864a9ec6087d04c9e4dba97d1022d1c530fd6029472f8b8dc8057328564bbccb33cef73955c57b26592c64a1c221c3e2b59d9fc0c91a33c6a429cf99b3eb641cdd381db5e0529710ce50e5f51d09b509a61718bba01bebae4758dfd05ab201e38b928e657aaf028ff15c42c5911c45159f59affe4ca05d993e278b925a30c6774cc4f5dd55ab9bc1e4260a55d72d9823b11693f045961650955e11c1ce4a757ad9985e0230e1d513a36f9148418a5a98b08b8a96ae75f0c6d896a0115dab0335678f5da63b367f3d71ac704580cfb0186c4ed27b1bee907c24cd2b02b0ce97f4c9ddc61bda92de3bba7619935db0a8b85eccb2d92329b9704761bdb8b70fb829843dad8254824c756e8d2f58e035fcb569bc7247fbb4a43b3d6e61a08e68052d336796db482367c938d5b0b4f251b657c6809374a7b87fdcfaef9195ffa4a73f6b259fcd45c1ce5525753586cb2ad776131dc73489aba368885b75a82d2c0e9a5163e376762064f1787dfd8a08d3e6af0360fd12c58ae28806a59aaf21dd5f02c994e9890292a78672061693838080cbd86aee7e90ca2e13b39453fb372668e9fcbc8838c5347f28abc6c6ce7261ab9614e8393aeeaf53f39c0af8a0c39b52ba9594e03c2845e54c99e025a83bfbb79b1dfffad4c76ed38a95fed55810c2d1c19552074ef18a7e64ebbe119278775996097450e47bf471e0d20911ec19c30f305ed2be5a833ff6718437bb8bf3425e5c04afa5472a928a061c45af621d281f9e8deab5d03a6a0615902bbc65dc316a7a51f5a957b3f6c6eaec61bc2a9415fe338bcfcc38875a7b393bcdcbd8aaa2b4aaeffbbc2e89b389d92f945a5c8855efb309be19834760e798cfce4e18c9cb65667fd8c0e17bc1a3a9c84db9b1256820d7208d0c6ad6ffe0d0cc922024f496974b56d86a5781ca4532f3c4358f4f72dab6b4c2d0c78603b2ef98aa42d7cd3d1978639d9d6b5ce95d8dc81711dfe9bac234f68ff8a20a0bc2eefe6df120d267502f1ea18be2eb80e0533508c8d1299d4a57fc8432bd57586f79f5123e4ef9919af1b47a0046d0fa08386977f954ab6d750e16ba838e614edc802985f225a7a80a182e13e6b44b73302fc45f1b0192f53f65150bc253ea74206b174d367c1bf58b174b95b7b7eee0402a44fc9b6d8bb51bfb459542e2cf76f570b52f5c8c28417a58456e27d0591b6fe6314723d67f1a8cbacd884e8c50f76ad79aec21f7bf767e3cca62adcd68f17e31966f0ed61fc9c3e549463c69a908129a75f5f0f0bd521afcd19009352850ea3b070cf8ca916557ac6cdbcdf48975236c12dde0390127ab7521e6fe17da6e0919dc5676339e965c7603e7766d4a562798f330b9b75e578e205a4c562c6f604fd6ce2e78a572b405d6ef449e9aa7d92e230d415399a8b3bfa3defd63104cf02d4318c1d7ac4ec00605ce00d94f31d6c2b9deec85d7cb2330160f8c10235ba0098d794b31877fd3f95939d15133dabb14627bd712819d01c05b3c7c7eafcad099e15264f4e8575612df4e4c1f0b8beac8e9bab3a03603a7952d2d2870f19f84f2c7aa544967b160bdb76f6b884c48e0589f7f17bdca9747789430e2014b35c087fa8ea95b46a7643516c69c7c56d8e38ffb117a4dab6ee5ca7f88b9e431a852408f8b66b4baa82edd3b5bebd6ddce0647013dc10b5ab74aa20c8b7aae661b5e7fee8164be7a1c2ae7eb711f7ca7e3a853549dee34464d9a7efdc28fd2008551a9817eb60446b0b5e506ae86c8c682a4b375b9eb2fdba7c6a14e29bb8419be54f46e9312e13609ad66f76b1bfec5e3bad5ea67b5d8ccf119cd2c02eaf24ef3b49b20325d1f8161ceebb9a22818fd883be9ad74d7ad5dc57bd2d8a63c06deab9ea4e236a40b4125341a5e28311713c820d9f3c1e3d807a0f948b125136fb0d0c88eb3a04a5b37a797fe9bf6282d30f81ffca9dcb53c81cb318266729e6ab0c6c8da9284bc50f73c8de2ba6ea3947e99638d2cad81a33794c1aa3181e33dcd8539e3e1a07f90b28759819eed6e1ac41d58d72096a1357ce80177631651bcf788eac78f1e7fbc80626cf17ac2707d6657f1fea89940824333becc81e9c16ddd2c7ca5a63617e9fca4ff78b68264282809520349cdd0ffde965ee685cff818deb8f0875cd019b7a01cd0255b0d095b4ae89da6a64d11917ede08a569bfab0c8138d4416a463ce610081ba53b314503d5fb00f14ea0aca2765e3a1f850e04ceb1ae092f288c40a0e24df906a9b1253dbb71081461f66283a6cb3b18596b1ef168f1ea87a1b79b905c018939defc6f418c8ca4783d897fd489dedd88b2a1368be5c233f9314b9c12761829b2a639dce6c1069e15a15e03537751f5b0cadace0f697a8671b70e035bc28afcbcd95e17e97f8d2102431737b76aa84e9b229cc027221855762a7e0ce41b0d5f36fff550324e947ab0875f7684629fd9ca4bef0f4efc16805eafa278bcc572917819a9c03d4226be788395f45ae014a555e95fd1d0c55064f164df022bff09b20e6287f096e9fe1b7fe1167b1024b496c6b68cc4cedb239b3af2b952056851be1f219fe036f583bf7d787d21941d6ae250c00e7593ec01719f1e109abdd18cb4ac2b518421d51705e3ecef2f891bae58654a056216320a5b13974ff05df8d941e842c10570e260a32c05b332e46d768cb2d1b98d0f84e4156d9486aa62fe2cc63a2940f78c2361b673a2150cbd3bacc521188e2f51641277e2ed6b9245986dbd24b5ecc56d7b250433cd8212070d08ca777c1cefd943710c918d7718b5acf1ccd67120f767990078960028524b6dcac143997427e1c3b7cc3ae60571aed60d3f87bd04a7857459acbad0f06e043c6aac17837c7b4c4712e8c1b09d2180e4ab232b300cc2d35de27ef151beaf5335b20a0fe227af701eab0b93f3fcc90167eddab35f927b2d9af9c80fa33c977189ece3449f36f4f5c7defd35a070b6191ebb612a1414a635c7800df0aa41f104f8ca53eccbb949623d1533c7b1244c404a1e61b66a3d88be70b3db2bfeed421aa8d8432d793685e0b9b1e0bb75ab9b6064d5a031b78f783b6f30145ed3961c5aeba992d8bad5a2a8da2f9ffc038226dd3684780c8fa8d1c8b0fd6e9eff89d769ed47ec3d96b81fe74dcc86b38bb46740db6a144cad705933397315d298d890544d4c79d95c75bf31d703a2273d5d56ed98723f5594718a8b6a8f752f74611ec1b31c86acb92b1d565dc6cc256fcfb622fd0794031f53f56f182cca597ebfcd09fdb0302885372a17cae19944fff71156813083b6ac1ecdaca0b6ea24b114cdc0dea1c4012c8c25a4dc1aea73d537fd8cbe62b1c910739d7dc8ab85cda9d763bd3456344e6b7f24bb83d0bb80550c762b55decfa3fe7eed0e4390f915f83b7f2d39c5aa8e5ebbd4422b51f7eb2cd89800a6fa87c6c5a1890fdbefbe73dd17ce0d6ab9b5b42d50593580527d0b1c20546324f5cee525fa2f0680f52beead0c3b8afbccb4fd98bb84152c8aa311d3744fa607fea59813097a04c516d9234944df6e3519f06e88d26dd2c3bffbe2fd78e70a7573f09cc72656beac5e71fcfa17d4e2fc1c0ec9c0b413e0f8f07f940dee24303f3844515568a4ade7c754870e53175174bb41c0df47240a9c19df1bdc0ef9253cb67876fb3a8d246864ec9587f5f603155531437e22376a8a1fe0b1957671c9239b7216e803908160ab9571989af5536f96d50aca124763f623f9513f5638e5445021dd3fbaca1775c0180beae1acf25718b65f3c25dd3e748c8c34a3d571074b1bcfb4d9e9a6ff819dff725bb5f42be9a40de92f2891be561d6949650a0111e93122119d0696c13931351b931bf159e8b87d34b51c6758204768e56ed4afa1d97bb2ea3c07c1c764ec25f371fa1d3b43f8638af5a57a04dfcd81880112e5abe2bbb077aeac70c9bba45cfa742fb249c2fb2b6a8e926c3758ee8ee12cf7bb6c453c0a93733ed7c4379007dcfa718ba2360eb66178e4942fd0c8fbea71ed0da2a66a8c64c9f8d68dd8f2f2121dde4ca28c96f234eed43569ab4a094c61eb679134052022c429e20da3cc9ebcf792d2ae5e2a53a98dbd96a9c9d9348961e2af93c0ef795fdc411ba9631ba1fd129535e29d793085ca3b50ab8f7b3b4d32efd393e1d97fb8991c071a9a56fc8d51490c787db55b24c20d84ecd80e757260da70c06622c45f74fc526982abe9ad75a59c9c340ea516b8868b1ac7fafdd5db306f1d86babd1e3174931e5d0c63f9cb58ef8d4b4d52eca0f1bee0ea3ae197ff85befb5ca76a70e7bb82d21b74e1fe002c871f62f0c28e8089ac9f3312cb854e5c9305f6a23ae568562d94c0fdd65737d8ca0fc94e3cba1ee532eea36ddf6e995daa44437efa588a5cd38d823c91546c8fcc7a4ff8038a54953c8ce031efb779705c782a70824c19800580cc622c1daa8510bdf4a3573153e70913a06024cfac908803550a06fc8b755d207dec3df71fbf2296cd2f0340ebf4b12dadda072f6f345b5a3f3dbe6a2855c99461d1ba50eeeabf33ff0f9a280784096bfece1aa767ef124dbe84b9a36f25a2eb160989de9d1486a5c9871027bfac80dee89010118cdc8e6c3ba40f2647c6508708876ee555da1f167e7714d1dcf61c444aa90a3a08ca71dbc774d2ed7fffa969fd6dfbea54b9536f8c22c3afda1544a0d6357e18e90caa2022457349d2ff0bc915e4e85b76384f7fe5fb3c1950862c33efa76be3381c86404bed17016c867b352ef268f7dd120b2d683a0eb73c7ab3e9e7b5ae5b51e245584004eada64d4cfde822d2ae48231a05a6d9421de6d18cb223e8577c93e990bc477a2c2f6d2074820e7e1cca04c50007da21da199087a4a7a23615d73beaf3b6d70c7928012f70bf3afa46e38f96999db37487a344f60e4ce0db0751221573a50cfa38ad3af0e4720baa6f2d2439fe8fd85723e4882bcdb02cfbd9341fcdaf0d9fa553c3ebca20fdcf438d6083b8b37827202f7f0d4630573b420f761ef3cb2f310b7ce11b5a08db63ccc041671365db39812a8fdd731d1f200f89461fd0ec2ab02886513795d7f1fb987a0dc6564bfd3c3e6d886733554882b5e71e29dc79c2d7b756eca43cd28f6637d7c95b4496a14814152d00cde2a562b4eeeaef1d397a7e05d985abe19c5dea498af9c56eea71044b890b6d0771eb8560e321d4ed31d1ff667ea66426da7ae75dea9a20383e626cd6f8a92f615fb9b6e29cc30cf5dc3bcf087f2dd0fbdab02fc5e1a40c48a1ec39e7bec0c2d4b13c00adce47f4a4ce1a4182b388abf0f3ff26e6c022b265fde1a8c6907588a529ed9b5f6f2a6cf11b0c8dc0d9d3a0152d0f318424039f3dda1775b7df5c9e4f2bf4faa26e4e7251fe13dc037e65739a35eae60f8cce1db4156262096037370da30ac44309726c964847454b34f8267217c642200e07b0d5404243ca7000d5cc34e18cee4d7b4f06fd53443ea4270a95a786821e5695ded2161fe90889e0d73289f24617b432615a0c97106d084a346969f5ab5c2fa29980a1cb9fdd4c7f7ad451fe5cd30d793de22443b9d14b5fe9803fc4b4580c08066d0e2556c1e43c55d289e26ed19cb0be9a81280f5b2cb197595646310a3a0fa88c95e90a434852a6190c6a6e37d652b7d74806c1146348a3e32145d1c8aa1b851d2d71e70b718eb70360e9ae0c28bdfd0b7af6a13f65a25f188d52c10d9378b27158bca3ad6aa03b8264e0a96edb15147ff84d8ab417f9f4af131feafee9cc9038e3d776efb16ef5c9e666719f8ec9a40eb3b5e6b02ee308527fb2f7190db2214d926f4d72d204267b0cf06510868d999f06ebee15f25329041d52765f231e4566e97482587c106f9aaec63613389414bef54d205752f33096674e1db6200e0a4e1c0e7a147e97e418c43df983fb6f068a86fe1a433d534959ce065bea740be717c371399888a45d8f38ea96f64d244c38b2eace7baf19727e50aee128973af7dccf6a3520ee1ba88d7e85cdb4b604c600e5dee4e5eeee198c253a66bf3e9950a0119a0764af5060b1066d12067affdea8d08f56da56f997d15d7d1ff6a8b31b9ff04327affca73395cd2ea622ab4cc0b8dbef9f29fa791143394ccc30842ad16096a1f320f3610186c8cd1d774baddcdbe99c8c8361f30506f472b7fba90b156cb80a21ecc07c1355efa6f345cce5e45f538db00922623dfcbec301de6ef3418cfd14f004bc22e6eaa3841bb6108308f6705084c38751e5c36cae3c7f4a97f0327421e9cb27cfdfdc1545d887125809d897323ce642131cac16b9a1be652f9180d59a2059a6662026b2f24df7ab4e0dc981bdf3cddcf2d2c196c042166071663362734e6f7c082061fdbfc8d1e5b87a3c0833858305913e08a8bb2ca372a03f7abd0394ee3bd4d0b0f1bb81219eb5000254b6334779b117711708315f2a1c09a94f394300854958a5841984d25dbfcea58f08afa3e42849d8db1d510d3f51f49669cedbfa807b240b8eab1bcc7eb7a43c1057f1c8ce9c4bcea5938f029abed4e2dbeb85b2d6a3a39e9a8f18ff6582a742e17b22ab3871ea66385bcd06e40ebf40466eb0e61fa558f21df7967d822ccdfc76e0656e07fc70b4b19a11989134a642837dfa29ba08d14f9ea7092926521dc290778b6dd3bdd6f58609a2ce72557800295e321d59fe8b12cf870bcdd927b97562d74dda3fdd0d7deccf2a7c499215e25a4b0a0214904dd64fcd344fe229398082908a0f3872005f5fb25894f6f991359b61cb5243557969c3b46246b4215817dad738b6cd8d0cbbd6ae5db3d1bdcd0089434bb1012cc72ae96d1488daa7bcb3a39bfa3b9901de2da55dd4674e34a97eef1cd24855160cb2ca770819fee07c6d5234afb59cdc1c57131b7fa83fe1ae99f262fa568fc79b41eaa934eab6ae267aeaf8e11c3dd3f8082f89d190d7ffdbf049d8ab203e07b3ec222bd35a7c3accd882cb0ee8116406cbe7b6a7c87d5c4562b39d748f5e88f11de319373e60d66686cc78f3a9d93b041ed6c6d41049b24fb933c8ee729cb8958a66dad1f62946d96b29880e47fae0f1035a01a8cc5797446d5441109a3e4d92c930d5662747d09b9eaca59addbcd7c85a735141e1413ef893c70aa2898dd5036d94fd03ed76ce3b7f689b6522000a925c3f56f51472b9a4925ee7151712af91684d8522011584ebcf32f855d970d6bd08adce24d982cfc97d417ef984f027014ac2c7484650852724fe7c5005e4909f8dcb01548e56c6d01b1f0213b6432498e3289d2206e1480409e633802bbca0b138ea72f15c158d10680adb3cf82feb4b21f88fe2af26d865686e3f11ede6f2d8484ad641dd94dbf4187986634c917408ac0944b71f20c6c488167b4576690f9be548caf97e5e82dbb6f5b45f5db96690801a2d6b5743e463a3ea3c918247d3eb3d5c1514c0da2c1c756a8b5e97837588acd0558123aec1d84a3db8117fb32f6d5d0135e770c810c92a9527eb36b2cb8054f0aa62f765f84dabd5f53cfa7bbef1804478448f1d5d831f3eb82fadbfe73ce53e14917870015ad2c20cb63eefa0ef802bb847267787d61088d6d178a84130a5482ece554129adf9826d5d826260b7ef22dd3748266866768bd8fe439250de9d67dcecc09f146deacc4e79e188b58a0dd112a2495fb0cce66db0ec83489b579f0a6458bc0f499b019ce99fb5a196ed3d90a456d80e5c9255183c6320fca04faa10b445b5873d5423089bdbe4af7b8be216b023ccb58209a9f2750da8025e2321dd101334121a6faeeeb7764ded8a1ce691f9d923a6494845745b1caf9d6ccfce3c5a691f2067713c84ebf634f6634147d28bef86389ed86e77717540a8825495fea42c2e8f7a14b486543f3296f888d4c1cf391012f4eada0e7993aafcd8fbe64d78928612eed30a58e43645694c7d972fa7a18593d1fdffc8f00c2760d38928efd1b70c41f1cb873d66c33897f79585514c08a099b6620fde4edcf06bb39db12880b68c7312c5b262f1b96baddecc018a18bbcc10431755809663264cabe44a36683ffdb2ded274f43dfe34886b481e649db0f2b85ab2e2e9608dace35599de35d808fb7c34c8c996b868c07183e684f09a1c443c2cc6bd9e6a6aad63a5f036d4c9281f059f1b50ca7bcf9449e1cacb0c7ad94a2f3820d572d0a9d92c56c4a856865f32bf5125a42a01bdf0feeddde893a7d036a655dc5b15e437dc1557bfb3136109d3d7d4d6ee4c462dcd8508ed6bab32c79c7bbefa8ec7cafbbec9a536ba6a6f4a5019d350ac7e93ce5dfa7dc99375db3861a0e8f0c8de933d647662874b59b862c716b6b8a99d732b771a2b7b2adb7bc6a208f9ce34caf5f8ef8b90bdda7a1d5ea2555d0105b59748845da7a16e9a39a65cf89061bdfe21666758b42e1fdd6b85383783ec48568e39666658c026323f4ce11c58b8b74b100f211d85ccd1e53acace550a2c017a9ecf2f45b292c11b06f52ee80ed58e692a8b3beea20dc6123c55234f2c0f8c7b5f15b0204c4c8eef9e74624af0317e837b7de98a618e282333ba163fb8897fec0871450a3f25154d01c35073252eb3947735a11c7a14996fe37443e8005bd2ec40a0fb46fe594c4b272600cb3e959949e8af42d89ac8a2c5a766211be3474c91f669d570bc2c1e6c9ca15e84cdd6218420484894f0f181bcb5833dc3940b87b2600bebe55d1eff71e4ae559a7","isRememberEnabled":true,"rememberDurationInDays":30,"staticryptSaltUniqueVariableName":"f0740cbf4e61f094b3fcc0083cc60ca5"};
+
+            // you can edit these values to customize some of the behavior of StatiCrypt
+            const templateConfig = {
+                rememberExpirationKey: "staticrypt_expiration",
+                rememberPassphraseKey: "staticrypt_passphrase",
+                replaceHtmlCallback: null,
+                clearLocalStorageCallback: null,
+            };
+
+            // init the staticrypt engine
+            const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
+
+            // try to automatically decrypt on load if there is a saved password
+            window.onload = async function () {
+                const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
+
+                // if we didn't decrypt anything on load, show the password prompt. Otherwise the content has already been
+                // replaced, no need to do anything
+                if (!isSuccessful) {
+                    // hide loading screen
+                    document.getElementById("staticrypt_loading").classList.add("hidden");
+                    document.getElementById("staticrypt_content").classList.remove("hidden");
+                    document.getElementById("staticrypt-password").focus();
+
+                    // show the remember me checkbox
+                    if (isRememberEnabled) {
+                        document.getElementById("staticrypt-remember-label").classList.remove("hidden");
+                    }
+                }
+            };
+
+            // toggle password visibility
+            const toggleIcon = document.querySelector(".staticrypt-toggle-password-visibility");
+            // these two icons are coming from FontAwesome
+            const imgSrcEyeClosed =
+                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg==";
+            const imgSrcEyeOpened =
+                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTI4OCAzMmMtODAuOCAwLTE0NS41IDM2LjgtMTkyLjYgODAuNkM0OC42IDE1NiAxNy4zIDIwOCAyLjUgMjQzLjdjLTMuMyA3LjktMy4zIDE2LjcgMCAyNC42QzE3LjMgMzA0IDQ4LjYgMzU2IDk1LjQgMzk5LjRDMTQyLjUgNDQzLjIgMjA3LjIgNDgwIDI4OCA0ODBzMTQ1LjUtMzYuOCAxOTIuNi04MC42YzQ2LjgtNDMuNSA3OC4xLTk1LjQgOTMtMTMxLjFjMy4zLTcuOSAzLjMtMTYuNyAwLTI0LjZjLTE0LjktMzUuNy00Ni4yLTg3LjctOTMtMTMxLjFDNDMzLjUgNjguOCAzNjguOCAzMiAyODggMzJ6TTE0NCAyNTZhMTQ0IDE0NCAwIDEgMSAyODggMCAxNDQgMTQ0IDAgMSAxIC0yODggMHptMTQ0LTY0YzAgMzUuMy0yOC43IDY0LTY0IDY0Yy03LjEgMC0xMy45LTEuMi0yMC4zLTMuM2MtNS41LTEuOC0xMS45IDEuNi0xMS43IDcuNGMuMyA2LjkgMS4zIDEzLjggMy4yIDIwLjdjMTMuNyA1MS4yIDY2LjQgODEuNiAxMTcuNiA2Ny45czgxLjYtNjYuNCA2Ny45LTExNy42Yy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM3oiLz48L3N2Zz4=";
+            toggleIcon.addEventListener("click", function () {
+                const passwordInput = document.getElementById("staticrypt-password");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    toggleIcon.src = imgSrcEyeOpened;
+                    toggleIcon.alt = templateToggleAltHide;
+                    toggleIcon.title = templateToggleAltHide;
+                } else {
+                    passwordInput.type = "password";
+                    toggleIcon.src = imgSrcEyeClosed;
+                    toggleIcon.alt = templateToggleAltShow;
+                    toggleIcon.title = templateToggleAltShow;
+                }
+            });
+
+            // handle password form submission
+            document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const password = document.getElementById("staticrypt-password").value,
+                    isRememberChecked = document.getElementById("staticrypt-remember").checked;
+
+                const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
+
+                if (!isSuccessful) {
+                    alert(templateError);
+                }
+            });
+        </script>
+    </body>
+</html>
