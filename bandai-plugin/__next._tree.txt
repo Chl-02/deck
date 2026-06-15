@@ -1,2 +1,2 @@
 :HL["/bandai-plugin/_next/static/chunks/3u2b5kka0fvjf.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"PFp3F8hyH3Np5bI69apmQ"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"clOUHAngMUx_4yKUC0oni"}
