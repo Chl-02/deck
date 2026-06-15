@@ -864,7 +864,27 @@ exports.init = init;
             const templateConfig = {
                 rememberExpirationKey: "staticrypt_expiration",
                 rememberPassphraseKey: "staticrypt_passphrase",
-                replaceHtmlCallback: null,
+                replaceHtmlCallback: function (plainHTML) {
+                    document.open();
+                    document.write(plainHTML);
+                    document.close();
+                    window.setTimeout(function () {
+                        if (document.getElementById("staticrypt-daw-guide-injector")) {
+                            return;
+                        }
+                        const card = document.createElement("section");
+                        card.id = "staticrypt-daw-guide-injector";
+                        card.setAttribute("aria-label", "Band AI DAW");
+                        card.style.cssText = "box-sizing:border-box;width:min(960px,calc(100% - 32px));margin:18px auto;padding:18px 20px;border:1px solid rgba(34,34,34,.14);border-radius:12px;background:#fff;color:#111827;box-shadow:0 12px 28px rgba(17,24,39,.08);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Malgun Gothic',sans-serif;";
+                        card.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><div><div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:5px">MIDI 작곡 도구</div><h2 style="font-size:20px;line-height:1.25;margin:0 0 6px;font-weight:800;color:#111827">Band AI DAW</h2><p style="margin:0;color:#4b5563;font-size:14px;line-height:1.55">DAW 화면에서 마디를 클릭하고 코드, 기타 스트로크, 드럼 후보를 골라 MIDI로 편집합니다.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="/daw/" style="display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:8px;background:#111827;color:#fff;text-decoration:none;font-size:14px;font-weight:700">DAW 열기</a><a href="/daw-guide/" style="display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:8px;border:1px solid #d1d5db;color:#111827;text-decoration:none;font-size:14px;font-weight:700">사용법</a></div></div>';
+                        const target = document.querySelector("main, #app, .container, body");
+                        if (target && target !== document.body) {
+                            target.insertBefore(card, target.firstChild);
+                        } else if (document.body) {
+                            document.body.insertBefore(card, document.body.firstChild);
+                        }
+                    }, 0);
+                },
                 clearLocalStorageCallback: null,
             };
 
