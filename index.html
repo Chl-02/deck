@@ -864,7 +864,26 @@ exports.init = init;
             const templateConfig = {
                 rememberExpirationKey: "staticrypt_expiration",
                 rememberPassphraseKey: "staticrypt_passphrase",
-                replaceHtmlCallback: null,
+                replaceHtmlCallback: function (plainHTML) {
+                    document.write(plainHTML);
+                    document.close();
+                    window.setTimeout(function () {
+                        if (document.getElementById("staticrypt-bandai-plugin-injector")) {
+                            return;
+                        }
+                        const bandaiPluginCard = document.createElement("section");
+                        bandaiPluginCard.id = "staticrypt-bandai-plugin-injector";
+                        bandaiPluginCard.setAttribute("aria-label", "BandAI Plugin MVP");
+                        bandaiPluginCard.style.cssText = "box-sizing:border-box;width:min(960px,calc(100% - 32px));margin:18px auto;padding:18px 20px;border:1px solid rgba(34,34,34,.14);border-radius:12px;background:#fff;color:#111827;box-shadow:0 12px 28px rgba(17,24,39,.08);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Malgun Gothic',sans-serif;";
+                        bandaiPluginCard.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><div><div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:5px">AI 밴드 작곡 플러그인 MVP</div><h2 style="font-size:20px;line-height:1.25;margin:0 0 6px;font-weight:800;color:#111827">BandAI Plugin MVP</h2><p style="margin:0;color:#4b5563;font-size:14px;line-height:1.55">로컬 FastAPI 엔진과 연결해 코드, 기타 스트로크, 드럼, 베이스, 피아노, 보컬 가이드 후보를 생성합니다.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="/bandai-plugin/" style="display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:8px;background:#111827;color:#fff;text-decoration:none;font-size:14px;font-weight:700">Plugin MVP 열기</a></div></div>';
+                        const bandaiTarget = document.querySelector("main, #app, .container, body");
+                        if (bandaiTarget && bandaiTarget !== document.body) {
+                            bandaiTarget.insertBefore(bandaiPluginCard, bandaiTarget.firstChild);
+                        } else if (document.body) {
+                            document.body.insertBefore(bandaiPluginCard, document.body.firstChild);
+                        }
+                    }, 0);
+                },
                 clearLocalStorageCallback: null,
             };
 
@@ -926,7 +945,7 @@ exports.init = init;
                 }
             });
         </script>
-    <p><a href="/bandai-plugin/">BandAI Plugin MVP</a></p>
 </body>
 </html>
+
 
