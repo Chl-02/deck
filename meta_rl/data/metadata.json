@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-07-01T17:01:21***",
+  "run_type": "validation",
+  "random_seed": 2.0260701E+7,
+  "git_commit": "not-a-git-repository",
+  "git_status": "not-a-git-repository",
+  "matlab_version": "24.2.0.3212159 (R2024b) Update 9",
+  "simulink_version": "24.2",
+  "model_path": "/home/yejun/meta_rl/models/modified/HEV_MetaEMS_Model.slx",
+  "model_sha256": "498794fc6b8959113e8c94e60aa6b25d1315eeaf4adc29bad4a59c17eb4d776b",
+  "config_path": "",
+  "config_sha256": "",
+  "parameter_hashes": [
+    {
+      "file": "params/battery_params.m",
+      "sha256": "f2a5e2f23071b8c19a94ed5de19ae576ec24289ebea9db239e16cb01c360ded6"
+    },
+    {
+      "file": "params/ems_calibration.m",
+      "sha256": "b5990b88a7078b310dd245708883c8be63681a07ffbb2080e6401f5fd31469aa"
+    },
+    {
+      "file": "params/engine_params.m",
+      "sha256": "536708e5cfb745481242e4cf37119e1e1ea89c613d7fa1e9fb8ed8d438a2d5aa"
+    },
+    {
+      "file": "params/meta_adapter_params.m",
+      "sha256": "067da1d39b4a2237c4fd7c3f1fb1708b31d5ff43cdad28d2a1aeb0ffb6e2183a"
+    },
+    {
+      "file": "params/motor_params.m",
+      "sha256": "0c06d2ca42f07e5cea9ac5918c18fb9127cf8d1b94eae977ab25f0cde8b9e60b"
+    },
+    {
+      "file": "params/vehicle_params.m",
+      "sha256": "52b5a8456281d5f17f3b5af2e5adb1be8c99d0fde0336bab34b64b76f24613bd"
+    },
+    {
+      "file": "controllers/map_rule_ems.m",
+      "sha256": "3369cc0a7d9276a4985c1ea8eecab6bde09c4cd54fb69088ec7b0b50d229dd58"
+    },
+    {
+      "file": "controllers/meta_adapter_interface.m",
+      "sha256": "53a8c58053f9d23ab1143d78cae62a3be63a37e2488eaa1bda39710c10a5a999"
+    },
+    {
+      "file": "controllers/reward_function.m",
+      "sha256": "9d15e96da47e908b1e098e88f91d18af71f313b29402bb45b39f336b9198e6cf"
+    },
+    {
+      "file": "controllers/safety_bounds.m",
+      "sha256": "64cc34d6d6a7a362ec8c0770a32a7d02b6405812e21e3ef19778b7ec1b2f0704"
+    }
+  ],
+  "physical_validation_report": "/home/yejun/meta_rl/results/validation/validation_report_20260701_165929.md",
+  "internal_logic_validation_report": "/home/yejun/meta_rl/results/validation/internal_logic_validation_report_20260701_170112.md",
+  "overall_status": "WARN"
+}

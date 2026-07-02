@@ -1,0 +1,6 @@
+test,status,count_a,count_b
+unit,PASS,8,8
+property,PASS,10000,0
+fault,PASS,8,8
+reward,PASS,0,0
+map,WARN,0,0
