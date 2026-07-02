@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "formula": "-fuel_rate - 0.08*abs(SOC-SOC_ref_base) - 0.02*engine_switch - 5.0*constraint_violation - 2e-4*abs(P_batt)",
+  "rows": [
+    {
+      "cycle": "urban",
+      "status": "PASS",
+      "fuel_term": -0.076678598978562815,
+      "soc_term": -0.50475594116334821,
+      "switching_term": -0.32,
+      "constraint_term": -0,
+      "battery_term": -0.23369636249780787,
+      "total_reconstructed": -1.1351309026397189,
+      "total_logged": -1.1351309026397185,
+      "notes": "abs reconstruction error 4.44e-16"
+    },
+    {
+      "cycle": "highway",
+      "status": "PASS",
+      "fuel_term": -0.20330290708489276,
+      "soc_term": -1.8568805413104643,
+      "switching_term": -0.1,
+      "constraint_term": -0,
+      "battery_term": -0.40654207264553072,
+      "total_reconstructed": -2.5667255210408881,
+      "total_logged": -2.5667255210408877,
+      "notes": "abs reconstruction error 4.44e-16"
+    },
+    {
+      "cycle": "high_load",
+      "status": "PASS",
+      "fuel_term": -0.32866658294031686,
+      "soc_term": -0.62554974892745441,
+      "switching_term": -0.18000000000000002,
+      "constraint_term": -0,
+      "battery_term": -0.278640261249164,
+      "total_reconstructed": -1.4128565931169352,
+      "total_logged": -1.4128565931169352,
+      "notes": "abs reconstruction error 0"
+    },
+    {
+      "cycle": "low_SOC_urban",
+      "status": "PASS",
+      "fuel_term": -0.097175161000074825,
+      "soc_term": -1.3379666296892199,
+      "switching_term": -0.34,
+      "constraint_term": -0,
+      "battery_term": -0.26927046777495567,
+      "total_reconstructed": -2.0444122584642503,
+      "total_logged": -2.0444122584642503,
+      "notes": "abs reconstruction error 0"
+    },
+    {
+      "cycle": "low_SOC_high_load",
+      "status": "PASS",
+      "fuel_term": -0.35207626169788919,
+      "soc_term": -1.0114460475137026,
+      "switching_term": -0.16,
+      "constraint_term": -0,
+      "battery_term": -0.32126397676305296,
+      "total_reconstructed": -1.8447862859746447,
+      "total_logged": -1.8447862859746444,
+      "notes": "abs reconstruction error 2.22e-16"
+    },
+    {
+      "cycle": "SOC_recovery_test",
+      "status": "PASS",
+      "fuel_term": -0.18292097343438207,
+      "soc_term": -1.2821245093482312,
+      "switching_term": -0.14,
+      "constraint_term": -0,
+      "battery_term": -0.37402228888255545,
+      "total_reconstructed": -1.979067771665169,
+      "total_logged": -1.9790677716651688,
+      "notes": "abs reconstruction error 2.22e-16"
+    }
+  ],
+  "outputPath": "/home/yejun/meta_rl/results/validation/reward_audit_results.json"
+}

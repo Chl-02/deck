@@ -1,0 +1,118 @@
+{
+  "overall_status": "WARN",
+  "physical_overall_status": "PASS",
+  "internal_overall_status": "WARN",
+  "category": [
+    {
+      "name": "Vehicle dynamics",
+      "status": "PASS",
+      "notes": "Longitudinal dynamics and demand reconstruction."
+    },
+    {
+      "name": "Power balance",
+      "status": "PASS",
+      "notes": "P_dem versus engine plus motor actual power."
+    },
+    {
+      "name": "SOC model",
+      "status": "PASS",
+      "notes": "SOC integration and battery limits."
+    },
+    {
+      "name": "Fuel model",
+      "status": "PASS",
+      "notes": "Fuel-rate sign, total fuel monotonicity, efficiency sanity."
+    },
+    {
+      "name": "EMS logic",
+      "status": "PASS",
+      "notes": "Mode validity, hysteresis, and timer behavior."
+    },
+    {
+      "name": "Meta interface",
+      "status": "PASS",
+      "notes": "Offset-only meta-RL interface checks."
+    }
+  ],
+  "cycles": [
+    {
+      "name": "urban",
+      "total_fuel_kg": 0.0766785989785628,
+      "fuel_L_per_100km": 6.2472109506848312,
+      "final_SOC": 0.56523431466533558,
+      "final_SOC_error": 0.015234314665335535,
+      "SOC_corrected_fuel_kg": 0.074218512280213159,
+      "engine_switch_count": 16,
+      "mode_switch_count": 46,
+      "constraint_violation_count": 0
+    },
+    {
+      "name": "highway",
+      "total_fuel_kg": 0.20330290708489268,
+      "fuel_L_per_100km": 3.6157933091509316,
+      "final_SOC": 0.51097426582410155,
+      "final_SOC_error": -0.0390257341758985,
+      "SOC_corrected_fuel_kg": 0.20960490961329734,
+      "engine_switch_count": 5,
+      "mode_switch_count": 18,
+      "constraint_violation_count": 0
+    },
+    {
+      "name": "high_load",
+      "total_fuel_kg": 0.32866658294031659,
+      "fuel_L_per_100km": 8.1425470390846453,
+      "final_SOC": 0.50331319106852712,
+      "final_SOC_error": -0.046686808931472923,
+      "SOC_corrected_fuel_kg": 0.33620572074623628,
+      "engine_switch_count": 9,
+      "mode_switch_count": 13,
+      "constraint_violation_count": 0
+    },
+    {
+      "name": "low_soc_urban",
+      "total_fuel_kg": 0.097175161000074867,
+      "fuel_L_per_100km": 7.9171207875609468,
+      "final_SOC": 0.55458494955977922,
+      "final_SOC_error": 0.0045849495597791723,
+      "SOC_corrected_fuel_kg": 0.096434768427622483,
+      "engine_switch_count": 17,
+      "mode_switch_count": 47,
+      "constraint_violation_count": 0
+    },
+    {
+      "name": "low_soc_high_load",
+      "total_fuel_kg": 0.35207626169788897,
+      "fuel_L_per_100km": 8.7225098961178116,
+      "final_SOC": 0.502783420926184,
+      "final_SOC_error": -0.047216579073816045,
+      "SOC_corrected_fuel_kg": 0.35970094851004825,
+      "engine_switch_count": 8,
+      "mode_switch_count": 13,
+      "constraint_violation_count": 0
+    },
+    {
+      "name": "soc_recovery_test",
+      "total_fuel_kg": 0.18292097343438204,
+      "fuel_L_per_100km": 5.046576767717724,
+      "final_SOC": 0.50734385539018412,
+      "final_SOC_error": -0.042656144609815927,
+      "SOC_corrected_fuel_kg": 0.1898092264515174,
+      "engine_switch_count": 7,
+      "mode_switch_count": 20,
+      "constraint_violation_count": 0
+    }
+  ],
+  "internal_tests": {
+    "unit_status": "PASS",
+    "unit_pass_count": 8,
+    "unit_case_count": 8,
+    "property_status": "PASS",
+    "property_sample_count": 10000,
+    "property_violation_count": 0,
+    "fault_status": "PASS",
+    "fault_pass_count": 8,
+    "fault_case_count": 8,
+    "reward_status": "PASS",
+    "map_status": "WARN"
+  }
+}
