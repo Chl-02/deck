@@ -31,179 +31,259 @@
       width: min(1180px, calc(100% - 32px));
       margin: 24px auto 48px;
     }
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(24px, 3vw, 36px);
-      letter-spacing: 0;
-    }
-    h2 {
-      margin: 32px 0 12px;
-      font-size: 20px;
-    }
+    h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 36px); letter-spacing: 0; }
+    h2 { margin: 34px 0 14px; font-size: 22px; letter-spacing: 0; }
     p { margin: 0; color: var(--muted); }
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 6px 10px;
+      color: var(--muted);
       background: #fff;
       font-size: 13px;
-      color: var(--muted);
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
     }
-    .figure {
-      background: var(--panel);
+    .card {
+      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
-      overflow: hidden;
+      background: var(--panel);
     }
-    .figure img {
+    .card img {
       display: block;
       width: 100%;
-      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
       background: #fff;
+      border-bottom: 1px solid var(--line);
     }
-    .figure .caption {
-      padding: 12px 14px 14px;
-      border-top: 1px solid var(--line);
-    }
-    .figure .caption strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-    .links {
+    .card-body { padding: 12px 14px 14px; }
+    .card strong { display: block; margin-bottom: 4px; font-size: 15px; }
+    .card span { display: block; min-height: 42px; color: var(--muted); font-size: 13px; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .report-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
     }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
+    .signal-list {
+      columns: 2 320px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
     }
-    a:hover { text-decoration: underline; }
-    .wide { grid-column: 1 / -1; }
-    footer {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto 36px;
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .signal-list li { break-inside: avoid; margin: 0 0 8px; color: var(--muted); }
+    footer { margin-top: 32px; color: var(--muted); font-size: 13px; }
   </style>
 </head>
 <body>
   <header>
     <h1>HEV Meta-RL Test Traces</h1>
-    <p>Simulink HEV Meta-EMS validation and experiment traces for SOC, speed, engine/motor torque proxy, engine on/off, EMS mode, and calibration offsets.</p>
+    <p>Simulink HEV Meta-EMS validation and experiment traces for SOC, speed, engine/motor torque proxy, engine on/off, EMS mode, calibration offsets, and cycle-specific drive-profile tests.</p>
     <div class="meta">
-      <span class="pill">Physical validation: PASS</span>
-      <span class="pill">Internal logic: WARN, documented conventions</span>
-      <span class="pill">Property tests: 10,000 samples, 0 violations</span>
+      <span class="pill">Current EMS logic retained</span>
+      <span class="pill">PNG/PDF/SVG figures</span>
       <span class="pill">Meta-RL outputs offsets only</span>
     </div>
   </header>
   <main>
-    <h2>Test Process Overview</h2>
+    <h2>Main Figures</h2>
     <section class="grid">
-      <article class="figure wide">
-        <img src="figures/test_process_dashboard.png" alt="Test process dashboard">
-        <div class="caption">
-          <strong>Full Test Trace Dashboard</strong>
-          <span>Speed, SOC, engine torque proxy, motor torque proxy, engine state, EMS mode, and bounded meta-RL offsets in one validation trace.</span>
-          <div class="links">
-            <a href="figures/test_process_dashboard.pdf">PDF</a>
-            <a href="figures/test_process_dashboard.svg">SVG</a>
-          </div>
+      
+      <article class="card">
+        <a href="figures/test_process_dashboard.png"><img src="figures/test_process_dashboard.png" alt="Test Process Dashboard"></a>
+        <div class="card-body">
+          <strong>Test Process Dashboard</strong>
+          <span>Speed, SOC, engine torque proxy, motor torque proxy, engine state, EMS mode, and bounded offsets.</span>
+          <div class="links"><a href="figures/test_process_dashboard.pdf">PDF</a><a href="figures/test_process_dashboard.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/speed_profile.png" alt="Speed profile">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/speed_profile.png"><img src="figures/speed_profile.png" alt="Speed Tracking"></a>
+        <div class="card-body">
           <strong>Speed Tracking</strong>
-          <span>Reference speed and simulated vehicle speed used during the test cycle.</span>
+          <span>Reference and realized vehicle speed for the representative cycle.</span>
           <div class="links"><a href="figures/speed_profile.pdf">PDF</a><a href="figures/speed_profile.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/soc_profile.png" alt="SOC profile">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/soc_profile.png"><img src="figures/soc_profile.png" alt="SOC"></a>
+        <div class="card-body">
           <strong>SOC</strong>
-          <span>Battery state-of-charge trajectory compared across EMS variants.</span>
+          <span>Battery SOC trajectory across EMS variants.</span>
           <div class="links"><a href="figures/soc_profile.pdf">PDF</a><a href="figures/soc_profile.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/engine_torque.png" alt="Engine torque proxy">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/engine_torque.png"><img src="figures/engine_torque.png" alt="Engine Torque Proxy"></a>
+        <div class="card-body">
           <strong>Engine Torque Proxy</strong>
           <span>Wheel-equivalent engine torque proxy derived from engine power and wheel speed.</span>
           <div class="links"><a href="figures/engine_torque.pdf">PDF</a><a href="figures/engine_torque.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/motor_torque.png" alt="Motor torque proxy">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/motor_torque.png"><img src="figures/motor_torque.png" alt="Motor Torque Proxy"></a>
+        <div class="card-body">
           <strong>Motor Torque Proxy</strong>
-          <span>Wheel-equivalent motor torque proxy, including regeneration intervals.</span>
+          <span>Wheel-equivalent motor torque proxy including regeneration intervals.</span>
           <div class="links"><a href="figures/motor_torque.pdf">PDF</a><a href="figures/motor_torque.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/engine_on_timeline.png" alt="Engine on timeline">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/engine_on_timeline.png"><img src="figures/engine_on_timeline.png" alt="Engine On/Off"></a>
+        <div class="card-body">
           <strong>Engine On/Off</strong>
-          <span>Engine physical state timeline after global minimum on/off timer guards.</span>
+          <span>Physical engine state timeline.</span>
           <div class="links"><a href="figures/engine_on_timeline.pdf">PDF</a><a href="figures/engine_on_timeline.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/ems_mode_timeline.png" alt="EMS mode timeline">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/ems_mode_timeline.png"><img src="figures/ems_mode_timeline.png" alt="EMS Mode"></a>
+        <div class="card-body">
           <strong>EMS Mode</strong>
           <span>EV, HEV, Charge, and Regen mode timeline.</span>
           <div class="links"><a href="figures/ems_mode_timeline.pdf">PDF</a><a href="figures/ems_mode_timeline.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/calibration_offsets.png" alt="Calibration offsets">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/calibration_offsets.png"><img src="figures/calibration_offsets.png" alt="Meta-RL Calibration Offsets"></a>
+        <div class="card-body">
           <strong>Meta-RL Calibration Offsets</strong>
           <span>Bounded and rate-limited delta_P_eng_on and delta_SOC_ref interface signals.</span>
           <div class="links"><a href="figures/calibration_offsets.pdf">PDF</a><a href="figures/calibration_offsets.svg">SVG</a></div>
         </div>
       </article>
-      <article class="figure">
-        <img src="figures/power_split.png" alt="Power split">
-        <div class="caption">
+    
+      <article class="card">
+        <a href="figures/power_split.png"><img src="figures/power_split.png" alt="Power Split"></a>
+        <div class="card-body">
           <strong>Power Split</strong>
-          <span>Demand, engine, motor, and battery power signals from the validation run.</span>
+          <span>Demand, engine, motor, and battery power signals.</span>
           <div class="links"><a href="figures/power_split.pdf">PDF</a><a href="figures/power_split.svg">SVG</a></div>
         </div>
       </article>
+    
     </section>
+
+    <h2>Drive Profile Traces</h2>
+    <section class="grid">
+      
+      <article class="card">
+        <a href="figures/drive_high_load_soc_speed_engine_torque.png"><img src="figures/drive_high_load_soc_speed_engine_torque.png" alt="High Load SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>High Load SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_high_load_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_high_load_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_highway_soc_speed_engine_torque.png"><img src="figures/drive_highway_soc_speed_engine_torque.png" alt="Highway SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Highway SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_highway_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_highway_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_low_soc_high_load_soc_speed_engine_torque.png"><img src="figures/drive_low_soc_high_load_soc_speed_engine_torque.png" alt="Low SOC High Load SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Low SOC High Load SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_low_soc_high_load_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_low_soc_high_load_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_low_soc_urban_soc_speed_engine_torque.png"><img src="figures/drive_low_soc_urban_soc_speed_engine_torque.png" alt="Low SOC Urban SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Low SOC Urban SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_low_soc_urban_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_low_soc_urban_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_regen_soc_speed_engine_torque.png"><img src="figures/drive_regen_soc_speed_engine_torque.png" alt="Regen SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Regen SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_regen_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_regen_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_soc_recovery_test_soc_speed_engine_torque.png"><img src="figures/drive_soc_recovery_test_soc_speed_engine_torque.png" alt="SOC Recovery Test SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>SOC Recovery Test SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_soc_recovery_test_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_soc_recovery_test_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_stop_go_soc_speed_engine_torque.png"><img src="figures/drive_stop_go_soc_speed_engine_torque.png" alt="Stop Go SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Stop Go SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_stop_go_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_stop_go_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+      <article class="card">
+        <a href="figures/drive_urban_soc_speed_engine_torque.png"><img src="figures/drive_urban_soc_speed_engine_torque.png" alt="Urban SOC Speed Engine Torque"></a>
+        <div class="card-body">
+          <strong>Urban SOC Speed Engine Torque</strong>
+          <span>Cycle-specific SOC, speed, and engine torque proxy trace.</span>
+          <div class="links"><a href="figures/drive_urban_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_urban_soc_speed_engine_torque.svg">SVG</a></div>
+        </div>
+      </article>
+    
+    </section>
+
+    <h2>Signal-Specific Drive Profile Plots</h2>
+    <ul class="signal-list">
+      <li><a href="figures/drive_high_load_engine_torque.png">High Load Engine Torque</a> <a href="figures/drive_high_load_engine_torque.pdf">PDF</a><a href="figures/drive_high_load_engine_torque.svg">SVG</a></li><li><a href="figures/drive_high_load_soc.png">High Load SOC</a> <a href="figures/drive_high_load_soc.pdf">PDF</a><a href="figures/drive_high_load_soc.svg">SVG</a></li><li><a href="figures/drive_high_load_speed.png">High Load Speed</a> <a href="figures/drive_high_load_speed.pdf">PDF</a><a href="figures/drive_high_load_speed.svg">SVG</a></li><li><a href="figures/drive_highway_engine_torque.png">Highway Engine Torque</a> <a href="figures/drive_highway_engine_torque.pdf">PDF</a><a href="figures/drive_highway_engine_torque.svg">SVG</a></li><li><a href="figures/drive_highway_soc.png">Highway SOC</a> <a href="figures/drive_highway_soc.pdf">PDF</a><a href="figures/drive_highway_soc.svg">SVG</a></li><li><a href="figures/drive_highway_speed.png">Highway Speed</a> <a href="figures/drive_highway_speed.pdf">PDF</a><a href="figures/drive_highway_speed.svg">SVG</a></li><li><a href="figures/drive_low_soc_high_load_engine_torque.png">Low SOC High Load Engine Torque</a> <a href="figures/drive_low_soc_high_load_engine_torque.pdf">PDF</a><a href="figures/drive_low_soc_high_load_engine_torque.svg">SVG</a></li><li><a href="figures/drive_low_soc_high_load_soc.png">Low SOC High Load SOC</a> <a href="figures/drive_low_soc_high_load_soc.pdf">PDF</a><a href="figures/drive_low_soc_high_load_soc.svg">SVG</a></li><li><a href="figures/drive_low_soc_high_load_speed.png">Low SOC High Load Speed</a> <a href="figures/drive_low_soc_high_load_speed.pdf">PDF</a><a href="figures/drive_low_soc_high_load_speed.svg">SVG</a></li><li><a href="figures/drive_low_soc_urban_engine_torque.png">Low SOC Urban Engine Torque</a> <a href="figures/drive_low_soc_urban_engine_torque.pdf">PDF</a><a href="figures/drive_low_soc_urban_engine_torque.svg">SVG</a></li><li><a href="figures/drive_low_soc_urban_soc.png">Low SOC Urban SOC</a> <a href="figures/drive_low_soc_urban_soc.pdf">PDF</a><a href="figures/drive_low_soc_urban_soc.svg">SVG</a></li><li><a href="figures/drive_low_soc_urban_speed.png">Low SOC Urban Speed</a> <a href="figures/drive_low_soc_urban_speed.pdf">PDF</a><a href="figures/drive_low_soc_urban_speed.svg">SVG</a></li><li><a href="figures/drive_regen_engine_torque.png">Regen Engine Torque</a> <a href="figures/drive_regen_engine_torque.pdf">PDF</a><a href="figures/drive_regen_engine_torque.svg">SVG</a></li><li><a href="figures/drive_regen_soc.png">Regen SOC</a> <a href="figures/drive_regen_soc.pdf">PDF</a><a href="figures/drive_regen_soc.svg">SVG</a></li><li><a href="figures/drive_regen_speed.png">Regen Speed</a> <a href="figures/drive_regen_speed.pdf">PDF</a><a href="figures/drive_regen_speed.svg">SVG</a></li><li><a href="figures/drive_soc_recovery_test_engine_torque.png">SOC Recovery Test Engine Torque</a> <a href="figures/drive_soc_recovery_test_engine_torque.pdf">PDF</a><a href="figures/drive_soc_recovery_test_engine_torque.svg">SVG</a></li><li><a href="figures/drive_soc_recovery_test_soc.png">SOC Recovery Test SOC</a> <a href="figures/drive_soc_recovery_test_soc.pdf">PDF</a><a href="figures/drive_soc_recovery_test_soc.svg">SVG</a></li><li><a href="figures/drive_soc_recovery_test_speed.png">SOC Recovery Test Speed</a> <a href="figures/drive_soc_recovery_test_speed.pdf">PDF</a><a href="figures/drive_soc_recovery_test_speed.svg">SVG</a></li><li><a href="figures/drive_stop_go_engine_torque.png">Stop Go Engine Torque</a> <a href="figures/drive_stop_go_engine_torque.pdf">PDF</a><a href="figures/drive_stop_go_engine_torque.svg">SVG</a></li><li><a href="figures/drive_stop_go_soc.png">Stop Go SOC</a> <a href="figures/drive_stop_go_soc.pdf">PDF</a><a href="figures/drive_stop_go_soc.svg">SVG</a></li><li><a href="figures/drive_stop_go_speed.png">Stop Go Speed</a> <a href="figures/drive_stop_go_speed.pdf">PDF</a><a href="figures/drive_stop_go_speed.svg">SVG</a></li><li><a href="figures/drive_urban_engine_torque.png">Urban Engine Torque</a> <a href="figures/drive_urban_engine_torque.pdf">PDF</a><a href="figures/drive_urban_engine_torque.svg">SVG</a></li><li><a href="figures/drive_urban_soc.png">Urban SOC</a> <a href="figures/drive_urban_soc.pdf">PDF</a><a href="figures/drive_urban_soc.svg">SVG</a></li><li><a href="figures/drive_urban_speed.png">Urban Speed</a> <a href="figures/drive_urban_speed.pdf">PDF</a><a href="figures/drive_urban_speed.svg">SVG</a></li>
+    </ul>
+
     <h2>Reports and Data</h2>
-    <div class="links">
+    <section class="report-links">
       <a href="validation_report.md">Validation report</a>
       <a href="internal_logic_validation_report.md">Internal logic report</a>
       <a href="experiment_report.md">Experiment report</a>
-      <a href="data/validation_metrics.csv">Validation CSV</a>
-      <a href="data/experiment_metrics.csv">Experiment CSV</a>
+      <a href="figure_gallery.md">Figure gallery</a>
+      <a href="data/drive_profile_metrics.csv">Drive profile CSV</a>
+      <a href="data/drive_profile_metrics.json">Drive profile JSON</a>
       <a href="manifest.json">Manifest</a>
-    </div>
+    </section>
+
+    <footer>
+      Generated from /home/yejun/meta_rl. Engine torque traces are wheel-equivalent proxies for visualization because the current model is power-domain and does not log resolved engine shaft torque.
+    </footer>
   </main>
-  <footer>
-    Generated from /home/yejun/meta_rl. Torque traces are wheel-equivalent proxies for visualization, not driveline-resolved shaft torque measurements.
-  </footer>
 </body>
 </html>

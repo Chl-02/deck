@@ -1,0 +1,74 @@
+[
+  {
+    "cycle": "urban",
+    "final_SOC": 0.56523431466533558,
+    "mean_speed_kph": 19.704604867334165,
+    "max_speed_kph": 56.082192134953736,
+    "max_engine_torque_proxy_Nm": 2676.111618506683,
+    "engine_switch_count": 16,
+    "engine_on_fraction": 0.15946843853820597
+  },
+  {
+    "cycle": "highway",
+    "final_SOC": 0.51097426582410155,
+    "mean_speed_kph": 90.265070236488015,
+    "max_speed_kph": 101.54895180153143,
+    "max_engine_torque_proxy_Nm": 423.58395839878943,
+    "engine_switch_count": 5,
+    "engine_on_fraction": 0.54485049833887045
+  },
+  {
+    "cycle": "high_load",
+    "final_SOC": 0.50331319106852712,
+    "mean_speed_kph": 64.800000000000011,
+    "max_speed_kph": 93.593683684075557,
+    "max_engine_torque_proxy_Nm": 701.93720071958262,
+    "engine_switch_count": 9,
+    "engine_on_fraction": 0.51827242524916939
+  },
+  {
+    "cycle": "low_soc_urban",
+    "final_SOC": 0.55458494955977922,
+    "mean_speed_kph": 19.704604867334165,
+    "max_speed_kph": 56.082192134953736,
+    "max_engine_torque_proxy_Nm": 2717.0090240313484,
+    "engine_switch_count": 17,
+    "engine_on_fraction": 0.18936877076411959
+  },
+  {
+    "cycle": "low_soc_high_load",
+    "final_SOC": 0.502783420926184,
+    "mean_speed_kph": 64.800000000000011,
+    "max_speed_kph": 93.593683684075557,
+    "max_engine_torque_proxy_Nm": 868.59963592540782,
+    "engine_switch_count": 8,
+    "engine_on_fraction": 0.52823920265780733
+  },
+  {
+    "cycle": "soc_recovery_test",
+    "final_SOC": 0.50734385539018412,
+    "mean_speed_kph": 58.189731360583451,
+    "max_speed_kph": 77.343020959385967,
+    "max_engine_torque_proxy_Nm": 810.94966671055681,
+    "engine_switch_count": 7,
+    "engine_on_fraction": 0.43189368770764119
+  },
+  {
+    "cycle": "regen",
+    "final_SOC": 0.490572826011988,
+    "mean_speed_kph": 58.249264356905549,
+    "max_speed_kph": 93.600000000000009,
+    "max_engine_torque_proxy_Nm": 401.24233562609641,
+    "engine_switch_count": 2,
+    "engine_on_fraction": 0.049833887043189369
+  },
+  {
+    "cycle": "stop_go",
+    "final_SOC": 0.54998335723474423,
+    "mean_speed_kph": 23.023255813953472,
+    "max_speed_kph": 39.6,
+    "max_engine_torque_proxy_Nm": 1566.6693589733509,
+    "engine_switch_count": 12,
+    "engine_on_fraction": 0.21926910299003322
+  }
+]
