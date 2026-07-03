@@ -230,7 +230,7 @@
       <h2>Profile Results</h2>
       <p>Each drive profile is shown as a continuous scroll section.</p>
       <nav class="profile-nav" aria-label="Drive profile navigation">
-        <a href="#profile-urban">Urban</a><a href="#profile-highway">Highway</a><a href="#profile-high_load">High Load</a><a href="#profile-low_soc_urban">Low SOC Urban</a><a href="#profile-low_soc_high_load">Low SOC High Load</a><a href="#profile-soc_recovery_test">SOC Recovery Test</a><a href="#profile-high_soc_urban">High SOC Urban</a><a href="#profile-high_soc_highway">High SOC Highway</a><a href="#profile-high_soc_high_load">High SOC High Load</a><a href="#profile-high_soc_regen">High SOC Regen</a><a href="#profile-regen">Regen</a><a href="#profile-stop_go">Stop Go</a>
+        <a href="#profile-urban">Urban</a><a href="#profile-highway">Highway</a><a href="#profile-high_load">High Load</a><a href="#profile-low_soc_urban">Low SOC Urban</a><a href="#profile-low_soc_high_load">Low SOC High Load</a><a href="#profile-soc_recovery_test">SOC Recovery Test</a><a href="#profile-high_soc_urban">High SOC Urban</a><a href="#profile-high_soc_highway">High SOC Highway</a><a href="#profile-high_soc_high_load">High SOC High Load</a><a href="#profile-high_soc_regen">High SOC Regen</a><a href="#profile-regen">Regen</a><a href="#profile-stop_go">Stop Go</a><a href="#profile-udds">UDDS</a><a href="#profile-hwfet">HWFET</a><a href="#profile-wltp_like">WLTP Like</a>
       </nav>
       <section class="profile-stack">
         
@@ -786,6 +786,144 @@
         </div>
       </section>
     
+      <section class="profile-section" id="profile-udds">
+        <div class="profile-heading">
+          <h3>UDDS</h3>
+          <a href="#top">top</a>
+        </div>
+        <div class="profile-plots">
+          
+        <article class="plot-card summary">
+          <a href="figures/drive_udds_soc_speed_engine_torque.png"><img src="figures/drive_udds_soc_speed_engine_torque.png" alt="SOC, speed, engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>SOC, speed, engine torque proxy</strong>
+            <span>One-page profile trace. Torque proxy is scaled as P_kw / wheel_omega and shown in kN m.</span>
+            <div class="links"><a href="figures/drive_udds_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_udds_soc_speed_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_udds_soc.png"><img src="figures/drive_udds_soc.png" alt="SOC"></a>
+          <div class="plot-caption">
+            <strong>SOC</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_udds_soc.pdf">PDF</a><a href="figures/drive_udds_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_udds_speed.png"><img src="figures/drive_udds_speed.png" alt="Speed"></a>
+          <div class="plot-caption">
+            <strong>Speed</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_udds_speed.pdf">PDF</a><a href="figures/drive_udds_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_udds_engine_torque.png"><img src="figures/drive_udds_engine_torque.png" alt="Engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>Engine torque proxy</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_udds_engine_torque.pdf">PDF</a><a href="figures/drive_udds_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        </div>
+      </section>
+    
+      <section class="profile-section" id="profile-hwfet">
+        <div class="profile-heading">
+          <h3>HWFET</h3>
+          <a href="#top">top</a>
+        </div>
+        <div class="profile-plots">
+          
+        <article class="plot-card summary">
+          <a href="figures/drive_hwfet_soc_speed_engine_torque.png"><img src="figures/drive_hwfet_soc_speed_engine_torque.png" alt="SOC, speed, engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>SOC, speed, engine torque proxy</strong>
+            <span>One-page profile trace. Torque proxy is scaled as P_kw / wheel_omega and shown in kN m.</span>
+            <div class="links"><a href="figures/drive_hwfet_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_hwfet_soc_speed_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_soc.png"><img src="figures/drive_hwfet_soc.png" alt="SOC"></a>
+          <div class="plot-caption">
+            <strong>SOC</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_hwfet_soc.pdf">PDF</a><a href="figures/drive_hwfet_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_speed.png"><img src="figures/drive_hwfet_speed.png" alt="Speed"></a>
+          <div class="plot-caption">
+            <strong>Speed</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_hwfet_speed.pdf">PDF</a><a href="figures/drive_hwfet_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_engine_torque.png"><img src="figures/drive_hwfet_engine_torque.png" alt="Engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>Engine torque proxy</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_hwfet_engine_torque.pdf">PDF</a><a href="figures/drive_hwfet_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        </div>
+      </section>
+    
+      <section class="profile-section" id="profile-wltp_like">
+        <div class="profile-heading">
+          <h3>WLTP Like</h3>
+          <a href="#top">top</a>
+        </div>
+        <div class="profile-plots">
+          
+        <article class="plot-card summary">
+          <a href="figures/drive_wltp_like_soc_speed_engine_torque.png"><img src="figures/drive_wltp_like_soc_speed_engine_torque.png" alt="SOC, speed, engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>SOC, speed, engine torque proxy</strong>
+            <span>One-page profile trace. Torque proxy is scaled as P_kw / wheel_omega and shown in kN m.</span>
+            <div class="links"><a href="figures/drive_wltp_like_soc_speed_engine_torque.pdf">PDF</a><a href="figures/drive_wltp_like_soc_speed_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_soc.png"><img src="figures/drive_wltp_like_soc.png" alt="SOC"></a>
+          <div class="plot-caption">
+            <strong>SOC</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_wltp_like_soc.pdf">PDF</a><a href="figures/drive_wltp_like_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_speed.png"><img src="figures/drive_wltp_like_speed.png" alt="Speed"></a>
+          <div class="plot-caption">
+            <strong>Speed</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_wltp_like_speed.pdf">PDF</a><a href="figures/drive_wltp_like_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_engine_torque.png"><img src="figures/drive_wltp_like_engine_torque.png" alt="Engine torque proxy"></a>
+          <div class="plot-caption">
+            <strong>Engine torque proxy</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_wltp_like_engine_torque.pdf">PDF</a><a href="figures/drive_wltp_like_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        </div>
+      </section>
+    
       </section>
     </section>
 
@@ -905,6 +1043,33 @@
             <strong>Stop Go</strong>
             <span>Battery SOC and SOC reference for this drive profile.</span>
             <div class="links"><a href="figures/drive_stop_go_soc.pdf">PDF</a><a href="figures/drive_stop_go_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_udds_soc.png"><img src="figures/drive_udds_soc.png" alt="UDDS"></a>
+          <div class="plot-caption">
+            <strong>UDDS</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_udds_soc.pdf">PDF</a><a href="figures/drive_udds_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_soc.png"><img src="figures/drive_hwfet_soc.png" alt="HWFET"></a>
+          <div class="plot-caption">
+            <strong>HWFET</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_hwfet_soc.pdf">PDF</a><a href="figures/drive_hwfet_soc.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_soc.png"><img src="figures/drive_wltp_like_soc.png" alt="WLTP Like"></a>
+          <div class="plot-caption">
+            <strong>WLTP Like</strong>
+            <span>Battery SOC and SOC reference for this drive profile.</span>
+            <div class="links"><a href="figures/drive_wltp_like_soc.pdf">PDF</a><a href="figures/drive_wltp_like_soc.svg">SVG</a></div>
           </div>
         </article>
     
@@ -1029,6 +1194,33 @@
           </div>
         </article>
     
+        <article class="plot-card">
+          <a href="figures/drive_udds_engine_torque.png"><img src="figures/drive_udds_engine_torque.png" alt="UDDS"></a>
+          <div class="plot-caption">
+            <strong>UDDS</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_udds_engine_torque.pdf">PDF</a><a href="figures/drive_udds_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_engine_torque.png"><img src="figures/drive_hwfet_engine_torque.png" alt="HWFET"></a>
+          <div class="plot-caption">
+            <strong>HWFET</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_hwfet_engine_torque.pdf">PDF</a><a href="figures/drive_hwfet_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_engine_torque.png"><img src="figures/drive_wltp_like_engine_torque.png" alt="WLTP Like"></a>
+          <div class="plot-caption">
+            <strong>WLTP Like</strong>
+            <span>Wheel-equivalent engine torque proxy in kN m.</span>
+            <div class="links"><a href="figures/drive_wltp_like_engine_torque.pdf">PDF</a><a href="figures/drive_wltp_like_engine_torque.svg">SVG</a></div>
+          </div>
+        </article>
+    
       </div>
     </section>
     
@@ -1147,6 +1339,33 @@
             <strong>Stop Go</strong>
             <span>Reference and simulated vehicle speed.</span>
             <div class="links"><a href="figures/drive_stop_go_speed.pdf">PDF</a><a href="figures/drive_stop_go_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_udds_speed.png"><img src="figures/drive_udds_speed.png" alt="UDDS"></a>
+          <div class="plot-caption">
+            <strong>UDDS</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_udds_speed.pdf">PDF</a><a href="figures/drive_udds_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_hwfet_speed.png"><img src="figures/drive_hwfet_speed.png" alt="HWFET"></a>
+          <div class="plot-caption">
+            <strong>HWFET</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_hwfet_speed.pdf">PDF</a><a href="figures/drive_hwfet_speed.svg">SVG</a></div>
+          </div>
+        </article>
+    
+        <article class="plot-card">
+          <a href="figures/drive_wltp_like_speed.png"><img src="figures/drive_wltp_like_speed.png" alt="WLTP Like"></a>
+          <div class="plot-caption">
+            <strong>WLTP Like</strong>
+            <span>Reference and simulated vehicle speed.</span>
+            <div class="links"><a href="figures/drive_wltp_like_speed.pdf">PDF</a><a href="figures/drive_wltp_like_speed.svg">SVG</a></div>
           </div>
         </article>
     
