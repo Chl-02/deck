@@ -210,6 +210,102 @@
 - PDF: `/home/yejun/meta_rl/results/figures/latest/drive_soc_recovery_test_engine_torque.pdf`
 - SVG: `/home/yejun/meta_rl/results/figures/latest/drive_soc_recovery_test_engine_torque.svg`
 
+## High Soc Urban SOC, speed, and engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc_speed_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc_speed_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc_speed_engine_torque.svg`
+
+## High Soc Urban SOC
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_soc.svg`
+
+## High Soc Urban speed tracking
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_speed.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_speed.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_speed.svg`
+
+## High Soc Urban engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_urban_engine_torque.svg`
+
+## High Soc Highway SOC, speed, and engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc_speed_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc_speed_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc_speed_engine_torque.svg`
+
+## High Soc Highway SOC
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_soc.svg`
+
+## High Soc Highway speed tracking
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_speed.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_speed.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_speed.svg`
+
+## High Soc Highway engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_highway_engine_torque.svg`
+
+## High Soc High Load SOC, speed, and engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc_speed_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc_speed_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc_speed_engine_torque.svg`
+
+## High Soc High Load SOC
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_soc.svg`
+
+## High Soc High Load speed tracking
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_speed.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_speed.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_speed.svg`
+
+## High Soc High Load engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_high_load_engine_torque.svg`
+
+## High Soc Regen SOC, speed, and engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc_speed_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc_speed_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc_speed_engine_torque.svg`
+
+## High Soc Regen SOC
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_soc.svg`
+
+## High Soc Regen speed tracking
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_speed.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_speed.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_speed.svg`
+
+## High Soc Regen engine torque proxy (kN m)
+
+- PNG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_engine_torque.png`
+- PDF: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_engine_torque.pdf`
+- SVG: `/home/yejun/meta_rl/results/figures/latest/drive_high_soc_regen_engine_torque.svg`
+
 ## Regen SOC, speed, and engine torque proxy (kN m)
 
 - PNG: `/home/yejun/meta_rl/results/figures/latest/drive_regen_soc_speed_engine_torque.png`

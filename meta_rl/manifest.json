@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-03T04:52:54.586624+00:00",
-  "artifact_count": 165,
+  "generated_at": "2026-07-03T05:34:53.106809+00:00",
+  "artifact_count": 213,
   "files": [
     {
       "path": "data/drive_profile_metrics.csv",
-      "bytes": 869,
-      "sha256": "6ea6890643e5dc87c38dc6f4b5d0394f75e4f0ac547f274c969e8775511b8595"
+      "bytes": 1397,
+      "sha256": "bf3b5c2aa0d7b3a1ebae4cc55c1d3b8610391227396d6376ff597df2d9d1eb95"
     },
     {
       "path": "data/drive_profile_metrics.json",
-      "bytes": 2295,
-      "sha256": "7b334be68ec926d9e6cfe3a6419951797c8b440e3e05cfd7d28b94077a2a9239"
+      "bytes": 4399,
+      "sha256": "4fa802504fc8b5ea6e61cd4590fe1e3f3c0b8a62bf518fa5b5895e21ec3e3128"
     },
     {
       "path": "data/experiment_metrics.csv",
@@ -69,18 +69,18 @@
     },
     {
       "path": "figure_gallery.md",
-      "bytes": 13100,
-      "sha256": "b5130920850aab2ba6be8f98b07c6013e247f4a25ea3fff40c285546f3616061"
+      "bytes": 18144,
+      "sha256": "840993cb2adfbb9b41209367f50dcc3876bd9a523b078dee13c9a684bb23cfcc"
     },
     {
       "path": "figures/calibration_offsets.pdf",
       "bytes": 11505,
-      "sha256": "ff0d00e973fe70559017c5c4d5c26c5d06875c06f7dbde181f4967ccfdce156d"
+      "sha256": "27b263b13b78dd6ac224f8d2bf3bdc7d061430148699ec2a4a9b74da07472e2d"
     },
     {
       "path": "figures/calibration_offsets.png",
       "bytes": 174649,
-      "sha256": "fc656dcd3a3d5c3c4e4813feb39955a20bd490169b0b16ba52e6fe3b269774fe"
+      "sha256": "1861670adee5af10d29999b16ab465bd549ef45eb04eb348e8606a0d5cbbbb4a"
     },
     {
       "path": "figures/calibration_offsets.svg",
@@ -90,12 +90,12 @@
     {
       "path": "figures/drive_high_load_engine_torque.pdf",
       "bytes": 6563,
-      "sha256": "76e640112b741edcfd1993c3e152b7d235d0699fcaf3a3ad04efaaa2cd47f039"
+      "sha256": "bb07f1636c663912206d489a91163263de6c09eb21ce174abeb2d7d74a84fd06"
     },
     {
       "path": "figures/drive_high_load_engine_torque.png",
       "bytes": 142238,
-      "sha256": "60e41d0ac1ffff68608b56fa112f058c0efcca191e22ba6419599fd5854e2c93"
+      "sha256": "b9f911da080a3052fbc252faca1ad955e60907ae56b87d9a24d4ae885727a4b3"
     },
     {
       "path": "figures/drive_high_load_engine_torque.svg",
@@ -105,12 +105,12 @@
     {
       "path": "figures/drive_high_load_soc.pdf",
       "bytes": 9030,
-      "sha256": "1cc4bc56a407cbef9126de6f9b5ecb0f735e02dece5507136f2987bff14e1f1d"
+      "sha256": "a6f2217cbde84efccc2cf7fe9a8c9d57e72fcf5a5d7e8e76c2b23a5b06cf3703"
     },
     {
       "path": "figures/drive_high_load_soc.png",
       "bytes": 180843,
-      "sha256": "ef0e927c7b299e6b60d564e4c3a1d20f8f8765c22e63ff6030c946fa1364fd82"
+      "sha256": "0cab2e741dc84768f1c455bca21a996d6a56e4f3f2d69d48850f197072ab47e0"
     },
     {
       "path": "figures/drive_high_load_soc.svg",
@@ -120,12 +120,12 @@
     {
       "path": "figures/drive_high_load_soc_speed_engine_torque.pdf",
       "bytes": 17379,
-      "sha256": "e869111c300255215aac218efb6477072ead02e9b219bacb288f3acc34b6e4d2"
+      "sha256": "2616249c0b1c5ea503f4f02cb30473b79f776f50ea33b909d8347134a9bb1f95"
     },
     {
       "path": "figures/drive_high_load_soc_speed_engine_torque.png",
       "bytes": 404484,
-      "sha256": "0d72e6fa2c51e62888831aeb8d3f97cef0863956ab1e168b34c8fd2535ef5ac2"
+      "sha256": "0cd72755c4c693f7e7e3627b85c09d7668d9a9674c19c6d68245ca87182435c0"
     },
     {
       "path": "figures/drive_high_load_soc_speed_engine_torque.svg",
@@ -135,12 +135,12 @@
     {
       "path": "figures/drive_high_load_speed.pdf",
       "bytes": 6331,
-      "sha256": "d4db8d8042c0ca11c947d7278d92dbbea953f162e35b3331714ab967375f6d94"
+      "sha256": "de2033467566c55bce40918f2e14fc84dfbe6f5fa8967c41fde4dd96b60bd128"
     },
     {
       "path": "figures/drive_high_load_speed.png",
       "bytes": 189611,
-      "sha256": "d6ea2ef3ebc2a8e0a56d047d2dcf3d3bbadb1dc00b53da61563d754cf4fa1e60"
+      "sha256": "c101b001dfc0d376f975aa3620f22faf2a3ec0b939a983002950443f13ba534d"
     },
     {
       "path": "figures/drive_high_load_speed.svg",
@@ -148,14 +148,254 @@
       "sha256": "155e26c2ea1d206758df8d04dc38cc5213244bc9edda85e2af0d6fb342c2ba70"
     },
     {
+      "path": "figures/drive_high_soc_high_load_engine_torque.pdf",
+      "bytes": 6514,
+      "sha256": "63e4558754f0db6e8657885082e00e66bd0ed3ce461b87e7d44f9c16adc89c54"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_engine_torque.png",
+      "bytes": 139877,
+      "sha256": "3c524b01a56665518b886372b6bd7a7c4279834a761f4c56bb526d1342a363e0"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_engine_torque.svg",
+      "bytes": 45194,
+      "sha256": "033d2bf89148b7562f606a3d62bb5502c882852747729e5cfea7316009f1bd6f"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc.pdf",
+      "bytes": 8750,
+      "sha256": "61554e67db1f72590b462d0cc38dfd4e3a7385cdf69833c897d477e73ebe9469"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc.png",
+      "bytes": 133231,
+      "sha256": "c99caa8828ceb95b699c91e6e2a8c28aab140c761af9295dad0f879bc0949cd8"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc.svg",
+      "bytes": 44372,
+      "sha256": "60152d51f80072f53ab20bbf0938aa75454b6bb4c2daf1de963cd84fbfa0785d"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc_speed_engine_torque.pdf",
+      "bytes": 16896,
+      "sha256": "7711fc10a53de74c47d1c714f2ab153bcef5dd78978dc5d805c978e4ae4d89d5"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc_speed_engine_torque.png",
+      "bytes": 365186,
+      "sha256": "6ca0f08a3c0db042870a85c039a9f7c6b7879d11b0e8c59bdec206c439fdc957"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_soc_speed_engine_torque.svg",
+      "bytes": 103894,
+      "sha256": "a82e8b13530a803489770b120d199c9083cd90b4ab1825d425be6d3994e9325c"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_speed.pdf",
+      "bytes": 6338,
+      "sha256": "d66c9751b98d821840a3e1e3afdb12a95cb223e84c716213749cc7cf05764a03"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_speed.png",
+      "bytes": 190754,
+      "sha256": "f7b61d720a6ab9937716f4db443c1e6b5863126c4319f2fbd2fd03b506a0e6bd"
+    },
+    {
+      "path": "figures/drive_high_soc_high_load_speed.svg",
+      "bytes": 51477,
+      "sha256": "5f513ea3f76644513dd2ef1c626b470a9cd787703d2e6e82f70f86916cdd2a33"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_engine_torque.pdf",
+      "bytes": 6810,
+      "sha256": "bd3dc76dbdedd7dff8c89dc21e81a209fc0e5ea945c6163e439bd57fceeeb42b"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_engine_torque.png",
+      "bytes": 170550,
+      "sha256": "7500ceb4c376c284ab72058ea6ef1cd12ccefc44e68e1fdb7785bc6b08a456d9"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_engine_torque.svg",
+      "bytes": 42934,
+      "sha256": "9f7bf5b426c5cfd0d1513b9abb376a0a2f9deaa93e1159ca353af4de495da883"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc.pdf",
+      "bytes": 8797,
+      "sha256": "118b9047b3349f808d4684bb3d435e73e85c6579573b077c539ebe55b4da28a4"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc.png",
+      "bytes": 140744,
+      "sha256": "7791a8a145bf1a625a9d2301b6781234d7e7cf3f7ac48486bfd50114aa23a7b9"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc.svg",
+      "bytes": 44173,
+      "sha256": "ee7003956b71b7e5e3f87c1dca977bd65611a625ff740d25bf36edfcc3d6d843"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc_speed_engine_torque.pdf",
+      "bytes": 17550,
+      "sha256": "e8b1363f857e4d0a6b02841db95eef45e6de2aab070cbc55ed39a99313e2328d"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc_speed_engine_torque.png",
+      "bytes": 370766,
+      "sha256": "d8f48d82d6acc79b150af969825a40d99f94a43af810f5300ee2e460632a08c7"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_soc_speed_engine_torque.svg",
+      "bytes": 101772,
+      "sha256": "d1f9f8e827809f8a466b96f6a4880f0d851671b479bec4c8a0ef9507756bb22f"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_speed.pdf",
+      "bytes": 7563,
+      "sha256": "7272ed2183711fcaf9ffa5daf09f235e58daaadbf4287a60706ce8089aa35df9"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_speed.png",
+      "bytes": 179437,
+      "sha256": "311d0f7b1bf1c96f0111539627a1291a9b31d37d4968c1ed814387650471f2bc"
+    },
+    {
+      "path": "figures/drive_high_soc_highway_speed.svg",
+      "bytes": 50455,
+      "sha256": "a7d159c5d381c953235537067df39efed6f055ab16b6169307b69718fbd2d575"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_engine_torque.pdf",
+      "bytes": 5807,
+      "sha256": "afd4e17eb7a8493fdb6e07d443de309955ce0e39285e456c66f9666bc3bf9d3d"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_engine_torque.png",
+      "bytes": 71515,
+      "sha256": "1e71595c578202969b32b736a48fb97f2bc0471ed69fc3267f831c87071f615c"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_engine_torque.svg",
+      "bytes": 46044,
+      "sha256": "d75e4761aa6c95ffa3ae79505fd22d0993ff52b7a33b903d3366c8e241b1d8e8"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc.pdf",
+      "bytes": 8821,
+      "sha256": "dcd29d5a32e6d7c591373e19e25bb14a3bd04363b0db5a97793e6727facf229e"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc.png",
+      "bytes": 158823,
+      "sha256": "95a31ec3e6a4920a3be9a87c89c33aa1ed826e1f5fe707fe26f883dc9ad8bd1d"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc.svg",
+      "bytes": 43802,
+      "sha256": "8b917011bd4e8086c9c4c749811f377b654c0108176d9ce3e47bab59564d363d"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc_speed_engine_torque.pdf",
+      "bytes": 15536,
+      "sha256": "8c5264e0110bc06c8bb8b51502d1d5a3933c407b87a305115e2fe070698efaeb"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc_speed_engine_torque.png",
+      "bytes": 317993,
+      "sha256": "5b929693b8df75cbc40b9a689489e9626ab7a7bcaa3984fa66afdb5575e5f0fc"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_soc_speed_engine_torque.svg",
+      "bytes": 100446,
+      "sha256": "5321c8e9470a8fce6c5bc67159b8e41406efb4e40ff458e3f93da80f352f5cbc"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_speed.pdf",
+      "bytes": 6746,
+      "sha256": "53337d339042708fe8313b25a5d15a5112f112db1eed13be9a0b9548cd23eff5"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_speed.png",
+      "bytes": 200618,
+      "sha256": "e88ff228b5d47724750fe08767f0633769e3bc1f58eeb328b0cfe21d584bd942"
+    },
+    {
+      "path": "figures/drive_high_soc_regen_speed.svg",
+      "bytes": 52507,
+      "sha256": "995c38e385269f41046ac81092a3da47c183e6d78f889764f5f5f674b206e69f"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_engine_torque.pdf",
+      "bytes": 5427,
+      "sha256": "418a0dc5d47a17859c3efc51975966d1dd6149417d4a9008db89d100e57801c6"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_engine_torque.png",
+      "bytes": 85150,
+      "sha256": "790924841e151136b7212d02e851214dc5ec5005d9f65f82fe79d8aa9bb72b47"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_engine_torque.svg",
+      "bytes": 41257,
+      "sha256": "da8b2d2f8700fe7dad264d67ec69c51606f247250cdd3be000fe50525d6675e0"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc.pdf",
+      "bytes": 8624,
+      "sha256": "7349acbba8b20659bfc46a53fa4e8edb85eaf883cc40250a0c73a4ddd38e4b74"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc.png",
+      "bytes": 152976,
+      "sha256": "d9635b3443fdfb48d45dc81113888360adbf580e8fd425d9bf3b096184d3dac5"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc.svg",
+      "bytes": 46920,
+      "sha256": "985fa5b77e84b42574ebd9ea596b03a23e7c4134567a550920119aad430cf807"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc_speed_engine_torque.pdf",
+      "bytes": 16617,
+      "sha256": "545a5d167a7fcecfafabda04636ba8a962c5fa983a5671096dd14ab628f6bc70"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc_speed_engine_torque.png",
+      "bytes": 363333,
+      "sha256": "e6db7f0f0ed4bb3be054fc7dc541f9b0dd140d4e409befc0055b2dff3764c49b"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_soc_speed_engine_torque.svg",
+      "bytes": 101449,
+      "sha256": "5e56147a6df9a4b6084e218d096440f43666b3277b22a4bdebb1037d8080a870"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_speed.pdf",
+      "bytes": 7433,
+      "sha256": "c55623df4381d26f07f2872e62f3d8096aef1d0963a8cc0b6a71c564416b9fe1"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_speed.png",
+      "bytes": 227301,
+      "sha256": "cbf5016b7acd73053f0e8a3ab1cd463c41ffaf9407f29e972a4e8af9c35820d9"
+    },
+    {
+      "path": "figures/drive_high_soc_urban_speed.svg",
+      "bytes": 49676,
+      "sha256": "35ff6caff07eb98da6ee725811d7aeb9754de6cb57a28d41775ed39fe7701a78"
+    },
+    {
       "path": "figures/drive_highway_engine_torque.pdf",
       "bytes": 6935,
-      "sha256": "ae022bd04d6f0b6512ff28803b00002f19b5572c365c671289ef20b37212572d"
+      "sha256": "0ad3987bc041cfcdcec7b3a58d237a52a9d7534028c1496b9adb9a9ffbfc3e9a"
     },
     {
       "path": "figures/drive_highway_engine_torque.png",
       "bytes": 172891,
-      "sha256": "e21b18ed2387e9ebfa7121b086a6ef6718c340066c492f1fee6dda9a33cc03a3"
+      "sha256": "d7d0b12092f280ebc08445028756a879aed5e301eef8e52edec03b9695bd2ce5"
     },
     {
       "path": "figures/drive_highway_engine_torque.svg",
@@ -165,12 +405,12 @@
     {
       "path": "figures/drive_highway_soc.pdf",
       "bytes": 9234,
-      "sha256": "3c842c9127d861ada7d1faf057b639f949cac5569dc26e9cf275995d9937242c"
+      "sha256": "8488d53000f7cdc1c91a5027c6ccb589b20e1a77b627d533293ba5e4a460188f"
     },
     {
       "path": "figures/drive_highway_soc.png",
       "bytes": 165411,
-      "sha256": "b5274d903119e2b7a0a66afa31924c6cf8d98129b2526f5307ad700261b45679"
+      "sha256": "3972c023ea0207aa0926e640200d0d99812c6fea6e89a945a8a31acff7de98da"
     },
     {
       "path": "figures/drive_highway_soc.svg",
@@ -180,12 +420,12 @@
     {
       "path": "figures/drive_highway_soc_speed_engine_torque.pdf",
       "bytes": 17242,
-      "sha256": "51650271ab263061af59f6ccde131ab034c776059d758ebdf8c97edcf5ed80f8"
+      "sha256": "64365f8bf09e08dadb29c64218f392c9036b3d7d50d62331639663c22278c41c"
     },
     {
       "path": "figures/drive_highway_soc_speed_engine_torque.png",
       "bytes": 380132,
-      "sha256": "7e6a476494511b2d007ecb9e404ca4e47995dd77dd5aeb47233b0de929795f00"
+      "sha256": "c434e6aeece05249ba1d495393c913bdc4b24ab3a51bfd32042d6957547beca3"
     },
     {
       "path": "figures/drive_highway_soc_speed_engine_torque.svg",
@@ -195,12 +435,12 @@
     {
       "path": "figures/drive_highway_speed.pdf",
       "bytes": 7556,
-      "sha256": "87f9a91714beea84f0ca56c38bb72fdeebe388d712d7c73fd39ba64bc73ba03b"
+      "sha256": "5a92468a00817f77e57ea357564e14a9bf6b946d35aa37493cf8e6e1716b8051"
     },
     {
       "path": "figures/drive_highway_speed.png",
       "bytes": 177779,
-      "sha256": "2de74113239780eeef6e1dc102f64a00097ea1e2bd83025d4a07fc64a8d90fe4"
+      "sha256": "5464548c4fd861ce3fb74e42db47ad36c95698c21a7f59d2e5535bb0b0ae097b"
     },
     {
       "path": "figures/drive_highway_speed.svg",
@@ -210,12 +450,12 @@
     {
       "path": "figures/drive_low_soc_high_load_engine_torque.pdf",
       "bytes": 6836,
-      "sha256": "c01e564ff608ea89794e10a69d5fb27e671397c7f70b24fa401f28e82738778b"
+      "sha256": "3259e1d0395611df12de5bcb718568f941d985a8f446a7099a235cdf5a55a059"
     },
     {
       "path": "figures/drive_low_soc_high_load_engine_torque.png",
       "bytes": 147993,
-      "sha256": "31a996f08d0d6ca10cfce61548560dcbd1c4b6ec8494088ed8072bc1746cb593"
+      "sha256": "b635645767b4a699dd471c5d5f841948fe5b2a95b8f966b0a1c599f5031428b0"
     },
     {
       "path": "figures/drive_low_soc_high_load_engine_torque.svg",
@@ -225,12 +465,12 @@
     {
       "path": "figures/drive_low_soc_high_load_soc.pdf",
       "bytes": 9187,
-      "sha256": "5820222c8cd9cf665810ef6d112b7440f434607712e459edd4ad57c77e4b4cd2"
+      "sha256": "bb127875962884406ab5df933c7f02eac00f888c19992e82b994bf69e90bb4a0"
     },
     {
       "path": "figures/drive_low_soc_high_load_soc.png",
       "bytes": 153484,
-      "sha256": "8d1652c25c2d3412cc18a4f4e583607a8ffb538fe9ff1c068ae630207ceb6f76"
+      "sha256": "71d3622e31264d16dafef0ebd07b8d880e2b92003d6503849e7ffcf418492ebc"
     },
     {
       "path": "figures/drive_low_soc_high_load_soc.svg",
@@ -240,12 +480,12 @@
     {
       "path": "figures/drive_low_soc_high_load_soc_speed_engine_torque.pdf",
       "bytes": 16467,
-      "sha256": "008457537442bdfc53523a490d3b0ba309faeeaeddadbf5c5da964da6abbc94a"
+      "sha256": "245f4b052505f7f840158460765d84a2f70d7a6eaa7f17ccc12f6c2c85e67313"
     },
     {
       "path": "figures/drive_low_soc_high_load_soc_speed_engine_torque.png",
       "bytes": 355195,
-      "sha256": "62a7d1ad97ec2d484c54ec010e243b41eef7bfef700f5763e6d6c73eaa3fc959"
+      "sha256": "781b3d2aa3cb8603e891db14dd7c1b0c11c2d00461068b1e405937d49f42ec2c"
     },
     {
       "path": "figures/drive_low_soc_high_load_soc_speed_engine_torque.svg",
@@ -255,12 +495,12 @@
     {
       "path": "figures/drive_low_soc_high_load_speed.pdf",
       "bytes": 6341,
-      "sha256": "6323d4117e3652b054b3772caf17a6bc738cf0a2160a0d247c1d6f33210f5899"
+      "sha256": "25ed7b81ef4cbbf5d556d1c8b3c639b9f7f35d43fb19cf9209147669233d5794"
     },
     {
       "path": "figures/drive_low_soc_high_load_speed.png",
       "bytes": 191360,
-      "sha256": "ee88e7c7699c683847f0b285ee382aa036598e87fa8a676d8103655711832bfe"
+      "sha256": "a5062796cbd85d7370ae0857b49af3f8e0e8fa5f9876d4cf436fd233ade92fbd"
     },
     {
       "path": "figures/drive_low_soc_high_load_speed.svg",
@@ -270,12 +510,12 @@
     {
       "path": "figures/drive_low_soc_urban_engine_torque.pdf",
       "bytes": 5652,
-      "sha256": "93a809ba5dad536807afce7fd0e3bccf2d5bbcf38ca8a0254ae9188233ea005b"
+      "sha256": "29395543c598ef574fb2bbaaf4c8adb503f3396d87c54ccf9f0d78310a72439f"
     },
     {
       "path": "figures/drive_low_soc_urban_engine_torque.png",
       "bytes": 107847,
-      "sha256": "c445f7ad0b318f08d8835228378cb60efeb5a1d0fc4777aed56b0948123f011d"
+      "sha256": "2b3db55e4608ca16b3fe760c20129ad8ec227936c347123ee6bbeb241be8dda7"
     },
     {
       "path": "figures/drive_low_soc_urban_engine_torque.svg",
@@ -285,12 +525,12 @@
     {
       "path": "figures/drive_low_soc_urban_soc.pdf",
       "bytes": 9038,
-      "sha256": "7b40157533ca23ad7e998914a35a0bed3fbfdecddd755945443310382be1029d"
+      "sha256": "92fd8404e1501ded6f717a23e131404adf497835cdd28c9edc9a920e73937b10"
     },
     {
       "path": "figures/drive_low_soc_urban_soc.png",
       "bytes": 143568,
-      "sha256": "7f3b272c4ebfee8599f0914a378589a2033881851a5bd93709d7a197b2b70b20"
+      "sha256": "a4c32dabab11008baa9c08893417dd3fd8c0d60e809668bf704730402a1bda16"
     },
     {
       "path": "figures/drive_low_soc_urban_soc.svg",
@@ -300,12 +540,12 @@
     {
       "path": "figures/drive_low_soc_urban_soc_speed_engine_torque.pdf",
       "bytes": 16532,
-      "sha256": "b5e46e94fdbc1dae075a1c970165aeb6df783c65e1410beefffa4934642d4c20"
+      "sha256": "262f8cd13857c6b6b4da6810b457ef69821b24b65afd197c7bd957ac16bfdf87"
     },
     {
       "path": "figures/drive_low_soc_urban_soc_speed_engine_torque.png",
       "bytes": 360013,
-      "sha256": "f98163b4fe85184b466473404507e21cefd44006cfe576eebc134d47f3bd5476"
+      "sha256": "cfea7cb56807280d29d8686a467d05d504810f69e12ecaa56f5c1944de4ac252"
     },
     {
       "path": "figures/drive_low_soc_urban_soc_speed_engine_torque.svg",
@@ -315,12 +555,12 @@
     {
       "path": "figures/drive_low_soc_urban_speed.pdf",
       "bytes": 7432,
-      "sha256": "8aa668042cceac0062e6424bd375a661c6118a1d79e40da73bbacbdea615d279"
+      "sha256": "dfee1734c55f7e2e6e495e3b0de20a7a2df26abbd3009b10b685e6e82a6ece8e"
     },
     {
       "path": "figures/drive_low_soc_urban_speed.png",
       "bytes": 227762,
-      "sha256": "589f3f51e7e2d3aab24d507c876347667a2ff44b3af9798d2ef4900aac1c29f6"
+      "sha256": "491ecf0c2cb26093d9ef2496f8f9dcde1ee536620feba7ce7260cf31d3abdf96"
     },
     {
       "path": "figures/drive_low_soc_urban_speed.svg",
@@ -330,12 +570,12 @@
     {
       "path": "figures/drive_regen_engine_torque.pdf",
       "bytes": 5825,
-      "sha256": "c7f931d9d19ab002deedecfa9394480cad6d8d37c20439efbcbfc762a1af3bfe"
+      "sha256": "76956aa490fb9a53add5f4b423a28fd673ac7ee31a5d859607e55ede54507fe1"
     },
     {
       "path": "figures/drive_regen_engine_torque.png",
       "bytes": 79917,
-      "sha256": "561dc9ad19a9a6cfaba3042e8a5117587080d04dff1956c343d6d404e2b1c32f"
+      "sha256": "5d7260a50516b3ff717ea3d41e9c25655d34013acf94f0c044c41457c41e0006"
     },
     {
       "path": "figures/drive_regen_engine_torque.svg",
@@ -345,12 +585,12 @@
     {
       "path": "figures/drive_regen_soc.pdf",
       "bytes": 8777,
-      "sha256": "318571bd1e504967776db892eec41a4f33bd0ecc985be76b899e23544a92d810"
+      "sha256": "31efa153636fccec9640f72b9aec2349a25ce245fbb0ca65669c6105773da1fb"
     },
     {
       "path": "figures/drive_regen_soc.png",
       "bytes": 158288,
-      "sha256": "2eaed048d5d4d82a09a5a2c720270e11c1e45a19c1fdb50ba84f3bc7fe13c377"
+      "sha256": "d99a9dd73edb851835d6e32a0596950825310589a433263fa67abff61a48d23c"
     },
     {
       "path": "figures/drive_regen_soc.svg",
@@ -360,12 +600,12 @@
     {
       "path": "figures/drive_regen_soc_speed_engine_torque.pdf",
       "bytes": 15872,
-      "sha256": "880b75d470556beeef3e93fd19eb4749529bcedc48f1655ab52e39c0f5bd7361"
+      "sha256": "f404c74f8d17d8ae60b54f2e82da1c92e5d0db852ccf003f3f5b0029b1365b3f"
     },
     {
       "path": "figures/drive_regen_soc_speed_engine_torque.png",
       "bytes": 329575,
-      "sha256": "bc8050f50a71514678d9116b50d2a1907864b3717c898e1b828db78eb4c9c46d"
+      "sha256": "6234bb5063709f97c122101fe5bcf7d30548113f3bbc7ff5c1680e5fa3e34f0d"
     },
     {
       "path": "figures/drive_regen_soc_speed_engine_torque.svg",
@@ -375,12 +615,12 @@
     {
       "path": "figures/drive_regen_speed.pdf",
       "bytes": 6735,
-      "sha256": "632bb91c655327b57a83e298c53079878a58f16ae8e35faa4bf402fdabe081ac"
+      "sha256": "45ed2ea2dcd583e3e012e72e668b5c901bafc1de34227a316982688de9d2c73e"
     },
     {
       "path": "figures/drive_regen_speed.png",
       "bytes": 198646,
-      "sha256": "73a11ec066739d6f68c95b2f14976052ac2d637445aec85ba0788ae5bdf65592"
+      "sha256": "408684ce3fb8fd1435ab3d8d4930bcff52769474b6952347dea584b3f202c01a"
     },
     {
       "path": "figures/drive_regen_speed.svg",
@@ -390,12 +630,12 @@
     {
       "path": "figures/drive_soc_recovery_test_engine_torque.pdf",
       "bytes": 6703,
-      "sha256": "92d64c0ccdb3f19bf025d89d632d8537cedc1fb809bdb15109516abb2f8425f5"
+      "sha256": "9ded464173bbb2235164710fa5f796ba040670c53905a9854f00affcc368bfbf"
     },
     {
       "path": "figures/drive_soc_recovery_test_engine_torque.png",
       "bytes": 157644,
-      "sha256": "3cdada8c9c2aa7c2c494a05d84c88ad2e30503c0f7332b2bf686ba3d4a489a84"
+      "sha256": "6881cae8078ce8e5bc4d8e7b9100d1f77f3b72ab59d0c5d991490c9e7391d653"
     },
     {
       "path": "figures/drive_soc_recovery_test_engine_torque.svg",
@@ -405,12 +645,12 @@
     {
       "path": "figures/drive_soc_recovery_test_soc.pdf",
       "bytes": 9196,
-      "sha256": "e5f7802162e6c06d45bcc05406dcbdf09ac83b16b6982454c63bb2bba3a74854"
+      "sha256": "19ee27eb121ad5c78b4de59ec433d731646cd81ba2bc90f3a68ca77594a84f69"
     },
     {
       "path": "figures/drive_soc_recovery_test_soc.png",
       "bytes": 160166,
-      "sha256": "319d059e65f29aea7ab353d1fbd9f4691f8eb18df73c6c95cf2c4e22532d6e59"
+      "sha256": "bfcd9f7ba9843ba936af1c827e5987cdebf7208321ae913cbe7e67d2c2954427"
     },
     {
       "path": "figures/drive_soc_recovery_test_soc.svg",
@@ -420,12 +660,12 @@
     {
       "path": "figures/drive_soc_recovery_test_soc_speed_engine_torque.pdf",
       "bytes": 16854,
-      "sha256": "87f87613d69f9de1719eed28a26cfe4bcdbadc3ac429e541323d30b0465f6644"
+      "sha256": "d196be4b1d315f55507ccf39cc505c3bc37fd24aec7639fe985095ad50624850"
     },
     {
       "path": "figures/drive_soc_recovery_test_soc_speed_engine_torque.png",
       "bytes": 366477,
-      "sha256": "829d48c21cae2209ac19150511ad11d138403aa572c6a74f6a1f26f002f19345"
+      "sha256": "f6429b20083f8c46caa1262bda557c0c9b311ebe93edc2fb8d2829c304d5da10"
     },
     {
       "path": "figures/drive_soc_recovery_test_soc_speed_engine_torque.svg",
@@ -435,12 +675,12 @@
     {
       "path": "figures/drive_soc_recovery_test_speed.pdf",
       "bytes": 7919,
-      "sha256": "70f516f353142c914a304e64f022cf4a838d6574d911850a0dc2912b0b237145"
+      "sha256": "cd07477418bb42cdfc29f38cdd9db49d0a59c45bcfd648baed42fe65e25a0a43"
     },
     {
       "path": "figures/drive_soc_recovery_test_speed.png",
       "bytes": 204185,
-      "sha256": "6b1de0941cabc1296107f388c2c5d1541843a6d1ec4034258b0f6e46608a4343"
+      "sha256": "1d2efd3b0ba02de72f98968ce4db84263e5f63848ffc24044987a5add9fbfcb3"
     },
     {
       "path": "figures/drive_soc_recovery_test_speed.svg",
@@ -450,12 +690,12 @@
     {
       "path": "figures/drive_stop_go_engine_torque.pdf",
       "bytes": 5855,
-      "sha256": "a6762d7f241ece235026d110529fe1c97dfdd9e91f109c355457d8aa305209c2"
+      "sha256": "993d671c12380440aed555f3da8cfcdf40b16717f9883d8cd6fd6d24ee0ee4fe"
     },
     {
       "path": "figures/drive_stop_go_engine_torque.png",
       "bytes": 95879,
-      "sha256": "8bd7ff3fd98f1f4fd796a54bca7a4f2021db655e6ef8c2c035467a2d52de5f0c"
+      "sha256": "a3eba1ece4be4e1cfad5987954ed89c625a4acfed85a64fba8fd5aed9079af6a"
     },
     {
       "path": "figures/drive_stop_go_engine_torque.svg",
@@ -465,12 +705,12 @@
     {
       "path": "figures/drive_stop_go_soc.pdf",
       "bytes": 8395,
-      "sha256": "15b172beadef000720534251be0751ef6694178ae06eefb95f26a59891890be9"
+      "sha256": "9bf0f94ee7328fe48d51197067a9acf203f4c5f7833db3a07ca3e30628e76cf4"
     },
     {
       "path": "figures/drive_stop_go_soc.png",
       "bytes": 132643,
-      "sha256": "7ddfc75829810a3f99e02e60b665a0a485b51af30a9c421e401c439a2e70ff3c"
+      "sha256": "2bf5d323b0fff24a2ee71663ffac6bba85017bc6dcfbd53f2e2509ad081448e2"
     },
     {
       "path": "figures/drive_stop_go_soc.svg",
@@ -480,12 +720,12 @@
     {
       "path": "figures/drive_stop_go_soc_speed_engine_torque.pdf",
       "bytes": 15259,
-      "sha256": "6d8e5ff52d284f780599bc859f6f41c39ef32768042d072b5314f35400a47fe7"
+      "sha256": "a62650c70cdec5067e8a77085215068c2bb4d68f66b13133bb5546e5a691ebd5"
     },
     {
       "path": "figures/drive_stop_go_soc_speed_engine_torque.png",
       "bytes": 318865,
-      "sha256": "7a5e738de41db1ce5a98d090655e074087bd62f80e041f54db4b109c30559d32"
+      "sha256": "1d770bc3c1c72d21a1caa1db1dcb28b6dcac1b2175e95a766a3fc3e217b048be"
     },
     {
       "path": "figures/drive_stop_go_soc_speed_engine_torque.svg",
@@ -495,12 +735,12 @@
     {
       "path": "figures/drive_stop_go_speed.pdf",
       "bytes": 5999,
-      "sha256": "22cfafa676ef7d4a2af1028678d40fa0050ffef01568740f2ffbddef3982e286"
+      "sha256": "d9984ac430d7930b77a56fd8d162d2e452732e0d92b1dd11c88248a747ec7103"
     },
     {
       "path": "figures/drive_stop_go_speed.png",
       "bytes": 150138,
-      "sha256": "ea511a886edbb557aee84f7732e3543c71d9f2210635e3d0bb3e94e6e81d5e1b"
+      "sha256": "e3b74a7dd4820bc8efd1572d42b7fdfb51b9e93ea0b19d9bcc636872ab1fed86"
     },
     {
       "path": "figures/drive_stop_go_speed.svg",
@@ -510,12 +750,12 @@
     {
       "path": "figures/drive_urban_engine_torque.pdf",
       "bytes": 5553,
-      "sha256": "b763759b9b4a319795abc96eae929ac7538c58375546191aa382b11f32c3144d"
+      "sha256": "8507c9e14e8644d6882f022ce08318bcdbe05d02d8c625b79b2243dee6095f42"
     },
     {
       "path": "figures/drive_urban_engine_torque.png",
       "bytes": 97211,
-      "sha256": "8da0ae3c122c70c7403707496ade7ba83598e80c0645e7d360d3c2d79563eef0"
+      "sha256": "0236b0dcfcddd3a02bc77aac036fc69c8252d31c42bc3faaac2586d7178a789d"
     },
     {
       "path": "figures/drive_urban_engine_torque.svg",
@@ -525,12 +765,12 @@
     {
       "path": "figures/drive_urban_soc.pdf",
       "bytes": 9065,
-      "sha256": "1d7fd0506039b914cadb652ee473c4df339c7a373ee9366ca37701ee068c3974"
+      "sha256": "259bf3d95fc0ed35774b8af831631d5d35a72ac7874704f277239472827027b5"
     },
     {
       "path": "figures/drive_urban_soc.png",
       "bytes": 164922,
-      "sha256": "3c46a39ccc603cc5bc1c7c1d28b30072269b07d7a164d1400e17fc60acfd0d7f"
+      "sha256": "01de45246526f63c354f732291c3bf4cd8c7d4c3ea5a93f79a517e5de449db1a"
     },
     {
       "path": "figures/drive_urban_soc.svg",
@@ -540,12 +780,12 @@
     {
       "path": "figures/drive_urban_soc_speed_engine_torque.pdf",
       "bytes": 16643,
-      "sha256": "00dfa5e279cac671a46206920e9948096c58a71cffe8d39372d5476573ce82bd"
+      "sha256": "b601142554f474ab976ec6b76cbe5fd47b2e6f722cf55334dc6c938ac5551e07"
     },
     {
       "path": "figures/drive_urban_soc_speed_engine_torque.png",
       "bytes": 372513,
-      "sha256": "4c972852cf0a53f6bdbb862f11a7baf1f71d1958e38838f0492ccd20c12dd3b9"
+      "sha256": "b819c1d3f97e487a91b38d10831bd9f232b3cbc0a1192408aacb905a6232d1b0"
     },
     {
       "path": "figures/drive_urban_soc_speed_engine_torque.svg",
@@ -555,12 +795,12 @@
     {
       "path": "figures/drive_urban_speed.pdf",
       "bytes": 7419,
-      "sha256": "7ca31592e25dfe09d536ff314e2fd04545541195a80419ab7fa9b70e7d5feaa0"
+      "sha256": "88b3899e531de1a1589cf85d53116e4a3c426fcba19f8ca34b39b7d206d1b938"
     },
     {
       "path": "figures/drive_urban_speed.png",
       "bytes": 225498,
-      "sha256": "0aec03a5b255dd302c78fd8a5319824d762083cf5a4f39ddec042eb4d9ab3d00"
+      "sha256": "7c3aa743b2c791786dbfbbc14b4bd5d0b8305d46e81843ccf26f1673ad4a93b0"
     },
     {
       "path": "figures/drive_urban_speed.svg",
@@ -570,12 +810,12 @@
     {
       "path": "figures/ems_mode_timeline.pdf",
       "bytes": 5240,
-      "sha256": "8d5e180eb2230e31a45877055cf7eff34069b8bc3d057b65e712548764939ddb"
+      "sha256": "63572547cb337bedb06bef6702bc088a54d8f63a00d4db0fd8b609dea3e028e3"
     },
     {
       "path": "figures/ems_mode_timeline.png",
       "bytes": 48831,
-      "sha256": "2b23155eca909acd5417f962dcdd351703779858f2cf6c2649d880d51fd12846"
+      "sha256": "5cb701c8df23a0d3172bbd1c0a36b667b2b0553f8f6a6daec9f4eb759c8476eb"
     },
     {
       "path": "figures/ems_mode_timeline.svg",
@@ -585,12 +825,12 @@
     {
       "path": "figures/ems_state_machine.pdf",
       "bytes": 2084,
-      "sha256": "69e98fe920b0b160413e18d515adad19969d351e728adbbda62e9210dd8c0c2f"
+      "sha256": "3e801fd396cdadad68a98e87621b2fd5f07cd973839a1b8fbe17701e1fb13a8e"
     },
     {
       "path": "figures/ems_state_machine.png",
       "bytes": 49961,
-      "sha256": "99b458e29364b865e06176eaa881f7e46c34f95d0f2acdebd8cbbd3c7dfd78d3"
+      "sha256": "450f23e0d8590ba4cf2da5fceaa1c2e8479141deb432d80425ddfcd65c8f5d58"
     },
     {
       "path": "figures/ems_state_machine.svg",
@@ -600,12 +840,12 @@
     {
       "path": "figures/engine_motor_torque.pdf",
       "bytes": 9004,
-      "sha256": "97159d763d3871b21a195b972fa29abc2f22be8c485fde4d2955958f722ac626"
+      "sha256": "55a715face64c0b3fa59ad719abc6bcee614d9a02313a28dbc54a0e28b53b529"
     },
     {
       "path": "figures/engine_motor_torque.png",
       "bytes": 206700,
-      "sha256": "72dfe4cd985f326accd3e54e7cae0ad3faaf05dc83d36e7b0454eaa277a55cba"
+      "sha256": "a7fd82bab535454721b07668c59f1e5076755b7f21e5867bb42506fd93684329"
     },
     {
       "path": "figures/engine_motor_torque.svg",
@@ -615,12 +855,12 @@
     {
       "path": "figures/engine_on_timeline.pdf",
       "bytes": 8614,
-      "sha256": "fdcf3c19b8547637a66b0f61117bf05298769d7f62ec7f09263cae5fb6bf7731"
+      "sha256": "e4aba258abf2d3a173ae21703dabbeb8b3840ad9aacdd04f4fe50cda90ea934c"
     },
     {
       "path": "figures/engine_on_timeline.png",
       "bytes": 65693,
-      "sha256": "7f0e8440361d32ae67dd4745e477d545765e403fa8b1589871a6e5a0f0d67238"
+      "sha256": "a8c3ef580aec28b88db0d07004d72aa183282231be6740290549bc58d9507c62"
     },
     {
       "path": "figures/engine_on_timeline.svg",
@@ -630,12 +870,12 @@
     {
       "path": "figures/engine_torque.pdf",
       "bytes": 5547,
-      "sha256": "e32486a7519c8596f9c8ae2c4cd5b13b92d49576502b1977e14081ab4d30cfd9"
+      "sha256": "25bc912adcfa3062db007ce06d628e15efd9e765942c4cec7ce1a1d49bcc38b3"
     },
     {
       "path": "figures/engine_torque.png",
       "bytes": 97536,
-      "sha256": "363ce44c55883f89f7f5a626f048307a1037a5ebe57932a82cbee693a65bdde7"
+      "sha256": "db6eee2b981febb5cd6eb58e032a8a27aa86369e1d33b4117633074b9b0e3a14"
     },
     {
       "path": "figures/engine_torque.svg",
@@ -645,12 +885,12 @@
     {
       "path": "figures/fuel_cumulative.pdf",
       "bytes": 7478,
-      "sha256": "dc83287aacca22e3fc88f7e0b825b9a6f6164dadd05aa01b67aacf7f25c7ac07"
+      "sha256": "528325d3e91d610a7d1f21a384c63a76aa024256de5fc71771ac8eb7b071b0b2"
     },
     {
       "path": "figures/fuel_cumulative.png",
       "bytes": 105077,
-      "sha256": "2d7a6b54c61cc73d56d677015315bb88ad47be4cde99e3408c1ae21ab0f880c0"
+      "sha256": "f94b1b0c95d0edaa19f1fb098640a47cf4ed5c7c7abf2c4a25734d0c60398a86"
     },
     {
       "path": "figures/fuel_cumulative.svg",
@@ -660,12 +900,12 @@
     {
       "path": "figures/meta_rl_pipeline.pdf",
       "bytes": 5139,
-      "sha256": "09507cd4cc16dc9b7ef13e01e66731ac26ca8fea4bd9b811306574c369465069"
+      "sha256": "f4f1647bafbc5d0a4bdc7d64afc49a2684fc5cf0de73bec8374704e8d2cd7790"
     },
     {
       "path": "figures/meta_rl_pipeline.png",
       "bytes": 56069,
-      "sha256": "53ecc01841def8d212fa8d5cacc417826811c3fd044f634583f398df6952c5b6"
+      "sha256": "36acccf5ddfb5a92b9c0acdbd5396fe31d70512819cc4d57519027e98698e0ed"
     },
     {
       "path": "figures/meta_rl_pipeline.svg",
@@ -675,12 +915,12 @@
     {
       "path": "figures/model_architecture.pdf",
       "bytes": 2280,
-      "sha256": "70d44dbb78c50201a8fd7bd51f3269a04b7a8a1541cececadbbe5520e02fe71f"
+      "sha256": "b91fca93cc66f70b7787e3cf6b7f5199d550a02d881e46125a6acccb4ced4568"
     },
     {
       "path": "figures/model_architecture.png",
       "bytes": 40926,
-      "sha256": "1d8335a9c98fa9d4a4ffd518338adf51446ef769d7c66afa488eef2d680bcfcc"
+      "sha256": "5b478d264dd1a14100ec14367a6c21a70116e06dfcfdd4634c6cb7a6cfcf460e"
     },
     {
       "path": "figures/model_architecture.svg",
@@ -690,12 +930,12 @@
     {
       "path": "figures/motor_torque.pdf",
       "bytes": 7078,
-      "sha256": "79933e42d438a2f2e924de0176b1d5777d0e4627e1ca0a415386e89651970a5e"
+      "sha256": "33673cf6d66d04005be59b489c4e248bad0a5de3f58b5c14dacdd471440da936"
     },
     {
       "path": "figures/motor_torque.png",
       "bytes": 191589,
-      "sha256": "1b2624294c6c5c0cd9b9948b83caae0216661870ef11c384874977ba21d127b5"
+      "sha256": "de6b2170ec5f057c295a8b451a167a8bd9b8441b007da641d2b51068bc8c5a5d"
     },
     {
       "path": "figures/motor_torque.svg",
@@ -705,12 +945,12 @@
     {
       "path": "figures/power_split.pdf",
       "bytes": 12436,
-      "sha256": "d07d55dfd06589fcaf569e5f65a1ac41ccd2fe66599d3ae80cfa8b5dbdf78acb"
+      "sha256": "b3f5e3181b3950058ce68ce9c729274143416d22954111cabcf52eff805c1889"
     },
     {
       "path": "figures/power_split.png",
       "bytes": 251231,
-      "sha256": "27e1761088bbe635a271eb1440448419e5c48bf4e8cecc486b12fefdbabb4e7a"
+      "sha256": "5a5f78b89ef31f5a6e99628f0a823db55f3f019bc606169d96bddbe3002776f6"
     },
     {
       "path": "figures/power_split.svg",
@@ -720,12 +960,12 @@
     {
       "path": "figures/soc_profile.pdf",
       "bytes": 11084,
-      "sha256": "02feaa886786a0528f862f317b55781b9607037fe77743711ce3826bc2cc95da"
+      "sha256": "635bc6160366d704d213a0b327beea5574b410e0358f937b16b8d4f1d87a4112"
     },
     {
       "path": "figures/soc_profile.png",
       "bytes": 160192,
-      "sha256": "76c4831c76ee2c20d161766c59c0b773b35d5e3e6de7b6a40fbea9344a46db86"
+      "sha256": "5993d9bcc6f2c4a92865a9aa7c854c22164986fe5d6eebb9479618018a3f17e0"
     },
     {
       "path": "figures/soc_profile.svg",
@@ -735,12 +975,12 @@
     {
       "path": "figures/speed_profile.pdf",
       "bytes": 7666,
-      "sha256": "03905fd3e52eef093048684189eee57c8977cdd8ac98c2272871aab1eb5d36e5"
+      "sha256": "85ce787645463f0cbf82bf10195baf8f4843d6e91ccba91f451ab79f00266ff8"
     },
     {
       "path": "figures/speed_profile.png",
       "bytes": 229507,
-      "sha256": "2aa9796fa8155b76f7f8d6a2d621cdb185bbdd30df4e1fb7260820289594c465"
+      "sha256": "940aa927e6d65cdec347b671590960cc80ad9ccf175443c5094f5d96707db4c6"
     },
     {
       "path": "figures/speed_profile.svg",
@@ -750,12 +990,12 @@
     {
       "path": "figures/test_process_dashboard.pdf",
       "bytes": 31512,
-      "sha256": "11a34d5a2a063783e6c26600631aab67409f49ad27189e83f5ac59e0277c7be8"
+      "sha256": "cf868243b683388c5e936f8cf662e0df627a06b9de1b29ffcf50a27c0d4a2ea0"
     },
     {
       "path": "figures/test_process_dashboard.png",
       "bytes": 515198,
-      "sha256": "8a12eecbfa05f12214bb11733946f15824d50d175fa749078d434e7ff116b7d3"
+      "sha256": "616fd740ac2eb22ac368811256a961e93058cba870ca396f2c60223e094a88e2"
     },
     {
       "path": "figures/test_process_dashboard.svg",
@@ -765,12 +1005,12 @@
     {
       "path": "figures/validation_summary.pdf",
       "bytes": 4039,
-      "sha256": "b448138c3ceabcc04f2bffa080cce402c643a1503c6b7b1ba0f4522a6aafd73f"
+      "sha256": "49b3afec2166c7bf06f0534a42abc60c57eb9106172d6246b431418afcfc1acc"
     },
     {
       "path": "figures/validation_summary.png",
       "bytes": 74176,
-      "sha256": "a92d14c545c9531f375795a33173a983a1b50b25ed938c92ee760cd6da463b05"
+      "sha256": "ce0cb5538caebd116b66d907a5398e698920d7f0418188539a3f54022a575dd5"
     },
     {
       "path": "figures/validation_summary.svg",
@@ -779,8 +1019,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 28598,
-      "sha256": "e0db2ed513c6964a6b3d99ceb4fb3c8d38ce24a8e6a6a63dfe602c2958f0f86b"
+      "bytes": 61763,
+      "sha256": "1c59291ee9623401bbf4a1ef5aa14369a5b9bf8d86968aac2709a4e22584c8f1"
     },
     {
       "path": "internal_logic_validation_report.md",
@@ -800,12 +1040,12 @@
     {
       "path": "status_card.json",
       "bytes": 352,
-      "sha256": "908b506d8e40e45c8eb0d0e8d9bb5ce5a1e24094867f1d278c3bcc609c462c49"
+      "sha256": "3942a2ea584fb424f78f64db3ea804d8beb1932ad04ad831f22e7832770c0873"
     },
     {
       "path": "summary.md",
       "bytes": 527,
-      "sha256": "8c442aa4913b96556709f3ed5ad50eac066604c8a37be41d6523a71697b9d7e4"
+      "sha256": "d06183368d3364f2ab290ea73f73cd757cf297390822b0fefebfc439f13bd027"
     },
     {
       "path": "tables/baseline_methods_table.tex",
