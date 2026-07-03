@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-07-03T06:02:21.390333+00:00",
+  "project": "HEV_MetaEMS_Model",
+  "validation_status": "WARN",
+  "physical_validation_status": "PASS",
+  "internal_validation_status": "WARN",
+  "experiment_rows": 25,
+  "git_commit": "not-a-git-repository",
+  "model_sha256": "d8dce19b48b8d6fcde3e0677ba351736c1bc5c964a9a4890a8b1b2cfcd94b29d"
+}

@@ -1,0 +1,18 @@
+section,name,status,total_fuel_kg,fuel_L_per_100km,final_SOC,final_SOC_error,SOC_corrected_fuel_kg,engine_switch_count,mode_switch_count,constraint_violation_count
+category,Vehicle dynamics,PASS,,,,,,,,
+category,Power balance,PASS,,,,,,,,
+category,SOC model,PASS,,,,,,,,
+category,Fuel model,PASS,,,,,,,,
+category,EMS logic,PASS,,,,,,,,
+category,Meta interface,PASS,,,,,,,,
+cycle,urban,,0.07667859898,6.247210951,0.5652343147,0.01523431467,0.07421851228,16,46,0
+cycle,highway,,0.2033029071,3.615793309,0.5109742658,-0.03902573418,0.2096049096,5,18,0
+cycle,high_load,,0.3286665829,8.142547039,0.5033131911,-0.04668680893,0.3362057207,9,13,0
+cycle,low_soc_urban,,0.097175161,7.917120788,0.5545849496,0.00458494956,0.09643476843,17,47,0
+cycle,low_soc_high_load,,0.3520762617,8.722509896,0.5027834209,-0.04721657907,0.3597009485,8,13,0
+cycle,soc_recovery_test,,0.1829209734,5.046576768,0.5073438554,-0.04265614461,0.1898092265,7,20,0
+internal,unit,PASS,,,,,,,8,,
+internal,property,PASS,,,,,,,0,,
+internal,fault,PASS,,,,,,,8,,
+internal,reward,PASS,,,,,,,,
+internal,map,WARN,,,,,,,,
