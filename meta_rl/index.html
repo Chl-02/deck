@@ -39,6 +39,62 @@
       .report-nav a:hover {
         background: #f4f7f8;
       }
+      .folder-panel {
+        width: min(1320px, calc(100% - 32px));
+        margin: 18px auto 0;
+        padding: 18px;
+        border: 1px solid #d8e0e4;
+        border-radius: 8px;
+        background: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+      .folder-panel h1 {
+        margin: 0 0 5px;
+        color: #1f2b32;
+        font-size: 22px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+      .folder-panel p {
+        margin: 0;
+        color: #6c7a82;
+        font-size: 14px;
+      }
+      .folder-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .folder-card {
+        display: block;
+        min-height: 116px;
+        padding: 16px;
+        border: 1px solid #cbd6dc;
+        border-radius: 7px;
+        background: #fbfcfd;
+        color: #1f2b32;
+        text-decoration: none;
+      }
+      .folder-card:hover {
+        border-color: #315f72;
+        background: #f4f7f8;
+      }
+      .folder-card strong {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 16px;
+      }
+      .folder-card span {
+        display: block;
+        color: #5f6f78;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      @media (max-width: 760px) {
+        .report-nav-inner { justify-content: flex-start; }
+        .folder-cards { grid-template-columns: 1fr; }
+      }
     </style>
     <script type="module" crossorigin src="./assets/index-Bvhc65GH.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BzsOFGtq.css">
@@ -50,6 +106,20 @@
         <a href="./experiment_design_report.md">Markdown</a>
       </div>
     </nav>
+    <section class="folder-panel" aria-label="Meta_RL folder">
+      <h1>Meta_RL Folder</h1>
+      <p>대시보드와 논문용 실험 설계 보고서.</p>
+      <div class="folder-cards">
+        <a class="folder-card" href="./">
+          <strong>Meta-RL Dashboard</strong>
+          <span>HEV Meta-EMS meta-RL 학습 결과와 평가 플롯 대시보드.</span>
+        </a>
+        <a class="folder-card" href="./experiment_design_report.html">
+          <strong>Meta-RL 실험 설계 보고서</strong>
+          <span>알고리즘 구조, task/context 정의, dataset split, reward/metric, ablation 설계 정리.</span>
+        </a>
+      </div>
+    </section>
     <main id="app"></main>
   </body>
 </html>
