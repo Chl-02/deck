@@ -4,10 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HEV Meta-EMS Meta-RL Results</title>
+    <style>
+      .report-nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: center;
+        padding: 10px 16px;
+        border-bottom: 1px solid #d8e0e4;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      }
+      .report-nav-inner {
+        width: min(1320px, 100%);
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .report-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border: 1px solid #cbd6dc;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #315f72;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .report-nav a:hover {
+        background: #f4f7f8;
+      }
+    </style>
     <script type="module" crossorigin src="./assets/index-Bvhc65GH.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BzsOFGtq.css">
   </head>
   <body>
+    <nav class="report-nav" aria-label="Meta-RL reports">
+      <div class="report-nav-inner">
+        <a href="./experiment_design_report.html">Experiment Design Report</a>
+        <a href="./experiment_design_report.md">Markdown</a>
+      </div>
+    </nav>
     <main id="app"></main>
   </body>
 </html>

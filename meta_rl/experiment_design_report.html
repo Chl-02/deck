@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEV Meta-EMS Meta-RL Experiment Design Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --ink: #172025;
+      --muted: #60717c;
+      --line: #d9e1e6;
+      --line-strong: #aebbc4;
+      --accent: #27645b;
+      --accent-soft: #e8f1ee;
+      --warn: #9a5a28;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+      line-height: 1.58;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner, main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .header-inner { padding: 28px 0 20px; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 {
+      max-width: 980px;
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 930px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #42525c;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    main { padding: 24px 0 56px; }
+    .toc {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      margin: 0 0 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: #26353d;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .toc a:hover { border-color: var(--line-strong); background: #f9fbfb; }
+    section {
+      scroll-margin-top: 88px;
+      padding: 22px;
+      margin: 0 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+    .claim {
+      margin: 14px 0 0;
+      padding: 16px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #18342f;
+      font-weight: 700;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .tile {
+      min-height: 120px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+    .tile strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0 2px;
+    }
+    .flow div {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 750;
+    }
+    .flow .safe { background: var(--accent-soft); border-color: #b7d0ca; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 2px;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f4f7f8; font-weight: 750; }
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 12px 0 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111820;
+      color: #ecf3f5;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+    li { margin: 5px 0; }
+    .note {
+      padding: 14px;
+      border: 1px solid #e4cfaf;
+      border-radius: 8px;
+      background: #fff8ed;
+      color: #5f3c16;
+      font-size: 14px;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+    @media (max-width: 900px) {
+      .toc { position: static; }
+      .grid, .flow { grid-template-columns: 1fr; }
+      section { padding: 18px; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a class="back-link" href="./">Meta-RL Dashboard로 돌아가기</a>
+      <h1>HEV Meta-EMS Meta-RL Experiment Design Report</h1>
+      <p class="lead">논문용 Meta-RL 실험 설계, 알고리즘 구조, task/context 정의, dataset split, reward/metric, ablation 계획을 한 곳에 정리한 기술 보고서.</p>
+      <div class="meta-row">
+        <span class="pill">작성일 2026-07-06</span>
+        <span class="pill">Bounded calibration adapter</span>
+        <span class="pill">Probabilistic latent-context SAC</span>
+        <span class="pill">Heldout task generalization</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="toc" aria-label="Report sections">
+      <a href="#claim">Claim</a>
+      <a href="#testbed">Testbed</a>
+      <a href="#algorithm">Algorithm</a>
+      <a href="#interface">Action</a>
+      <a href="#support-query">Support/Query</a>
+      <a href="#task">Task</a>
+      <a href="#features">Features</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#split">Split</a>
+      <a href="#matrix">Experiment Matrix</a>
+      <a href="#interpretation">Interpretation</a>
+    </nav>
+
+    <section id="claim">
+      <h2>1. 논문 Claim</h2>
+      <p>본 실험의 중심 주장은 다음으로 고정한다.</p>
+      <div class="claim">A production-like HEV map/rule EMS can be improved by a task-aware Meta-RL calibration adapter, which enhances SOC regulation and constraint robustness under unseen driving conditions while preserving bounded, interpretable calibration authority.</div>
+      <p style="margin-top:14px;">핵심은 Meta-RL이 차량의 엔진/모터 파워 명령을 직접 만들지 않는다는 점이다. Meta-RL은 제한된 calibration offset만 출력하고, 최종 engine state, EMS mode, power split은 기존 map/rule EMS가 유지한다.</p>
+      <pre>Meta-RL -> delta_P_eng_on, delta_SOC_ref
+Map/rule EMS -> engine state, EMS mode, power split, final commands</pre>
+    </section>
+
+    <section id="testbed">
+      <h2>2. Testbed 위치</h2>
+      <p>현재 모델은 실제 OEM ECU 복제가 아니라, HEV EMS 연구를 위한 power-domain simplified testbed이다. 차량/컴포넌트 스케일은 public FASTSim Prius-class data에 기반하고, EMS calibration map과 SOC reference, hysteresis, timer, simplified battery limits는 투명한 연구용 calibration으로 둔다.</p>
+      <div class="grid">
+        <div class="tile"><strong>Vehicle Layer</strong><span>Backward-facing power-domain HEV model. 요구 파워를 engine/motor/battery power로 변환한다.</span></div>
+        <div class="tile"><strong>EMS Layer</strong><span>Production-like map/rule controller. Engine-on threshold map, SOC reference, hysteresis, timer guard를 가진다.</span></div>
+        <div class="tile"><strong>Meta-RL Layer</strong><span>Actuator command가 아니라 bounded calibration offset만 제공한다.</span></div>
+      </div>
+      <p class="note" style="margin-top:14px;">논문 표현에서 “OEM Prius EMS”, “exact production vehicle model”, “real BMS map”처럼 읽힐 수 있는 표현은 피한다.</p>
+    </section>
+
+    <section id="algorithm">
+      <h2>3. 알고리즘 구조</h2>
+      <p>기본 알고리즘은 probabilistic PEARL-style context encoder + SAC이다. 새로운 SAC 수식을 주장하기보다, latent-context meta-RL을 HEV EMS calibration adapter 문제에 맞게 제한하고 검증한다.</p>
+      <div class="flow" aria-label="Algorithm flow">
+        <div>Support History</div>
+        <div>Raw Branch</div>
+        <div>Summary Branch</div>
+        <div>q(z | support)</div>
+        <div>SAC Policy(obs, z)</div>
+        <div class="safe">Bounded EMS Offset</div>
+      </div>
+      <pre>support history
+  -> raw sequence branch
+  -> physics-summary branch
+  -> q_phi(z | support) = N(mu_z, sigma_z)
+  -> z sample / latent context
+  -> SAC policy(obs, z)
+  -> delta_P_eng_on, delta_SOC_ref
+  -> bounded/rate-limited adapter interface
+  -> map/rule EMS</pre>
+    </section>
+
+    <section id="interface">
+      <h2>4. Action Interface</h2>
+      <table>
+        <thead><tr><th>Action</th><th>의미</th><th>Bound</th></tr></thead>
+        <tbody>
+          <tr><td><code>delta_P_eng_on</code></td><td>Engine-on threshold offset</td><td><code>[-3, +3] kW</code></td></tr>
+          <tr><td><code>delta_SOC_ref</code></td><td>SOC reference offset</td><td><code>[-0.01, +0.01]</code></td></tr>
+        </tbody>
+      </table>
+      <pre>delta_P_eng_on rate limit = 0.5 kW/s
+delta_SOC_ref rate limit = 0.001 /s
+adapter target update period = 10 s</pre>
+      <p style="margin-top:12px;">따라서 policy가 불안정한 raw action을 내더라도 실제 EMS에는 bounded and rate-limited calibration change만 전달된다.</p>
+    </section>
+
+    <section id="support-query">
+      <h2>5. Observation, Support, Query</h2>
+      <div class="grid">
+        <div class="tile"><strong>Observation</strong><span>Current speed, acceleration/P_dem, SOC, engine_on, previous action, optional road_grade.</span></div>
+        <div class="tile"><strong>Support</strong><span>최근 30-120초 causal history를 이용해 현재 task context를 추정한다.</span></div>
+        <div class="tile"><strong>Query</strong><span>추정된 latent context를 가지고 240초 rollout에서 제어 성능을 평가한다.</span></div>
+      </div>
+      <table>
+        <tbody>
+          <tr><th>Raw history</th><td>30 s</td></tr>
+          <tr><th>Support summary</th><td>120 s</td></tr>
+          <tr><th>Query horizon</th><td>240 s</td></tr>
+          <tr><th>Sample rate</th><td>1 Hz</td></tr>
+          <tr><th>Latent dimension</th><td>z_dim = 4</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="task">
+      <h2>6. Task 정의</h2>
+      <p>Task는 사람이 붙인 도메인 라벨이 아니라 다음 조합으로 정의한다.</p>
+      <pre>task = drive segment + slow operating condition</pre>
+      <table>
+        <thead><tr><th>Variation</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td><code>profile_id</code></td><td>주행 segment 자체의 패턴과 요구 파워 형태</td></tr>
+          <tr><td><code>initial_SOC</code></td><td>같은 주행에서도 EMS charge/discharge 판단을 바꾸는 초기 조건</td></tr>
+          <tr><td><code>road_grade</code></td><td>긴 오르막/내리막, 회생 가능성, SOC drift를 바꾸는 환경 조건</td></tr>
+          <tr><td><code>mass_scale</code></td><td>부하 변화, 탑승/화물 조건 proxy</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;"><code>source_family</code>, <code>source_id</code>, <code>profile_class</code>, <code>driver_style_label</code>은 split/reporting metadata로 유지하되, 기본 policy/context input으로 직접 넣지 않는다.</p>
+    </section>
+
+    <section id="features">
+      <h2>7. Encoder Feature</h2>
+      <div class="grid">
+        <div class="tile"><strong>Raw Branch</strong><span>speed, acceleration, P_dem, SOC, engine_on, previous_action.</span></div>
+        <div class="tile"><strong>Summary Branch</strong><span>idle fraction, stop density, P_dem percentile, regen opportunity, SOC slope 등 물리 의미 feature.</span></div>
+        <div class="tile"><strong>Change Indicators</strong><span>short-long EMA gap, rolling variability, change score, persistence score는 causal driving indicator로 재정의한다.</span></div>
+      </div>
+      <pre>accel_std_10s
+P_dem_90_10s
+mean_speed_60s
+idle_fraction_60s
+stop_count_per_km_60s
+P_dem_95_60s
+regen_opportunity_60s
+SOC_slope_120s
+mean_P_dem_120s
+road_grade_mean_120s</pre>
+    </section>
+
+    <section id="metrics">
+      <h2>8. Reward와 논문 Metric</h2>
+      <p>Reward는 학습 목적함수이고, 논문 claim의 직접 지표는 아니다. 논문 표는 SOC regulation, constraint robustness, fuel guardrail, switching guardrail 중심으로 해석한다.</p>
+      <div class="grid">
+        <div class="tile"><strong>Primary Metric</strong><span>SOC_RMSE, |final_SOC_error|, constraint_violation_steps.</span></div>
+        <div class="tile"><strong>Guardrail Metric</strong><span>SOC_corrected_fuel, engine_switch_count.</span></div>
+        <div class="tile"><strong>Reward Terms</strong><span>fuel, SOC tracking, terminal SOC, switching, constraint, throughput, action magnitude/rate.</span></div>
+      </div>
+      <pre>heldout SOC_RMSE reduction >= 10%
+heldout |final_SOC_error| reduction >= 20%
+heldout constraint violation reduction >= 30%
+SOC-corrected fuel degradation <= 2%
+engine switch increase <= 10%</pre>
+    </section>
+
+    <section id="split">
+      <h2>9. Dataset Split</h2>
+      <p>Profile split은 source metadata를 활용하지만, source metadata는 policy input이 아니다. 목표는 random split 점수가 아니라 unseen driving condition에서 task-aware adaptation이 작동하는지 보는 것이다.</p>
+      <ul>
+        <li>EPA 표준 사이클은 heldout evaluation anchor로 둔다.</li>
+        <li>NGSIM 등 짧은 실차 micro-profile은 validation/heldout 보조로 둔다.</li>
+        <li>DriveCAT은 vocation 단위 holdout을 포함한다.</li>
+        <li>SUMO profile은 feature-diverse split을 유지하고, 일부 unseen network/source를 heldout으로 둔다.</li>
+        <li>Long-horizon composite는 학습이 아니라 sustainability/stress evaluation에 둔다.</li>
+      </ul>
+    </section>
+
+    <section id="matrix">
+      <h2>10. Experiment Matrix</h2>
+      <table>
+        <thead><tr><th>구분</th><th>설정</th><th>목적</th></tr></thead>
+        <tbody>
+          <tr><td>Main</td><td><code>raw_summary_probabilistic_encoder_SAC</code>, 5 seeds, 200k steps/seed</td><td>논문 claim 검증용 주 결과</td></tr>
+          <tr><td>Baseline</td><td><code>map_rule_zero_offset</code></td><td>기존 EMS calibration 기준선</td></tr>
+          <tr><td>Ablation</td><td><code>summary_only_encoder_SAC</code></td><td>Physics summary만으로 충분한지 확인</td></tr>
+          <tr><td>Ablation</td><td><code>raw_only_encoder_SAC</code></td><td>Raw history가 추가 정보를 주는지 확인</td></tr>
+          <tr><td>Sensitivity</td><td>support length, z_dim, action bound, reward penalty 제거</td><td>설계 선택의 민감도 확인</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="interpretation">
+      <h2>11. 해석 기준</h2>
+      <p>좋은 결과는 단순히 reward가 증가하는 것이 아니다. 다음 조건이 함께 보여야 한다.</p>
+      <ul>
+        <li>Heldout SOC regulation 개선</li>
+        <li>Constraint violation 감소</li>
+        <li>SOC-corrected fuel 악화 제한</li>
+        <li>Engine switching guardrail 통과</li>
+        <li>Offset action이 해석 가능한 범위에 머무름</li>
+        <li>Source/domain label 없이도 latent context가 주행 패턴 변화에 반응함</li>
+      </ul>
+      <p class="note" style="margin-top:14px;">Novelty는 새로운 SAC/PEARL 수식 자체가 아니라, production-like map/rule EMS의 권한을 보존하면서 Meta-RL을 bounded calibration adapter로 제한하고, support-query/heldout-task generalization으로 EMS 배포 관점의 강건성을 검증하는 실험 설계에 있다.</p>
+    </section>
+
+    <p class="footer">Source summary: HEV_MetaEMS_Model project docs, meta-RL paper defaults, and EMS interface constraints.</p>
+  </main>
+</body>
+</html>
