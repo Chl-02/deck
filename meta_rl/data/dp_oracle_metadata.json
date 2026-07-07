@@ -1,37 +1,40 @@
 {
-  "created_at": "20260707_204338",
+  "created_at": "20260707_205039",
   "run_root": "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901",
-  "out_dir": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512",
-  "oracle_definition": "discretized bounded-offset DP oracle over delta_P_eng_on and delta_SOC_ref; map/rule EMS keeps engine-state and power-split authority",
-  "frontier_cap_note": "If frontier_cap_hit is true, the oracle is frontier-capped within the discretized bounded-offset search.",
-  "dp_params": {
-    "decision_interval_s": 10,
-    "delta_p_grid_kw": [
-      -3.0,
-      -2.0,
-      -1.0,
-      0.0,
-      1.0,
-      2.0,
-      3.0
-    ],
-    "delta_soc_grid": [
-      -0.01,
-      -0.005,
-      0.0,
-      0.005,
-      0.01
-    ],
-    "soc_bin": 0.005,
-    "prev_delta_p_bin_kw": 0.5,
-    "prev_delta_soc_bin": 0.001,
-    "timer_clip_s": 5.0,
-    "frontier_cap": 5
-  },
+  "out_dir": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820",
+  "oracle_definition": "bounded-offset DP action-bound sweep; DP chooses only delta_P_eng_on and delta_SOC_ref while map/rule EMS keeps engine-state and power-split authority",
+  "full_power_split_dp_note": "Full power-split DP is included only as an offline diagnostic reference and is not inverted into calibration bounds.",
   "representative_counts": {
     "meta_validation": 16,
     "heldout_evaluation": 16
   },
+  "bound_sweep": {
+    "enabled": true,
+    "delta_P_eng_on_bound_grid_kw": [
+      1.0,
+      2.0,
+      3.0,
+      5.0,
+      7.0
+    ],
+    "delta_SOC_ref_bound_grid": [
+      0.005,
+      0.01,
+      0.015,
+      0.02
+    ],
+    "delta_p_grid_count": 7,
+    "delta_soc_grid_count": 5,
+    "decision_interval_s": 10,
+    "frontier_cap": 10,
+    "frontier_cap_hit_count": 640,
+    "frontier_cap_hit_total": 640,
+    "selection_path": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/bound_sweep_selection.json",
+    "summary_path": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/bound_sweep_summary.csv",
+    "pareto_path": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/bound_sweep_pareto.csv"
+  },
+  "dp_runtime_s": 59.364335775375366,
+  "full_dp_runtime_s": 37.68188977241516,
   "policy_checkpoints": [
     "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260706/policy.pt",
     "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260707/policy.pt",
@@ -39,47 +42,20 @@
     "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260709/policy.pt",
     "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260710/policy.pt"
   ],
-  "workers": 24,
-  "dp_runtime_s": 66.32915115356445,
-  "full_dp_runtime_s": 380.48360228538513,
-  "frontier_cap_hit_tasks": [
-    "heldout_evaluation:003",
-    "meta_validation:013",
-    "heldout_evaluation:007",
-    "meta_validation:015",
-    "heldout_evaluation:005",
-    "meta_validation:010",
-    "meta_validation:007",
-    "meta_validation:000",
-    "meta_validation:003",
-    "meta_validation:002",
-    "meta_validation:011",
-    "meta_validation:008",
-    "meta_validation:009",
-    "meta_validation:006",
-    "meta_validation:001",
-    "heldout_evaluation:006",
-    "meta_validation:014",
-    "heldout_evaluation:004",
-    "heldout_evaluation:000",
-    "meta_validation:005",
-    "heldout_evaluation:001",
-    "heldout_evaluation:002",
-    "meta_validation:012",
-    "meta_validation:004",
-    "heldout_evaluation:011",
-    "heldout_evaluation:012",
-    "heldout_evaluation:014",
-    "heldout_evaluation:009",
-    "heldout_evaluation:008",
-    "heldout_evaluation:010",
-    "heldout_evaluation:015",
-    "heldout_evaluation:013"
-  ],
+  "workers": 80,
+  "resource_report": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/resource_report.json",
+  "plots": {
+    "dp_oracle_metric_bars": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/dp_oracle_metric_bars.png",
+    "dp_oracle_gap_capture": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/dp_oracle_gap_capture.png",
+    "bound_sweep_heatmap_soc_rmse": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/bound_sweep_heatmap_soc_rmse.png",
+    "bound_sweep_heatmap_constraint": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/bound_sweep_heatmap_constraint.png",
+    "bound_sweep_pareto": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/bound_sweep_pareto.png",
+    "bound_sweep_gap_to_full_dp": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820/figures/bound_sweep_gap_to_full_dp.png"
+  },
   "full_power_split_dp": {
     "enabled": true,
     "definition": "discretized offline full power-split DP oracle that directly chooses engine power; not deployable and not the same authority as the Meta-RL adapter",
-    "decision_interval_s": 1,
+    "decision_interval_s": 10,
     "engine_power_grid_kw": [
       0.0,
       5.0,
@@ -97,17 +73,11 @@
       65.0,
       70.0
     ],
-    "soc_bin": 0.05,
-    "max_frontier_states": 100000,
+    "soc_bin": 0.005,
+    "max_frontier_states": 20000,
     "extra_constraint_penalty": 200.0,
     "constraint_mode": "lexicographic",
-    "runtime_s": 380.48360228538513,
-    "stats_path": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/full_power_split_dp_stats.json"
+    "runtime_s": 37.68188977241516
   },
-  "plots": {
-    "dp_oracle_metric_bars": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_metric_bars.png",
-    "dp_oracle_gap_capture": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_gap_capture.png",
-    "dp_oracle_representative_soc": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_representative_soc.png"
-  },
-  "resource_report": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/resource_report.json"
+  "paper_sentence": "The action bounds were selected through a bounded-offset DP sweep under the same calibration-adapter authority, using full power-split DP only as an offline diagnostic reference."
 }
