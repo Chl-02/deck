@@ -2693,13 +2693,18 @@
       "dp_oracle_full_power_split_improvements.csv": "data/dp_oracle_full_power_split_improvements.csv",
       "dp_oracle_full_power_split_stats.json": "data/dp_oracle_full_power_split_stats.json",
       "dp_oracle_full_power_split_actions.csv": "data/dp_oracle_full_power_split_actions.csv"
-    }
+    },
+    "bound_sweep": null
   },
+  "controller_comparison_report_path": "controller_comparison_report.html",
   "report_path": "data/full_run_analysis_report.md",
   "report_html_path": "full_run_analysis_report.html",
   "artifacts": {
     "html_report": "full_run_analysis_report.html",
     "markdown_report": "data/full_run_analysis_report.md",
+    "controller_comparison_report": "controller_comparison_report.html",
+    "controller_comparison_summary": "data/controller_comparison_summary.json",
+    "controller_representative_trajectory_csv": "data/controller_representative_trajectory.csv",
     "aggregate_report": "data/sweep_aggregate_report.md",
     "metric_summary_csv": "data/full_run_metric_summary.csv",
     "seed_delta_csv": "data/full_run_seed_deltas.csv",
