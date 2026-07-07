@@ -1822,7 +1822,7 @@
     "learning_trend": "plots/full_run_learning_trend.png"
   },
   "dp_oracle": {
-    "root": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714",
+    "root": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512",
     "summary": [
       {
         "split": "heldout_evaluation",
@@ -1846,6 +1846,29 @@
         "battery_energy_throughput_kWh_std": "0.1454963687658593",
         "constraint_violation_steps_mean": "1.6875",
         "constraint_violation_steps_std": "2.7549671050667737"
+      },
+      {
+        "split": "heldout_evaluation",
+        "policy": "full_power_split_dp_oracle",
+        "episodes": "16",
+        "episode_reward_mean": "-83.63531741129648",
+        "episode_reward_std": "56.7918266066437",
+        "fuel_kg_mean": "0.13315555131066004",
+        "fuel_kg_std": "0.07755593587478558",
+        "SOC_corrected_fuel_kg_mean": "0.13216425545979338",
+        "SOC_corrected_fuel_kg_std": "0.07671059140944761",
+        "final_SOC_error_mean": "0.006138691343144591",
+        "final_SOC_error_std": "0.019613576795914748",
+        "abs_final_SOC_error_mean": "0.012878495000915167",
+        "abs_final_SOC_error_std": "0.01601625089236076",
+        "SOC_RMSE_mean": "0.029400021268724603",
+        "SOC_RMSE_std": "0.01009532483224817",
+        "engine_switch_count_mean": "7.1875",
+        "engine_switch_count_std": "1.9435389756832766",
+        "battery_energy_throughput_kWh_mean": "0.4148615876699484",
+        "battery_energy_throughput_kWh_std": "0.19132074421478504",
+        "constraint_violation_steps_mean": "10.125",
+        "constraint_violation_steps_std": "7.00780814520489"
       },
       {
         "split": "heldout_evaluation",
@@ -1941,6 +1964,29 @@
       },
       {
         "split": "meta_validation",
+        "policy": "full_power_split_dp_oracle",
+        "episodes": "16",
+        "episode_reward_mean": "-62.339288852067114",
+        "episode_reward_std": "44.47358068370847",
+        "fuel_kg_mean": "0.08109123882576669",
+        "fuel_kg_std": "0.06067278786638553",
+        "SOC_corrected_fuel_kg_mean": "0.08111912938225822",
+        "SOC_corrected_fuel_kg_std": "0.06063693765261552",
+        "final_SOC_error_mean": "-0.00017271485353271415",
+        "final_SOC_error_std": "0.009637558831584549",
+        "abs_final_SOC_error_mean": "0.006435027782435106",
+        "abs_final_SOC_error_std": "0.0071765443001609395",
+        "SOC_RMSE_mean": "0.03525768295238847",
+        "SOC_RMSE_std": "0.014182553503276164",
+        "engine_switch_count_mean": "6.875",
+        "engine_switch_count_std": "3.4798527267687636",
+        "battery_energy_throughput_kWh_mean": "0.4101374972782321",
+        "battery_energy_throughput_kWh_std": "0.14974086540212972",
+        "constraint_violation_steps_mean": "7.4375",
+        "constraint_violation_steps_std": "5.499644874898742"
+      },
+      {
+        "split": "meta_validation",
         "policy": "latent_sac_adapter",
         "episodes": "80",
         "episode_reward_mean": "-10.41765639127685",
@@ -2012,6 +2058,7 @@
     "improvements": [
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "episode_reward",
         "baseline_mean": "-10.088151985629565",
         "adapter_mean": "-10.417656391276852",
@@ -2025,6 +2072,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_corrected_fuel_kg",
         "baseline_mean": "0.10058759265696529",
         "adapter_mean": "0.10059806119351802",
@@ -2038,6 +2086,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "abs_final_SOC_error",
         "baseline_mean": "0.05985206358149964",
         "adapter_mean": "0.05844647415871232",
@@ -2051,6 +2100,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_RMSE",
         "baseline_mean": "0.05487748280833432",
         "adapter_mean": "0.054668717689706686",
@@ -2064,6 +2114,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "engine_switch_count",
         "baseline_mean": "11.0",
         "adapter_mean": "11.05",
@@ -2077,6 +2128,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "constraint_violation_steps",
         "baseline_mean": "0.625",
         "adapter_mean": "0.6625",
@@ -2090,6 +2142,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "episode_reward",
         "baseline_mean": "-24.91549337203582",
         "adapter_mean": "-24.095498473416512",
@@ -2103,6 +2156,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_corrected_fuel_kg",
         "baseline_mean": "0.14833823338755442",
         "adapter_mean": "0.148411931848455",
@@ -2116,6 +2170,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "abs_final_SOC_error",
         "baseline_mean": "0.05803434445023055",
         "adapter_mean": "0.057866999901120444",
@@ -2129,6 +2184,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_RMSE",
         "baseline_mean": "0.07111271785701359",
         "adapter_mean": "0.07026142712476263",
@@ -2142,6 +2198,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "engine_switch_count",
         "baseline_mean": "12.0625",
         "adapter_mean": "12.1125",
@@ -2155,6 +2212,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "constraint_violation_steps",
         "baseline_mean": "2.3125",
         "adapter_mean": "2.2125",
@@ -2167,9 +2225,180 @@
         "capture_ratio_pct": "16.000000000000014"
       }
     ],
+    "full_improvements": [
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "episode_reward",
+        "baseline_mean": "-10.088151985629565",
+        "adapter_mean": "-10.417656391276852",
+        "dp_oracle_mean": "-62.339288852067114",
+        "adapter_improvement": "-0.32950440564728645",
+        "dp_improvement": "-52.25113686643755",
+        "adapter_gap_to_dp": "-51.92163246079026",
+        "adapter_improvement_pct": "-3.2662514018093796",
+        "dp_improvement_pct": "-517.9455755709131",
+        "capture_ratio_pct": "nan"
+      },
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "SOC_corrected_fuel_kg",
+        "baseline_mean": "0.10058759265696529",
+        "adapter_mean": "0.10059806119351802",
+        "dp_oracle_mean": "0.08111912938225822",
+        "adapter_improvement": "-1.0468536552732388e-05",
+        "dp_improvement": "0.019468463274707068",
+        "adapter_gap_to_dp": "0.0194789318112598",
+        "adapter_improvement_pct": "-0.010407383531320136",
+        "dp_improvement_pct": "19.354736265635196",
+        "capture_ratio_pct": "-0.05377176618933681"
+      },
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "abs_final_SOC_error",
+        "baseline_mean": "0.05985206358149964",
+        "adapter_mean": "0.05844647415871232",
+        "dp_oracle_mean": "0.006435027782435106",
+        "adapter_improvement": "0.0014055894227873178",
+        "dp_improvement": "0.05341703579906453",
+        "adapter_gap_to_dp": "0.052011446376277214",
+        "adapter_improvement_pct": "2.3484393664611884",
+        "dp_improvement_pct": "89.24844458592037",
+        "capture_ratio_pct": "2.631350470427888"
+      },
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "SOC_RMSE",
+        "baseline_mean": "0.05487748280833432",
+        "adapter_mean": "0.054668717689706686",
+        "dp_oracle_mean": "0.03525768295238847",
+        "adapter_improvement": "0.00020876511862763514",
+        "dp_improvement": "0.01961979985594585",
+        "adapter_gap_to_dp": "0.019411034737318214",
+        "adapter_improvement_pct": "0.3804203617661736",
+        "dp_improvement_pct": "35.75200401313991",
+        "capture_ratio_pct": "1.0640532531445173"
+      },
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "engine_switch_count",
+        "baseline_mean": "11.0",
+        "adapter_mean": "11.05",
+        "dp_oracle_mean": "6.875",
+        "adapter_improvement": "-0.05000000000000071",
+        "dp_improvement": "4.125",
+        "adapter_gap_to_dp": "4.175000000000001",
+        "adapter_improvement_pct": "-0.454545454545461",
+        "dp_improvement_pct": "37.5",
+        "capture_ratio_pct": "-1.2121212121212293"
+      },
+      {
+        "split": "meta_validation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "constraint_violation_steps",
+        "baseline_mean": "0.625",
+        "adapter_mean": "0.6625",
+        "dp_oracle_mean": "7.4375",
+        "adapter_improvement": "-0.03749999999999998",
+        "dp_improvement": "-6.8125",
+        "adapter_gap_to_dp": "-6.775",
+        "adapter_improvement_pct": "-5.9999999999999964",
+        "dp_improvement_pct": "-1090.0",
+        "capture_ratio_pct": "nan"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "episode_reward",
+        "baseline_mean": "-24.91549337203582",
+        "adapter_mean": "-24.095498473416512",
+        "dp_oracle_mean": "-83.63531741129648",
+        "adapter_improvement": "0.8199948986193064",
+        "dp_improvement": "-58.719824039260665",
+        "adapter_gap_to_dp": "-59.53981893787997",
+        "adapter_improvement_pct": "3.2911043998817093",
+        "dp_improvement_pct": "-235.67594332755823",
+        "capture_ratio_pct": "nan"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "SOC_corrected_fuel_kg",
+        "baseline_mean": "0.14833823338755442",
+        "adapter_mean": "0.148411931848455",
+        "dp_oracle_mean": "0.13216425545979338",
+        "adapter_improvement": "-7.369846090057863e-05",
+        "dp_improvement": "0.01617397792776104",
+        "adapter_gap_to_dp": "0.01624767638866162",
+        "adapter_improvement_pct": "-0.04968271444087585",
+        "dp_improvement_pct": "10.903445159350293",
+        "capture_ratio_pct": "-0.4556606991164646"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "abs_final_SOC_error",
+        "baseline_mean": "0.05803434445023055",
+        "adapter_mean": "0.057866999901120444",
+        "dp_oracle_mean": "0.012878495000915167",
+        "adapter_improvement": "0.00016734454911010443",
+        "dp_improvement": "0.04515584944931538",
+        "adapter_gap_to_dp": "0.04498850490020528",
+        "adapter_improvement_pct": "0.2883543368937626",
+        "dp_improvement_pct": "77.8088386748995",
+        "capture_ratio_pct": "0.37059329223324267"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "SOC_RMSE",
+        "baseline_mean": "0.07111271785701359",
+        "adapter_mean": "0.07026142712476263",
+        "dp_oracle_mean": "0.029400021268724603",
+        "adapter_improvement": "0.0008512907322509589",
+        "dp_improvement": "0.04171269658828899",
+        "adapter_gap_to_dp": "0.04086140585603803",
+        "adapter_improvement_pct": "1.1971005439036235",
+        "dp_improvement_pct": "58.657154226844135",
+        "capture_ratio_pct": "2.0408432009403157"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "engine_switch_count",
+        "baseline_mean": "12.0625",
+        "adapter_mean": "12.1125",
+        "dp_oracle_mean": "7.1875",
+        "adapter_improvement": "-0.05000000000000071",
+        "dp_improvement": "4.875",
+        "adapter_gap_to_dp": "4.925000000000001",
+        "adapter_improvement_pct": "-0.41450777202073125",
+        "dp_improvement_pct": "40.41450777202073",
+        "capture_ratio_pct": "-1.0256410256410402"
+      },
+      {
+        "split": "heldout_evaluation",
+        "oracle_policy": "full_power_split_dp_oracle",
+        "metric": "constraint_violation_steps",
+        "baseline_mean": "2.3125",
+        "adapter_mean": "2.2125",
+        "dp_oracle_mean": "10.125",
+        "adapter_improvement": "0.10000000000000009",
+        "dp_improvement": "-7.8125",
+        "adapter_gap_to_dp": "-7.9125",
+        "adapter_improvement_pct": "4.324324324324328",
+        "dp_improvement_pct": "-337.83783783783787",
+        "capture_ratio_pct": "nan"
+      }
+    ],
     "capture": [
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "episode_reward",
         "baseline_mean": "-10.088151985629565",
         "adapter_mean": "-10.417656391276852",
@@ -2183,6 +2412,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_corrected_fuel_kg",
         "baseline_mean": "0.10058759265696529",
         "adapter_mean": "0.10059806119351802",
@@ -2196,6 +2426,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "abs_final_SOC_error",
         "baseline_mean": "0.05985206358149964",
         "adapter_mean": "0.05844647415871232",
@@ -2209,6 +2440,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_RMSE",
         "baseline_mean": "0.05487748280833432",
         "adapter_mean": "0.054668717689706686",
@@ -2222,6 +2454,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "engine_switch_count",
         "baseline_mean": "11.0",
         "adapter_mean": "11.05",
@@ -2235,6 +2468,7 @@
       },
       {
         "split": "meta_validation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "constraint_violation_steps",
         "baseline_mean": "0.625",
         "adapter_mean": "0.6625",
@@ -2248,6 +2482,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "episode_reward",
         "baseline_mean": "-24.91549337203582",
         "adapter_mean": "-24.095498473416512",
@@ -2261,6 +2496,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_corrected_fuel_kg",
         "baseline_mean": "0.14833823338755442",
         "adapter_mean": "0.148411931848455",
@@ -2274,6 +2510,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "abs_final_SOC_error",
         "baseline_mean": "0.05803434445023055",
         "adapter_mean": "0.057866999901120444",
@@ -2287,6 +2524,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "SOC_RMSE",
         "baseline_mean": "0.07111271785701359",
         "adapter_mean": "0.07026142712476263",
@@ -2300,6 +2538,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "engine_switch_count",
         "baseline_mean": "12.0625",
         "adapter_mean": "12.1125",
@@ -2313,6 +2552,7 @@
       },
       {
         "split": "heldout_evaluation",
+        "oracle_policy": "bounded_offset_dp_oracle",
         "metric": "constraint_violation_steps",
         "baseline_mean": "2.3125",
         "adapter_mean": "2.2125",
@@ -2326,9 +2566,9 @@
       }
     ],
     "metadata": {
-      "created_at": "20260707_184920",
+      "created_at": "20260707_204338",
       "run_root": "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901",
-      "out_dir": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714",
+      "out_dir": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512",
       "oracle_definition": "discretized bounded-offset DP oracle over delta_P_eng_on and delta_SOC_ref; map/rule EMS keeps engine-state and power-split authority",
       "frontier_cap_note": "If frontier_cap_hit is true, the oracle is frontier-capped within the discretized bounded-offset search.",
       "dp_params": {
@@ -2367,47 +2607,76 @@
         "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260710/policy.pt"
       ],
       "workers": 24,
-      "dp_runtime_s": 67.04876470565796,
+      "dp_runtime_s": 66.32915115356445,
+      "full_dp_runtime_s": 380.48360228538513,
       "frontier_cap_hit_tasks": [
-        "heldout_evaluation:007",
-        "meta_validation:013",
-        "heldout_evaluation:005",
-        "meta_validation:015",
         "heldout_evaluation:003",
+        "meta_validation:013",
+        "heldout_evaluation:007",
+        "meta_validation:015",
+        "heldout_evaluation:005",
+        "meta_validation:010",
         "meta_validation:007",
         "meta_validation:000",
-        "meta_validation:010",
         "meta_validation:003",
-        "meta_validation:009",
-        "meta_validation:011",
         "meta_validation:002",
+        "meta_validation:011",
         "meta_validation:008",
-        "meta_validation:001",
+        "meta_validation:009",
         "meta_validation:006",
-        "meta_validation:005",
+        "meta_validation:001",
         "heldout_evaluation:006",
         "meta_validation:014",
         "heldout_evaluation:004",
         "heldout_evaluation:000",
+        "meta_validation:005",
         "heldout_evaluation:001",
         "heldout_evaluation:002",
         "meta_validation:012",
         "meta_validation:004",
         "heldout_evaluation:011",
         "heldout_evaluation:012",
+        "heldout_evaluation:014",
         "heldout_evaluation:009",
         "heldout_evaluation:008",
-        "heldout_evaluation:014",
         "heldout_evaluation:010",
         "heldout_evaluation:015",
         "heldout_evaluation:013"
       ],
-      "plots": {
-        "dp_oracle_metric_bars": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714/figures/dp_oracle_metric_bars.png",
-        "dp_oracle_gap_capture": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714/figures/dp_oracle_gap_capture.png",
-        "dp_oracle_representative_soc": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714/figures/dp_oracle_representative_soc.png"
+      "full_power_split_dp": {
+        "enabled": true,
+        "definition": "discretized offline full power-split DP oracle that directly chooses engine power; not deployable and not the same authority as the Meta-RL adapter",
+        "decision_interval_s": 1,
+        "engine_power_grid_kw": [
+          0.0,
+          5.0,
+          10.0,
+          15.0,
+          20.0,
+          25.0,
+          30.0,
+          35.0,
+          40.0,
+          45.0,
+          50.0,
+          55.0,
+          60.0,
+          65.0,
+          70.0
+        ],
+        "soc_bin": 0.05,
+        "max_frontier_states": 100000,
+        "extra_constraint_penalty": 200.0,
+        "constraint_mode": "lexicographic",
+        "runtime_s": 380.48360228538513,
+        "stats_path": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/full_power_split_dp_stats.json"
       },
-      "resource_report": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/representative_cap5_20260707_184714/resource_report.json"
+      "plots": {
+        "dp_oracle_metric_bars": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_metric_bars.png",
+        "dp_oracle_gap_capture": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_gap_capture.png",
+        "dp_oracle_representative_soc": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/figures/dp_oracle_representative_soc.png"
+      },
+      "resource_report": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/full_split_1s_socbin005_representative_20260707_203512/resource_report.json"
     },
     "plots": {
       "dp_oracle_gap_capture": "plots/dp_oracle_gap_capture.png",
@@ -2420,7 +2689,10 @@
       "dp_oracle_capture_ratio.csv": "data/dp_oracle_capture_ratio.csv",
       "dp_oracle_metadata.json": "data/dp_oracle_metadata.json",
       "dp_oracle_manifest.csv": "data/dp_oracle_manifest.csv",
-      "dp_oracle_episode_metrics.csv": "data/dp_oracle_episode_metrics.csv"
+      "dp_oracle_episode_metrics.csv": "data/dp_oracle_episode_metrics.csv",
+      "dp_oracle_full_power_split_improvements.csv": "data/dp_oracle_full_power_split_improvements.csv",
+      "dp_oracle_full_power_split_stats.json": "data/dp_oracle_full_power_split_stats.json",
+      "dp_oracle_full_power_split_actions.csv": "data/dp_oracle_full_power_split_actions.csv"
     }
   },
   "report_path": "data/full_run_analysis_report.md",

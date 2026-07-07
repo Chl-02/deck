@@ -224,11 +224,13 @@
       <p>추가로 학습된 adapter를 <strong>discretized bounded-offset DP oracle</strong>과 비교했다. 이 oracle은 미래 주행 프로파일을 알고 있지만, Meta-RL과 동일하게 <code>delta_P_eng_on</code>, <code>delta_SOC_ref</code> 두 보정값만 선택한다.</p>
       <p>엔진 on/off, EMS mode, engine/motor power split은 계속 기존 map/rule EMS가 결정한다. 따라서 이 비교는 차량 전체 파워분배를 직접 최적화한 full DP lower bound가 아니라, 같은 권한을 가진 calibration adapter의 offline upper bound다.</p>
       <p class="note">이번 대표 subset에서 frontier cap이 32/32 task에 걸렸다. 따라서 continuous full-vehicle optimum이 아니라 frontier-capped discretized bounded-offset DP oracle로 보수적으로 해석해야 한다.</p>
-      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter mean</th><th>DP oracle</th><th>Adapter capture</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.058034</td><td>0.057867</td><td>0.055132</td><td>5.77%</td></tr>
-<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.071113</td><td>0.070261</td><td>0.069269</td><td>46.18%</td></tr>
-<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>2.312500</td><td>2.212500</td><td>1.687500</td><td>16.00%</td></tr>
-<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.148338</td><td>0.148412</td><td>0.148425</td><td>n/a</td></tr>
-<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>12.062500</td><td>12.112500</td><td>11.250000</td><td>-6.15%</td></tr></tbody></table>
+      <p class="note">추가 진단으로 discretized offline full power-split DP oracle도 계산했다. 이 oracle은 P_eng_target을 직접 선택하므로 Meta-RL adapter와 권한이 다르고, 미래 주행을 모두 아는 offline/non-deployable 기준이다. 이번 실행은 decision interval 1 s, constraint mode lexicographic 설정이다.</p>
+      <p class="note">주의: full power-split DP는 heldout에서 SOC/fuel 지표를 크게 개선했지만, 제약 위반 step이 baseline 2.312에서 10.125로 증가했다. 따라서 이 값은 논문 claim의 공정 비교 기준이 아니라, 현재 direct power-split oracle 설계의 trade-off를 보여주는 진단 결과다.</p>
+      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter mean</th><th>Bounded DP oracle</th><th>Full split DP</th><th>Adapter capture</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.058034</td><td>0.057867</td><td>0.055132</td><td>0.012878</td><td>5.77%</td></tr>
+<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.071113</td><td>0.070261</td><td>0.069269</td><td>0.029400</td><td>46.18%</td></tr>
+<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>2.312500</td><td>2.212500</td><td>1.687500</td><td>10.125000</td><td>16.00%</td></tr>
+<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.148338</td><td>0.148412</td><td>0.148425</td><td>0.132164</td><td>n/a</td></tr>
+<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>12.062500</td><td>12.112500</td><td>11.250000</td><td>7.187500</td><td>-6.15%</td></tr></tbody></table>
       
       <h3>그림 4. Baseline, Adapter, DP oracle 비교</h3>
       <div class="figure">
