@@ -1822,7 +1822,10 @@
     "learning_trend": "plots/full_run_learning_trend.png"
   },
   "report_path": "data/full_run_analysis_report.md",
+  "report_html_path": "full_run_analysis_report.html",
   "artifacts": {
+    "html_report": "full_run_analysis_report.html",
+    "markdown_report": "data/full_run_analysis_report.md",
     "aggregate_report": "data/sweep_aggregate_report.md",
     "metric_summary_csv": "data/full_run_metric_summary.csv",
     "seed_delta_csv": "data/full_run_seed_deltas.csv",

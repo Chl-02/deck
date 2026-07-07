@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meta-RL Full Run Analysis Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2b32;
+      --muted: #5f6f78;
+      --line: #d8e0e4;
+      --paper: #ffffff;
+      --bg: #f4f7f8;
+      --accent: #386f8f;
+      --warn: #b65f3b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topline { margin-bottom: 22px; font-size: 14px; }
+    h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.1; letter-spacing: 0; }
+    h2 { margin: 34px 0 12px; font-size: 20px; letter-spacing: 0; }
+    p { max-width: 860px; margin: 0 0 14px; color: var(--muted); }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin-top: 18px;
+    }
+    .boundary {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #eef4f5;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      color: var(--ink);
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      text-align: right;
+      vertical-align: top;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th:last-child, td:last-child { text-align: left; }
+    th { color: var(--muted); font-weight: 700; }
+    ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+    li { margin: 8px 0; }
+    .verdict {
+      border-left: 4px solid var(--warn);
+      padding-left: 14px;
+      color: var(--ink);
+      font-weight: 650;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topline"><a href="./">Back to Meta-RL dashboard</a> · <a href="./data/full_run_analysis_report.md">Markdown source</a></div>
+    <h1>Meta-RL Full Run Analysis Report</h1>
+    <p class="verdict">The 5-seed paper-scale run completed successfully and remained stable, but heldout improvements are positive and small rather than strong enough for the current paper success targets.</p>
+
+    <section class="panel">
+      <h2>Adapter Boundary</h2>
+      <p>The learned policy is a bounded calibration adapter. It does not directly command engine or motor power.</p>
+      <div class="boundary">Meta-RL -&gt; delta_P_eng_on, delta_SOC_ref<br>Map/rule EMS -&gt; engine state, EMS mode, power split, final commands</div>
+    </section>
+
+    <section class="panel">
+      <h2>Final Heldout Result</h2>
+      <table>
+        <thead><tr><th>Metric</th><th>Baseline</th><th>Adapter</th><th>Reduction</th><th>Interpretation</th></tr></thead>
+        <tbody>
+<tr><td>Abs final SOC error</td><td>0.054238</td><td>0.053534</td><td>1.30%</td><td>target 20% reduction; not met</td></tr>
+<tr><td>SOC RMSE</td><td>0.062284</td><td>0.061945</td><td>0.55%</td><td>target 10% reduction; not met</td></tr>
+<tr><td>Constraint steps</td><td>1.143750</td><td>1.118750</td><td>2.19%</td><td>target 30% reduction; not met</td></tr>
+<tr><td>SOC-corrected fuel</td><td>0.111858</td><td>0.111936</td><td>-0.07%</td><td>guardrail cost 0.07%; within 2%</td></tr>
+<tr><td>Engine switches</td><td>8.615625</td><td>8.646875</td><td>-0.36%</td><td>guardrail increase 0.36%; within 10%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Validation Split Check</h2>
+      <table>
+        <thead><tr><th>Metric</th><th>Baseline</th><th>Adapter</th><th>Reduction</th></tr></thead>
+        <tbody>
+<tr><td>Abs final SOC error</td><td>0.054443</td><td>0.054242</td><td>0.37%</td></tr>
+<tr><td>SOC RMSE</td><td>0.060976</td><td>0.060608</td><td>0.60%</td></tr>
+<tr><td>Constraint steps</td><td>0.918750</td><td>0.903125</td><td>1.70%</td></tr>
+<tr><td>SOC-corrected fuel</td><td>0.111759</td><td>0.111807</td><td>-0.04%</td></tr>
+<tr><td>Engine switches</td><td>10.881250</td><td>10.912500</td><td>-0.29%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Training Diagnostics</h2>
+      <ul>
+        <li>Initial full run exposed critic-loss explosion; the run was stopped before wasting all seeds.</li>
+        <li>Stabilization used Huber critic loss, Q-target clipping, gradient clipping, and separating actor updates from direct encoder updates.</li>
+        <li>A stable reward setting was used for the completed 5-seed sweep: fuel weight 1.5, SOC step weight 0.30, terminal SOC weight 6.0.</li>
+        <li>Final results are reproducible across 5 seeds, but the current effect size is too small for the originally proposed strong claim.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Paper Implication</h2>
+      <p>The current evidence supports a narrower statement: the task-aware calibration adapter can produce small heldout improvements in SOC regulation and constraint steps while staying within fuel and switching guardrails.</p>
+      <p>It does not yet support the stronger success criteria of 10% SOC-RMSE, 20% final-SOC-error, and 30% constraint-step reduction.</p>
+    </section>
+  </main>
+</body>
+</html>
