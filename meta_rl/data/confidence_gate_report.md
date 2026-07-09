@@ -12,23 +12,26 @@ SOC가 낮을 때는 모든 action을 줄이는 것이 아니라 `delta_P_eng_on
 
 | controller | reward | SOC tail risk | SOC RMSE | final SOC err | constraint | SOC-corr fuel | confidence | attenuation | fallback |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Baseline | -128.1088 | 0.51980 | 0.06701 | 0.06893 | 0.375 | 0.08953 | 1.000 | 1.000 | 0.000 |
-| Old adapter, no gate | -130.2368 | 0.52427 | 0.06801 | 0.06949 | 0.400 | 0.08948 | 1.000 | 1.000 | 0.000 |
-| Gate current bound | -127.7215 | 0.51383 | 0.06697 | 0.06385 | 0.425 | 0.09002 | 0.513 | 0.747 | 0.000 |
+| Baseline | -94.7484 | 0.33538 | 0.06180 | 0.05466 | 0.906 | 0.09941 | 1.000 | 1.000 | 0.000 |
+| Old adapter, no gate | -94.6648 | 0.33369 | 0.06132 | 0.05329 | 0.941 | 0.09947 | 1.000 | 1.000 | 0.000 |
+| Gate current bound | -93.0720 | 0.32646 | 0.06106 | 0.05332 | 0.928 | 0.09944 | 0.608 | 0.752 | 0.008 |
+| Gate wider bound | -92.3669 | 0.32444 | 0.06082 | 0.05313 | 0.894 | 0.09954 | 0.611 | 0.737 | 0.008 |
 
 ## Combined Stress 평균 비교
 
 | controller | SOC tail risk | SOC RMSE | final SOC err | constraint | confidence | attenuation | fallback | direction suppression |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Baseline | 0.98307 | 0.10286 | 0.06255 | 1.500 | 1.000 | 1.000 | 0.000 | 0.000 |
-| Old adapter, no gate | 0.97626 | 0.10237 | 0.06378 | 1.600 | 1.000 | 1.000 | 0.000 | 0.000 |
-| Gate current bound | 0.98095 | 0.10274 | 0.06246 | 1.500 | 0.182 | 0.493 | 0.020 | 0.745 |
+| Baseline | 0.66996 | 0.08428 | 0.05522 | 4.375 | 1.000 | 1.000 | 0.000 | 0.000 |
+| Old adapter, no gate | 0.67872 | 0.08476 | 0.05604 | 4.400 | 1.000 | 1.000 | 0.000 | 0.000 |
+| Gate current bound | 0.66291 | 0.08384 | 0.05437 | 4.375 | 0.328 | 0.489 | 0.060 | 0.579 |
+| Gate wider bound | 0.66820 | 0.08416 | 0.05480 | 4.350 | 0.326 | 0.485 | 0.060 | 0.514 |
 
 ## Lexicographic selection
 
 선택 기준은 heldout constraint <= baseline, SOC tail risk <= baseline, SOC-corrected fuel 악화 2% 이내, engine switch 증가 10% 이내, 이후 SOC_RMSE/final SOC/reward 순이다.
-- Gate current bound seed `20260709_step_50000`: SOC tail Δ -0.02281, SOC RMSE Δ -0.00115, constraint Δ 0.0000, fuel Δ 0.00046.
-- Old adapter, no gate seed `20260709`: SOC tail Δ 0.00908, SOC RMSE Δ 0.00111, constraint Δ 0.0000, fuel Δ 0.00003.
+- Gate current bound seed `20260709_step_50000`: SOC tail Δ -0.01117, SOC RMSE Δ -0.00115, constraint Δ -0.0312, fuel Δ -0.00004.
+- Gate wider bound seed `20260709_step_120000`: SOC tail Δ -0.01136, SOC RMSE Δ -0.00111, constraint Δ -0.0938, fuel Δ 0.00026.
+- Old adapter, no gate seed `20260708`: SOC tail Δ -0.00072, SOC RMSE Δ -0.00017, constraint Δ -0.0469, fuel Δ 0.00005.
 
 ## 해석
 

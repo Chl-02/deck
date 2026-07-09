@@ -11,24 +11,29 @@
 <table><tbody>
 <tr><th>controller</th><th>reward</th><th>SOC tail risk</th><th>SOC RMSE</th><th>final SOC err</th><th>constraint</th><th>SOC-corr fuel</th><th>confidence</th><th>attenuation</th><th>fallback</th></tr>
 
-<tr><td>Baseline</td><td>-128.1088</td><td>0.51980</td><td>0.06701</td><td>0.06893</td><td>0.375</td><td>0.08953</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
+<tr><td>Baseline</td><td>-94.7484</td><td>0.33538</td><td>0.06180</td><td>0.05466</td><td>0.906</td><td>0.09941</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
 
-<tr><td>Old adapter, no gate</td><td>-130.2368</td><td>0.52427</td><td>0.06801</td><td>0.06949</td><td>0.400</td><td>0.08948</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
+<tr><td>Old adapter, no gate</td><td>-94.6648</td><td>0.33369</td><td>0.06132</td><td>0.05329</td><td>0.941</td><td>0.09947</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
 
-<tr><td>Gate current bound</td><td>-127.7215</td><td>0.51383</td><td>0.06697</td><td>0.06385</td><td>0.425</td><td>0.09002</td><td>0.513</td><td>0.747</td><td>0.000</td></tr>
+<tr><td>Gate current bound</td><td>-93.0720</td><td>0.32646</td><td>0.06106</td><td>0.05332</td><td>0.928</td><td>0.09944</td><td>0.608</td><td>0.752</td><td>0.008</td></tr>
+
+<tr><td>Gate wider bound</td><td>-92.3669</td><td>0.32444</td><td>0.06082</td><td>0.05313</td><td>0.894</td><td>0.09954</td><td>0.611</td><td>0.737</td><td>0.008</td></tr>
 <section><h2>Combined Stress 평균 비교</h2>
 <table><tbody>
 <tr><th>controller</th><th>SOC tail risk</th><th>SOC RMSE</th><th>final SOC err</th><th>constraint</th><th>confidence</th><th>attenuation</th><th>fallback</th><th>direction suppression</th></tr>
 
-<tr><td>Baseline</td><td>0.98307</td><td>0.10286</td><td>0.06255</td><td>1.500</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
+<tr><td>Baseline</td><td>0.66996</td><td>0.08428</td><td>0.05522</td><td>4.375</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
 
-<tr><td>Old adapter, no gate</td><td>0.97626</td><td>0.10237</td><td>0.06378</td><td>1.600</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
+<tr><td>Old adapter, no gate</td><td>0.67872</td><td>0.08476</td><td>0.05604</td><td>4.400</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
 
-<tr><td>Gate current bound</td><td>0.98095</td><td>0.10274</td><td>0.06246</td><td>1.500</td><td>0.182</td><td>0.493</td><td>0.020</td><td>0.745</td></tr>
+<tr><td>Gate current bound</td><td>0.66291</td><td>0.08384</td><td>0.05437</td><td>4.375</td><td>0.328</td><td>0.489</td><td>0.060</td><td>0.579</td></tr>
+
+<tr><td>Gate wider bound</td><td>0.66820</td><td>0.08416</td><td>0.05480</td><td>4.350</td><td>0.326</td><td>0.485</td><td>0.060</td><td>0.514</td></tr>
 <section><h2>Lexicographic selection</h2>
 <p>선택 기준은 heldout constraint &lt;= baseline, SOC tail risk &lt;= baseline, SOC-corrected fuel 악화 2% 이내, engine switch 증가 10% 이내, 이후 SOC_RMSE/final SOC/reward 순이다.</p>
-<p>- Gate current bound seed `20260709_step_50000`: SOC tail Δ -0.02281, SOC RMSE Δ -0.00115, constraint Δ 0.0000, fuel Δ 0.00046.</p>
-<p>- Old adapter, no gate seed `20260709`: SOC tail Δ 0.00908, SOC RMSE Δ 0.00111, constraint Δ 0.0000, fuel Δ 0.00003.</p>
+<p>- Gate current bound seed `20260709_step_50000`: SOC tail Δ -0.01117, SOC RMSE Δ -0.00115, constraint Δ -0.0312, fuel Δ -0.00004.</p>
+<p>- Gate wider bound seed `20260709_step_120000`: SOC tail Δ -0.01136, SOC RMSE Δ -0.00111, constraint Δ -0.0938, fuel Δ 0.00026.</p>
+<p>- Old adapter, no gate seed `20260708`: SOC tail Δ -0.00072, SOC RMSE Δ -0.00017, constraint Δ -0.0469, fuel Δ 0.00005.</p>
 <section><h2>해석</h2>
 <p>confidence gate의 핵심 가치는 평균 reward를 키우는 것이 아니라, OOD/stress에서 adapter 개입량이 자동으로 줄어드는지 눈으로 확인할 수 있게 만든 점이다. Confidence boxplot과 attenuation scatter에서 stress/weather split의 confidence가 nominal heldout보다 낮고 action attenuation이 커진다면, production-like deployment claim에 필요한 fallback behavior를 보여줄 수 있다.</p>
 <p>wider bound는 confidence gate가 있을 때 action authority를 넓혀도 되는지 보는 실험이다. Wider가 SOC tail risk를 줄이면서 constraint/fuel/switch guardrail을 지키면 추가 권한이 타당하고, 그렇지 않으면 current bound가 더 production-like하다.</p>
