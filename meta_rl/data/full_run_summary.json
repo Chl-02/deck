@@ -1837,7 +1837,7 @@
     "checkpoint_series_csv": "data/full_run_checkpoint_series.csv"
   },
   "reward_version": "robustness_v2",
-  "robustness_reward_report_path": "robustness_reward_report.html",
+  "robustness_reward_report_path": "robustness_reward_v2_report.html",
   "robustness_reward": {
     "old_run_root": "/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901",
     "new_run_root": "/home/yejun/meta_rl/results/meta_rl_paper/robustness_v2_raw_summary/20260709_161421",
@@ -2536,6 +2536,6 @@
       "action_trajectory": "figures/robustness_action_trajectory.png",
       "battery_limit_usage": "figures/robustness_battery_limit_usage.png"
     },
-    "report_html": "robustness_reward_report.html"
+    "report_html": "robustness_reward_v2_report.html"
   }
 }
