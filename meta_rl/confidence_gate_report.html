@@ -1,44 +1,43 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Confidence-Gated Meta-RL Adapter Report</title>
-<style>body{font-family:Inter,system-ui,sans-serif;margin:0;background:#f6f8f9;color:#1f2b32}main{max-width:1180px;margin:auto;padding:32px}section{background:#fff;border:1px solid #d8e0e4;border-radius:8px;padding:20px;margin:18px 0}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{border-bottom:1px solid #e3e8eb;padding:8px;text-align:right}th:first-child,td:first-child{text-align:left}img{max-width:100%;border:1px solid #d8e0e4;border-radius:8px;background:white}h1,h2,h3{letter-spacing:0}</style></head><body><main>
+<style>body{font-family:Inter,system-ui,sans-serif;margin:0;background:#f7f8f9;color:#1f2b32}main{max-width:1180px;margin:auto;padding:34px 30px 60px}.report-section{border-top:1px solid #d8e0e4;padding:24px 0;margin:0}table{width:100%;border-collapse:collapse;margin:12px 0 22px;background:#fff}th,td{border-bottom:1px solid #e3e8eb;padding:8px;text-align:right;vertical-align:top}th:first-child,td:first-child{text-align:left}img{display:block;max-width:100%;border:1px solid #d8e0e4;border-radius:4px;background:white;margin:14px 0 34px}h1,h2,h3{letter-spacing:0}h1{margin:0 0 22px}h2{margin:0 0 14px}h3{margin:24px 0 10px}p{line-height:1.58;margin:.55rem 0}</style></head><body><main>
 <h1>Confidence-Gated Meta-RL Adapter 결과 보고서</h1>
-<section><h2>요약</h2>
+<section class="report-section"><h2>요약</h2>
 <p>이번 실험은 Meta-RL adapter가 계속 `delta_P_eng_on`, `delta_SOC_ref`만 내보내는 bounded calibration adapter라는 전제를 유지하면서, runtime confidence가 낮을 때 action을 줄이거나 zero-offset baseline EMS로 복귀하는 기능을 추가한 것이다.</p>
 <p>confidence는 distribution confidence, safety-margin confidence, stability confidence의 minimum으로 정의했다. Distribution confidence는 학습 profile의 robust median/IQR envelope에서 벗어나는 정도를 보고, safety confidence는 SOC/battery-limit/최근 constraint margin을 보고, stability confidence는 action saturation/sign flip/rate를 본다.</p>
 <p>SOC가 낮을 때는 모든 action을 줄이는 것이 아니라 `delta_P_eng_on &gt; 0`, `delta_SOC_ref &lt; 0`처럼 방전을 더 허용할 수 있는 방향만 억제한다. SOC가 높을 때는 반대로 charge-favoring 방향을 억제한다. 반복 constraint 또는 nonfinite action은 `[0, 0]` fallback으로 보낸다.</p>
-<section><h2>Heldout 평균 비교</h2>
+</section>
+<section class="report-section"><h2>Heldout 평균 비교</h2>
 <table><tbody>
 <tr><th>controller</th><th>reward</th><th>SOC tail risk</th><th>SOC RMSE</th><th>final SOC err</th><th>constraint</th><th>SOC-corr fuel</th><th>confidence</th><th>attenuation</th><th>fallback</th></tr>
-
 <tr><td>Baseline</td><td>-94.7484</td><td>0.33538</td><td>0.06180</td><td>0.05466</td><td>0.906</td><td>0.09941</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
-
 <tr><td>Old adapter, no gate</td><td>-94.6648</td><td>0.33369</td><td>0.06132</td><td>0.05329</td><td>0.941</td><td>0.09947</td><td>1.000</td><td>1.000</td><td>0.000</td></tr>
-
 <tr><td>Gate current bound</td><td>-93.0720</td><td>0.32646</td><td>0.06106</td><td>0.05332</td><td>0.928</td><td>0.09944</td><td>0.608</td><td>0.752</td><td>0.008</td></tr>
-
 <tr><td>Gate wider bound</td><td>-92.3669</td><td>0.32444</td><td>0.06082</td><td>0.05313</td><td>0.894</td><td>0.09954</td><td>0.611</td><td>0.737</td><td>0.008</td></tr>
-<section><h2>Combined Stress 평균 비교</h2>
+</tbody></table>
+</section>
+<section class="report-section"><h2>Combined Stress 평균 비교</h2>
 <table><tbody>
 <tr><th>controller</th><th>SOC tail risk</th><th>SOC RMSE</th><th>final SOC err</th><th>constraint</th><th>confidence</th><th>attenuation</th><th>fallback</th><th>direction suppression</th></tr>
-
 <tr><td>Baseline</td><td>0.66996</td><td>0.08428</td><td>0.05522</td><td>4.375</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
-
 <tr><td>Old adapter, no gate</td><td>0.67872</td><td>0.08476</td><td>0.05604</td><td>4.400</td><td>1.000</td><td>1.000</td><td>0.000</td><td>0.000</td></tr>
-
 <tr><td>Gate current bound</td><td>0.66291</td><td>0.08384</td><td>0.05437</td><td>4.375</td><td>0.328</td><td>0.489</td><td>0.060</td><td>0.579</td></tr>
-
 <tr><td>Gate wider bound</td><td>0.66820</td><td>0.08416</td><td>0.05480</td><td>4.350</td><td>0.326</td><td>0.485</td><td>0.060</td><td>0.514</td></tr>
-<section><h2>Lexicographic selection</h2>
+</tbody></table>
+</section>
+<section class="report-section"><h2>Lexicographic selection</h2>
 <p>선택 기준은 heldout constraint &lt;= baseline, SOC tail risk &lt;= baseline, SOC-corrected fuel 악화 2% 이내, engine switch 증가 10% 이내, 이후 SOC_RMSE/final SOC/reward 순이다.</p>
 <p>- Gate current bound seed `20260709_step_50000`: SOC tail Δ -0.01117, SOC RMSE Δ -0.00115, constraint Δ -0.0312, fuel Δ -0.00004.</p>
 <p>- Gate wider bound seed `20260709_step_120000`: SOC tail Δ -0.01136, SOC RMSE Δ -0.00111, constraint Δ -0.0938, fuel Δ 0.00026.</p>
 <p>- Old adapter, no gate seed `20260708`: SOC tail Δ -0.00072, SOC RMSE Δ -0.00017, constraint Δ -0.0469, fuel Δ 0.00005.</p>
-<section><h2>해석</h2>
+</section>
+<section class="report-section"><h2>해석</h2>
 <p>confidence gate의 핵심 가치는 평균 reward를 키우는 것이 아니라, OOD/stress에서 adapter 개입량이 자동으로 줄어드는지 눈으로 확인할 수 있게 만든 점이다. Confidence boxplot과 attenuation scatter에서 stress/weather split의 confidence가 nominal heldout보다 낮고 action attenuation이 커진다면, production-like deployment claim에 필요한 fallback behavior를 보여줄 수 있다.</p>
 <p>wider bound는 confidence gate가 있을 때 action authority를 넓혀도 되는지 보는 실험이다. Wider가 SOC tail risk를 줄이면서 constraint/fuel/switch guardrail을 지키면 추가 권한이 타당하고, 그렇지 않으면 current bound가 더 production-like하다.</p>
 <p>성능이 개선되지 않는 경우에는 gate가 너무 보수적이어서 학습된 action이 baseline에 가까워졌거나, distribution envelope가 stress를 과도하게 OOD로 판단해 유효한 charge-favoring action까지 줄였을 수 있다. 이 경우 threshold/top-k/feature scale ablation이 필요하다.</p>
-<section><h2>Figures</h2>
+</section>
+<section class="report-section"><h2>Figures</h2>
 <h3>Metric bars</h3>
 <img src="figures/confidence_metric_bars.png" alt="Metric bars" />
 <h3>Confidence boxplot</h3>
@@ -53,4 +52,5 @@
 <img src="figures/confidence_direction_gate_case.png" alt="Direction-aware gate case" />
 <h3>Action-bound tradeoff</h3>
 <img src="figures/confidence_bound_tradeoff.png" alt="Action-bound tradeoff" />
+</section>
 </main></body></html>
