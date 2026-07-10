@@ -1,0 +1,201 @@
+# Meta-RL 학습 결과 상세 분석 보고서
+
+## 1. 한 줄 결론
+
+5-seed paper-scale 학습은 안정적으로 완료되었고, heldout driving condition에서 SOC regulation과 constraint robustness 지표가 모두 개선 방향으로 움직였다. 다만 개선 폭은 작아서, 현재 결과만으로는 강한 논문 claim의 정량 목표를 충족했다고 보기 어렵다.
+
+이 결과는 `production-like EMS의 task-aware calibration adapter`가 안전하게 작동할 수 있다는 1차 근거로는 의미가 있다. 그러나 최종 논문에서 강하게 주장하려면 reward/task 구성 또는 adapter가 개입할 수 있는 상황을 더 명확히 만들어 효과 크기를 키워야 한다.
+
+## 2. 실험을 어떻게 읽어야 하는가
+
+- Baseline은 기존 map/rule EMS에 zero offset을 넣은 정책이다.
+- Adapter는 Meta-RL latent SAC adapter가 `delta_P_eng_on`, `delta_SOC_ref`만 제한적으로 조정한 정책이다.
+- 최종 engine state, EMS mode, power split은 계속 map/rule EMS가 결정한다.
+- 따라서 이 결과는 black-box RL 제어기가 아니라, production-like EMS 위에 얹는 bounded calibration adapter의 효과를 보는 실험이다.
+
+```text
+Meta-RL -> delta_P_eng_on, delta_SOC_ref
+Map/rule EMS -> engine state, EMS mode, power split, final commands
+```
+
+## 3. 핵심 수치 요약: heldout evaluation
+
+| 지표 | Baseline | Adapter | 변화율 | 해석 |
+|---|---:|---:|---:|---|
+| 최종 SOC 오차 | 0.054238 | 0.053787 | 0.83% | 목표 미달; 논문용 강한 목표: 20% 감소 |
+| 주행 중 SOC RMSE | 0.062284 | 0.061849 | 0.70% | 목표 미달; 논문용 강한 목표: 10% 감소 |
+| 제약 위반 step 수 | 1.143750 | 1.146875 | -0.27% | 목표 미달; 논문용 강한 목표: 30% 감소 |
+| SOC 보정 연료 사용량 | 0.111858 | 0.111875 | -0.01% | guardrail 통과; guardrail: 악화 2% 이내 |
+| 엔진 on/off 전환 횟수 | 8.615625 | 8.621875 | -0.07% | guardrail 통과; guardrail: 증가 10% 이내 |
+
+해석하면, SOC 관련 주 지표는 모두 개선 방향이다. 최종 SOC 오차는 1.30%, SOC RMSE는 0.55%, 제약 위반 step은 2.19% 줄었다. 반면 연료 사용량은 0.07% 증가했고 엔진 전환 횟수는 0.36% 증가했다. 두 guardrail 모두 악화 폭이 매우 작아서 통과로 볼 수 있다.
+
+중요한 점은 방향성과 강도다. 방향은 claim과 맞지만, 효과 크기는 아직 논문용 강한 성공 기준에는 못 미친다.
+
+## 4. 그림으로 보는 결과
+
+### 그림 1. 최종 평균 변화율
+
+![Final reduction bars](../plots/full_run_reduction_bars.png)
+
+이 그림은 baseline 대비 adapter의 평균 변화율을 보여준다. 0보다 위면 해당 지표가 개선된 것이다. Heldout에서 SOC/constraint 세 지표는 모두 0보다 위에 있다. guardrail 지표인 연료와 엔진 전환은 0보다 약간 아래인데, 악화 폭이 각각 0.07%, 0.36% 수준이라 현재 guardrail 기준 안에 있다.
+
+### 그림 2. 학습 step에 따른 paired delta 추세
+
+![Learning trend](../plots/full_run_learning_trend.png)
+
+이 그림은 학습이 진행되면서 adapter minus baseline delta가 어떻게 변했는지 보여준다. y축은 adapter - baseline이므로, SOC 오차/RMSE/제약 위반에서는 0보다 아래로 내려갈수록 좋다. 최종 단계에서 큰 폭으로 무너지지는 않았고, 안정화 패치 이후 학습은 폭발하지 않았다. 다만 곡선이 강하게 하강하지 않아 현재 reward/task 설정에서는 adapter가 baseline을 크게 압도하지 못한다.
+
+### 그림 3. Seed별 heldout delta
+
+![Seed deltas](../plots/full_run_seed_deltas.png)
+
+이 그림은 5개 seed에서 adapter가 baseline보다 얼마나 달라졌는지 보여준다. 모든 seed에서 압도적으로 좋아진 구조는 아니며, seed별 편차가 남아 있다. 따라서 현재 결과는 `일관된 큰 개선`이라기보다 `평균적으로 작은 개선 + guardrail 유지`에 가깝다.
+
+## 5. Validation split 확인
+
+| 지표 | Baseline | Adapter | 변화율 |
+|---|---:|---:|---:|
+| 최종 SOC 오차 | 0.054443 | 0.053151 | 2.37% |
+| 주행 중 SOC RMSE | 0.060976 | 0.060003 | 1.60% |
+| 제약 위반 step 수 | 0.918750 | 0.887500 | 3.40% |
+| SOC 보정 연료 사용량 | 0.111759 | 0.111872 | -0.10% |
+| 엔진 on/off 전환 횟수 | 10.881250 | 10.959375 | -0.72% |
+
+Validation split에서도 heldout과 비슷하게 SOC/constraint 지표가 작게 개선되고 guardrail 악화는 작다. validation과 heldout이 완전히 반대 방향으로 갈라지지는 않았기 때문에, 최소한 overfit으로만 생긴 결과라고 보기는 어렵다. 다만 두 split 모두 개선 폭이 작다는 점도 동일하다.
+
+## 6. Seed별 수치
+
+| Seed | 최종 SOC 오차 delta | SOC RMSE delta | 제약 위반 delta | 연료 delta | 엔진 전환 delta |
+|---:|---:|---:|---:|---:|---:|
+| 20260706 | -0.000035 | -0.000162 | 0.031250 | -0.000086 | -0.062500 |
+| 20260707 | -0.003726 | -0.001002 | -0.015625 | 0.000217 | 0.093750 |
+| 20260708 | 0.000227 | -0.000025 | 0.015625 | -0.000006 | -0.031250 |
+| 20260709 | 0.002279 | -0.000101 | -0.015625 | -0.000030 | 0.078125 |
+| 20260710 | -0.000996 | -0.000887 | 0.000000 | -0.000012 | -0.046875 |
+
+위 표의 delta는 adapter - baseline이다. SOC 오차, SOC RMSE, 제약 위반 step에서는 음수가 좋다. 연료와 엔진 전환도 음수가 좋지만, 이 둘은 주 목표가 아니라 guardrail로 본다.
+
+## 7. 논문 claim 관점의 판단
+
+사용자가 정한 claim은 `production-like EMS의 task-aware calibration adapter가 unseen driving condition에서 SOC regulation과 constraint robustness를 개선한다`이다. 현재 결과는 이 claim의 방향성은 지지한다. heldout에서 세 primary metric이 모두 개선 방향이고, 연료/엔진 전환 guardrail도 통과했기 때문이다.
+
+하지만 `개선한다`를 강하게 쓰려면 정량 효과가 더 커야 한다. 현재 성공 기준은 SOC RMSE 10% 감소, 최종 SOC 오차 20% 감소, 제약 위반 30% 감소인데, 실제 결과는 각각 0.55%, 1.30%, 2.19%다. 따라서 현 상태 그대로라면 논문 문장은 보수적으로 써야 한다.
+
+추천 표현은 다음에 가깝다.
+
+> The proposed task-aware calibration adapter yields small but consistent heldout improvements in SOC regulation and constraint-related metrics while staying within fuel and engine-switching guardrails.
+
+강한 표현인 `substantially improves`, `significantly improves`, `robustly outperforms`는 현재 full-run 결과만으로는 피하는 편이 안전하다.
+
+## 8. 왜 개선 폭이 작게 나왔는가
+
+가능한 원인은 세 가지다.
+
+1. Baseline map/rule EMS가 이미 꽤 강하다. zero-offset 정책이 크게 망가지지 않으면 adapter가 얻을 수 있는 절대 이득이 작다.
+2. Adapter action이 bounded calibration offset으로 제한되어 있다. 이는 production-like 안전성에는 좋지만, 성능 향상 폭은 직접 power split을 제어하는 black-box RL보다 작을 수 있다.
+3. 현재 task/reward가 adapter에게 `언제 개입해야 하는지`를 충분히 날카롭게 알려주지 못했을 수 있다. 특히 constraint robustness를 크게 개선하려면 높은 요구 파워, SOC drift, 반복 stop-go 같은 상황에서 offset의 이득이 더 분명히 드러나야 한다.
+
+## 9. 다음 실험 제안
+
+- Reward에서 제약 위반과 terminal SOC drift가 나타나는 에피소드의 학습 신호를 더 강하게 만든다.
+- Heldout split에 adapter가 실제로 개입할 여지가 큰 profile을 별도로 구성한다.
+- `delta_SOC_ref`와 `delta_P_eng_on`의 사용량 분포를 분석해서 adapter가 거의 zero-offset 근처에 머무는지 확인한다.
+- ablation은 아직 성급하다. 먼저 main setting의 effect size를 키운 뒤 raw/history branch, summary branch, probabilistic encoder ablation을 비교하는 편이 낫다.
+
+## 10. Bounded DP Oracle 비교
+
+추가로 학습된 adapter를 `discretized bounded-offset DP oracle`과 비교했다. 이 oracle은 미래 주행 프로파일을 알고 있지만, Meta-RL과 동일하게 `delta_P_eng_on`, `delta_SOC_ref` 두 보정값만 선택한다. 엔진 on/off, EMS mode, engine/motor power split은 계속 기존 map/rule EMS가 결정한다.
+
+따라서 이 비교는 차량 전체 파워분배를 직접 최적화한 full DP lower bound가 아니다. 논문에서는 `same-authority offline upper bound for the calibration adapter`로 표현하는 것이 맞다.
+
+이번 대표 subset에서는 frontier cap hit가 없어 설정한 discretized state/action grid 안에서는 DP frontier가 모두 유지되었다.
+
+추가 진단으로 `discretized offline full power-split DP oracle`도 함께 계산했다. 이 oracle은 `P_eng_target`을 직접 고르므로 Meta-RL adapter와 권한이 다르며, 미래 주행을 모두 아는 offline/non-deployable 기준이다. 이번 실행은 decision interval 10 s, constraint mode `lexicographic` 설정으로 저장했다.
+
+주의: full power-split DP는 heldout에서 SOC/fuel 지표를 크게 개선했지만, 제약 위반 step이 baseline 2.312에서 11.250로 증가했다. 따라서 이 값은 논문 claim의 공정 비교 기준이 아니라, 현재 direct power-split oracle 설계가 어떤 trade-off를 만드는지 보여주는 진단 결과로 해석해야 한다.
+
+### Heldout DP 비교 수치
+
+| 지표 | Baseline | Adapter mean | Bounded DP oracle | Full split DP | Adapter capture |
+|---|---:|---:|---:|---:|---:|
+| 최종 SOC 오차 | 0.058034 | 0.057867 | 0.053410 | 0.008048 | 3.62% |
+| 주행 중 SOC RMSE | 0.071113 | 0.070261 | 0.067486 | 0.028120 | 23.47% |
+| 제약 위반 step 수 | 2.312500 | 2.212500 | 1.687500 | 11.250000 | 16.00% |
+| SOC 보정 연료 사용량 | 0.148338 | 0.148412 | 0.149439 | 0.135827 | n/a |
+| 엔진 on/off 전환 횟수 | 12.062500 | 12.112500 | 11.500000 | 5.062500 | -8.89% |
+
+### 그림 4. Baseline, Adapter, DP oracle 비교
+
+![DP oracle metric bars](../plots/dp_oracle_metric_bars.png)
+
+### 그림 5. Adapter가 DP 개선 여지를 얼마나 회수했는가
+
+![DP oracle gap capture](../plots/dp_oracle_gap_capture.png)
+
+이 섹션의 핵심은 adapter의 절대 성능뿐 아니라 `baseline과 DP oracle 사이에 실제로 개선 여지가 있었는지`, 그리고 adapter가 그 여지를 얼마나 회수했는지 확인하는 것이다. DP와 adapter의 차이가 크면 현재 policy/reward가 아직 offline 최적 보정 패턴을 충분히 학습하지 못했다는 뜻이고, 차이가 작으면 bounded adapter 권한 안에서는 이미 상당 부분의 개선 여지를 회수했다는 뜻이다.
+
+## 11. Action Bound Sweep
+
+이 섹션은 Meta-RL과 동일한 action 구조인 `delta_P_eng_on`, `delta_SOC_ref`에 대해 어느 bound가 production-like calibration adapter에 적합한지 확인한다. DP는 full power split을 직접 고르지 않고, 같은 bounded-offset authority 안에서만 미래 정보를 사용하는 diagnostic upper bound로 계산했다.
+
+Full power-split DP에서 bound를 직접 역산하지 않는 이유는 권한이 다르기 때문이다. Full DP는 `P_eng_target` 또는 power split을 직접 고르므로, 그 결과를 `delta_P_eng_on`/`delta_SOC_ref`로 inverse하면 map/rule EMS의 hysteresis, minimum on/off timer, limiter, charge mode branch를 우회한 비양산형 제어 권한을 calibration bound로 착각하게 된다. 여기서는 full DP를 남아 있는 성능 gap을 보는 offline reference로만 사용한다.
+
+- Current bound: ±3.000 kW / ±0.0100 SOC
+- Recommended bound: **±3.000 kW / ±0.0200 SOC**
+- Aggressive bound: **±3.000 kW / ±0.0200 SOC**
+- Current bound sufficient: `False`
+
+> The action bounds were selected through a bounded-offset DP sweep under the same calibration-adapter authority, using full power-split DP only as an offline diagnostic reference.
+
+### Heldout Bound Sweep Table
+
+| Bound | SOC RMSE | Abs final SOC err | Constraint steps | SOC-corr fuel | Engine switches | Feasible | Selection |
+|---|---:|---:|---:|---:|---:|---|---|
+| ±1.000 kW / ±0.0050 SOC | 0.068335 | 0.057645 | 2.125000 | 0.147966 | 11.750000 | no |  |
+| ±1.000 kW / ±0.0100 SOC | 0.068163 | 0.057100 | 2.062500 | 0.148006 | 11.750000 | no |  |
+| ±1.000 kW / ±0.0150 SOC | 0.067446 | 0.055043 | 2.062500 | 0.148149 | 11.750000 | no |  |
+| ±1.000 kW / ±0.0200 SOC | 0.065633 | 0.049311 | 2.000000 | 0.148492 | 11.750000 | no |  |
+| ±2.000 kW / ±0.0050 SOC | 0.068853 | 0.056822 | 2.062500 | 0.147806 | 11.500000 | no |  |
+| ±2.000 kW / ±0.0100 SOC | 0.068735 | 0.056278 | 2.000000 | 0.147841 | 11.500000 | no |  |
+| ±2.000 kW / ±0.0150 SOC | 0.067989 | 0.055873 | 2.000000 | 0.147987 | 11.500000 | no |  |
+| ±2.000 kW / ±0.0200 SOC | 0.067254 | 0.053878 | 1.812500 | 0.148883 | 11.375000 | no |  |
+| ±3.000 kW / ±0.0050 SOC | 0.068157 | 0.054554 | 1.687500 | 0.149273 | 11.375000 | yes |  |
+| ±3.000 kW / ±0.0100 SOC | 0.067486 | 0.053410 | 1.687500 | 0.149439 | 11.500000 | yes |  |
+| ±3.000 kW / ±0.0150 SOC | 0.067888 | 0.052260 | 1.687500 | 0.148584 | 11.250000 | yes |  |
+| ±3.000 kW / ±0.0200 SOC | 0.066629 | 0.050293 | 1.625000 | 0.148710 | 11.250000 | yes | recommended;aggressive |
+| ±5.000 kW / ±0.0050 SOC | 0.069000 | 0.054640 | 1.625000 | 0.149152 | 11.250000 | yes |  |
+| ±5.000 kW / ±0.0100 SOC | 0.068940 | 0.054166 | 1.625000 | 0.149167 | 11.250000 | yes |  |
+| ±5.000 kW / ±0.0150 SOC | 0.068681 | 0.052551 | 1.625000 | 0.149352 | 11.250000 | yes |  |
+| ±5.000 kW / ±0.0200 SOC | 0.067352 | 0.051108 | 1.562500 | 0.149440 | 11.250000 | yes |  |
+| ±7.000 kW / ±0.0050 SOC | 0.070033 | 0.054407 | 1.625000 | 0.149232 | 11.250000 | yes |  |
+| ±7.000 kW / ±0.0100 SOC | 0.070042 | 0.054027 | 1.625000 | 0.149252 | 11.250000 | yes |  |
+| ±7.000 kW / ±0.0150 SOC | 0.069320 | 0.052689 | 1.562500 | 0.149371 | 11.250000 | yes |  |
+| ±7.000 kW / ±0.0200 SOC | 0.068698 | 0.050940 | 1.562500 | 0.149482 | 11.250000 | yes |  |
+
+### 그림 7. Heldout SOC RMSE heatmap
+
+![Bound sweep SOC RMSE](../plots/bound_sweep_heatmap_soc_rmse.png)
+
+### 그림 8. Heldout constraint heatmap
+
+![Bound sweep constraint](../plots/bound_sweep_heatmap_constraint.png)
+
+### 그림 9. Pareto/elbow selection
+
+![Bound sweep Pareto](../plots/bound_sweep_pareto.png)
+
+### 그림 10. Gap to full power-split DP diagnostic
+
+![Bound sweep gap to full DP](../plots/bound_sweep_gap_to_full_dp.png)
+
+### Bound Sweep Artifacts
+
+- Selection JSON: `data/bound_sweep_selection.json`
+- Summary CSV: `data/bound_sweep_summary.csv`
+- Episode metrics CSV: `data/bound_sweep_episode_metrics.csv`
+- Pareto CSV: `data/bound_sweep_pareto.csv`
+
+## 12. 최종 판정
+
+현재 full run은 실패가 아니라 `안정적인 1차 결과`다. 학습 안정화는 성공했고, heldout 평균은 원하는 방향으로 움직였으며, guardrail도 지켰다. 다만 논문 메인 결과로 쓰기에는 개선 폭이 작다. 다음 목표는 알고리즘을 더 복잡하게 만드는 것보다, adapter가 유의미하게 개입할 수 있는 task/reward/evaluation setting을 선명하게 만드는 것이다.
