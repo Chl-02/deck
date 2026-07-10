@@ -4971,7 +4971,9 @@
     "checkpoint_series_csv": "data/full_run_checkpoint_series.csv",
     "trajectory_comparison_summary_json": "data/trajectory_comparison_summary.json",
     "trajectory_comparison_metrics_csv": "data/trajectory_comparison_episode_metrics.csv",
-    "trajectory_comparison_trajectory_csv": "data/trajectory_comparison_trajectories.csv"
+    "trajectory_comparison_trajectory_csv": "data/trajectory_comparison_trajectories.csv",
+    "experiment_suite_summary_json": "data/experiment_suite_summary.json",
+    "experiment_suite_metrics_csv": "data/experiment_suite_episode_metrics.csv"
   },
   "reward_version": "robustness_v2",
   "robustness_reward_report_path": "robustness_reward_v2_report.html",
@@ -9577,5 +9579,6 @@
       "C15_ice_weather_ice_friction": "plots/C15_ice_weather_ice_friction_trajectory.png",
       "C16_heldout_nominal": "plots/C16_heldout_nominal_trajectory.png"
     }
-  }
+  },
+  "experiment_suite_report_path": "experiment_suite_report.html"
 }

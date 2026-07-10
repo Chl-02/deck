@@ -1,0 +1,129 @@
+{
+  "timestamp": "20260710_150536",
+  "result_root": "results/meta_rl_paper/experiment_suite/20260710_145307",
+  "result_root_name": "20260710_145307",
+  "case_count": 73,
+  "episode_count": 1978,
+  "trace_row_count": 17280,
+  "controller_group_count": 10,
+  "controller_groups": [
+    "adaptive_rule_calibration",
+    "confidence_gate_current",
+    "confidence_gate_wider",
+    "conservative_soc_ref_rule",
+    "fixed_retuned_calibration",
+    "gate_current_raw_only_mask",
+    "gate_current_summary_only_mask",
+    "map_rule_zero_offset",
+    "old_latent_sac_adapter",
+    "robustness_v2_adapter"
+  ],
+  "policy_authority": "bounded calibration offsets only: delta_P_eng_on, delta_SOC_ref",
+  "notes": [
+    "Weather-in-training is reported as diagnostic because the existing completed 5-seed policies were not retrained on a weather-augmented meta_train split.",
+    "Raw/summary ablation is post-hoc branch masking, not retrained raw_only/summary_only SAC.",
+    "EMS variant generalization is zero-shot diagnostic transfer and does not justify an any-EMS claim by itself."
+  ],
+  "plots": {
+    "main_bars": "figures/experiment_suite_main_bars.png",
+    "noninferiority": "figures/experiment_suite_noninferiority.png",
+    "stress_ood_tail": "figures/experiment_suite_stress_ood_tail.png",
+    "confidence_response": "figures/experiment_suite_confidence_response.png",
+    "simpler_baselines": "figures/experiment_suite_simpler_baselines.png",
+    "branch_mask_ablation": "figures/experiment_suite_branch_mask_ablation.png",
+    "ems_variants": "figures/experiment_suite_ems_variants.png",
+    "domain_breakdown": "figures/experiment_suite_domain_breakdown.png"
+  },
+  "cards": [
+    {
+      "id": "main",
+      "title": "5. Main Experiment",
+      "status": "executed",
+      "claim": "일반/heldout 조건에서 baseline behavior를 보존하면서 stress/OOD에서 SOC robustness 개선 여부를 확인.",
+      "result": "heldout nominal 기준 confidence_gate_current SOC tail risk=0.66987, baseline=0.69253.",
+      "plot": "figures/experiment_suite_main_bars.png"
+    },
+    {
+      "id": "noninferiority",
+      "title": "6. Non-Inferiority",
+      "status": "executed",
+      "claim": "nominal 주행에서 fuel/switch/constraint/SOC guardrail을 넘지 않는지 확인.",
+      "result": "guardrail 4/5 passed for confidence_gate_current under heldout_nominal.",
+      "plot": "figures/experiment_suite_noninferiority.png"
+    },
+    {
+      "id": "stress_ood",
+      "title": "7. Stress/OOD Robustness",
+      "status": "executed",
+      "claim": "low SOC, high mass, uphill, weather/friction shift에서 tail risk와 constraint 변화를 본다.",
+      "result": "ood_stress SOC tail risk baseline=0.52311, gate_current=0.46737.",
+      "plot": "figures/experiment_suite_stress_ood_tail.png"
+    },
+    {
+      "id": "weather_training",
+      "title": "8. Weather-In-Training",
+      "status": "diagnostic_executed_full_retrain_pending",
+      "claim": "weather-diverse meta-training이 heldout weather 적응을 개선하는지 확인해야 한다.",
+      "result": "이번 suite는 생성된 dry/wet/heavy_rain/snow/ice profile 위에서 기존 dry/canonical-trained 정책을 재평가했다. weather-augmented 5-seed retraining은 별도 장기 run으로 남겨야 한다.",
+      "plot": "figures/experiment_suite_domain_breakdown.png"
+    },
+    {
+      "id": "weather_heldout_confidence",
+      "title": "9. Weather-Heldout Confidence",
+      "status": "executed",
+      "claim": "학습에서 충분히 보지 못한 weather/friction shift에서 confidence가 낮아지고 baseline-like behavior로 보수화되는지 확인.",
+      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.435.",
+      "plot": "figures/experiment_suite_confidence_response.png"
+    },
+    {
+      "id": "confidence_ablation",
+      "title": "10. Confidence Gate Ablation",
+      "status": "executed",
+      "claim": "no-gate, current bound, wider bound를 비교해 gate가 개입량/안전성을 어떻게 바꾸는지 확인.",
+      "result": "heldout nominal fallback ratio current=0.010, wider=0.010.",
+      "plot": "figures/experiment_suite_confidence_response.png"
+    },
+    {
+      "id": "raw_summary",
+      "title": "11. Raw/Summary Encoder Ablation",
+      "status": "posthoc_mask_executed_retrained_ablation_pending",
+      "claim": "raw history는 transient 변화, summary는 task-level 안정성을 담당하는지 확인.",
+      "result": "이번 결과는 retraining ablation이 아니라 trained raw+summary policy의 inference-time branch masking 진단이다. 논문 본문용 강한 claim에는 raw_only/summary_only 재학습이 추가로 필요하다.",
+      "plot": "figures/experiment_suite_branch_mask_ablation.png"
+    },
+    {
+      "id": "simpler_baseline",
+      "title": "12. Simpler Baseline Comparison",
+      "status": "executed_partial",
+      "claim": "fixed retuned EMS와 hand-designed adaptive calibration보다 Meta-RL이 stress/OOD 적응에 유리한지 확인.",
+      "result": "fixed retuned, conservative SOC-ref rule, rule-based adaptive calibration을 같은 manifest에서 실행했다. contextual SAC/supervised predictor/ECMS-like baseline은 다음 장기 비교군으로 남는다.",
+      "plot": "figures/experiment_suite_simpler_baselines.png"
+    },
+    {
+      "id": "ems_variant",
+      "title": "13. EMS Variant Generalization",
+      "status": "diagnostic_executed",
+      "claim": "다른 map/rule EMS calibration variant에서도 adapter가 같은 경향을 유지하는지 확인.",
+      "result": "conservative/aggressive engine-on map, SOC_ref, hysteresis, min timer 변형에서 재학습 없이 transfer 평가했다. 이 결과 전에는 any-EMS claim은 금지한다.",
+      "plot": "figures/experiment_suite_ems_variants.png"
+    },
+    {
+      "id": "dp_oracle",
+      "title": "14. DP/Oracle Reference",
+      "status": "included_existing_executed_result",
+      "claim": "adapter가 동일 권한 bounded-offset DP oracle 개선 여지를 얼마나 회수하는지 확인.",
+      "result": "기존 bounded-offset DP와 full power-split diagnostic DP 결과를 suite에 연결했다. full split DP는 deployable controller가 아니라 offline diagnostic upper reference다.",
+      "plot": "plots/bound_sweep_pareto.png"
+    },
+    {
+      "id": "domain_breakdown",
+      "title": "15. Domain Breakdown",
+      "status": "executed",
+      "claim": "EPA/NGSIM/commercial/SUMO/weather/stress domain별로 결과를 분리해 SUMO-only claim을 피한다.",
+      "result": "domain groups evaluated: 7.",
+      "plot": "figures/experiment_suite_domain_breakdown.png"
+    }
+  ],
+  "dp_oracle_root": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820",
+  "dp_oracle_attached": true
+}
