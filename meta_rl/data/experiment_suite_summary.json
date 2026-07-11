@@ -1,7 +1,7 @@
 {
-  "timestamp": "20260710_150536",
-  "result_root": "results/meta_rl_paper/experiment_suite/20260710_145307",
-  "result_root_name": "20260710_145307",
+  "timestamp": "20260711_161120",
+  "result_root": "results/meta_rl_paper/experiment_suite/20260711_155845_socref",
+  "result_root_name": "20260711_155845_socref",
   "case_count": 73,
   "episode_count": 1978,
   "trace_row_count": 17280,
@@ -27,6 +27,7 @@
   "plots": {
     "main_bars": "figures/experiment_suite_main_bars.png",
     "noninferiority": "figures/experiment_suite_noninferiority.png",
+    "soc_to_ref": "figures/experiment_suite_soc_to_ref_tracking.png",
     "stress_ood_tail": "figures/experiment_suite_stress_ood_tail.png",
     "confidence_response": "figures/experiment_suite_confidence_response.png",
     "simpler_baselines": "figures/experiment_suite_simpler_baselines.png",
@@ -47,8 +48,8 @@
       "id": "noninferiority",
       "title": "6. Non-Inferiority",
       "status": "executed",
-      "claim": "nominal 주행에서 fuel/switch/constraint/SOC guardrail을 넘지 않는지 확인.",
-      "result": "guardrail 4/5 passed for confidence_gate_current under heldout_nominal.",
+      "claim": "nominal 주행에서 SOC가 고정 기준 SOC_ref_base에 가까운지와 fuel/switch/constraint guardrail을 넘지 않는지 확인.",
+      "result": "guardrail 5/7 passed for confidence_gate_current under heldout_nominal.",
       "plot": "figures/experiment_suite_noninferiority.png"
     },
     {
@@ -72,7 +73,7 @@
       "title": "9. Weather-Heldout Confidence",
       "status": "executed",
       "claim": "학습에서 충분히 보지 못한 weather/friction shift에서 confidence가 낮아지고 baseline-like behavior로 보수화되는지 확인.",
-      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.435.",
+      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.543.",
       "plot": "figures/experiment_suite_confidence_response.png"
     },
     {
