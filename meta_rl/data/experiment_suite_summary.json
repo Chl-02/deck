@@ -1,11 +1,11 @@
 {
-  "timestamp": "20260711_161120",
-  "result_root": "results/meta_rl_paper/experiment_suite/20260711_155845_socref",
-  "result_root_name": "20260711_155845_socref",
+  "timestamp": "20260712_193658",
+  "result_root": "/home/yejun/meta_rl/results/meta_rl_paper/experiment_suite/20260712_192625_residual_v2",
+  "result_root_name": "20260712_192625_residual_v2",
   "case_count": 73,
-  "episode_count": 1978,
-  "trace_row_count": 17280,
-  "controller_group_count": 10,
+  "episode_count": 2343,
+  "trace_row_count": 24480,
+  "controller_group_count": 11,
   "controller_groups": [
     "adaptive_rule_calibration",
     "confidence_gate_current",
@@ -16,6 +16,7 @@
     "gate_current_summary_only_mask",
     "map_rule_zero_offset",
     "old_latent_sac_adapter",
+    "residual_rule_dp_v2",
     "robustness_v2_adapter"
   ],
   "policy_authority": "bounded calibration offsets only: delta_P_eng_on, delta_SOC_ref",
@@ -41,15 +42,23 @@
       "title": "5. Main Experiment",
       "status": "executed",
       "claim": "일반/heldout 조건에서 baseline behavior를 보존하면서 stress/OOD에서 SOC robustness 개선 여부를 확인.",
-      "result": "heldout nominal 기준 confidence_gate_current SOC tail risk=0.66987, baseline=0.69253.",
+      "result": "heldout nominal 기준 confidence_gate_current SOC tail risk=0.67115, baseline=0.69253. residual_rule_dp_v2 ood_stress tail=0.39892, adaptive_rule=0.35824.",
       "plot": "figures/experiment_suite_main_bars.png"
+    },
+    {
+      "id": "residual_v2",
+      "title": "5b. Residual Rule DP V2",
+      "status": "executed",
+      "claim": "adaptive_rule_calibration을 deployable base로 두고 Meta-RL은 작은 residual만 학습했을 때 OOD/stress tail metric이 유의하게 개선되는지 확인.",
+      "result": "ood_stress SOC tail risk adaptive_rule=0.35824, residual_rule_dp_v2=0.39892; safety reject heldout=0.021, residual magnitude=0.531.",
+      "plot": "figures/experiment_suite_simpler_baselines.png"
     },
     {
       "id": "noninferiority",
       "title": "6. Non-Inferiority",
       "status": "executed",
       "claim": "nominal 주행에서 SOC가 고정 기준 SOC_ref_base에 가까운지와 fuel/switch/constraint guardrail을 넘지 않는지 확인.",
-      "result": "guardrail 5/7 passed for confidence_gate_current under heldout_nominal.",
+      "result": "guardrail 5/7 passed for residual_rule_dp_v2 under heldout_nominal.",
       "plot": "figures/experiment_suite_noninferiority.png"
     },
     {
@@ -57,7 +66,7 @@
       "title": "7. Stress/OOD Robustness",
       "status": "executed",
       "claim": "low SOC, high mass, uphill, weather/friction shift에서 tail risk와 constraint 변화를 본다.",
-      "result": "ood_stress SOC tail risk baseline=0.52311, gate_current=0.46737.",
+      "result": "ood_stress SOC tail risk baseline=0.52311, gate_current=0.46740.",
       "plot": "figures/experiment_suite_stress_ood_tail.png"
     },
     {
@@ -73,7 +82,7 @@
       "title": "9. Weather-Heldout Confidence",
       "status": "executed",
       "claim": "학습에서 충분히 보지 못한 weather/friction shift에서 confidence가 낮아지고 baseline-like behavior로 보수화되는지 확인.",
-      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.543.",
+      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.482.",
       "plot": "figures/experiment_suite_confidence_response.png"
     },
     {
@@ -81,7 +90,7 @@
       "title": "10. Confidence Gate Ablation",
       "status": "executed",
       "claim": "no-gate, current bound, wider bound를 비교해 gate가 개입량/안전성을 어떻게 바꾸는지 확인.",
-      "result": "heldout nominal fallback ratio current=0.010, wider=0.010.",
+      "result": "heldout nominal fallback ratio current=0.012, wider=0.012.",
       "plot": "figures/experiment_suite_confidence_response.png"
     },
     {
@@ -126,5 +135,7 @@
     }
   ],
   "dp_oracle_root": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820",
-  "dp_oracle_attached": true
+  "dp_oracle_attached": true,
+  "residual_v2_root": "/home/yejun/meta_rl/results/meta_rl_paper/residual_rule_dp_v2/20260712_171359",
+  "residual_v2_attached": true
 }
