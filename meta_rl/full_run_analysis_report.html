@@ -128,11 +128,11 @@
     <p class="lead">5-seed paper-scale 학습은 안정적으로 완료되었고, heldout driving condition에서 SOC regulation과 constraint robustness 지표가 모두 개선 방향으로 움직였다. 다만 개선 폭은 작아서 현재 결과만으로는 강한 논문 claim의 정량 목표를 충족했다고 보기는 어렵다.</p>
 
     <div class="quick">
-      <div><span>최종 SOC 오차</span><strong>0.83%</strong><span>heldout 평균 개선</span></div>
-      <div><span>SOC RMSE</span><strong>0.70%</strong><span>heldout 평균 개선</span></div>
-      <div><span>제약 위반 step</span><strong>-0.27%</strong><span>heldout 평균 개선</span></div>
-      <div><span>연료 guardrail</span><strong>-0.01%</strong><span>0보다 아래는 악화, 2% 이내 통과</span></div>
-      <div><span>엔진 전환 guardrail</span><strong>-0.07%</strong><span>0보다 아래는 증가, 10% 이내 통과</span></div>
+      <div><span>최종 SOC 오차</span><strong>1.30%</strong><span>heldout 평균 개선</span></div>
+      <div><span>SOC RMSE</span><strong>0.55%</strong><span>heldout 평균 개선</span></div>
+      <div><span>제약 위반 step</span><strong>2.19%</strong><span>heldout 평균 개선</span></div>
+      <div><span>연료 guardrail</span><strong>-0.07%</strong><span>0보다 아래는 악화, 2% 이내 통과</span></div>
+      <div><span>엔진 전환 guardrail</span><strong>-0.36%</strong><span>0보다 아래는 증가, 10% 이내 통과</span></div>
     </div>
 
     <section class="panel">
@@ -143,12 +143,12 @@
 
     <section class="panel">
       <h2>2. 핵심 수치 요약: heldout evaluation</h2>
-      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter</th><th>변화율</th><th>해석</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.054238</td><td>0.053787</td><td>0.83%</td><td>목표 미달<br><small>논문용 강한 목표: 20% 감소</small></td></tr>
-<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.062284</td><td>0.061849</td><td>0.70%</td><td>목표 미달<br><small>논문용 강한 목표: 10% 감소</small></td></tr>
-<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>1.143750</td><td>1.146875</td><td>-0.27%</td><td>목표 미달<br><small>논문용 강한 목표: 30% 감소</small></td></tr>
-<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.111858</td><td>0.111875</td><td>-0.01%</td><td>guardrail 통과<br><small>guardrail: 악화 2% 이내</small></td></tr>
-<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>8.615625</td><td>8.621875</td><td>-0.07%</td><td>guardrail 통과<br><small>guardrail: 증가 10% 이내</small></td></tr></tbody></table>
-      <p class="note">SOC 관련 주 지표는 모두 개선 방향이다. 최종 SOC 오차는 0.83%, SOC RMSE는 0.70%, 제약 위반 step은 -0.27% 줄었다. 연료와 엔진 전환은 약간 악화되었지만 각각 guardrail 안에 있다.</p>
+      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter</th><th>변화율</th><th>해석</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.054238</td><td>0.053534</td><td>1.30%</td><td>목표 미달<br><small>논문용 강한 목표: 20% 감소</small></td></tr>
+<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.062284</td><td>0.061945</td><td>0.55%</td><td>목표 미달<br><small>논문용 강한 목표: 10% 감소</small></td></tr>
+<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>1.143750</td><td>1.118750</td><td>2.19%</td><td>목표 미달<br><small>논문용 강한 목표: 30% 감소</small></td></tr>
+<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.111858</td><td>0.111936</td><td>-0.07%</td><td>guardrail 통과<br><small>guardrail: 악화 2% 이내</small></td></tr>
+<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>8.615625</td><td>8.646875</td><td>-0.36%</td><td>guardrail 통과<br><small>guardrail: 증가 10% 이내</small></td></tr></tbody></table>
+      <p class="note">SOC 관련 주 지표는 모두 개선 방향이다. 최종 SOC 오차는 1.30%, SOC RMSE는 0.55%, 제약 위반 step은 2.19% 줄었다. 연료와 엔진 전환은 약간 악화되었지만 각각 guardrail 안에 있다.</p>
     </section>
 
     <section class="panel">
@@ -174,28 +174,28 @@
 
     <section class="panel">
       <h2>4. Validation split 확인</h2>
-      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter</th><th>변화율</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.054443</td><td>0.053151</td><td>2.37%</td></tr>
-<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.060976</td><td>0.060003</td><td>1.60%</td></tr>
-<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>0.918750</td><td>0.887500</td><td>3.40%</td></tr>
-<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.111759</td><td>0.111872</td><td>-0.10%</td></tr>
-<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>10.881250</td><td>10.959375</td><td>-0.72%</td></tr></tbody></table>
+      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter</th><th>변화율</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.054443</td><td>0.054242</td><td>0.37%</td></tr>
+<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.060976</td><td>0.060608</td><td>0.60%</td></tr>
+<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>0.918750</td><td>0.903125</td><td>1.70%</td></tr>
+<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.111759</td><td>0.111807</td><td>-0.04%</td></tr>
+<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>10.881250</td><td>10.912500</td><td>-0.29%</td></tr></tbody></table>
       <p>Validation split에서도 heldout과 비슷하게 SOC/constraint 지표가 작게 개선되고 guardrail 악화는 작다. validation과 heldout이 완전히 반대 방향으로 갈라지지는 않았기 때문에, 최소한 overfit으로만 생긴 결과라고 보기는 어렵다.</p>
     </section>
 
     <section class="panel">
       <h2>5. Seed별 수치</h2>
-      <table><thead><tr><th>Seed</th><th>최종 SOC 오차 delta</th><th>SOC RMSE delta</th><th>제약 위반 delta</th><th>연료 delta</th><th>엔진 전환 delta</th></tr></thead><tbody><tr><td>20260706</td><td>-0.000035</td><td>-0.000162</td><td>0.031250</td><td>-0.000086</td><td>-0.062500</td></tr>
-<tr><td>20260707</td><td>-0.003726</td><td>-0.001002</td><td>-0.015625</td><td>0.000217</td><td>0.093750</td></tr>
-<tr><td>20260708</td><td>0.000227</td><td>-0.000025</td><td>0.015625</td><td>-0.000006</td><td>-0.031250</td></tr>
-<tr><td>20260709</td><td>0.002279</td><td>-0.000101</td><td>-0.015625</td><td>-0.000030</td><td>0.078125</td></tr>
-<tr><td>20260710</td><td>-0.000996</td><td>-0.000887</td><td>0.000000</td><td>-0.000012</td><td>-0.046875</td></tr></tbody></table>
+      <table><thead><tr><th>Seed</th><th>최종 SOC 오차 delta</th><th>SOC RMSE delta</th><th>제약 위반 delta</th><th>연료 delta</th><th>엔진 전환 delta</th></tr></thead><tbody><tr><td>20260706</td><td>0.000347</td><td>-0.000433</td><td>0.000000</td><td>-0.000073</td><td>-0.093750</td></tr>
+<tr><td>20260707</td><td>0.000106</td><td>0.000367</td><td>-0.031250</td><td>0.000066</td><td>0.093750</td></tr>
+<tr><td>20260708</td><td>-0.000559</td><td>-0.000536</td><td>0.031250</td><td>0.000161</td><td>0.156250</td></tr>
+<tr><td>20260709</td><td>-0.000324</td><td>-0.000204</td><td>-0.031250</td><td>0.000094</td><td>0.000000</td></tr>
+<tr><td>20260710</td><td>-0.003088</td><td>-0.000893</td><td>-0.093750</td><td>0.000139</td><td>0.000000</td></tr></tbody></table>
       <p>delta는 adapter - baseline이다. SOC 오차, SOC RMSE, 제약 위반 step에서는 음수가 좋다. 연료와 엔진 전환도 음수가 좋지만, 이 둘은 주 목표가 아니라 guardrail로 본다.</p>
     </section>
 
     <section class="panel">
       <h2>6. 논문 claim 관점의 판단</h2>
       <p>사용자가 정한 claim은 production-like EMS의 task-aware calibration adapter가 unseen driving condition에서 SOC regulation과 constraint robustness를 개선한다는 것이다. 현재 결과는 방향성은 지지한다. heldout에서 세 primary metric이 모두 개선 방향이고, 연료/엔진 전환 guardrail도 통과했기 때문이다.</p>
-      <p>하지만 강한 claim을 쓰려면 정량 효과가 더 커야 한다. 현재 성공 기준은 SOC RMSE 10% 감소, 최종 SOC 오차 20% 감소, 제약 위반 30% 감소인데, 실제 결과는 각각 0.70%, 0.83%, -0.27%다.</p>
+      <p>하지만 강한 claim을 쓰려면 정량 효과가 더 커야 한다. 현재 성공 기준은 SOC RMSE 10% 감소, 최종 SOC 오차 20% 감소, 제약 위반 30% 감소인데, 실제 결과는 각각 0.55%, 1.30%, 2.19%다.</p>
       <p class="note">추천 표현: The proposed task-aware calibration adapter yields small but consistent heldout improvements in SOC regulation and constraint-related metrics while staying within fuel and engine-switching guardrails.</p>
     </section>
 
@@ -219,94 +219,10 @@
     </section>
 
     
-    <section class="panel">
-      <h2>10. Bounded DP Oracle 비교</h2>
-      <p>추가로 학습된 adapter를 <strong>discretized bounded-offset DP oracle</strong>과 비교했다. 이 oracle은 미래 주행 프로파일을 알고 있지만, Meta-RL과 동일하게 <code>delta_P_eng_on</code>, <code>delta_SOC_ref</code> 두 보정값만 선택한다.</p>
-      <p>엔진 on/off, EMS mode, engine/motor power split은 계속 기존 map/rule EMS가 결정한다. 따라서 이 비교는 차량 전체 파워분배를 직접 최적화한 full DP lower bound가 아니라, 같은 권한을 가진 calibration adapter의 offline upper bound다.</p>
-      <p class="note">이번 대표 subset에서는 frontier cap hit가 없어 설정한 discretized state/action grid 안에서는 DP frontier가 모두 유지되었다.</p>
-      <p class="note">추가 진단으로 discretized offline full power-split DP oracle도 계산했다. 이 oracle은 P_eng_target을 직접 선택하므로 Meta-RL adapter와 권한이 다르고, 미래 주행을 모두 아는 offline/non-deployable 기준이다. 이번 실행은 decision interval 10 s, constraint mode lexicographic 설정이다.</p>
-      <p class="note">주의: full power-split DP는 heldout에서 SOC/fuel 지표를 크게 개선했지만, 제약 위반 step이 baseline 2.312에서 11.250로 증가했다. 따라서 이 값은 논문 claim의 공정 비교 기준이 아니라, 현재 direct power-split oracle 설계의 trade-off를 보여주는 진단 결과다.</p>
-      <table><thead><tr><th>지표</th><th>Baseline</th><th>Adapter mean</th><th>Bounded DP oracle</th><th>Full split DP</th><th>Adapter capture</th></tr></thead><tbody><tr><td><strong>최종 SOC 오차</strong><span>에피소드 종료 시 목표 SOC에서 얼마나 벗어났는지 본다. 낮을수록 SOC regulation이 좋다.</span></td><td>0.058034</td><td>0.057867</td><td>0.053410</td><td>0.008048</td><td>3.62%</td></tr>
-<tr><td><strong>주행 중 SOC RMSE</strong><span>전체 주행 동안 SOC 궤적이 목표 주변에 얼마나 잘 머물렀는지 본다. 낮을수록 좋다.</span></td><td>0.071113</td><td>0.070261</td><td>0.067486</td><td>0.028120</td><td>23.47%</td></tr>
-<tr><td><strong>제약 위반 step 수</strong><span>SOC/전력 등 단순화된 제약을 벗어난 step 수다. 낮을수록 constraint robustness가 좋다.</span></td><td>2.312500</td><td>2.212500</td><td>1.687500</td><td>11.250000</td><td>16.00%</td></tr>
-<tr><td><strong>SOC 보정 연료 사용량</strong><span>SOC 차이를 보정한 연료 사용량이다. 낮을수록 좋지만, 여기서는 guardrail로 사용한다.</span></td><td>0.148338</td><td>0.148412</td><td>0.149439</td><td>0.135827</td><td>n/a</td></tr>
-<tr><td><strong>엔진 on/off 전환 횟수</strong><span>엔진 켜짐/꺼짐 전환 횟수다. 너무 늘면 drivability/NVH 관점에서 불리할 수 있어 guardrail로 본다.</span></td><td>12.062500</td><td>12.112500</td><td>11.500000</td><td>5.062500</td><td>-8.89%</td></tr></tbody></table>
-      
-      <h3>그림 4. Baseline, Adapter, DP oracle 비교</h3>
-      <div class="figure">
-        <img src="plots/dp_oracle_metric_bars.png" alt="DP oracle metric bars">
-        <div class="caption">동일한 bounded calibration-offset 권한 안에서 baseline, learned adapter, offline DP oracle의 heldout metric을 비교한다.</div>
-      </div>
-
-      <h3>그림 5. Adapter가 DP 개선 여지를 얼마나 회수했는가</h3>
-      <div class="figure">
-        <img src="plots/dp_oracle_gap_capture.png" alt="DP oracle gap capture">
-        <div class="caption">100%에 가까울수록 adapter가 같은 권한의 offline DP 개선 여지를 많이 회수했다는 뜻이다.</div>
-      </div>
-
-</section>
-
     
-    <section class="panel">
-      <h2>11. Action Bound Sweep</h2>
-      <p>이 섹션은 Meta-RL과 동일한 action 구조인 <code>delta_P_eng_on</code>, <code>delta_SOC_ref</code>의 적절한 bound를 실험적으로 고른다. DP는 full power split을 직접 고르지 않고, 같은 bounded-offset authority 안에서만 미래 정보를 사용하는 diagnostic upper bound로 계산했다.</p>
-      <p>Full power-split DP에서 bound를 직접 역산하지 않는 이유는 권한이 다르기 때문이다. Full DP는 power split을 직접 선택하므로 그 결과를 calibration offset으로 inverse하면 map/rule EMS의 hysteresis, minimum timer, limiter, charge branch를 우회한 권한을 calibration bound로 착각하게 된다.</p>
-      <div class="quick">
-        <div><span>Current bound</span><strong>±3.000 kW / ±0.0100 SOC</strong><span>기존 adapter bound</span></div>
-        <div><span>Recommended</span><strong>±3.000 kW / ±0.0200 SOC</strong><span>production-like elbow</span></div>
-        <div><span>Aggressive</span><strong>±3.000 kW / ±0.0200 SOC</strong><span>guardrail 내 최대 성능</span></div>
-      </div>
-      <p class="note">The action bounds were selected through a bounded-offset DP sweep under the same calibration-adapter authority, using full power-split DP only as an offline diagnostic reference.</p>
-      <table><thead><tr><th>Bound</th><th>SOC RMSE</th><th>Abs final SOC err</th><th>Constraint steps</th><th>SOC-corr fuel</th><th>Engine switches</th><th>Feasible</th><th>Selection</th></tr></thead><tbody><tr><td><strong>±1.000 kW / ±0.0050 SOC</strong></td><td>0.068335</td><td>0.057645</td><td>2.125000</td><td>0.147966</td><td>11.750000</td><td>no</td><td></td></tr>
-<tr><td><strong>±1.000 kW / ±0.0100 SOC</strong></td><td>0.068163</td><td>0.057100</td><td>2.062500</td><td>0.148006</td><td>11.750000</td><td>no</td><td></td></tr>
-<tr><td><strong>±1.000 kW / ±0.0150 SOC</strong></td><td>0.067446</td><td>0.055043</td><td>2.062500</td><td>0.148149</td><td>11.750000</td><td>no</td><td></td></tr>
-<tr><td><strong>±1.000 kW / ±0.0200 SOC</strong></td><td>0.065633</td><td>0.049311</td><td>2.000000</td><td>0.148492</td><td>11.750000</td><td>no</td><td></td></tr>
-<tr><td><strong>±2.000 kW / ±0.0050 SOC</strong></td><td>0.068853</td><td>0.056822</td><td>2.062500</td><td>0.147806</td><td>11.500000</td><td>no</td><td></td></tr>
-<tr><td><strong>±2.000 kW / ±0.0100 SOC</strong></td><td>0.068735</td><td>0.056278</td><td>2.000000</td><td>0.147841</td><td>11.500000</td><td>no</td><td></td></tr>
-<tr><td><strong>±2.000 kW / ±0.0150 SOC</strong></td><td>0.067989</td><td>0.055873</td><td>2.000000</td><td>0.147987</td><td>11.500000</td><td>no</td><td></td></tr>
-<tr><td><strong>±2.000 kW / ±0.0200 SOC</strong></td><td>0.067254</td><td>0.053878</td><td>1.812500</td><td>0.148883</td><td>11.375000</td><td>no</td><td></td></tr>
-<tr><td><strong>±3.000 kW / ±0.0050 SOC</strong></td><td>0.068157</td><td>0.054554</td><td>1.687500</td><td>0.149273</td><td>11.375000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±3.000 kW / ±0.0100 SOC</strong></td><td>0.067486</td><td>0.053410</td><td>1.687500</td><td>0.149439</td><td>11.500000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±3.000 kW / ±0.0150 SOC</strong></td><td>0.067888</td><td>0.052260</td><td>1.687500</td><td>0.148584</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±3.000 kW / ±0.0200 SOC</strong></td><td>0.066629</td><td>0.050293</td><td>1.625000</td><td>0.148710</td><td>11.250000</td><td>yes</td><td>recommended;aggressive</td></tr>
-<tr><td><strong>±5.000 kW / ±0.0050 SOC</strong></td><td>0.069000</td><td>0.054640</td><td>1.625000</td><td>0.149152</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±5.000 kW / ±0.0100 SOC</strong></td><td>0.068940</td><td>0.054166</td><td>1.625000</td><td>0.149167</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±5.000 kW / ±0.0150 SOC</strong></td><td>0.068681</td><td>0.052551</td><td>1.625000</td><td>0.149352</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±5.000 kW / ±0.0200 SOC</strong></td><td>0.067352</td><td>0.051108</td><td>1.562500</td><td>0.149440</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±7.000 kW / ±0.0050 SOC</strong></td><td>0.070033</td><td>0.054407</td><td>1.625000</td><td>0.149232</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±7.000 kW / ±0.0100 SOC</strong></td><td>0.070042</td><td>0.054027</td><td>1.625000</td><td>0.149252</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±7.000 kW / ±0.0150 SOC</strong></td><td>0.069320</td><td>0.052689</td><td>1.562500</td><td>0.149371</td><td>11.250000</td><td>yes</td><td></td></tr>
-<tr><td><strong>±7.000 kW / ±0.0200 SOC</strong></td><td>0.068698</td><td>0.050940</td><td>1.562500</td><td>0.149482</td><td>11.250000</td><td>yes</td><td></td></tr></tbody></table>
-      
-      <h3>그림 7. Heldout SOC RMSE heatmap</h3>
-      <div class="figure">
-        <img src="plots/bound_sweep_heatmap_soc_rmse.png" alt="그림 7. Heldout SOC RMSE heatmap">
-        <div class="caption">각 action bound 조합에서 heldout SOC RMSE를 비교한다.</div>
-      </div>
-
-      <h3>그림 8. Heldout constraint heatmap</h3>
-      <div class="figure">
-        <img src="plots/bound_sweep_heatmap_constraint.png" alt="그림 8. Heldout constraint heatmap">
-        <div class="caption">제약 위반 step이 baseline/current bound보다 악화되는지 확인한다.</div>
-      </div>
-
-      <h3>그림 9. Pareto/elbow selection</h3>
-      <div class="figure">
-        <img src="plots/bound_sweep_pareto.png" alt="그림 9. Pareto/elbow selection">
-        <div class="caption">SOC regulation, fuel guardrail, engine switching, authority 크기를 함께 본 Pareto view다.</div>
-      </div>
-
-      <h3>그림 10. Gap to full power-split DP diagnostic</h3>
-      <div class="figure">
-        <img src="plots/bound_sweep_gap_to_full_dp.png" alt="그림 10. Gap to full power-split DP diagnostic">
-        <div class="caption">Full power-split DP는 bound 역산에 쓰지 않고 남은 성능 gap을 보는 offline reference로만 사용한다.</div>
-      </div>
-
-    </section>
-
 
     <section class="panel">
-      <h2>12. 최종 판정</h2>
+      <h2>9. 최종 판정</h2>
       <p>현재 full run은 실패가 아니라 안정적인 1차 결과다. 학습 안정화는 성공했고, heldout 평균은 원하는 방향으로 움직였으며, guardrail도 지켰다. 다만 논문 메인 결과로 쓰기에는 개선 폭이 작다. 다음 목표는 알고리즘을 더 복잡하게 만드는 것보다, adapter가 유의미하게 개입할 수 있는 task/reward/evaluation setting을 선명하게 만드는 것이다.</p>
     </section>
   </main>

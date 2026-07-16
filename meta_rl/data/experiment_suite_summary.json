@@ -1,38 +1,37 @@
 {
-  "timestamp": "20260712_193658",
-  "result_root": "/home/yejun/meta_rl/results/meta_rl_paper/experiment_suite/20260712_192625_residual_v2",
-  "result_root_name": "20260712_192625_residual_v2",
-  "case_count": 73,
-  "episode_count": 2343,
-  "trace_row_count": 24480,
-  "controller_group_count": 11,
+  "timestamp": "20260715_010329",
+  "result_root": "results/meta_rl_paper/experiment_suite_v3/20260715_final_5seed",
+  "result_root_name": "20260715_final_5seed",
+  "case_count": 120,
+  "episode_count": 1524,
+  "trace_row_count": 100800,
+  "controller_group_count": 9,
   "controller_groups": [
+    "adaptive_rule_9knob_fitted",
+    "adaptive_rule_9knob_hand",
     "adaptive_rule_calibration",
-    "confidence_gate_current",
-    "confidence_gate_wider",
     "conservative_soc_ref_rule",
     "fixed_retuned_calibration",
-    "gate_current_raw_only_mask",
-    "gate_current_summary_only_mask",
+    "global_static_tuned",
     "map_rule_zero_offset",
-    "old_latent_sac_adapter",
-    "residual_rule_dp_v2",
-    "robustness_v2_adapter"
+    "per_task_static_oracle",
+    "v3_meta_rl"
   ],
-  "policy_authority": "bounded calibration offsets only: delta_P_eng_on, delta_SOC_ref",
+  "policy_authority": "bounded V3 calibration knobs only: residual delta_P_eng_on/delta_SOC_ref on the adaptive base + 7 production knobs (recovery gain, engine-on SOC sensitivity, hysteresis, min on/off timers, battery/regen margins)",
   "notes": [
     "Weather-in-training is reported as diagnostic because the existing completed 5-seed policies were not retrained on a weather-augmented meta_train split.",
     "Raw/summary ablation is post-hoc branch masking, not retrained raw_only/summary_only SAC.",
     "EMS variant generalization is zero-shot diagnostic transfer and does not justify an any-EMS claim by itself."
   ],
   "plots": {
+    "headroom_capture": "figures/experiment_suite_headroom_capture.png",
+    "within_episode_adaptation": "figures/experiment_suite_within_episode_adaptation.png",
     "main_bars": "figures/experiment_suite_main_bars.png",
     "noninferiority": "figures/experiment_suite_noninferiority.png",
     "soc_to_ref": "figures/experiment_suite_soc_to_ref_tracking.png",
     "stress_ood_tail": "figures/experiment_suite_stress_ood_tail.png",
     "confidence_response": "figures/experiment_suite_confidence_response.png",
     "simpler_baselines": "figures/experiment_suite_simpler_baselines.png",
-    "branch_mask_ablation": "figures/experiment_suite_branch_mask_ablation.png",
     "ems_variants": "figures/experiment_suite_ems_variants.png",
     "domain_breakdown": "figures/experiment_suite_domain_breakdown.png"
   },
@@ -42,15 +41,15 @@
       "title": "5. Main Experiment",
       "status": "executed",
       "claim": "일반/heldout 조건에서 baseline behavior를 보존하면서 stress/OOD에서 SOC robustness 개선 여부를 확인.",
-      "result": "heldout nominal 기준 confidence_gate_current SOC tail risk=0.67115, baseline=0.69253. residual_rule_dp_v2 ood_stress tail=0.39892, adaptive_rule=0.35824.",
+      "result": "heldout nominal 기준 confidence_gate_current SOC tail risk=n/a, baseline=0.11556.",
       "plot": "figures/experiment_suite_main_bars.png"
     },
     {
       "id": "residual_v2",
       "title": "5b. Residual Rule DP V2",
-      "status": "executed",
+      "status": "pending_full_run",
       "claim": "adaptive_rule_calibration을 deployable base로 두고 Meta-RL은 작은 residual만 학습했을 때 OOD/stress tail metric이 유의하게 개선되는지 확인.",
-      "result": "ood_stress SOC tail risk adaptive_rule=0.35824, residual_rule_dp_v2=0.39892; safety reject heldout=0.021, residual magnitude=0.531.",
+      "result": "V2 training/evaluation result root has not been attached yet.",
       "plot": "figures/experiment_suite_simpler_baselines.png"
     },
     {
@@ -58,7 +57,7 @@
       "title": "6. Non-Inferiority",
       "status": "executed",
       "claim": "nominal 주행에서 SOC가 고정 기준 SOC_ref_base에 가까운지와 fuel/switch/constraint guardrail을 넘지 않는지 확인.",
-      "result": "guardrail 5/7 passed for residual_rule_dp_v2 under heldout_nominal.",
+      "result": "guardrail 4/7 passed for confidence_gate_current under heldout_nominal.",
       "plot": "figures/experiment_suite_noninferiority.png"
     },
     {
@@ -66,7 +65,7 @@
       "title": "7. Stress/OOD Robustness",
       "status": "executed",
       "claim": "low SOC, high mass, uphill, weather/friction shift에서 tail risk와 constraint 변화를 본다.",
-      "result": "ood_stress SOC tail risk baseline=0.52311, gate_current=0.46740.",
+      "result": "ood_stress SOC tail risk baseline=0.23400, gate_current=n/a.",
       "plot": "figures/experiment_suite_stress_ood_tail.png"
     },
     {
@@ -82,7 +81,7 @@
       "title": "9. Weather-Heldout Confidence",
       "status": "executed",
       "claim": "학습에서 충분히 보지 못한 weather/friction shift에서 confidence가 낮아지고 baseline-like behavior로 보수화되는지 확인.",
-      "result": "confidence_gate_current mean confidence nominal=0.416, ood_weather=0.482.",
+      "result": "confidence_gate_current mean confidence nominal=n/a, ood_weather=n/a.",
       "plot": "figures/experiment_suite_confidence_response.png"
     },
     {
@@ -90,7 +89,7 @@
       "title": "10. Confidence Gate Ablation",
       "status": "executed",
       "claim": "no-gate, current bound, wider bound를 비교해 gate가 개입량/안전성을 어떻게 바꾸는지 확인.",
-      "result": "heldout nominal fallback ratio current=0.012, wider=0.012.",
+      "result": "heldout nominal fallback ratio current=n/a, wider=n/a.",
       "plot": "figures/experiment_suite_confidence_response.png"
     },
     {
@@ -130,12 +129,24 @@
       "title": "15. Domain Breakdown",
       "status": "executed",
       "claim": "EPA/NGSIM/commercial/SUMO/weather/stress domain별로 결과를 분리해 SUMO-only claim을 피한다.",
-      "result": "domain groups evaluated: 7.",
+      "result": "domain groups evaluated: 6.",
       "plot": "figures/experiment_suite_domain_breakdown.png"
     }
   ],
   "dp_oracle_root": "/home/yejun/meta_rl/results/meta_rl_paper/dp_oracle/bound_sweep/20260707_204820",
   "dp_oracle_attached": true,
-  "residual_v2_root": "/home/yejun/meta_rl/results/meta_rl_paper/residual_rule_dp_v2/20260712_171359",
-  "residual_v2_attached": true
+  "residual_v2_root": "",
+  "residual_v2_attached": false,
+  "v3_run_root": "results/meta_rl_paper/v3_full_9knob_pilot/20260714_153319",
+  "v3_step": null,
+  "v3_config": "/home/yejun/meta_rl/configs/meta_rl_v3_full_9knob.json",
+  "static_headroom_root": "/home/yejun/meta_rl/results/meta_rl_paper/static_v3_headroom/20260714_phaseA",
+  "fitted_rule_model": "/home/yejun/meta_rl/results/meta_rl_paper/fitted_9knob_rule/20260714_phaseA_v2/observable_knob_rule.json",
+  "hand_rule_scale": 0.25,
+  "skip_legacy_policies": true,
+  "manifest_source": "results/meta_rl_paper/static_v3_headroom/20260714_phaseA/experiment_suite_manifest.csv",
+  "paired_deltas_baselines": [
+    "map_rule_zero_offset",
+    "adaptive_rule_calibration"
+  ]
 }
