@@ -1,0 +1,5 @@
+{
+  "meta_train": 512,
+  "meta_validation": 32,
+  "heldout_evaluation": 32
+}
