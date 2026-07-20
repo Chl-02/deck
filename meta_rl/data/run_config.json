@@ -1,0 +1,20 @@
+{
+  "seed": 20260706,
+  "total_steps": 6000,
+  "warmup_steps": 1000,
+  "horizon": 240,
+  "support_length": 120,
+  "raw_length": 30,
+  "batch_size": 128,
+  "replay_size": 100000,
+  "gamma": 0.99,
+  "tau": 0.005,
+  "lr": 0.0003,
+  "entropy_coef": 0.05,
+  "z_dim": 4,
+  "hidden_dim": 128,
+  "eval_every": 2000,
+  "eval_profiles": 8,
+  "max_train_profiles": 512,
+  "device": "cpu"
+}
