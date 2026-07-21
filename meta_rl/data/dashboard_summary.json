@@ -1,0 +1,55 @@
+{
+  "title": "HEV Meta-EMS Meta-RL Training Result",
+  "run_config": {
+    "seed": 20260706,
+    "total_steps": 6000,
+    "warmup_steps": 1000,
+    "horizon": 240,
+    "support_length": 120,
+    "raw_length": 30,
+    "batch_size": 128,
+    "replay_size": 100000,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "lr": 0.0003,
+    "entropy_coef": 0.05,
+    "z_dim": 4,
+    "hidden_dim": 128,
+    "eval_every": 2000,
+    "eval_profiles": 8,
+    "max_train_profiles": 512,
+    "device": "cpu"
+  },
+  "result_dir": "/home/yejun/meta_rl/results/meta_rl/20260706_130208",
+  "summary_cards": [
+    {
+      "split": "meta_validation",
+      "reward_delta": 1.4891967666483008,
+      "soc_corrected_fuel_delta_kg": 0.0014687894228754802,
+      "final_soc_error_delta": 0.024110871573313576,
+      "engine_switch_delta": 2.0,
+      "constraint_delta": -0.25,
+      "baseline_reward": -3.5380846792644367,
+      "adapter_reward": -2.048887912616136,
+      "baseline_soc_corrected_fuel_kg": 0.10868382506626828,
+      "adapter_soc_corrected_fuel_kg": 0.11015261448914376
+    },
+    {
+      "split": "heldout_evaluation",
+      "reward_delta": 1.3881625393224575,
+      "soc_corrected_fuel_delta_kg": 0.0020421981472973486,
+      "final_soc_error_delta": 0.013801403756926817,
+      "engine_switch_delta": 1.625,
+      "constraint_delta": -0.25,
+      "baseline_reward": -4.405808001107419,
+      "adapter_reward": -3.017645461784962,
+      "baseline_soc_corrected_fuel_kg": 0.06364113863417109,
+      "adapter_soc_corrected_fuel_kg": 0.06568333678146844
+    }
+  ],
+  "interpretation": [
+    "The 6k-step smoke run improved reward, final SOC error, and constraint counts on paired validation and heldout tasks.",
+    "SOC-corrected fuel and engine switching moved in the wrong direction, so this is not yet a paper-scale performance claim.",
+    "The learned policy remains a bounded calibration adapter: delta_P_eng_on and delta_SOC_ref only."
+  ]
+}
