@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. 집필 로드맵 — Meta-RL 논문 설계 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 논문 보고서</a>
+  <div class="chapters">
+    <a class="ch" href="01_problem.html">1 문제의식</a>
+    <a class="ch" href="02_testbed.html">2 실험 장치</a>
+    <a class="ch" href="03_journey.html">3 연대기</a>
+    <a class="ch" href="04_results.html">4 결과·논증</a>
+    <a class="ch" href="05_paper.html">5 논문 설계</a>
+    <a class="ch" href="06_literature.html">6 문헌 전략</a>
+    <a class="ch cur" href="07_roadmap.html">7 로드맵</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">7장 · 집필 가이드와 로드맵</p>
+<h1>쓰기 전에 — 금지 문장, 급소, 남은 작업</h1>
+<p class="lede">
+집필 중 실수를 막는 안전 장치들. 어떤 문장을 절대 쓰면 안 되는지, 심사자의 공격 지점과
+방어가 어디까지 준비됐는지, 그리고 초고 착수 전후에 처리할 작업이 무엇인지.
+</p>
+
+<h2 id="trust"><span class="no">7.1</span>문서 신뢰 순위 — 무엇을 보고 쓰는가</h2>
+<p><code>docs/</code> 안의 문서들은 시점이 달라 <strong>결론이 서로 충돌한다.</strong>
+모르고 쓰면 이미 철회된 주장을 옮기게 된다.</p>
+<div class="tw"><table>
+<tr><th>문서</th><th>기준 시점</th><th>상태</th></tr>
+<tr><td><code>docs/meta_rl_living_experiment_ledger_ko.md</code></td><td>2026-07-27</td><td><span class="badge ok">유일한 source of truth</span> (숫자는 원본 CSV로 재확인)</td></tr>
+<tr><td><code>docs/meta_rl_paper_writing_brief_ko.md</code></td><td>2026-07-27</td><td><span class="badge ok">"무엇을 왜 주장하는가"의 단일 참조</span></td></tr>
+<tr><td><code>docs/decision_records/20260727_paper_scope_storyline.md</code></td><td>2026-07-27</td><td><span class="badge ok">논문 골격</span> — 맨 앞 ⚠ 갱신 블록이 원문에 우선</td></tr>
+<tr><td><code>docs/00_PROJECT_CONTEXT_KO.md</code></td><td>2026-07-27 (§4 일부 구식)</td><td><span class="badge warn">⚠ 철회된 문장 잔존</span> ("관측 병목" 등)</td></tr>
+<tr><td><code>docs/meta_rl_claim_positioning_ko.md</code></td><td>2026-07-09</td><td><span class="badge dead">낡음</span> 2-action 시절 — 사용 금지</td></tr>
+<tr><td><code>docs/meta_rl_paper_experiment_plan_ko.md</code></td><td>2026-07-09</td><td><span class="badge dead">낡음</span> action 2개로 기재 — 사용 금지</td></tr>
+</table></div>
+
+<h2 id="forbidden"><span class="no">7.2</span>절대 쓰면 안 되는 문장 — ledger §7.3 12개 + writing brief §8 보강 5개</h2>
+<div class="box warn"><span class="t">A. ledger §7.3 금지 목록 (12개) — 초고 검토 시 체크리스트로 사용</span>
+<ol>
+<li>보편적 대규모 연비 개선 (large universal fuel improvement)</li>
+<li>모든 split에서 제약 위반 감소 보장</li>
+<li>Meta-RL이 engine/motor power split을 직접 최적화한다</li>
+<li>full-split DP를 배포 가능한 상한 컨트롤러로 표현</li>
+<li>meta-RL이 supervised fitted rule을 <strong>상회</strong>한다 (어느 축에서도 — 07-23 철회)</li>
+<li>meta-RL과 fitted 중 <strong>어느 쪽이 앞선다</strong>는 서술 자체 (n=802에서 부호 역전 —
+"구분되지 않음"만 가능)</li>
+<li>학습 축(weather/ems_variant)에서 fitted 상회 (ems_variant 39.2 vs 38.4 역전)</li>
+<li>meta-RL이 anticipation에서 fitted를 이긴다 (격리 역전 t=−3.83)</li>
+<li>태스크 추론이 <strong>평균 성능</strong>을 만든다 (masking·재학습 모두 비유의 — 기여는 분산)</li>
+<li>Toyota 실차 스펙 fidelity (provenance는 "FASTSim 파일"로만)</li>
+<li>ice +53.8% 등 소형 분모 조건의 capture <strong>크기</strong> 주장 (부호만 가능)</li>
+<li>단일 학습 추첨 결과를 오차 없는 값처럼 제시 (fitted도 sd ≈2.5)</li>
+</ol></div>
+<div class="box warn"><span class="t">B. writing brief §8 보강 (5개)</span>
+<ol start="13">
+<li>"오라클 성능의 33% 달성" / "67%를 보장 못 함" → 올바른 표현은 "격차의 약 1/3을 포착"</li>
+<li>절대 연비의 외부 비교 (본 플랜트 SUMO 장기 9~10.5 vs 실차 4~5 L/100km)</li>
+<li>"관측 가능성이 병목" — thesis로서 사용 금지 (T0h가 폐기)</li>
+<li>OOD hidden에서 V6가 reactive hand rule을 넘었다 (케이스 단위 hand 29.5 &gt; meta 22.9)</li>
+<li>미학습 severity(ice)로 weather 역량이 일반화된다 (V5 외삽 실패 확인)</li>
+</ol></div>
+
+<h2 id="attacks"><span class="no">7.3</span>심사자 급소 R1~R7과 방어 상태</h2>
+<div class="tw"><table>
+<tr><th>#</th><th>공격</th><th>방어</th><th>상태</th></tr>
+<tr><td>R1</td><td>"새 방법이 없다 / null result"</td><td>장르가 측정 논문 — 프로토콜 + 3요인 분해 + 반증 카탈로그 + 배포 가능한 V6</td><td><span class="badge ok">준비됨</span></td></tr>
+<tr><td>R2</td><td>"9-knob·10초 주기면 당연히 못 이긴다"</td><td>좁음을 숨기지 않고 <strong>결론으로 승격</strong>: "이것이 배포 가능한 영역이고 그 상한을 정량화했다. 따름정리 — 문헌의 큰 이득은 상당 부분 권한으로 산 것"</td><td><span class="badge warn">서술 설계 필요</span></td></tr>
+<tr><td>R3</td><td>"자기 상한의 1/3밖에 못 먹었다"</td><td>정보 축 7-arm으로 닫힘 (T0h p=1.000) + 잔여분은 태스크의 함수가 아님</td><td><span class="badge ok">완료</span></td></tr>
+<tr><td><strong>R4</strong></td><td><strong>"최적 knob이 태스크로 결정 안 되면 분모가 잡음 아닌가"</strong></td><td>분모는 잘 정의됨(동일 권한 내 도달 가능). 발견은 분모가 체계 성분(~1/3) + 개별 실현 성분(~2/3)으로 분해된다는 것. <strong>보강책: oracle 재현성 검사</strong>(같은 에피소드 CEM 2회 — 재학습 불필요)</td><td><span class="badge warn">유일한 미방어 — 직접 측정 미실행</span></td></tr>
+<tr><td>R5</td><td>"oracle이 정적인데 진짜 최적은 시변"</td><td>K=3 분할: 겉보기 이득의 70%가 탐색 예산 착시, 실질 +4%</td><td><span class="badge ok">완료</span></td></tr>
+<tr><td>R6</td><td>"데이터 누수"</td><td>학습/평가 교집합 0 (양쪽 arm·두 키), 하이퍼파라미터 train 전용</td><td><span class="badge ok">완료</span></td></tr>
+<tr><td>R7</td><td>"시뮬레이션 전용 / 플랜트 충실도"</td><td>절대 연비 금지 + 상대 capture만 + EPA 앵커링(UDDS 3.87) + Limitations 명시</td><td><span class="badge ok">재료 있음</span></td></tr>
+</table></div>
+
+<h2 id="limitations"><span class="no">7.4</span>Limitations에 반드시 들어갈 6개</h2>
+<ol>
+<li><strong>절대 연비 비교 금지</strong> — SUMO 장기 프로파일 9~10.5 L/100km는 정차 지배
+프로파일 특유(정차 46%, 그중 33% 엔진 ON — min_on_time 60 s가 관통, #21). EPA 표준
+사이클에서는 3.5~7.0으로 실차 정합 — §8 서술을 이 정정판으로.</li>
+<li><strong>무손실 배터리</strong> — round_trip_eff 0.97 파라미터 존재하나 미사용.
+트레이스 추정 결과 거의 공통 편향(컨트롤러 간 차이 0.28 g)이나 미검증(#18b-a).</li>
+<li><strong>시동 페널티 2.0 g</strong> = 공회전 등가시간 K≈20.5 s — 재래식 실측(K≈9.1 s)의
+2.2배 상단값. 등가시간 형식으로 표기(B1 근거, "26배" 논거는 철회됨).</li>
+<li><strong>저속 모터 파워캡</strong> — "미모델링"이 아니라 <strong>"검증 결과 비활성"</strong>으로
+격상 (V6 100,800스텝 + 스파이크 2.25M스텝 binding 0건, v_base 9.53 m/s 1차 출처 확정).</li>
+<li><strong>FASTSim provenance</strong> — 실차 스펙 아님 (#11). "FASTSim 파일 + 1 Hz 에너지
+수준"으로만 서술.</li>
+<li><strong>냉시동 농후화 미모델링</strong> — 문헌 시동 페널티 값도 전부 warm restart 기준
+— scope 서술로 처리.</li>
+</ol>
+
+<h2 id="tasks"><span class="no">7.5</span>남은 작업</h2>
+<h3>집필 전/중 처리 (writing brief §14)</h3>
+<div class="tw"><table>
+<tr><th>우선</th><th>항목</th><th>비용</th><th>왜</th></tr>
+<tr><td>1</td><td><strong>thesis 문장 교체</strong> — "관측 병목" 표현을 문서 전체에서 제거</td><td>30분</td><td>흔들린 채 서론을 쓰면 전부 재작성</td></tr>
+<tr><td>2</td><td><strong>oracle 재현성 검사</strong> (CEM 재실행 2회, 재학습 0)</td><td>소</td><td>R4 — 유일한 미방어 급소</td></tr>
+<tr><td>3</td><td>인코더 제거 SAC ablation (z=0 완전 제거)</td><td>5 seed × 200k + 신규 코드</td><td>meta-RL 논문 관례 요구 — #26은 branch 단위 재학습 ablation까지 완료, z=0 완전 제거만 미시험</td></tr>
+<tr><td>4</td><td>A2·A4 전문 확보 → §1 대조표 6열 완성 (#24b)</td><td>문헌 작업</td><td>서론 P2의 핵심 그림</td></tr>
+<tr><td>5</td><td>함수 클래스 CV 스크리닝 각주 정리</td><td>완료분 정리</td><td>"선형 상한" 반론 — sweep 완료(진출 0건), 서술만</td></tr>
+</table></div>
+<h3>열려 있는 followups (docs/10_FOLLOWUPS_KO.md — 집필 관련만 선별)</h3>
+<p class="small">아래는 논문 집필과 직접 관련된 항목만 추린 것이다. 이외에 #13(부분완료)·#15(진행중)·
+#16(대기)·#18(부분완료)이 열려 있다 — 전체는 followups 문서 참조.</p>
+<ul>
+<li><strong>#27</strong> guard 전체 효과 재판정 — allowlist 수정 완료로 선행조건 해소, V7 suite
+재실행하면 21조건 전체 비교 가능 (부록 guard 표 보강용).</li>
+<li><strong>#21</strong> 정차 idle — 논문에는 Limitations로 명시(정정판 서술), 플랜트 변경은
+결과 무효화라 보류.</li>
+<li><strong>#19</strong> V6.1(guard만 얹기) — guard가 표적 효과뿐임이 확인되어 우선순위 하향.</li>
+<li><strong>#18b-(a)</strong> 배터리 왕복효율 0.97 eval-only 토글 검증 — 공통 편향 추정의 확인.</li>
+<li><strong>#11</strong> fidelity 표현 제약 반영 — Limitations 작성 시 소화.</li>
+<li><strong>#7</strong> <code>web_exports/latest/</code> 검증 리포트 재export 필요 여부 판단.</li>
+<li><strong>#5</strong> (상시) 새 결과는 항상 adaptive 대비 paired delta로 보고.</li>
+<li><strong>#25</strong> preview 정보 축 — <strong>다음 논문으로 이월.</strong> SUMO라 무오차
+preview horizon 스윕(0/30/60/120/300 s) 가능, 인프라는 정보축 실험에서 완성됨.
+"추론된 미래는 무가치(ΔR² +0.025)" vs "주어진 미래"의 대비가 자산.</li>
+</ul>
+
+<h2 id="tools"><span class="no">7.6</span>재산출 도구와 함정</h2>
+<pre><code># 논문 전 표 재산출 (케이스 단위 통일 + 분모 assert)
+python3 scripts/report_paper_tables.py --suite results/meta_rl_paper/experiment_suite_v3/20260727_v6_fittedN802</code></pre>
+<div class="box warn"><span class="t">⚠ 두 번 겪은 함정 (반드시 숙지)</span>
+<p><code>--v3-config</code>에는 <strong>항상</strong> <code>configs/meta_rl_v3_full_9knob.json</code>을
+넘긴다. V6 config를 넘기면 zero-action arm이 fitted rule이 되어 capture 분모가 오염된다
+(실제 2회 발생 — 장기 프로파일 평가, encoder masking 1차). 조기 탐지:
+Phase A 120케이스의 <strong>Σ(adaptive−oracle) = 5.6296</strong>이 아니면 오염.</p></div>
+<p class="small">실험별 아티팩트 경로 전체 맵(본문 11종 + 부록)은 ledger §9와 4장 수치의 출처
+표기 참조. 대표: 주 결과 <code>experiment_suite_v3/20260727_v6_fittedN802/</code> ·
+권한의 대가 <code>dp_oracle/20260727_phaseA_authority/</code> · 정보축
+<code>fitted_9knob_rule/20260726_infoaxis_v2_*/</code> · 함수클래스
+<code>function_class_sweep/20260727/</code> · encoder
+<code>v6_encoder_{raw_only,summary_only}/20260727/</code> · 장기
+<code>long_horizon_eval/20260726_corrected/</code> · 표준 사이클
+<code>standard_cycles/20260727/</code>.</p>
+
+<h2 id="order"><span class="no">7.7</span>집필 순서 제안</h2>
+<ol>
+<li>thesis 문장 교체(위 1번) → §3 평가 프레임 → §2 테스트베드 (재료가 완전한 절부터)</li>
+<li>§5 주 결과 → §6 천장의 실재성 → §7 기각 표 (수치 정본 확정 완료)</li>
+<li>§4 권한의 대가 → §8 한계 (Limitations 6종 소화)</li>
+<li>§1 서론 — A2/A4 확보 후 대조표 완성과 함께 마지막에 (P2 그림이 관건)</li>
+<li>병행: oracle 재현성 검사(R4) + encoder 제거 ablation은 심사 대응 예비로</li>
+</ol>
+
+<div class="pn">
+  <a class="prev" href="06_literature.html"><span class="dir">← 이전</span><span class="ttl">6. 문헌 전략</span></a>
+  <a class="next" href="index.html"><span class="dir">처음으로 →</span><span class="ttl">개요</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 작성 2026-07-28 · 수치 정본은 <code>docs/meta_rl_living_experiment_ledger_ko.md</code>와 results/ 원본 CSV</footer>
+</body>
+</html>
