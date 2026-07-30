@@ -273,3 +273,66 @@ footer.site {
 .deeper {
   font-size: 13px; margin-top: 10px; color: var(--muted);
 }
+
+/* ---------- experiment cards (ch.8) ---------- */
+.xlegend {
+  display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px;
+  color: var(--ink-2); margin: 4px 0 26px;
+}
+.xcards { display: grid; gap: 16px; margin: 16px 0 0; }
+.xcard {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 18px;
+}
+.xcard > header {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.xcard .xid {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11.5px; font-weight: 700; color: #fff; background: var(--s1);
+  border-radius: 6px; padding: 2px 7px; letter-spacing: 0.02em;
+}
+.xcard h3 { margin: 0; font-size: 16.5px; flex: 1 1 12em; line-height: 1.45; }
+.xrow { margin: 12px 0 0; }
+.xl {
+  display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+}
+.xrow p { margin: 0; font-size: 14.5px; color: var(--ink-2); max-width: 46em; }
+.xrow.show p { color: var(--ink); }
+.xrow.show .xl { color: var(--s1); }
+.xcard .tw { margin: 6px 0 0; }
+.xcard table { font-size: 13px; }
+.xcard th, .xcard td { padding: 6px 10px; }
+.xmeta {
+  margin-top: 13px; padding-top: 9px; border-top: 1px solid var(--grid);
+  font-size: 11.5px; color: var(--muted); line-height: 1.6;
+}
+.xmeta code { font-size: 11.5px; }
+
+/* mini bar chart inside cards */
+.mbars { margin: 8px 0 2px; display: grid; gap: 5px; }
+.mb {
+  display: grid; grid-template-columns: minmax(84px, 9.5em) 1fr auto;
+  align-items: center; gap: 10px; font-size: 13px;
+}
+.mb .k { color: var(--ink-2); line-height: 1.4; }
+.mb .t { background: var(--grid); border-radius: 4px; height: 14px; overflow: hidden; }
+.mb .t i { display: block; height: 100%; border-radius: 4px; background: var(--s1); }
+.mb .v {
+  font-variant-numeric: tabular-nums; font-weight: 650;
+  min-width: 4.6em; text-align: right; white-space: nowrap;
+}
+.mb i.b1 { background: var(--s1); }
+.mb i.b2 { background: var(--s2); }
+.mb i.b3 { background: var(--s3); }
+.mb i.b7 { background: var(--s7); }
+.mb i.bn { background: var(--critical); }
+.mb i.bm { background: var(--baseline); }
+.mb.dim .k, .mb.dim .v { color: var(--muted); }
+.mcap { font-size: 11.5px; color: var(--muted); margin: 6px 0 0; }
+@media (max-width: 640px) {
+  .mb { grid-template-columns: 1fr auto; }
+  .mb .t { grid-column: 1 / -1; }
+}

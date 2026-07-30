@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8. 실험 하나하나 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+    <a class="ch cur" href="08_experiments.html">8 실험 하나하나</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">8장 · 실험 하나하나</p>
+<h1>실험 19가지 — 왜 했고, 뭐가 나왔고, 그게 무슨 뜻인지</h1>
+<p class="lede">
+4장이 <em>이야기 순서</em>로, 5장이 <em>최종 결과</em>로 설명한 것을 여기서는 <strong>실험 하나씩</strong>
+떼어 봅니다. 카드마다 세 칸이 똑같이 붙어 있습니다 —
+<strong>① 왜 했나 → ② 뭐가 나왔나(표·그래프) → ③ 그래서 무슨 뜻인가.</strong>
+용어는 <a href="07_glossary.html">7장 용어 사전</a>을 함께 보세요.
+</p>
+
+<div class="box note"><span class="t">먼저 알아두면 편한 세 단어</span>
+<ul>
+<li><strong>다이얼 9개</strong> — AI가 만질 수 있는 설정값. 운전대(엔진 출력 직접 지령)는 안 줍니다.</li>
+<li><strong>정답지</strong> — 주행이 끝난 뒤 컴퓨터로 그 주행에 가장 잘 맞는 다이얼을 찾아낸 것. 채점의 만점 기준(100%).</li>
+<li><strong>점수(capture)</strong> — 기본값에서 정답지까지의 격차 중 몇 %를 좁혔는지. 0% = 아무것도 안 함, 100% = 정답지와 동일.</li>
+</ul></div>
+
+<div class="xlegend">
+  <span><span class="badge ok">성공</span> 논문 본문에 씀</span>
+  <span><span class="badge info">보조</span> 참고 자료로 씀</span>
+  <span><span class="badge dead">기각</span> 가설이 틀렸음이 밝혀짐</span>
+  <span><span class="badge warn">주의</span> 해석에 조건이 붙음</span>
+</div>
+
+<h2 id="a"><span class="no">묶음 A</span>채점 기준을 만든 실험 (3가지)</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">실험 1</span><h3>다이얼 2개만 줬을 때 — 여유가 있는지 확인</h3><span class="badge info">보조</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>처음에는 AI에게 다이얼을 <strong>2개만</strong> 줬는데 사람 규칙을 못 이겼습니다.
+원인이 <em>AI가 부족해서</em>인지 <em>다이얼 2개로는 애초에 할 수 있는 게 없어서</em>인지 알아야 했습니다.
+그래서 <strong>미래를 전부 아는 컴퓨터</strong>에게 똑같이 다이얼 2개만 주고 최대한 잘해보라고 시켰습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<p>미래를 다 아는 컴퓨터도 개선폭이 <strong>5~6%</strong>밖에 안 됐습니다. 사람 규칙과 비교하면
+거의 차이가 없는 수준(0~1%)이었습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>다이얼 2개로는 아무리 잘해도 먹을 것이 없다.</strong> AI 잘못이 아니라 <em>권한이 좁아서</em>였습니다.
+그날 바로 다이얼을 <strong>9개로 늘렸습니다</strong>. 지금 연구가 왜 9개인지의 이유가 이 실험입니다.</p></div>
+<footer class="xmeta">2026-07-13 · 지금은 옛 설정이라 최신 결과와 나란히 비교하면 안 됩니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 2</span><h3>정답지 만들기 — 그리고 "상황마다 답이 다른가" 확인</h3><span class="badge ok">성공</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>두 가지를 동시에 확인해야 했습니다.
+<strong>(1)</strong> 다이얼 9개로는 정말 개선할 여유가 있나?
+<strong>(2)</strong> 그 최적값이 상황마다 <em>다른가</em>? — 만약 어떤 상황에서든 최적값이 같다면
+AI가 상황을 알아챌 필요가 없고, 공장에서 한 번 잘 맞춰놓으면 끝입니다.</p>
+<p>그래서 주행 120개 각각에 대해 컴퓨터가 수천 번 다시 돌려보며 최적 다이얼을 찾았습니다.
+<strong>이것이 이 연구의 "정답지"이고, 모든 점수의 만점 기준</strong>이 됩니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="mbars">
+  <div class="mb"><span class="k">짐 많고 오르막</span><span class="t"><i class="b7" style="width:100%"></i></span><span class="v">0.57</span></div>
+  <div class="mb"><span class="k">낯선 도로</span><span class="t"><i class="b7" style="width:89%"></i></span><span class="v">0.51</span></div>
+  <div class="mb"><span class="k">에어컨 많이 씀</span><span class="t"><i class="b7" style="width:63%"></i></span><span class="v">0.36</span></div>
+  <div class="mb"><span class="k">여러 악조건 겹침</span><span class="t"><i class="b7" style="width:49%"></i></span><span class="v">0.28</span></div>
+</div>
+<p class="mcap">개선할 수 있는 여유의 크기(클수록 여유 많음). 여유는 <strong>확실히 있었습니다.</strong></p>
+<p style="margin-top:10px">그리고 더 중요한 것 — <strong>같은 다이얼을 어떤 상황에서는 올려야 하고
+다른 상황에서는 내려야 했습니다.</strong> 최적 방향이 상황마다 뒤집혔습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>개선할 여유가 실제로 있고, <strong>상황을 알아채야만 그 여유를 먹을 수 있다.</strong>
+공장에서 한 번 맞춰놓는 방식으로는 안 된다는 뜻이고 — 실제로 실험 4에서 그걸 확인합니다
+(고정 튜닝은 기본값보다 <strong>더 나빴습니다</strong>).</p></div>
+<footer class="xmeta">2026-07-14 · 주행 120개 = 상황 21종류 × 각 3~8개 주행, 전부 240초 구간</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 3</span><h3>운전대까지 주면? — 권한의 가격표</h3><span class="badge ok">성공</span><span class="badge warn">조건 있음</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>기존 연구들이 보고하는 큰 개선 숫자(연비 10% 등)가 <strong>"운전대까지 줬기 때문"</strong>이라는
+의심이 있었습니다. 확인하려면 실제로 운전대(엔진 출력을 직접 지령하는 권한)를 주고
+<em>얼마를 벌고 무엇을 잃는지</em> 같은 주행에서 재봐야 합니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tiles" style="margin:8px 0 2px">
+  <div class="tile"><div class="lb">연료 절감</div><div class="v">+9.3%</div><div class="sub">이득은 진짜입니다</div></div>
+  <div class="tile"><div class="lb">그 대가: 규칙 위반</div><div class="v">13배</div><div class="sub">배터리 한계 위반 급증</div></div>
+  <div class="tile"><div class="lb">배터리 사용량</div><div class="v">+60%</div><div class="sub">수명에 부담</div></div>
+</div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>운전대를 주면 확실히 좋아진다 — 하지만 그 차는 팔 수 없다.</strong>
+배터리 한계를 13배 자주 넘고 배터리를 60% 더 굴립니다. 즉 "다이얼 9개만"이라는 제한은
+<strong>연료 상금을 포기하고 안전을 산 거래</strong>입니다. 논문은 이 <em>가격표</em>를 제시해서
+"왜 이렇게 좁은 조건을 연구하나"에 답합니다.</p></div>
+<footer class="xmeta">2026-07-27 다시 실행 · ⚠ 이 비교는 <strong>평범한 조건 78개</strong>에서만 가능했습니다
+(숨겨진 조건은 이 계산에 넣을 수 없었음) — 논문에 이 제한을 씁니다</footer>
+</article>
+</div>
+
+<h2 id="b"><span class="no">묶음 B</span>가장 중요한 결과 (2가지)</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">실험 4</span><h3>본 시합 — 사람 규칙 vs 공식 vs AI</h3><span class="badge ok">성공 · 주 결과</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>이 연구의 단 하나의 핵심 질문입니다 —
+<strong>똑같은 다이얼 9개, 똑같이 볼 수 있는 정보를 주면, 방법이 다르다고 성적이 달라지는가?</strong>
+사람이 손으로 짠 규칙 / 정답지를 보고 만든 공식 / AI(meta-RL)를 같은 120문제로 채점했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="mbars">
+  <div class="mb"><span class="k">사람 규칙</span><span class="t"><i class="b3" style="width:61.5%"></i></span><span class="v">19.5%</span></div>
+  <div class="mb"><span class="k">공식 (지도학습)</span><span class="t"><i class="b2" style="width:100%"></i></span><span class="v">31.7%</span></div>
+  <div class="mb"><span class="k">AI (meta-RL)</span><span class="t"><i class="b1" style="width:96.8%"></i></span><span class="v">30.7%</span></div>
+  <div class="mb dim"><span class="k">공장 고정 튜닝</span><span class="t"></span><span class="v">−18.9%</span></div>
+</div>
+<p class="mcap">점수 = 기본값에서 정답지까지의 격차 중 좁힌 비율. 고정 튜닝은 <strong>기본값보다 나빴습니다.</strong></p>
+<p style="margin-top:10px">특히 눈에 띄는 것 — 점수 계산에서 비중이 가장 큰 두 상황(엔진 타이머가
+잘못 설정된 차, 잔량 기준이 어긋난 차)에서 <strong>사람 규칙은 0점</strong>이었습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>세 가지가 한꺼번에 나옵니다.</p>
+<ul>
+<li><strong>학습은 사람 규칙을 확실히 이긴다</strong> (약 12%p 차이). 사람이 손 못 대는 조건에서 특히 강합니다.</li>
+<li><strong>그런데 AI와 단순 공식이 서로 구분되지 않는다</strong> — 1%p 차이는 오차 범위 안입니다.</li>
+<li><strong>둘 다 격차의 약 1/3에서 멈춘다.</strong></li>
+</ul>
+<p>이것이 논문의 핵심 표이고, 5장 "발견 ①·②"의 근거입니다.</p></div>
+<footer class="xmeta">2026-07-27 · 낯선 복합 조건(숨겨진 조건이 겹친 극단 케이스)에서는
+AI가 사람 규칙에 <strong>뒤집니다</strong> — 논문에 그대로 씁니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 5</span><h3>순위가 뒤집힌 사건 — "비긴 것"보다 강한 증거</h3><span class="badge ok">성공</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>"공식은 계산식이니까 매번 같은 답이 나오고, 따라서 오차가 없다"고 생각하기 쉽습니다.
+그런데 공식도 <strong>어떤 연습문제를 뽑아서 만들었는지</strong>에 따라 달라집니다.
+그래서 연습문제 묶음을 바꿔가며 공식을 다시 만들어봤습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>공식이 쓴 연습문제</th><th class="num">공식</th><th class="num">AI</th><th>누가 앞섰나</th></tr>
+<tr><td>70문제 (옛 버전)</td><td class="num">30.4</td><td class="num">30.7</td><td><strong>AI</strong>가 근소하게</td></tr>
+<tr><td>802문제 (최종)</td><td class="num">31.7</td><td class="num">30.7</td><td><strong>공식</strong>이 근소하게</td></tr>
+</table></div>
+<p class="mcap">연습문제를 바꿨을 뿐인데 <strong>순위가 뒤집혔습니다.</strong> 두 경우 모두 차이는 오차 범위 안입니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>어느 쪽이 이기는지가 주사위에 달렸다</strong>는 것은 "실력이 비슷하다"보다 강한 말입니다.
+둘 사이에 실력 차가 아예 없고 <strong>같은 천장에 부딪혔다</strong>는 뜻입니다.
+동시에 이 실험은 "결과를 발표할 때 어떤 오차를 함께 써야 하는지"라는 방법론 규칙도 만들었습니다.</p></div>
+<footer class="xmeta">2026-07-27 · 이 연구에서 유일하게 할 수 있는 말은
+"두 방법은 통계적으로 구분되지 않는다"입니다 — "AI가 더 낫다"고는 못 씁니다</footer>
+</article>
+</div>
+
+<h2 id="c"><span class="no">묶음 C</span>"정보가 부족해서 아닌가?"를 확인한 실험 (3가지)</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">실험 6</span><h3>정답을 알려줘도 안 오른다 — 이 연구의 결정타</h3><span class="badge ok">성공 · 관문</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>가장 위험한 반론을 막기 위해서입니다 —
+<em>"차가 볼 수 있는 정보를 저자가 일부러 좁게 골라놓고 '한계'라고 부르는 거 아닌가?"</em></p>
+<p>그래서 정보를 단계적으로 늘려봤습니다. 그리고 결정적으로 —
+<strong>실제 차라면 절대 알 수 없는 것들의 정답을 그냥 알려줬습니다</strong>
+(지금 짐이 얼마나 무거운지, 에어컨이 얼마나 켜졌는지, 배터리가 얼마나 늙었는지, 노면이 얼마나 미끄러운지).</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>정보 단계</th><th class="num">정보 개수</th><th class="num">맞추는 정도</th><th>결과</th></tr>
+<tr><td>기본</td><td class="num">10개</td><td class="num">0.149</td><td>출발점</td></tr>
+<tr><td>+ 도로 경사</td><td class="num">12개</td><td class="num">0.150</td><td>거의 변화 없음</td></tr>
+<tr><td><strong>+ 숨겨진 조건 정답 4개</strong></td><td class="num">14개</td><td class="num neg">0.125</td><td><strong>오히려 떨어짐</strong></td></tr>
+<tr><td>+ 주행 통계 8개</td><td class="num">18개</td><td class="num">0.153</td><td>거의 변화 없음</td></tr>
+<tr><td>+ 더 늘림</td><td class="num">22개</td><td class="num">0.131</td><td>떨어짐</td></tr>
+</table></div>
+<p class="mcap">"맞추는 정도" = 상황 정보로 정답 다이얼을 얼마나 예측할 수 있는지 (1.0이면 완벽).
+정보를 10개에서 22개로 늘려도 <strong>0.13~0.15에서 평평</strong>합니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>정답을 알려줘도 못 맞춥니다.</strong> 그렇다는 건 애초에
+<em>"상황 → 최적 다이얼"이라는 관계가 존재하지 않는다</em>는 뜻입니다.</p>
+<p>이 실험이 그 직전까지의 결론("정보가 부족해서 한계에 걸린 것")을
+<strong>자기 데이터로 뒤집었고</strong>, 지금의 최종 결론을 만들었습니다 —
+<strong>남은 격차는 상황의 문제가 아니라 그날 그 주행의 우연에 붙어 있다.</strong></p></div>
+<footer class="xmeta">2026-07-26 · AI를 다시 학습시키지 않고 기존 정답지를 재활용해서 계산 ·
+실험 설계의 함정 2개를 미리 찾아 고쳤습니다 (AI만 도로 경사를 보고 있던 불공정, 숨겨진 조건 조합이 일부 빠져 있던 것)</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 7</span><h3>연습문제를 4배로 늘려보기</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>1/3에서 멈추는 이유가 <strong>연습문제가 적어서</strong>일 수도 있습니다.
+그렇다면 문제를 더 주면 더 잘해야 합니다. 다른 조건은 다 그대로 두고
+연습문제만 70개 → 301개로 늘렸습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>확인 항목</th><th class="num">70문제</th><th class="num">301문제</th><th>결과</th></tr>
+<tr><td>연습문제 맞추는 정도</td><td class="num">0.343</td><td class="num neg">0.231</td><td><strong>떨어짐</strong></td></tr>
+<tr><td>실제 성적</td><td class="num">0.676</td><td class="num neg">0.685</td><td>살짝 나빠짐</td></tr>
+</table></div>
+<p class="mcap">70문제에서 잘 맞추는 것처럼 보였던 것은 <strong>문제를 외운 것(과적합)</strong>이었고,
+문제가 늘자 실제 실력이 드러났습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>데이터를 4배 줬는데 오히려 나빠졌습니다.</strong> 연습문제가 부족한 게 아니라
+애초에 상황 정보가 정답을 별로 설명하지 못한다는 뜻이고, 이 값은 데이터로 올라가지 않습니다.
+"데이터를 더 모으면 되지 않나"라는 반론을 막습니다.</p></div>
+<footer class="xmeta">2026-07-23 · 최종 802문제로 다시 해봐도 결론 같음</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 8</span><h3>공식을 더 똑똑하게 만들어보기 — 6가지 방식 × 5단계 정보</h3><span class="badge ok">성공</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>이 연구에서 가장 약한 고리를 막기 위해서입니다.
+비교에 쓴 "공식"은 <strong>1차식(직선)</strong>입니다. 그러니 심사자가 이렇게 물을 수 있습니다 —
+<em>"당신이 말하는 한계는 그냥 1차식의 한계 아닌가? 더 복잡한 방식이면 넘을 텐데?"</em></p>
+<p>그래서 같은 정답지에 <strong>더 유연한 방식 6가지</strong>를 붙여 다시 만들어봤습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>확인한 것</th><th>결과</th></tr>
+<tr><td>시험한 조합</td><td>방식 6가지 × 정보 5단계 = 30가지</td></tr>
+<tr><td>1차식을 이긴 조합</td><td class="num"><strong>0개</strong></td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>한계는 "1차식의 한계"가 아닙니다.</strong> 정답지를 손에 쥐여주고 아무리 유연한 방식을
+붙여도 단순한 1차식을 못 넘습니다. 즉 방법도, 수식의 복잡도도 병목이 아니라는 뜻입니다.
+실험 6과 짝을 이뤄 "정보 부족 아닌가" 쪽 방어를 완성합니다.</p></div>
+<footer class="xmeta">2026-07-27 · 비싼 계산(정답지 찾기)은 다시 하지 않고 기존 표만 재활용 —
+그래서 며칠이 아니라 몇 시간에 끝났습니다</footer>
+</article>
+</div>
+
+<h2 id="d"><span class="no">묶음 D</span>"그럼 이건 해봤어?"에 답한 실험 6가지</h2>
+<p>심사자가 물어볼 만한 대안을 <strong>하나씩 실제로 해보고 안 된다는 것을 확인한</strong> 기록입니다.
+성적표보다 이쪽이 이 논문의 진짜 힘입니다.</p>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">실험 9</span><h3>"안전장치가 발목을 잡는 것 아닌가?"</h3><span class="badge dead">가설이 틀림</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>AI에는 <strong>안전장치(gate)</strong>가 붙어 있습니다 — 낯선 상황이면 AI 개입을 줄이는 장치입니다.
+성적이 낮은 이유가 "AI가 좋은 답을 내도 안전장치가 깎아버려서"라는 의심이 있었습니다.
+그래서 안전장치를 끄고 다시 채점했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="mbars">
+  <div class="mb"><span class="k">안전장치 켜짐</span><span class="t"><i class="b1" style="width:100%"></i></span><span class="v">10.5%</span></div>
+  <div class="mb"><span class="k">안전장치 꺼짐</span><span class="t"><i class="bn" style="width:40%"></i></span><span class="v">4.2%</span></div>
+</div>
+<p class="mcap">끄면 <strong>더 나빠졌습니다.</strong> 특히 낯선 상황에서는 크게 망가졌습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>안전장치는 발목이 아니라 보험이었습니다.</strong> AI의 나쁜 판단을 막아주고 있었습니다.
+그래서 논문에서는 안전장치를 "성적을 올리는 장치"가 아니라
+<strong>"양산차에 필요한 안전 장치"</strong>로 설명합니다.</p></div>
+<footer class="xmeta">2026-07-17 · AI를 다시 학습시키지 않고 채점만 다시 했습니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 10</span><h3>"안전장치를 더 똑똑하게 만들면?"</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>주행마다 <em>사후에</em> 가장 좋은 안전장치 설정을 골라보니 40.4%가 나왔습니다.
+이게 진짜 여지라면 "언제 개입할지 잘 판단하는 안전장치"를 만들면 10%p를 회수할 수 있습니다.
+두 가지를 확인했습니다 — 그 판단이 <em>가능한가</em>, 그리고 40.4%가 <em>새 주행에서도 나오는가</em>.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>판단에 쓴 정보</th><th>맞추는 능력</th></tr>
+<tr><td>차가 볼 수 있는 정보</td><td class="num neg">동전 던지기보다 못함</td></tr>
+<tr><td><strong>숨겨진 조건 정답까지 다 줌</strong></td><td class="num neg">역시 실패</td></tr>
+</table></div>
+<div class="tw" style="margin-top:8px"><table>
+<tr><th>채점 방식</th><th class="num">점수</th></tr>
+<tr><td>같은 데이터로 고르고 같은 데이터로 채점 (반칙)</td><td class="num">40.4%</td></tr>
+<tr><td>고르는 데이터와 채점 데이터를 분리 (정직)</td><td class="num">31.6%</td></tr>
+<tr><td>지금 방식</td><td class="num">30.7%</td></tr>
+<tr><td><strong>실제 이득</strong></td><td class="num"><strong>+0.9%p</strong></td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>10%p로 보였던 여지의 90%가 착시였습니다.</strong> 그리고 두 결과가 서로 맞아떨어집니다 —
+판단이 안 되는 이유는 그게 <em>대체로 운</em>이기 때문이고, 운은 어떤 장치로도 이용할 수 없습니다.
+특히 <strong>정답을 다 줘도 판단이 안 됐다</strong>는 점이 중요합니다.</p></div>
+<footer class="xmeta">2026-07-23 · 기존 데이터만으로 계산 · 논문에서는 "사후 40.4%를 보여준 뒤
+정직한 방법으로 무너뜨리는" 방식으로 씁니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 11</span><h3>"미래를 미리 보게 하면?" — 그리고 대조군의 반전</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>AI가 낯선 상황에서 약한 이유가 <strong>앞으로 뭐가 올지 모르기 때문</strong>일 수 있습니다.
+그래서 <em>갑자기 출력이 크게 필요해지는</em> 주행 4,000개를 새로 만들어 미리 대비하도록 학습시켰습니다.
+그리고 중요한 장치를 하나 넣었습니다 — <strong>새 데이터만 빼고 나머지는 똑같이 한 대조군</strong>을
+함께 학습시켜서, 좋아지면 그게 진짜 새 데이터 덕인지 확인하게 했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="mbars">
+  <div class="mb"><span class="k">미래 대비 학습</span><span class="t"><i class="bn" style="width:34%"></i></span><span class="v">3.2%</span></div>
+  <div class="mb"><span class="k">대조군 (새 데이터 없음)</span><span class="t"><i class="b1" style="width:100%"></i></span><span class="v">9.5%</span></div>
+</div>
+<p class="mcap"><strong>대조군이 더 좋았습니다.</strong> 미래를 대비하게 학습시킨 것이 오히려 해로웠습니다.
+게다가 AI 내부를 들여다보니 <strong>과거 주행 기록만으로는 앞으로 올 급증을 거의 예측하지 못했습니다.</strong></p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>"추측한 미래"는 가치가 없습니다.</strong> 속도와 경사 기록만으로는 앞으로 무슨 일이
+생길지 알 수 없기 때문입니다. 그리고 대조군이 더 좋았으니 소폭 개선의 원인은 새 데이터가
+아니었습니다. 그래서 <strong>"AI가 미래 대비에서 이겼다"고는 절대 쓸 수 없습니다.</strong></p></div>
+<footer class="xmeta">2026-07-23 · 주행 4,000개 새로 생성 · AI 학습 10회(5+5) ·
+부산물로 "낯선 조건에서 개입을 줄이는 장치"는 특정 상황에서 효과가 있었습니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 12</span><h3>"AI에게 다이얼을 더 많이 돌릴 권한을 주면?"</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>AI는 다이얼을 <em>조금씩만</em> 돌릴 수 있게 제한돼 있습니다(기본 공식 위에 살짝 보정하는 정도).
+이 제한을 풀면 더 잘할 여지가 생기는지 확인했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>항목</th><th class="num">원래</th><th class="num">권한 확대</th><th>결과</th></tr>
+<tr><td>전체 점수</td><td class="num">30.7</td><td class="num">30.1</td><td>차이 없음</td></tr>
+<tr><td>건조 노면 (미학습)</td><td class="num">74.2</td><td class="num neg">18%p 하락</td><td>부작용 발생</td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>그냥 권한을 늘리는 것은 답이 아닙니다.</strong> 이득은 없고 다른 조건에서 오히려
+나빠집니다. 실험 3에서 "권한이 중요하다"고 했던 것과 모순이 아닙니다 —
+자릿수를 바꾸는 것은 <em>운전대</em>이고, 같은 다이얼 안에서 폭만 조금 넓히는 것은 다른 얘기입니다.</p></div>
+<footer class="xmeta">2026-07-23</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 13</span><h3>"상황이 급변할 때 AI가 더 빨리 적응하지 않나?"</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>비교 대상인 공식은 <strong>최근 60초</strong>를 보고 판단합니다. 그러니 상황이 갑자기 바뀐 직후에는
+구조적으로 낡은 정보를 쓰게 됩니다. 그렇다면 <em>급변 직후</em>에는 AI가 이길 수 있어야 합니다.
+급변 시점 160개를 잡고 그 전후를 네 구간으로 나눠 비교했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>구간</th><th>AI가 더 나았나?</th></tr>
+<tr><td>급변 전</td><td>차이 없음 (정상 — 대조 확인)</td></tr>
+<tr><td><strong>급변 직후 (0~60초)</strong></td><td class="num neg"><strong>차이 없음</strong></td></tr>
+<tr><td>중간 (60~120초)</td><td>차이 없음</td></tr>
+<tr><td>이후</td><td>차이 없음</td></tr>
+</table></div>
+<p class="mcap">그리고 뜻밖의 발견 — 급변 직후에는 <strong>기본 설정이 세 참가자 모두보다 나았습니다.</strong></p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>시간 축에도 AI만 먹을 수 있는 몫이 없습니다. 그리고 뜻밖의 발견이 재미있습니다 —
+<strong>상황이 급변하는 동안에는 낡은 정보로 적응하려 애쓰는 것보다 기본 설정을 지키는 게 안전합니다.</strong>
+"적응의 가치는 상황이 안정된 뒤에 나온다"는 이야기가 됩니다.</p></div>
+<footer class="xmeta">2026-07-26 · 급변 시점은 학습에 쓰지 않은 주행에서 뽑았습니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 14</span><h3>"주행 중에 다이얼을 바꿔가면?" — 그리고 예산 함정</h3><span class="badge dead">기각</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>정답지는 주행 한 번에 다이얼 <strong>한 세트</strong>를 정합니다. 만약 진짜 최적이 주행 중에
+계속 바뀌는 것이라면, 규칙이 못 먹는 몫이 남아 있다는 뜻입니다.
+그래서 주행을 3등분해서 구간마다 다른 다이얼을 쓰게 해봤습니다.</p>
+<p><strong>여기서 중요한 확인을 하나 더 했습니다</strong> — 3등분하면 컴퓨터가 탐색을 3배 더 하게 됩니다.
+그러니 좋아진 게 <em>진짜 시간에 따라 달라서</em>인지 <em>그냥 탐색을 더 해서</em>인지 갈라야 합니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="mbars">
+  <div class="mb"><span class="k">겉보기 이득</span><span class="t"><i class="b2" style="width:100%"></i></span><span class="v">+13.6%</span></div>
+  <div class="mb"><span class="k">탐색량 맞춘 뒤</span><span class="t"><i class="b1" style="width:29%"></i></span><span class="v">+4%</span></div>
+</div>
+<p class="mcap">한 세트만 쓰는 쪽에 <strong>똑같이 많은 탐색 기회</strong>를 주자
+이득의 <strong>70%가 사라졌습니다.</strong></p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>두 가지를 동시에 줍니다.
+<strong>(1)</strong> 시간 축에 AI만 먹을 몫이 거의 없습니다(실제 +4%).
+<strong>(2)</strong> 그리고 더 중요한 것 — <strong>지금 쓰는 정답지(한 세트짜리)가 채점 기준으로
+타당하다는 증거</strong>입니다. "당신 정답지가 너무 단순해서 불공정하다"는 반론을 이 실험이 막습니다.</p></div>
+<footer class="xmeta">2026-07-26 · 주행 120개 전부에 대해 계산</footer>
+</article>
+</div>
+
+<h2 id="e"><span class="no">묶음 E</span>그럼 AI는 어디에 쓸모 있나 + 믿을 수 있나 (5가지)</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">실험 15</span><h3>AI의 "상황 파악 부품"을 떼어보기</h3><span class="badge ok">성공</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>AI에는 <strong>상황을 알아채는 부품(encoder)</strong>이 있습니다. 이게 실제로 기여하는지
+확인하려면 그 부품을 가리고 <em>처음부터 다시 학습</em>시켜봐야 합니다. 5번씩 학습시켰습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>버전</th><th class="num">평균 점수 차이</th><th class="num">학습 결과의 흔들림</th><th class="num">학습 실패한 판</th></tr>
+<tr><td>부품 있음 (기본)</td><td class="num">—</td><td class="num">2.3</td><td class="num">0회</td></tr>
+<tr><td>부품 절반 가림 (A)</td><td class="num">−2.1</td><td class="num neg">8.7</td><td class="num neg">1회</td></tr>
+<tr><td>부품 절반 가림 (B)</td><td class="num">−2.0</td><td class="num neg">7.7</td><td class="num neg">1회</td></tr>
+</table></div>
+<p class="mcap">평균 점수는 <strong>거의 안 변했지만</strong>, 학습 결과가 <strong>4배 가까이 들쭉날쭉</strong>해지고
+학습이 아예 망하는 판이 생겼습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p><strong>상황 파악 부품은 평균 점수가 아니라 "안정성"을 삽니다.</strong>
+빼면 5판 중 1판꼴로 학습이 망합니다. 1/3 벽 안에서도 AI 구조가 갖는 실질 가치이고 —
+올해 다른 연구팀이 다른 차종에서 발견한 것("메타학습은 학습 속도를 사고 최종 성적은 같다")과
+정확히 같은 모양입니다.</p></div>
+<footer class="xmeta">2026-07-27 · 프로젝트 최초로 실제 재학습해서 확인 ·
+한계: 부품을 <strong>완전히</strong> 없앤 버전은 아직 안 해봤습니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 16</span><h3>시험 문제를 미리 본 건 아닌지 확인 (부정행위 검사)</h3><span class="badge ok">성공</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>심사자가 가장 먼저 의심할 것은 <strong>"연습문제와 시험문제가 겹친 게 아닌가"</strong>입니다.
+직접 대조해서 확인했습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>참가자</th><th class="num">연습에 쓴 주행</th><th class="num">시험 주행</th><th class="num">겹침</th></tr>
+<tr><td>공식 (70문제판)</td><td class="num">70</td><td class="num">64</td><td class="num pos">0</td></tr>
+<tr><td>공식 (301문제판)</td><td class="num">292</td><td class="num">64</td><td class="num pos">0</td></tr>
+<tr><td>AI</td><td class="num">5,187</td><td class="num">64</td><td class="num pos">0</td></tr>
+</table></div>
+<p class="mcap">두 가지 다른 방식으로 대조해도 전부 <strong>0</strong>. 설정값 조정도 연습 데이터에서만 했습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>결과가 부정행위로 부풀려진 것이 아닙니다. 그리고 이 표에서 이 논문의 가장 강한 문장이 나옵니다 —
+<strong>AI는 주행 5,187개로 수십만 번 학습했고, 공식은 70개 정답에 맞춘 1차식입니다.
+그런데 둘의 성적이 구분되지 않습니다.</strong> 74배의 데이터가 아무것도 사지 못했습니다.</p></div>
+<footer class="xmeta">2026-07-23</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 17</span><h3>비 오는 날에 계속 지던 이유 — 알고 보니 배선 실수</h3><span class="badge info">보조</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>AI가 비·눈 조건에서 계속 지고 있었습니다. 이게 <strong>"AI가 날씨에 약하다"</strong>인지
+<strong>"애초에 날씨를 학습한 적이 없다"</strong>인지 구분해야 했습니다 —
+앞이면 방법의 한계고, 뒤면 그냥 버그입니다.</p>
+<p>코드를 추적해보니 학습 데이터를 만드는 부분이 <strong>날씨 목록을 아예 읽지 않고 있었습니다.</strong></p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>조건</th><th class="num">고치기 전</th><th class="num">고친 후</th><th>결과</th></tr>
+<tr><td>젖은 노면</td><td class="num neg">−0.05</td><td class="num pos">+0.22</td><td>사람 규칙도 넘음</td></tr>
+<tr><td>비 · 눈</td><td class="num neg">전부 짐</td><td class="num pos">전부 개선</td><td>같은 방향</td></tr>
+<tr><td><strong>빙판 (학습 안 한 조건)</strong></td><td class="num">−0.37</td><td class="num neg">−0.51</td><td><strong>여전히 실패</strong></td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>학습한 날씨는 확실히 좋아지고(배선을 고치니 전부 뒤집혔으니 인과가 확인됩니다),
+<strong>학습하지 않은 정도의 날씨(빙판)로는 넘어가지 않습니다.</strong>
+그래서 "날씨 하나 배우면 다른 날씨도 된다"고는 쓸 수 없습니다.
+동시에 이 연구의 태도를 보여주는 사례입니다 — 성적이 나쁠 때 방법을 의심하기 전에
+<strong>먼저 자기 배선을 의심했습니다.</strong></p></div>
+<footer class="xmeta">2026-07-20 · 같은 수정으로 비교 대상인 공식도 강해져서 격차는 오히려 벌어졌습니다</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 18</span><h3>며칠짜리 실제 주행에서도 되나? — 안 됐습니다</h3><span class="badge warn">한계 발견</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>시험 문제는 <strong>240초 짜리 토막</strong>입니다. 여기서 얻은 우위가
+<strong>며칠 단위 실제 주행에도 이어지는지</strong> 확인해야 했습니다.
+만들어놓고 한 번도 써본 적 없던 장기 주행 데이터(7일·14일·21일)를 처음 채점에 넣었습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>관측</th><th class="num">값</th><th>의미</th></tr>
+<tr><td>우위가 이어졌나</td><td class="num neg">아니오</td><td>짧은 토막에서만 성립</td></tr>
+<tr><td>정차(멈춰 있는) 시간</td><td class="num">46.0%</td><td>—</td></tr>
+<tr><td><strong>멈춰 있는데 엔진이 켜져 있던 시간</strong></td><td class="num neg">33.2%</td><td>연료를 그냥 태움</td></tr>
+<tr><td>연비</td><td class="num neg">9~10.5 L/100km</td><td>실제 프리우스(4~5)의 약 2배</td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>이건 <strong>약점을 드러낸 실험</strong>이고, 그래서 논문에 꼭 필요합니다.
+"엔진을 한 번 켜면 최소 60초 유지"라는 규칙이 정차 구간을 관통해서 연료를 태우고 있고,
+그게 연비가 실제 차의 2배인 주된 이유입니다. 결론 두 개:
+<strong>(1)</strong> 논문에서 <strong>절대 연비 숫자는 쓰지 않고</strong> 상대 점수만 씁니다.
+<strong>(2)</strong> 정차 문제를 한계로 명시합니다.</p></div>
+<footer class="xmeta">2026-07-23 · 흥미로운 점 — 다이얼 9개에 "엔진 최소 유지 시간"이 들어 있는데도
+AI가 그걸 쓰지 않았습니다 (연습 주행에 정차가 별로 없었던 탓으로 추정)</footer>
+</article>
+
+<article class="xcard">
+<header><span class="xid">실험 19</span><h3>사고 두 건 — 그리고 그것이 규칙이 된 이야기</h3><span class="badge ok">성공 · 방법론</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>둘 다 <em>계획한 실험이 아니라 사고</em>였는데, 오히려 논문의 기여가 됐습니다.</p></div>
+<div class="xrow"><span class="xl">뭐가 나왔나</span>
+<div class="tw"><table>
+<tr><th>사고</th><th>무슨 일이 있었나</th><th>어떻게 바꿨나</th></tr>
+<tr><td>학습을 오래 하니 나빠짐</td><td class="num">10만 번에 32.6% → 20만 번에 <strong>12.4%</strong></td><td>"어느 시점 AI를 쓸지" 고르는 규칙 교체</td></tr>
+<tr><td><strong>통계에 속을 뻔한 일</strong></td><td class="num">확실해 보였던 +21.6%p → 다시 재보니 <strong>+2.2%p</strong></td><td>결과 보고 시 오차를 하나 더 쓰기로 규칙 변경</td></tr>
+</table></div>
+<p class="mcap">두 번째가 특히 아찔했습니다 — 엄격한 통계 검사까지 통과한 결과였는데,
+<strong>연습문제 묶음을 바꿔가며 다시 해보니</strong> 거의 사라졌습니다.</p></div>
+<div class="xrow show"><span class="xl">그래서 무슨 뜻인가</span>
+<p>흔히 쓰는 통계 방법이 <strong>불확실성을 크게 과소평가</strong>할 수 있습니다 —
+"시험 문제를 바꿨을 때의 흔들림"만 재고 <strong>"연습 문제를 바꿨을 때의 흔들림"은 안 재기</strong>
+때문입니다. 하마터면 틀린 결과를 발표할 뻔했습니다.
+이 사고 기록이 그대로 논문의 통계 규칙이 됐습니다 — <strong>사고를 숨기지 않고 방법론으로 바꾼 사례</strong>입니다.</p></div>
+<footer class="xmeta">2026-07-14 (첫 번째), 2026-07-26 (두 번째)</footer>
+</article>
+</div>
+
+<h2 id="left"><span class="no">마지막</span>아직 안 한 실험 하나</h2>
+<div class="box warn"><span class="t">남은 약점 — 정답지 자체가 운이면?</span>
+<p>지금 남아 있는 반론은 하나입니다.</p>
+<p><em>"최적 다이얼이 상황으로 정해지지 않는다면, 당신들의 정답지 자체가 상당 부분
+운(잡음)이라는 뜻 아닌가? 그러면 1/3이라는 숫자가 무슨 의미인가?"</em></p>
+<p>이걸 뒷받침하는 간접 증거는 세 건 있습니다(실험 6·10·14). 하지만
+<strong>직접 재본 적은 없습니다.</strong> 계획된 실험은 간단합니다 —
+<strong>같은 주행에 정답 찾기를 두 번 돌려보는 것</strong>입니다.
+찾아낸 다이얼이 서로 많이 다르고 성적은 거의 같다면,
+"정답이 여러 개 있어서 애초에 맞출 필요가 없었다"가 확인됩니다.
+AI를 다시 학습시킬 필요도 없습니다.</p>
+<p>함께 검토 중인 것 하나 더 — <strong>상황 21종류마다 최적 다이얼을 하나씩</strong> 만들어보면
+"상황을 완벽히 알려줬을 때의 최대 점수"가 직접 계산됩니다. 이 값이 1/3 근처로 나오면,
+1/3은 <em>관찰된 숫자</em>에서 <strong>설명되는 숫자</strong>로 격상됩니다.</p></div>
+
+<div class="box key"><span class="t">8장 요약 — 19가지 실험이 만든 논증</span>
+<ol>
+<li><strong>실험 1~3</strong>이 채점 기준(정답지)을 만들고, 운전대 권한의 가격표를 매겼다.</li>
+<li><strong>실험 4~5</strong>가 본 결과를 냈다 — 학습은 사람을 이기지만 서로는 구분되지 않고, 둘 다 1/3에서 멈춘다.</li>
+<li><strong>실험 6~8</strong>이 "정보가 부족해서 아닌가"를 닫았다 — 정답을 줘도, 데이터를 늘려도, 더 복잡한 방식을 써도 안 오른다.</li>
+<li><strong>실험 9~14</strong>가 "그럼 이건 해봤어?" 여섯 가지를 하나씩 실험으로 막았다.</li>
+<li><strong>실험 15~19</strong>가 AI의 남은 가치(안정성)와 이 연구를 믿을 수 있는 이유를 보였다.</li>
+</ol></div>
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/08_experiments.html">8장 실험 카드</a>
+(정확한 수치, 통계 검정값, 산출물 경로, 논문 절 매핑)</p>
+
+<div class="pn">
+  <a class="prev" href="07_glossary.html"><span class="dir">← 이전</span><span class="ttl">7. 용어·FAQ</span></a>
+  <a class="next" href="index.html"><span class="dir">처음으로 →</span><span class="ttl">목차</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 실험 카드 작성 2026-07-30 ·
+상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>
