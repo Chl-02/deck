@@ -1,0 +1,189 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meta-RL Controller Trajectory Comparison Report</title>
+<style>
+body{margin:0;background:#f7f8f9;color:#1f2b32;font-family:Inter,system-ui,sans-serif}main{max-width:1240px;margin:auto;padding:34px 30px 60px}.topbar{border-bottom:1px solid #d8e0e4;padding-bottom:18px;margin-bottom:26px}.report-section{border-top:1px solid #d8e0e4;padding:24px 0;margin:0}.utility{border-top:1px solid #d8e0e4;padding:18px 0;margin:0}h1,h2,h3{letter-spacing:0}h1{margin:0 0 12px}h2{margin:0 0 14px}h3{margin:24px 0 10px}p{line-height:1.58;margin:.55rem 0}.lead{font-size:1.05rem;color:#40515b}.warning{border-left:4px solid #b65f3b;background:#fff7f2;padding:12px 14px;margin:16px 0 0}table{width:100%;border-collapse:collapse;margin:12px 0 22px;font-size:.92rem;background:#fff}th,td{border-bottom:1px solid #e2e8eb;padding:8px;text-align:right;vertical-align:top}th:first-child,td:first-child{text-align:left}figure{margin:18px 0 34px}img{display:block;max-width:100%;background:#fff;border:1px solid #d8e0e4;border-radius:4px}select{padding:8px 10px;border:1px solid #bdc8ce;border-radius:6px;background:white}.artifact-links{display:flex;gap:10px;flex-wrap:wrap}.artifact-links a{color:#245f7a}.bullet{margin:.35rem 0}blockquote{border-left:4px solid #386f8f;background:#eef6f9;padding:12px 14px;margin:14px 0}
+</style></head><body><main>
+<div class="topbar"><h1>Meta-RL Controller Trajectory Comparison Report</h1>
+<p class="lead">Baseline, old Meta-RL adapter, robustness-v2 adapter, and confidence-gated adapter are rolled out under identical physical conditions. Reward values are treated only as post-hoc scores.</p>
+<p class="warning">old/new reward formula의 episode_reward 절대값은 직접 비교하지 않는다. 비교는 동일 rollout 조건의 reward-independent physical metrics와 trajectory 중심으로 수행한다.</p></div>
+<section class="utility"><h2>Case Selector</h2><select id="caseSelector"><option value="all">All cases</option><option value="C01_meta_val_nominal">C01_meta_val_nominal | Meta-val | Nominal | mixed arterial dense mild seed43 | SOC 0.65, mass 1.15, grade 2.0%</option>
+<option value="C02_meta_val_nominal">C02_meta_val_nominal | Meta-val | Nominal | freeway corridor free flow normal seed42 | SOC 0.55, mass 1.00, grade -2.0%</option>
+<option value="C03_heldout_nominal">C03_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 0.0%</option>
+<option value="C04_heldout_nominal">C04_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed44 | SOC 0.65, mass 1.15, grade -2.0%</option>
+<option value="C05_low_soc_stress_low_soc">C05_low_soc_stress_low_soc | Low-SOC stress | Low SOC | suburban arterial congested normal seed46 | SOC 0.45, mass 1.00, grade 0.0%</option>
+<option value="C06_combined_stress_low_soc_mass_uphill">C06_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed46 | SOC 0.45, mass 1.30, grade 6.0%</option>
+<option value="C07_combined_stress_low_soc_mass_uphill">C07_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed44 | SOC 0.45, mass 1.30, grade 6.0%</option>
+<option value="C08_high_mass_stress_high_mass">C08_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed44 | SOC 0.55, mass 1.30, grade 0.0%</option>
+<option value="C09_uphill_stress_uphill_grade">C09_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed44 | SOC 0.55, mass 1.00, grade 6.0%</option>
+<option value="C10_high_mass_stress_high_mass">C10_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed46 | SOC 0.55, mass 1.30, grade 0.0%</option>
+<option value="C11_uphill_stress_uphill_grade">C11_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 6.0%</option>
+<option value="C12_wet_weather_wet_friction">C12_wet_weather_wet_friction | Wet weather | Wet friction | freeway corridor / wet | SOC 0.55, mass 1.00, grade 0.0%</option>
+<option value="C13_snow_weather_snow_friction">C13_snow_weather_snow_friction | Snow weather | Snow friction | urban signalized / snow | SOC 0.55, mass 1.00, grade 0.0%</option>
+<option value="C14_ice_weather_ice_friction">C14_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0%</option>
+<option value="C15_ice_weather_ice_friction">C15_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0%</option>
+<option value="C16_heldout_nominal">C16_heldout_nominal | Heldout | Nominal | mixed arterial free flow mild seed46 | SOC 0.65, mass 1.15, grade 2.0%</option></select></section>
+<section class="utility"><h2>Controller Summary</h2><table><thead><tr><th>Controller</th><th>SOC RMSE</th><th>Final SOC err</th><th>Constraint</th><th>SOC-corr fuel</th><th>Switches</th><th>Confidence</th></tr></thead><tbody><tr><td>Baseline zero-offset EMS</td><td>0.0723</td><td>0.0712</td><td>2.562</td><td>0.1246</td><td>6.750</td><td>1.000</td></tr>
+<tr><td>Old Meta-RL adapter</td><td>0.0725</td><td>0.0695</td><td>2.562</td><td>0.1248</td><td>6.875</td><td>1.000</td></tr>
+<tr><td>New robustness adapter, no gate</td><td>0.0718</td><td>0.0664</td><td>2.375</td><td>0.1249</td><td>7.000</td><td>1.000</td></tr>
+<tr><td>New robustness/confidence adapter</td><td>0.0692</td><td>0.0670</td><td>2.562</td><td>0.1246</td><td>6.688</td><td>0.480</td></tr></tbody></table></section>
+<section class="utility"><h2>Artifacts</h2><div class="artifact-links"><a href="data/trajectory_comparison_manifest.csv">Manifest CSV</a><a href="data/trajectory_comparison_episode_metrics.csv">Metrics CSV</a><a href="data/trajectory_comparison_trajectories.csv">Trajectory CSV</a><a href="data/trajectory_comparison_summary.json">Summary JSON</a></div></section>
+<h1>Meta-RL Controller Trajectory Comparison Report</h1>
+<p>Baseline vs Old Adapter vs Robust Confidence Adapter</p>
+<section class="report-section"><h2>핵심 주의 문구</h2>
+<p class="bullet">- old/new reward formula의 episode_reward 절대값은 직접 비교하지 않는다.</p>
+<p class="bullet">- 비교는 동일 rollout 조건에서 계산한 reward-independent physical metrics를 중심으로 수행한다.</p>
+<p class="bullet">- baseline은 학습된 정책이 아니라 zero-offset map/rule EMS이다.</p>
+<p class="bullet">- `SOC_corrected_fuel`은 reward가 아니라 charge-sustaining fairness metric으로 사용한다.</p>
+</section>
+<section class="report-section"><h2>비교 대상</h2>
+<table><tbody>
+<tr><th>controller</th><th>역할</th><th>checkpoint</th><th>선택 근거</th></tr>
+<tr><td>Baseline zero-offset EMS</td><td>map_rule_zero_offset</td><td>``</td><td>zero-offset map/rule EMS; no learned policy or training reward</td></tr>
+<tr><td>Old Meta-RL adapter</td><td>old_latent_sac_adapter</td><td>`/home/yejun/meta_rl/results/meta_rl_paper/main_raw_summary_soc_guarded/20260706_164901/seed_20260710/policy.pt`</td><td>seed_20260710: selected final policy by heldout physical deltas</td></tr>
+<tr><td>New robustness adapter, no gate</td><td>new_robust_adapter_no_gate</td><td>`/home/yejun/meta_rl/results/meta_rl_paper/robustness_v2_raw_summary/20260709_161421/seed_20260707/policy.pt`</td><td>seed_20260707: selected final policy by heldout physical deltas</td></tr>
+<tr><td>New robustness/confidence adapter</td><td>new_robust_confidence_adapter</td><td>`/home/yejun/meta_rl/results/meta_rl_paper/confidence_gate_current_bound/20260709_173821/seed_20260708/checkpoints/policy_step_90000.pt`</td><td>seed_20260708: selected heldout step 90000</td></tr>
+</tbody></table>
+</section>
+<section class="report-section"><h2>전체 metric summary</h2>
+<table><tbody>
+<tr><th>controller</th><th>SOC RMSE</th><th>Final SOC err</th><th>Constraint</th><th>SOC-corr fuel</th><th>Engine switches</th><th>Confidence mean</th><th>Fallback ratio</th></tr>
+<tr><td>Baseline zero-offset EMS</td><td>0.0723</td><td>0.0712</td><td>2.562</td><td>0.1246</td><td>6.750</td><td>1.000</td><td>0.0000</td></tr>
+<tr><td>Old Meta-RL adapter</td><td>0.0725</td><td>0.0695</td><td>2.562</td><td>0.1248</td><td>6.875</td><td>1.000</td><td>0.0000</td></tr>
+<tr><td>New robustness adapter, no gate</td><td>0.0718</td><td>0.0664</td><td>2.375</td><td>0.1249</td><td>7.000</td><td>1.000</td><td>0.0000</td></tr>
+<tr><td>New robustness/confidence adapter</td><td>0.0692</td><td>0.0670</td><td>2.562</td><td>0.1246</td><td>6.688</td><td>0.480</td><td>0.0339</td></tr>
+</tbody></table>
+</section>
+<section class="report-section"><h2>대표 case 선정 기준</h2>
+<p>총 16개 case를 선정했다. meta_validation/heldout representative, SOC tail risk, constraint violation, low-SOC, high-mass, uphill grade, weather/friction stress(wet/snow/ice), old/new 차이가 큰 case, new adapter 개선/악화 case를 섞었다.</p>
+<table><tbody>
+<tr><th>case</th><th>split</th><th>profile</th><th>condition</th><th>initial SOC</th><th>mass</th><th>grade</th><th>reason</th></tr>
+<tr><td>C01_meta_val_nominal</td><td>Meta-val</td><td>Nominal</td><td>mixed arterial dense mild seed43</td><td>SOC 0.65, mass 1.15, grade 2.0%</td><td>Meta-val</td><td>mixed arterial dense mild seed43</td><td>Nominal</td><td>0.650</td><td>1.15</td><td>2.00</td><td>meta_validation representative</td></tr>
+<tr><td>C02_meta_val_nominal</td><td>Meta-val</td><td>Nominal</td><td>freeway corridor free flow normal seed42</td><td>SOC 0.55, mass 1.00, grade -2.0%</td><td>Meta-val</td><td>freeway corridor free flow normal seed42</td><td>Nominal</td><td>0.550</td><td>1.00</td><td>-2.00</td><td>meta_validation representative</td></tr>
+<tr><td>C03_heldout_nominal</td><td>Heldout</td><td>Nominal</td><td>suburban arterial congested normal seed46</td><td>SOC 0.55, mass 1.00, grade 0.0%</td><td>Heldout</td><td>suburban arterial congested normal seed46</td><td>Nominal</td><td>0.550</td><td>1.00</td><td>0.00</td><td>heldout_evaluation representative</td></tr>
+<tr><td>C04_heldout_nominal</td><td>Heldout</td><td>Nominal</td><td>suburban arterial congested normal seed44</td><td>SOC 0.65, mass 1.15, grade -2.0%</td><td>Heldout</td><td>suburban arterial congested normal seed44</td><td>Nominal</td><td>0.650</td><td>1.15</td><td>-2.00</td><td>heldout_evaluation representative</td></tr>
+<tr><td>C05_low_soc_stress_low_soc</td><td>Low-SOC stress</td><td>Low SOC</td><td>suburban arterial congested normal seed46</td><td>SOC 0.45, mass 1.00, grade 0.0%</td><td>Low-SOC stress</td><td>suburban arterial congested normal seed46</td><td>Low SOC</td><td>0.450</td><td>1.00</td><td>0.00</td><td>large baseline SOC RMSE / tail risk; large SOC tail-risk integral; low-SOC stress</td></tr>
+<tr><td>C06_combined_stress_low_soc_mass_uphill</td><td>Combined stress</td><td>Low SOC + mass + uphill</td><td>suburban arterial congested normal seed46</td><td>SOC 0.45, mass 1.30, grade 6.0%</td><td>Combined stress</td><td>suburban arterial congested normal seed46</td><td>Low SOC + mass + uphill</td><td>0.450</td><td>1.30</td><td>6.00</td><td>large baseline SOC RMSE / tail risk; large SOC tail-risk integral; combined low-SOC/mass/uphill stress</td></tr>
+<tr><td>C07_combined_stress_low_soc_mass_uphill</td><td>Combined stress</td><td>Low SOC + mass + uphill</td><td>suburban arterial congested normal seed44</td><td>SOC 0.45, mass 1.30, grade 6.0%</td><td>Combined stress</td><td>suburban arterial congested normal seed44</td><td>Low SOC + mass + uphill</td><td>0.450</td><td>1.30</td><td>6.00</td><td>baseline constraint violation case; battery-limit proximity stress</td></tr>
+<tr><td>C08_high_mass_stress_high_mass</td><td>High-mass stress</td><td>High mass</td><td>suburban arterial congested normal seed44</td><td>SOC 0.55, mass 1.30, grade 0.0%</td><td>High-mass stress</td><td>suburban arterial congested normal seed44</td><td>High mass</td><td>0.550</td><td>1.30</td><td>0.00</td><td>baseline constraint violation case</td></tr>
+<tr><td>C09_uphill_stress_uphill_grade</td><td>Uphill stress</td><td>Uphill grade</td><td>suburban arterial congested normal seed44</td><td>SOC 0.55, mass 1.00, grade 6.0%</td><td>Uphill stress</td><td>suburban arterial congested normal seed44</td><td>Uphill grade</td><td>0.550</td><td>1.00</td><td>6.00</td><td>battery-limit proximity stress</td></tr>
+<tr><td>C10_high_mass_stress_high_mass</td><td>High-mass stress</td><td>High mass</td><td>suburban arterial congested normal seed46</td><td>SOC 0.55, mass 1.30, grade 0.0%</td><td>High-mass stress</td><td>suburban arterial congested normal seed46</td><td>High mass</td><td>0.550</td><td>1.30</td><td>0.00</td><td>high-mass stress</td></tr>
+<tr><td>C11_uphill_stress_uphill_grade</td><td>Uphill stress</td><td>Uphill grade</td><td>suburban arterial congested normal seed46</td><td>SOC 0.55, mass 1.00, grade 6.0%</td><td>Uphill stress</td><td>suburban arterial congested normal seed46</td><td>Uphill grade</td><td>0.550</td><td>1.00</td><td>6.00</td><td>uphill grade stress</td></tr>
+<tr><td>C12_wet_weather_wet_friction</td><td>Wet weather</td><td>Wet friction</td><td>freeway corridor / wet</td><td>SOC 0.55, mass 1.00, grade 0.0%</td><td>Wet weather</td><td>freeway corridor / wet</td><td>Wet friction</td><td>0.550</td><td>1.00</td><td>0.00</td><td>wet weather/friction stress</td></tr>
+<tr><td>C13_snow_weather_snow_friction</td><td>Snow weather</td><td>Snow friction</td><td>urban signalized / snow</td><td>SOC 0.55, mass 1.00, grade 0.0%</td><td>Snow weather</td><td>urban signalized / snow</td><td>Snow friction</td><td>0.550</td><td>1.00</td><td>0.00</td><td>snow weather/friction stress; new confidence adapter worsens baseline composite physical score</td></tr>
+<tr><td>C14_ice_weather_ice_friction</td><td>Ice weather</td><td>Ice friction</td><td>freeway corridor / ice</td><td>SOC 0.55, mass 1.00, grade 0.0%</td><td>Ice weather</td><td>freeway corridor / ice</td><td>Ice friction</td><td>0.550</td><td>1.00</td><td>0.00</td><td>ice weather/friction stress</td></tr>
+<tr><td>C15_ice_weather_ice_friction</td><td>Ice weather</td><td>Ice friction</td><td>freeway corridor / ice</td><td>SOC 0.55, mass 1.00, grade 0.0%</td><td>Ice weather</td><td>freeway corridor / ice</td><td>Ice friction</td><td>0.550</td><td>1.00</td><td>0.00</td><td>large old-vs-new trajectory/metric difference; new confidence adapter improves baseline composite physical score</td></tr>
+<tr><td>C16_heldout_nominal</td><td>Heldout</td><td>Nominal</td><td>mixed arterial free flow mild seed46</td><td>SOC 0.65, mass 1.15, grade 2.0%</td><td>Heldout</td><td>mixed arterial free flow mild seed46</td><td>Nominal</td><td>0.650</td><td>1.15</td><td>2.00</td><td>large old-vs-new trajectory/metric difference; new confidence adapter improves baseline composite physical score</td></tr>
+</tbody></table>
+</section>
+<section class="report-section"><h2>주요 해석</h2>
+<p class="bullet">- new confidence adapter가 가장 개선한 case는 `C15_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0%`이며 composite physical delta는 -0.0599이다.</p>
+<p class="bullet">- new confidence adapter가 가장 악화한 case는 `C13_snow_weather_snow_friction | Snow weather | Snow friction | urban signalized / snow | SOC 0.55, mass 1.00, grade 0.0%`이며 composite physical delta는 0.0398이다.</p>
+<p class="bullet">- action 관점에서는 old/new 모두 `delta_P_eng_on`, `delta_SOC_ref` bounded offset만 내보내며, engine state/mode/power split은 map/rule EMS가 결정한다.</p>
+<p class="bullet">- confidence gate가 낮아지는 구간에서는 raw action 대비 final action attenuation과 fallback 여부를 confidence plot에서 확인한다.</p>
+<p class="bullet">- 논문 본문에는 reward 절대값 비교 대신 SOC trajectory, SOC tail risk, constraint/battery-limit risk, fuel/switching guardrail을 사용한다.</p>
+</section>
+<section class="report-section"><h2>논문에 쓸 수 있는 문장</h2>
+<blockquote>Under identical rollout conditions, the robust confidence adapter preserves the production-like EMS authority boundary and changes only bounded calibration offsets; therefore, controller comparisons are based on reward-independent physical metrics and trajectory behavior rather than the absolute episode rewards of different reward formulae.</blockquote>
+</section>
+<section class="report-section"><h2>아직 쓰면 위험한 문장</h2>
+<p class="bullet">- new adapter가 모든 unseen condition에서 연료를 직접 개선한다고 쓰는 문장</p>
+<p class="bullet">- full power-split optimality 또는 direct power controller처럼 해석되는 문장</p>
+<p class="bullet">- old/new reward formula의 episode_reward 절대값으로 우열을 말하는 문장</p>
+</section>
+<section class="report-section"><h2>Summary Plots</h2>
+<h3 id="metric_summary_bars">Metric summary bars</h3>
+<figure><img src="plots/trajectory_summary_metric_bars.png" alt="Metric summary bars" loading="lazy"></figure>
+<h3 id="soc_rmse_heatmap">SOC RMSE heatmap</h3>
+<figure><img src="plots/trajectory_soc_rmse_heatmap.png" alt="SOC RMSE heatmap" loading="lazy"></figure>
+<h3 id="soc_corrected_fuel_delta">SOC-corrected fuel delta</h3>
+<figure><img src="plots/trajectory_soc_corrected_fuel_delta.png" alt="SOC-corrected fuel delta" loading="lazy"></figure>
+<h3 id="constraint_delta">Constraint delta</h3>
+<figure><img src="plots/trajectory_constraint_delta.png" alt="Constraint delta" loading="lazy"></figure>
+<h3 id="action_magnitude_rate">Action magnitude/rate</h3>
+<figure><img src="plots/trajectory_action_magnitude_rate.png" alt="Action magnitude/rate" loading="lazy"></figure>
+<h3 id="confidence_vs_stress">Confidence vs stress</h3>
+<figure><img src="plots/trajectory_confidence_vs_stress.png" alt="Confidence vs stress" loading="lazy"></figure>
+<h3 id="new_adapter_waterfall">New adapter waterfall</h3>
+<figure><img src="plots/trajectory_new_adapter_waterfall.png" alt="New adapter waterfall" loading="lazy"></figure>
+</section>
+<section class="report-section"><h2>Case Trajectory Gallery</h2>
+<h3 id="c01_meta_val_nominal_meta_val_nominal_mixed_arterial_dense_mild_seed43_soc_0_65_mass_1_15_grade_2_0">C01_meta_val_nominal | Meta-val | Nominal | mixed arterial dense mild seed43 | SOC 0.65, mass 1.15, grade 2.0%</h3>
+<p class="bullet">- reason: meta_validation representative</p>
+<p class="bullet">- trajectory CSV: `trajectories/C01_meta_val_nominal.csv`</p>
+<figure data-case="C01_meta_val_nominal" class="case-plot"><img src="plots/C01_meta_val_nominal_trajectory.png" alt="C01_meta_val_nominal | Meta-val | Nominal | mixed arterial dense mild seed43 | SOC 0.65, mass 1.15, grade 2.0% trajectory" loading="lazy"></figure>
+<h3 id="c02_meta_val_nominal_meta_val_nominal_freeway_corridor_free_flow_normal_seed42_soc_0_55_mass_1_00_grade_2_0">C02_meta_val_nominal | Meta-val | Nominal | freeway corridor free flow normal seed42 | SOC 0.55, mass 1.00, grade -2.0%</h3>
+<p class="bullet">- reason: meta_validation representative</p>
+<p class="bullet">- trajectory CSV: `trajectories/C02_meta_val_nominal.csv`</p>
+<figure data-case="C02_meta_val_nominal" class="case-plot"><img src="plots/C02_meta_val_nominal_trajectory.png" alt="C02_meta_val_nominal | Meta-val | Nominal | freeway corridor free flow normal seed42 | SOC 0.55, mass 1.00, grade -2.0% trajectory" loading="lazy"></figure>
+<h3 id="c03_heldout_nominal_heldout_nominal_suburban_arterial_congested_normal_seed46_soc_0_55_mass_1_00_grade_0_0">C03_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: heldout_evaluation representative</p>
+<p class="bullet">- trajectory CSV: `trajectories/C03_heldout_nominal.csv`</p>
+<figure data-case="C03_heldout_nominal" class="case-plot"><img src="plots/C03_heldout_nominal_trajectory.png" alt="C03_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c04_heldout_nominal_heldout_nominal_suburban_arterial_congested_normal_seed44_soc_0_65_mass_1_15_grade_2_0">C04_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed44 | SOC 0.65, mass 1.15, grade -2.0%</h3>
+<p class="bullet">- reason: heldout_evaluation representative</p>
+<p class="bullet">- trajectory CSV: `trajectories/C04_heldout_nominal.csv`</p>
+<figure data-case="C04_heldout_nominal" class="case-plot"><img src="plots/C04_heldout_nominal_trajectory.png" alt="C04_heldout_nominal | Heldout | Nominal | suburban arterial congested normal seed44 | SOC 0.65, mass 1.15, grade -2.0% trajectory" loading="lazy"></figure>
+<h3 id="c05_low_soc_stress_low_soc_low_soc_stress_low_soc_suburban_arterial_congested_normal_seed46_soc_0_45_mass_1_00_grade_0_0">C05_low_soc_stress_low_soc | Low-SOC stress | Low SOC | suburban arterial congested normal seed46 | SOC 0.45, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: large baseline SOC RMSE / tail risk; large SOC tail-risk integral; low-SOC stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C05_low_soc_stress_low_soc.csv`</p>
+<figure data-case="C05_low_soc_stress_low_soc" class="case-plot"><img src="plots/C05_low_soc_stress_low_soc_trajectory.png" alt="C05_low_soc_stress_low_soc | Low-SOC stress | Low SOC | suburban arterial congested normal seed46 | SOC 0.45, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c06_combined_stress_low_soc_mass_uphill_combined_stress_low_soc_mass_uphill_suburban_arterial_congested_normal_seed46_soc_0_45_mass_1_30_grade_6_0">C06_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed46 | SOC 0.45, mass 1.30, grade 6.0%</h3>
+<p class="bullet">- reason: large baseline SOC RMSE / tail risk; large SOC tail-risk integral; combined low-SOC/mass/uphill stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C06_combined_stress_low_soc_mass_uphill.csv`</p>
+<figure data-case="C06_combined_stress_low_soc_mass_uphill" class="case-plot"><img src="plots/C06_combined_stress_low_soc_mass_uphill_trajectory.png" alt="C06_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed46 | SOC 0.45, mass 1.30, grade 6.0% trajectory" loading="lazy"></figure>
+<h3 id="c07_combined_stress_low_soc_mass_uphill_combined_stress_low_soc_mass_uphill_suburban_arterial_congested_normal_seed44_soc_0_45_mass_1_30_grade_6_0">C07_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed44 | SOC 0.45, mass 1.30, grade 6.0%</h3>
+<p class="bullet">- reason: baseline constraint violation case; battery-limit proximity stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C07_combined_stress_low_soc_mass_uphill.csv`</p>
+<figure data-case="C07_combined_stress_low_soc_mass_uphill" class="case-plot"><img src="plots/C07_combined_stress_low_soc_mass_uphill_trajectory.png" alt="C07_combined_stress_low_soc_mass_uphill | Combined stress | Low SOC + mass + uphill | suburban arterial congested normal seed44 | SOC 0.45, mass 1.30, grade 6.0% trajectory" loading="lazy"></figure>
+<h3 id="c08_high_mass_stress_high_mass_high_mass_stress_high_mass_suburban_arterial_congested_normal_seed44_soc_0_55_mass_1_30_grade_0_0">C08_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed44 | SOC 0.55, mass 1.30, grade 0.0%</h3>
+<p class="bullet">- reason: baseline constraint violation case</p>
+<p class="bullet">- trajectory CSV: `trajectories/C08_high_mass_stress_high_mass.csv`</p>
+<figure data-case="C08_high_mass_stress_high_mass" class="case-plot"><img src="plots/C08_high_mass_stress_high_mass_trajectory.png" alt="C08_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed44 | SOC 0.55, mass 1.30, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c09_uphill_stress_uphill_grade_uphill_stress_uphill_grade_suburban_arterial_congested_normal_seed44_soc_0_55_mass_1_00_grade_6_0">C09_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed44 | SOC 0.55, mass 1.00, grade 6.0%</h3>
+<p class="bullet">- reason: battery-limit proximity stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C09_uphill_stress_uphill_grade.csv`</p>
+<figure data-case="C09_uphill_stress_uphill_grade" class="case-plot"><img src="plots/C09_uphill_stress_uphill_grade_trajectory.png" alt="C09_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed44 | SOC 0.55, mass 1.00, grade 6.0% trajectory" loading="lazy"></figure>
+<h3 id="c10_high_mass_stress_high_mass_high_mass_stress_high_mass_suburban_arterial_congested_normal_seed46_soc_0_55_mass_1_30_grade_0_0">C10_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed46 | SOC 0.55, mass 1.30, grade 0.0%</h3>
+<p class="bullet">- reason: high-mass stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C10_high_mass_stress_high_mass.csv`</p>
+<figure data-case="C10_high_mass_stress_high_mass" class="case-plot"><img src="plots/C10_high_mass_stress_high_mass_trajectory.png" alt="C10_high_mass_stress_high_mass | High-mass stress | High mass | suburban arterial congested normal seed46 | SOC 0.55, mass 1.30, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c11_uphill_stress_uphill_grade_uphill_stress_uphill_grade_suburban_arterial_congested_normal_seed46_soc_0_55_mass_1_00_grade_6_0">C11_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 6.0%</h3>
+<p class="bullet">- reason: uphill grade stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C11_uphill_stress_uphill_grade.csv`</p>
+<figure data-case="C11_uphill_stress_uphill_grade" class="case-plot"><img src="plots/C11_uphill_stress_uphill_grade_trajectory.png" alt="C11_uphill_stress_uphill_grade | Uphill stress | Uphill grade | suburban arterial congested normal seed46 | SOC 0.55, mass 1.00, grade 6.0% trajectory" loading="lazy"></figure>
+<h3 id="c12_wet_weather_wet_friction_wet_weather_wet_friction_freeway_corridor_wet_soc_0_55_mass_1_00_grade_0_0">C12_wet_weather_wet_friction | Wet weather | Wet friction | freeway corridor / wet | SOC 0.55, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: wet weather/friction stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C12_wet_weather_wet_friction.csv`</p>
+<figure data-case="C12_wet_weather_wet_friction" class="case-plot"><img src="plots/C12_wet_weather_wet_friction_trajectory.png" alt="C12_wet_weather_wet_friction | Wet weather | Wet friction | freeway corridor / wet | SOC 0.55, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c13_snow_weather_snow_friction_snow_weather_snow_friction_urban_signalized_snow_soc_0_55_mass_1_00_grade_0_0">C13_snow_weather_snow_friction | Snow weather | Snow friction | urban signalized / snow | SOC 0.55, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: snow weather/friction stress; new confidence adapter worsens baseline composite physical score</p>
+<p class="bullet">- trajectory CSV: `trajectories/C13_snow_weather_snow_friction.csv`</p>
+<figure data-case="C13_snow_weather_snow_friction" class="case-plot"><img src="plots/C13_snow_weather_snow_friction_trajectory.png" alt="C13_snow_weather_snow_friction | Snow weather | Snow friction | urban signalized / snow | SOC 0.55, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c14_ice_weather_ice_friction_ice_weather_ice_friction_freeway_corridor_ice_soc_0_55_mass_1_00_grade_0_0">C14_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: ice weather/friction stress</p>
+<p class="bullet">- trajectory CSV: `trajectories/C14_ice_weather_ice_friction.csv`</p>
+<figure data-case="C14_ice_weather_ice_friction" class="case-plot"><img src="plots/C14_ice_weather_ice_friction_trajectory.png" alt="C14_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c15_ice_weather_ice_friction_ice_weather_ice_friction_freeway_corridor_ice_soc_0_55_mass_1_00_grade_0_0">C15_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0%</h3>
+<p class="bullet">- reason: large old-vs-new trajectory/metric difference; new confidence adapter improves baseline composite physical score</p>
+<p class="bullet">- trajectory CSV: `trajectories/C15_ice_weather_ice_friction.csv`</p>
+<figure data-case="C15_ice_weather_ice_friction" class="case-plot"><img src="plots/C15_ice_weather_ice_friction_trajectory.png" alt="C15_ice_weather_ice_friction | Ice weather | Ice friction | freeway corridor / ice | SOC 0.55, mass 1.00, grade 0.0% trajectory" loading="lazy"></figure>
+<h3 id="c16_heldout_nominal_heldout_nominal_mixed_arterial_free_flow_mild_seed46_soc_0_65_mass_1_15_grade_2_0">C16_heldout_nominal | Heldout | Nominal | mixed arterial free flow mild seed46 | SOC 0.65, mass 1.15, grade 2.0%</h3>
+<p class="bullet">- reason: large old-vs-new trajectory/metric difference; new confidence adapter improves baseline composite physical score</p>
+<p class="bullet">- trajectory CSV: `trajectories/C16_heldout_nominal.csv`</p>
+<figure data-case="C16_heldout_nominal" class="case-plot"><img src="plots/C16_heldout_nominal_trajectory.png" alt="C16_heldout_nominal | Heldout | Nominal | mixed arterial free flow mild seed46 | SOC 0.65, mass 1.15, grade 2.0% trajectory" loading="lazy"></figure>
+</section>
+
+<script>
+const selector = document.querySelector('#caseSelector');
+function filterCase() {
+  const chosen = selector.value;
+  document.querySelectorAll('figure.case-plot').forEach((el) => {
+    el.style.display = chosen === 'all' || el.dataset.case === chosen ? '' : 'none';
+  });
+}
+selector.addEventListener('change', filterCase);
+filterCase();
+</script>
+
+</main></body></html>

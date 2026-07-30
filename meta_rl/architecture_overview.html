@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEV Meta-EMS 아키텍처 개요</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2930;
+      --muted: #64727c;
+      --line: #d9e1e5;
+      --paper: #fbfcfc;
+      --band: #eef4f2;
+      --card: #ffffff;
+      --accent: #2e6e73;
+      --accent-2: #7a5c22;
+      --warn: #9b4f3a;
+      --good: #3f7455;
+      --code-bg: #f2f6f5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.62;
+      font-size: 16px;
+    }
+    header {
+      padding: 40px clamp(18px, 5vw, 64px) 30px;
+      background: linear-gradient(180deg, #e6efec 0%, #f8faf9 100%);
+      border-bottom: 1px solid var(--line);
+    }
+    header .kicker { color: var(--accent); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 13px; }
+    header h1 { margin: 8px 0 10px; font-size: clamp(26px, 4vw, 38px); line-height: 1.2; }
+    header p.lead { margin: 0; max-width: 60ch; color: var(--muted); font-size: 17px; }
+    main { max-width: 960px; margin: 0 auto; padding: 8px clamp(16px, 4vw, 40px) 80px; }
+    section { margin-top: 44px; }
+    h2 { font-size: 23px; margin: 0 0 6px; padding-top: 8px; border-top: 2px solid var(--accent); display: inline-block; }
+    h3 { font-size: 18px; margin: 26px 0 8px; color: var(--accent); }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    .lede { font-size: 17px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 5px 0; }
+    code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 0.88em; }
+    pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.5; }
+    .callout { background: var(--band); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 18px 0; }
+    .callout.warn { background: #fbf1ec; border-left-color: var(--warn); }
+    .callout.good { background: #eef5ef; border-left-color: var(--good); }
+    .callout strong { color: var(--ink); }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 14.5px; }
+    th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+    th { background: var(--band); font-weight: 600; }
+    td.num, th.num { text-align: right; white-space: nowrap; }
+    .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 20px; background: var(--band); color: var(--accent); font-weight: 600; }
+    .pos { color: var(--good); font-weight: 600; }
+    .neg { color: var(--warn); font-weight: 600; }
+    .scroll { overflow-x: auto; }
+
+    /* Layer stack diagram */
+    .stack { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+    .layer { border: 1px solid var(--line); background: var(--card); padding: 12px 16px; position: relative; }
+    .layer:not(:last-child) { border-bottom: none; }
+    .layer .lname { font-weight: 700; font-size: 15px; }
+    .layer .ldesc { color: var(--muted); font-size: 13.5px; }
+    .layer.l-task { background: #f4f7f2; }
+    .layer.l-phys { background: #f2f6f7; }
+    .layer.l-ems  { background: #eaf2f0; border-color: var(--accent); }
+    .layer.l-adapter { background: #fbf6ec; }
+    .layer.l-gate { background: #f7f0f4; }
+    .layer.l-safety { background: #f3f4f5; }
+    .arrow-note { text-align: center; color: var(--muted); font-size: 12px; padding: 4px 0; }
+
+    /* Flow boxes */
+    .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; margin: 18px 0; }
+    .fbox { flex: 1 1 150px; min-width: 140px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 10px 12px; }
+    .fbox .ft { font-weight: 700; font-size: 13.5px; }
+    .fbox .fd { color: var(--muted); font-size: 12.5px; }
+
+    /* base+residual equation blocks */
+    .eq { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; font-size: 13.5px; margin: 12px 0; }
+    .eq .hl { color: var(--accent); font-weight: 700; }
+    .eq .hl2 { color: var(--accent-2); font-weight: 700; }
+
+    footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 22px clamp(16px,4vw,40px); color: var(--muted); font-size: 13px; max-width: 960px; margin-left: auto; margin-right: auto; }
+    .toc { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 20px; margin: 22px 0; }
+    .toc ol { margin: 6px 0; }
+    .toc a { color: var(--accent); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="kicker">HEV Meta-EMS · Meta-RL Testbed</div>
+  <h1>모델 아키텍처 개요</h1>
+  <p class="lead">양산형 map/rule 하이브리드 에너지 관리(EMS) 위에 Meta-RL을 <em>제어기 대체가 아니라</em> 경계가 정해진 보정(calibration) 어댑터로 얹은 구조를, 처음 보는 사람도 이해할 수 있게 정리한 문서.</p>
+</header>
+
+<main>
+
+  <div class="callout">
+    <strong>한 문장 요약 —</strong> 공장에서 튜닝된 <strong>EMS 제어기</strong>가 운전대(엔진 on/off·파워 분배)를 잡고, <strong>Meta-RL은 조수석에서 9개 다이얼(calibration)만 정해진 폭 안에서 미세조정</strong>하며, <strong>Confidence Gate(안전 감독관)</strong>가 낯선 상황에서 그 손을 붙잡아 규칙으로 되돌린다.
+  </div>
+
+  <div class="toc">
+    <strong>목차</strong>
+    <ol>
+      <li><a href="#s1">큰 그림과 권한 경계</a></li>
+      <li><a href="#s2">전체 아키텍처 (6개 층)</a></li>
+      <li><a href="#s3">제어 흐름 한 스텝</a></li>
+      <li><a href="#s4">9개 calibration 다이얼</a></li>
+      <li><a href="#s5">base + residual 구조 (핵심)</a></li>
+      <li><a href="#s6">Confidence Gate — 안전 감독관</a></li>
+      <li><a href="#s7">"Meta" 학습 — 상황을 추론하는 법</a></li>
+      <li><a href="#s8">진화 과정과 핵심 교훈 (V2→V6)</a></li>
+      <li><a href="#s9">주장 가능 범위와 한계</a></li>
+    </ol>
+  </div>
+
+  <section id="s1">
+    <h2>1. 큰 그림과 권한 경계</h2>
+    <p class="lede">이 프로젝트는 <strong>production-like map/rule HEV EMS</strong> 위에 Meta-RL을 올려, <em>처음 보는 주행 조건(unseen / OOD / 날씨 / 스트레스)</em>에서 <strong>SOC 조절 tail risk</strong>를 줄일 수 있는지 평가하는 논문용 testbed다.</p>
+    <p>가장 중요한 설계 원칙은 <strong>권한 경계(authority boundary)</strong>다:</p>
+    <pre>Meta-RL   →  경계가 정해진 9-knob calibration residual / knob  (만 조정)
+Map/Rule  →  엔진 상태, EMS 모드, 파워 분배, 최종 command  (를 결정)</pre>
+    <div class="callout warn">
+      <strong>절대 이렇게 해석하지 않는다:</strong> Meta-RL이 엔진/모터 파워, 토크 분배, 엔진 command를 직접 최적화한다 · 이 모델이 정확한 양산 ECU calibration이다 · 절대 연비 비교가 가능하다. (모델은 FASTSim 기반 backward, power-domain 단순화 모델이다.)
+    </div>
+  </section>
+
+  <section id="s2">
+    <h2>2. 전체 아키텍처 (6개 층)</h2>
+    <p>매 스텝, 신호는 아래로 흐른다. 위 두 층은 "상황"을, 가운데 EMS는 "운전자"를, 아래 세 층은 "보조 튜너 + 안전장치"를 나타낸다.</p>
+    <div class="stack">
+      <div class="layer l-task"><div class="lname">① 주행 태스크 (매 에피소드 달라짐)</div><div class="ldesc">속도·경사 트레이스 + 숨은 조건(날씨, 질량, 초기 SOC, accessory 부하, 배터리 derating, 마찰). &nbsp; <code>data/drive_cycles/</code>, <code>env.reset()</code></div></div>
+      <div class="arrow-note">▼ 파워 요구 P<sub>dem</sub></div>
+      <div class="layer l-phys"><div class="lname">② 차량·배터리 물리 시뮬</div><div class="ldesc">파워 요구 → SOC / 연료 / 배터리 한계 계산 (단순화된 backward 모델). &nbsp; <code>python/hev_native_env.py</code></div></div>
+      <div class="arrow-note">▼ 관측 obs</div>
+      <div class="layer l-ems"><div class="lname">③ Map / Rule EMS &nbsp;<span class="tag">운전대</span></div><div class="ldesc">엔진 켤지·모드·파워 분배를 결정. 9개 calibration 다이얼로 튜닝된다. &nbsp; <code>controllers/map_rule_ems.m</code></div></div>
+      <div class="arrow-note">▲ 9개 다이얼 값 &nbsp; (아래에서 위로 보정)</div>
+      <div class="layer l-adapter"><div class="lname">④ Meta-RL 어댑터 &nbsp;<span class="tag">조수석 보조 튜너</span></div><div class="ldesc">상황(obs+context)을 보고 9개 다이얼을 <strong>정해진 폭 안에서만</strong> 조정. PEARL context encoder + SAC. &nbsp; <code>meta_adapter_interface.m</code></div></div>
+      <div class="arrow-note">▲ 감쇠(attenuate)</div>
+      <div class="layer l-gate"><div class="lname">⑤ Confidence Gate &nbsp;<span class="tag">안전 감독관</span></div><div class="ldesc">상황이 낯설면(OOD) 어댑터의 조정을 0으로 줄여 순수 rule로 복귀시킨다.</div></div>
+      <div class="arrow-note">▲</div>
+      <div class="layer l-safety"><div class="lname">⑥ Safety Bounds / Limiter</div><div class="ldesc">배터리 파워 등 물리 한계로 최종 clamp. &nbsp; <code>safety_bounds.m</code></div></div>
+    </div>
+    <p class="muted">Simulink 검증 모델(<code>models/modified/HEV_MetaEMS_Model.slx</code>)은 위 로직을 MATLAB/Simulink API로 재현해 논문 fidelity를 검증하는 용도이고, 학습·평가는 위의 Python native env에서 이뤄진다.</p>
+  </section>
+
+  <section id="s3">
+    <h2>3. 제어 흐름 — 한 스텝에서 일어나는 일</h2>
+    <div class="flow">
+      <div class="fbox"><div class="ft">1. 관측</div><div class="fd">현재 SOC, 속도, 파워 요구, 최근 이력을 읽는다.</div></div>
+      <div class="fbox"><div class="ft">2. context 추론</div><div class="fd">최근 이력 → 잠재 벡터 z ("이건 어떤 주행인가").</div></div>
+      <div class="fbox"><div class="ft">3. 어댑터 출력</div><div class="fd">정책이 9-knob 조정(bounded)을 낸다.</div></div>
+      <div class="fbox"><div class="ft">4. gate 감쇠</div><div class="fd">낯섦/스트레스면 조정을 줄여 base로 복귀.</div></div>
+      <div class="fbox"><div class="ft">5. EMS 결정</div><div class="fd">보정된 다이얼로 엔진 on/off·파워 분배 결정.</div></div>
+      <div class="fbox"><div class="ft">6. 물리 적분</div><div class="fd">SOC·연료·배터리 갱신, 보상 계산.</div></div>
+    </div>
+    <p class="muted">어댑터는 매 스텝이 아니라 <code>adapter_update_period</code>(약 10초)마다 갱신되고, 각 다이얼은 rate-limit으로 부드럽게만 움직인다 — 갑자기 튀지 않는다.</p>
+  </section>
+
+  <section id="s4">
+    <h2>4. 9개 calibration 다이얼</h2>
+    <p>Meta-RL이 만질 수 있는 것은 오직 이 9개뿐이며, 모두 <strong>공장 캘리브레이션에 더하는 조정량(delta)</strong>이고 전부 bounded다.</p>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>#</th><th>다이얼</th><th>물리적으로 무엇을 바꾸나</th><th>범위(bound)</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><code>ΔP_eng_on</code></td><td>엔진 켜는 파워 바이어스 — 배터리 충전 위해 엔진을 더/덜 밀어줌</td><td>residual ±1 kW, 최종 ±3 kW</td></tr>
+        <tr><td class="num">2</td><td><code>ΔSOC_ref</code></td><td>EMS가 맞추려는 목표 SOC 기준값 이동 (↑=배터리 더 꽉 채움)</td><td>residual ±0.01, 최종 ±0.02</td></tr>
+        <tr><td class="num">3</td><td><code>SOC_recovery_gain</code></td><td>SOC가 목표보다 낮을 때 회복하는 세기 (↑=빠르게 충전)</td><td>[−0.4, +0.6]</td></tr>
+        <tr><td class="num">4</td><td><code>engine_on_SOC_sens</code></td><td>엔진-on 결정이 SOC 부족에 반응하는 민감도</td><td>[−0.4, +0.6]</td></tr>
+        <tr><td class="num">5</td><td><code>P_hysteresis</code></td><td>엔진 on/off 임계 주변 불감대 — 채터링 방지 (↑=스위칭↓)</td><td>적용 [2, 15] kW</td></tr>
+        <tr><td class="num">6</td><td><code>min_on_time</code></td><td>엔진이 켜지면 최소 유지 시간 (↑=스위칭↓)</td><td>Δ[−30,+30]s, 적용 [5,90]s</td></tr>
+        <tr><td class="num">7</td><td><code>min_off_time</code></td><td>엔진이 꺼지면 최소 재시동 금지 시간</td><td>Δ[−5,+20]s, 적용 [5,90]s</td></tr>
+        <tr><td class="num">8</td><td><code>battery_power_margin</code></td><td>배터리 파워 한계를 얼마나 쓸지 (↓=여유 남김·보호)</td><td>[0.75, 1.0]</td></tr>
+        <tr><td class="num">9</td><td><code>regen_margin</code></td><td>허용 회생제동 파워 (↓=회생 덜 씀·눈길 대응)</td><td>[0.5, 1.0]</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <h3>기능별 4그룹으로 묶으면</h3>
+    <pre>① 세트포인트 (어디에 맞출까)   : 1 ΔP_eng_on, 2 ΔSOC_ref
+② 반응 세기 (얼마나 세게)      : 3 recovery_gain, 4 SOC_sensitivity
+③ 스위칭 동작 (엔진 껐다 켰다) : 5 hysteresis, 6 min_on, 7 min_off
+④ 파워 여유 (배터리/회생 한계) : 8 battery_margin, 9 regen_margin</pre>
+    <p>SOC tail risk는 주로 ①②로, 엔진 스위칭(가드레일)은 ③으로, 날씨·배터리 derating 같은 OOD는 ④로 대응한다. Phase A 정적 분석에서 <strong>#6 min_on_time</strong>이 가장 강력한 지렛대였다.</p>
+  </section>
+
+  <section id="s5">
+    <h2>5. base + residual 구조 <span class="tag">핵심</span></h2>
+    <p>최종 다이얼 값은 항상 <strong>기준값(base) + 정책이 더하는 보정(residual)</strong>으로 조립된다. 이 구조가 이 프로젝트 연구의 중심이다.</p>
+    <div class="eq">
+      최종 calibration &nbsp;=&nbsp; <span class="hl2">base(기준)</span> &nbsp;+&nbsp; gate · <span class="hl">residual(정책 보정)</span>
+    </div>
+    <p><strong>base를 누가 주느냐</strong>가 성능을 좌우한다. 여기서 "capture %"는 <em>adaptive baseline에서 정적 oracle 상한까지의 개선 여지를 몇 % 잡았는가</em>를 뜻한다(높을수록 좋음).</p>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>버전</th><th>base 기준</th><th>base 성능(capture)</th><th>낮은 confidence에서 fallback</th></tr></thead>
+      <tbody>
+        <tr><td>V3~V5</td><td>hand-coded <strong>adaptive rule</strong> (반응형)</td><td class="num">~14%</td><td>adaptive rule로 복귀</td></tr>
+        <tr><td><strong>V6 (P3, 현재)</strong></td><td>학습된 <strong>fitted rule</strong> (oracle 회귀)</td><td class="num"><span class="pos">~32%</span></td><td>fitted rule로 복귀</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="callout good">
+      <strong>P3(residual-on-fitted-base)의 아이디어 —</strong> 9개 다이얼 <strong>전부</strong>를 fitted rule(32%)이 base로 주고, 정책은 그 위에 bounded residual(정규화 ±0.3)만 더한다. gate가 residual을 억제해도 <strong>fallback이 강한 fitted rule</strong>이라, 낯선 조건에서도 성능 바닥이 높다. 정책은 처음부터 32%에서 출발해 <em>한계 개선</em>만 학습하면 된다.
+    </div>
+    <div class="eq">
+      P3: &nbsp; final = <span class="hl2">fitted_rule(obs)</span> + gate · <span class="hl">bounded_residual</span> &nbsp;&nbsp;<span style="color:var(--muted)">// confidence 0 → fitted rule로 정확 복귀</span>
+    </div>
+  </section>
+
+  <section id="s6">
+    <h2>6. Confidence Gate — 안전 감독관</h2>
+    <p>gate는 "지금 이 조정을 믿어도 되나"를 판단해 residual을 감쇠한다. 하지만 실제로 재는 것은 <strong>"유능함"이 아니라 두 가지 대리지표</strong>다:</p>
+    <div class="flow">
+      <div class="fbox"><div class="ft">채널 1 — 낯섦</div><div class="fd">11개 관측 feature가 학습 분포 중앙값에서 얼마나 벗어났나 (z-score). "이 입력이 특이한가?"</div></div>
+      <div class="fbox"><div class="ft">채널 2 — 스트레스</div><div class="fd">SOC 위험, 배터리 한계 사용률, 최근 constraint 위반. "지금 SOC/배터리가 힘든가?"</div></div>
+    </div>
+    <div class="callout good">
+      <strong>긍정 결과 —</strong> gate는 OOD tail risk를 <strong>+6.3pt 개선</strong>한다(2026-07-17 ablation). 안전장치가 성능도 개선하는, 그 자체로 논문 기여 후보.
+    </div>
+    <div class="callout warn">
+      <strong>근본 한계 —</strong> gate가 억제해야 하는지는 <em>"정책이 이 영역을 학습했는가"</em>에 달렸는데, gate는 <em>"특이하거나 힘든가"</em>만 본다. 이 둘은 다른 축이다. 예컨대 <strong>학습한 날씨</strong>는 특이·힘들어 보이지만 정책은 유능한데, gate가 좋은 적응까지 깎는다. 게다가 숨은 축(마찰·accessory·배터리 derating)은 관측에서 <em>격리</em>돼 있어 gate에 애초에 안 보인다. → 이래서 전역 attenuation floor는 net-negative였고(P1), 강한 fallback을 주는 P3나 판별형 gate가 옳은 방향이다.
+    </div>
+  </section>
+
+  <section id="s7">
+    <h2>7. "Meta" 학습 — 상황을 추론하는 법</h2>
+    <p>정책은 두 부분으로 된 <strong>probabilistic PEARL-style context encoder + SAC</strong>다:</p>
+    <ul>
+      <li><strong>Context encoder</strong>: 최근 주행 이력(support set)을 보고 "지금 어떤 종류의 주행인가"를 잠재 벡터 <code>z</code>로 추론한다. → 태스크마다 다르게 반응하는 원천.</li>
+      <li><strong>SAC 정책</strong>: 관측 + <code>z</code>를 받아 9-knob 조정을 출력한다.</li>
+    </ul>
+    <p>즉 "새 조건을 만나면 몇 스텝 안에 스스로 튜닝을 맞춘다"가 <em>meta</em>의 의미다. 학습 태스크는 drive cycle + 숨은 축의 조합으로 매 에피소드 샘플링되고, 보상은 연료·SOC tracking·<strong>tail risk</strong>·배터리·스위칭·action penalty의 다항 합이다.</p>
+    <p class="muted">warm-start: 과거(V4/V5)에는 fitted rule을 모사하는 imitation pretraining을 썼지만, P3(V6)에서는 fitted rule이 <em>구조적으로</em> base가 되므로 별도 pretraining 없이 정책이 residual≈0(=32%)에서 출발한다.</p>
+  </section>
+
+  <section id="s8">
+    <h2>8. 진화 과정과 핵심 교훈 (V2 → V6)</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>버전</th><th>무엇을 바꿨나</th><th>핵심 교훈</th></tr></thead>
+      <tbody>
+        <tr><td><strong>V2</strong></td><td>residual + DP teacher</td><td>zero-offset은 이겼으나 강한 adaptive rule은 못 이김. gate가 base까지 감쇠한 게 원인.</td></tr>
+        <tr><td><strong>V3</strong></td><td><code>final = adaptive_base + gated_residual</code>로 base 보존, 9-knob 확장, 숨은 축 3종 추가</td><td>정적 headroom 존재 확인(Phase A). 단 seed 분산 큼.</td></tr>
+        <tr><td><strong>V4</strong></td><td>fitted-rule warm-start + tail 보상 + 정렬된 선택 eval</td><td>seed 분산 해결. 그러나 평균은 gate 감쇠에 막힘.</td></tr>
+        <tr><td><strong>V5</strong></td><td><strong>weather를 학습 분포에 통합</strong> (배선 누락 버그 수정)</td><td>날씨 열세는 알고리즘이 아니라 <em>훈련 커버리지 버그</em>였음. 학습한 wet/rain/snow는 음수→양수 전환(wet은 hand rule 상회).</td></tr>
+        <tr><td><strong>V6</strong> <span class="tag">진행중</span></td><td><strong>P3: residual-on-fitted-base</strong> (base를 adaptive→fitted로)</td><td>gate가 유능함을 못 보는 문제를 <em>강한 fallback</em>으로 우회. 검증(불변식·스모크·평가경로) 통과 후 5-seed 재학습 중.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <h3>V5 날씨 통합의 대표 결과</h3>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>조건</th><th class="num">V4</th><th class="num">V5</th><th class="num">hand rule</th></tr></thead>
+      <tbody>
+        <tr><td>weather_wet (학습)</td><td class="num neg">−0.05</td><td class="num pos">+0.22</td><td class="num">0.08</td></tr>
+        <tr><td>weather_heavy_rain (학습)</td><td class="num neg">−0.11</td><td class="num pos">+0.10</td><td class="num">0.24</td></tr>
+        <tr><td>weather_snow (학습)</td><td class="num neg">−0.09</td><td class="num pos">+0.06</td><td class="num">0.22</td></tr>
+        <tr><td>weather_ice (미학습·held-out)</td><td class="num neg">−0.37</td><td class="num neg">−0.51</td><td class="num">0.28</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="muted">학습한 날씨는 전부 개선됐지만, <strong>학습하지 않은 ice는 일반화되지 않는다</strong> — 날씨 역량은 "학습되는 것"이지 "외삽되는 것"이 아니다.</p>
+  </section>
+
+  <section id="s9">
+    <h2>9. 주장 가능 범위와 한계</h2>
+    <p><strong>안전하게 주장 가능:</strong></p>
+    <ul>
+      <li>경계가 정해진 task-aware calibration 어댑터가 <strong>권한 경계를 보존하면서</strong> unseen/stress 조건의 SOC tail risk를 줄일 수 있다.</li>
+      <li>Confidence-gated baseline reversion이 OOD 개입을 보수적으로 만들고, OOD capture를 <strong>+6.3pt</strong> 개선한다.</li>
+      <li>rule이 구조적으로 못 만지는 <strong>오보정(ems-variant) 축</strong>에서 meta-RL이 우위를 보인다.</li>
+    </ul>
+    <p><strong>피해야 할 주장:</strong></p>
+    <ul>
+      <li>큰 보편적 연비 개선 / 모든 baseline 압도 / 모든 split에서 constraint 감소 보장.</li>
+      <li>Meta-RL이 엔진·모터 파워 분배를 직접 최적화한다.</li>
+      <li>강한 adaptive/fitted rule을 검증 없이 확실히 능가한다 — 현재 <strong>fitted rule(supervised, ~32%)</strong>이 여전히 강한 상한이다.</li>
+    </ul>
+    <div class="callout">
+      <strong>현재 정직한 위치 —</strong> "성능"보다 <strong>권한/성능 tradeoff, gate의 OOD 보호, 훈련 커버리지의 인과적 중요성(V5), supervised headroom을 RL이 어떻게 좁히는가(V6/P3)"</strong>가 이 testbed의 실질 기여다.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>HEV Meta-EMS · Meta-RL Testbed — 아키텍처 개요. 정확한 수치와 최신 실험은 프로젝트 living ledger 및 원본 결과 CSV/JSON에서 검증한다.</div>
+  <div style="margin-top:6px;">권한 경계: Meta-RL → bounded 9-knob calibration residual/knob · Map/Rule EMS → engine state·mode·power split·final command.</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meta-RL Controller Comparison Report</title>
+  <style>
+    :root {
+      --ink: #1f2b32;
+      --muted: #5f6f78;
+      --line: #d8e0e4;
+      --paper: #ffffff;
+      --bg: #f4f7f8;
+      --accent: #386f8f;
+      --warn: #b65f3b;
+      --soft: #eef4f5;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 68px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .topline { margin-bottom: 22px; font-size: 14px; }
+    h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.12; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 21px; letter-spacing: 0; }
+    h3 { margin: 22px 0 10px; font-size: 16px; letter-spacing: 0; }
+    p { max-width: 940px; margin: 0 0 14px; color: var(--muted); }
+    .lead { color: var(--ink); font-size: 18px; max-width: 1020px; }
+    .quick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 24px 0; }
+    .quick div { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 14px; min-height: 112px; }
+    .quick strong { display: block; font-size: 19px; margin: 4px 0; color: var(--ink); }
+    .quick span { display: block; font-size: 12px; color: var(--muted); }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 22px; margin-top: 18px; }
+    .note { border-left: 4px solid var(--warn); padding: 12px 14px; margin: 14px 0; background: #fff8f4; color: var(--ink); }
+    .boundary { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 12px; color: var(--ink); overflow-x: auto; }
+    .figure { margin: 18px 0 8px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+    .figure img { display: block; width: 100%; height: auto; }
+    .caption { padding: 12px 14px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: right; vertical-align: top; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 700; }
+    td strong { display: block; color: var(--ink); }
+    td span, td small { display: block; color: var(--muted); font-size: 12px; line-height: 1.4; margin-top: 4px; }
+    ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+    li { margin: 8px 0; }
+    @media (max-width: 900px) { .quick { grid-template-columns: 1fr; } table { font-size: 13px; } th, td { padding: 8px 6px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topline"><a href="./">Meta-RL dashboard</a> · <a href="./full_run_analysis_report.html">Full run report</a> · <a href="./data/controller_representative_trajectory.csv">trajectory CSV</a></div>
+    <h1>Controller 결과 비교 및 대표 시계열 분석</h1>
+    <p class="lead">이 페이지는 실험 결과 분석을 위해 같은 heldout cycle에서 Baseline, Meta-RL adapter, bounded-offset DP oracle, full power-split DP oracle의 metric과 시계열을 한 곳에 모은 보고서다. Meta-RL은 여전히 <code>delta_P_eng_on</code>, <code>delta_SOC_ref</code>만 내는 calibration adapter로 해석한다.</p>
+
+    <div class="quick">
+      <div><span>Meta-RL final SOC error</span><strong>0.057867</strong><span>baseline 0.058034</span></div>
+      <div><span>Meta-RL constraint steps</span><strong>2.212500</strong><span>baseline 2.312500</span></div>
+      <div><span>Bounded DP reward</span><strong>-19.630013</strong><span>same offset authority</span></div>
+      <div><span>Full split DP SOC RMSE</span><strong>0.029400</strong><span>direct P_eng diagnostic</span></div>
+    </div>
+
+    <section class="panel">
+      <h2>1. Controller 권한을 먼저 분리해서 읽기</h2>
+      <p>Baseline과 Meta-RL adapter, bounded DP oracle은 모두 map/rule EMS의 power split 권한을 유지한다. 차이는 offset을 누가 고르는가다. 반면 full split DP는 엔진 파워 목표를 직접 선택하므로, SOC/fuel lower-bound 성격을 볼 수는 있지만 논문 claim의 공정 비교군은 아니다.</p>
+      <div class="boundary">Meta-RL -&gt; delta_P_eng_on, delta_SOC_ref<br>Map/rule EMS -&gt; engine state, EMS mode, power split, final commands<br>Full split DP -&gt; P_eng_target 직접 선택, offline diagnostic only</div>
+      <table><thead><tr><th>Controller</th><th>Action 권한</th><th>제어 구조</th><th>해석 위치</th></tr></thead><tbody><tr><td>Baseline map/rule</td><td>외부 offset 없음</td><td>기존 map/rule EMS가 engine state, mode, power split을 모두 결정</td><td>공정한 기준 정책</td></tr>
+<tr><td>Meta-RL adapter</td><td>delta_P_eng_on, delta_SOC_ref</td><td>bounded calibration offset만 조정하고 power split은 map/rule EMS가 결정</td><td>논문 claim의 대상</td></tr>
+<tr><td>Bounded DP oracle</td><td>delta_P_eng_on, delta_SOC_ref</td><td>미래 cycle을 알고 같은 offset 권한 안에서 offline DP 탐색</td><td>same-authority upper bound, frontier-capped</td></tr>
+<tr><td>Full split DP</td><td>P_eng_target 직접 선택</td><td>engine power target을 직접 고르는 offline 진단 oracle</td><td>권한이 달라 공정 비교가 아니라 trade-off 분석용</td></tr></tbody></table>
+    </section>
+
+    <section class="panel">
+      <h2>2. Heldout aggregate metric 비교</h2>
+      <table><thead><tr><th>Controller</th><th>Reward</th><th>최종 SOC 오차</th><th>SOC RMSE</th><th>제약 위반 step</th><th>SOC 보정 연료</th><th>엔진 전환</th></tr></thead><tbody><tr><td><strong>Baseline map/rule</strong><span>map_rule_zero_offset</span></td><td>-24.915493</td><td>0.058034</td><td>0.071113</td><td>2.312500</td><td>0.148338</td><td>12.062500</td></tr>
+<tr><td><strong>Meta-RL adapter mean</strong><span>latent_sac_adapter_seed_mean</span></td><td>-24.095498</td><td>0.057867</td><td>0.070261</td><td>2.212500</td><td>0.148412</td><td>12.112500</td></tr>
+<tr><td><strong>Bounded DP oracle</strong><span>bounded_offset_dp_oracle</span></td><td>-19.630013</td><td>0.055132</td><td>0.069269</td><td>1.687500</td><td>0.148425</td><td>11.250000</td></tr>
+<tr><td><strong>Full split DP</strong><span>full_power_split_dp_oracle</span></td><td>-83.635317</td><td>0.012878</td><td>0.029400</td><td>10.125000</td><td>0.132164</td><td>7.187500</td></tr></tbody></table>
+      <p>Meta-RL adapter는 baseline보다 reward, SOC RMSE, constraint step에서 작은 개선을 보인다. Bounded DP는 같은 offset 권한 안에서 아직 회수 가능한 여지가 있음을 보여준다. Full split DP는 SOC/fuel을 크게 낮추지만 권한과 trade-off가 다르다.</p>
+      <p class="note">Full split DP는 final SOC error 0.012878, SOC RMSE 0.029400까지 낮추지만, constraint steps가 2.312500에서 10.125000로 증가했다. 따라서 논문 claim의 공정 비교가 아니라 direct power-split oracle의 trade-off 진단으로 둔다.</p>
+      <div class="figure"><img src="plots/controller_metric_bars.png" alt="Controller metric bars"><div class="caption">Heldout aggregate metric을 controller별로 비교한다. Full split DP의 SOC/fuel 개선은 직접 power split 권한에서 나온 진단값이다.</div></div>
+      <div class="figure"><img src="plots/controller_episode_tradeoffs.png" alt="Controller episode tradeoffs"><div class="caption">Heldout episode별 trade-off다. 같은 평균이라도 episode별로 SOC/constraint/fuel의 분포가 다르게 나타나는지 확인한다.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>3. 같은 heldout cycle에서 observation-like state 비교</h2>
+      <p>대표 trajectory는 <code>heldout_evaluation:000</code>이며, Meta-RL trajectory는 저장된 seed <code>20260706</code>의 deterministic rollout이다. 여기서 observation-like signal은 실제 policy 입력 전체를 완전히 복원한 것이 아니라, env가 기록한 SOC, 요구 파워, 배터리 파워, engine state 등 의사결정에 직접 연결되는 주요 상태 신호다.</p>
+      <div class="figure"><img src="plots/controller_observation_timeseries.png" alt="Observation-like time series"><div class="caption">P_dem은 동일 cycle의 외생 demand이고, SOC/P_batt/engine_on은 controller 선택이 누적되며 갈라지는 내부 상태다.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>4. 같은 cycle에서 action 비교</h2>
+      <p>Meta-RL과 bounded DP는 calibration offset action만 가진다. Full split DP의 <code>P_eng_target</code>은 비교 편의를 위해 함께 그렸지만, 이 action은 Meta-RL adapter가 낼 수 없는 직접 power-split action이다.</p>
+      <div class="figure"><img src="plots/controller_action_timeseries.png" alt="Controller action time series"><div class="caption">Meta-RL offset이 얼마나 작게 움직이는지, bounded DP가 어떤 시점에 offset을 쓰는지, full split DP가 어떤 엔진 파워 목표를 고르는지 확인한다.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>5. Power split과 누적 결과</h2>
+      <p>Power-domain testbed이므로 여기서의 split은 shaft torque가 아니라 engine/motor/battery power split이다. Full split DP가 SOC를 잘 맞추는 대신 constraint flag를 더 많이 만드는 이유는 이 시계열에서 limiter와 battery-side response가 함께 갈라지는 구간을 보면 추적할 수 있다.</p>
+      <div class="figure"><img src="plots/controller_power_split_timeseries.png" alt="Power split time series"><div class="caption">동일 demand에서 engine, motor, battery power response가 controller별로 어떻게 달라지는지 보여준다.</div></div>
+      <div class="figure"><img src="plots/controller_cumulative_timeseries.png" alt="Cumulative reward and constraints"><div class="caption">누적 reward, 누적 constraint flag, battery throughput proxy를 함께 보면 평균 metric의 원인을 episode 안에서 찾을 수 있다.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>6. 실험 결과 분석용 결론</h2>
+      <ul>
+        <li>Meta-RL adapter는 baseline보다 안정적으로 조금 나아졌지만, 대표 cycle에서 action 크기가 작고 baseline과 power split이 크게 갈라지지 않는 구간이 많다. 다음 실험에서는 adapter가 개입할 여지가 큰 heldout profile을 따로 분석해야 한다.</li>
+        <li>Bounded DP oracle은 같은 권한 안에서 reward와 constraint 개선 여지가 더 있음을 보여준다. 이는 알고리즘 구조보다 reward/task 구성과 support-query adaptation 신호를 더 선명하게 만드는 쪽이 우선이라는 뜻이다.</li>
+        <li>Full split DP는 SOC/fuel lower-bound처럼 보이는 값을 만들지만 constraint robustness가 무너질 수 있다. 논문 본문 claim에는 쓰지 말고, appendix/diagnostic으로 controller authority 차이를 설명하는 자료로 두는 편이 안전하다.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
