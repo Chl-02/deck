@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 하이브리드차 기초 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch cur" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">1장 · 기초</p>
+<h1>하이브리드 자동차는 매 순간 세 가지를 결정한다</h1>
+<p class="lede">
+이 연구를 이해하는 데 필요한 배경은 사실 이 한 장이 전부입니다.
+하이브리드차가 어떻게 움직이고, 그 안의 소프트웨어가 무슨 일을 하는지 봅시다.
+</p>
+
+<h2 id="hev"><span class="no">1.1</span>하이브리드차 = 엔진 + 모터 + 작은 배터리</h2>
+<p>
+하이브리드차(HEV)에는 동력원이 두 개 있습니다. <strong>엔진</strong>(연료를 씀)과
+<strong>모터</strong>(배터리 전기를 씀)입니다. 배터리는 전기차처럼 크지 않고 아주 작아서
+(이 연구의 차는 0.75 kWh — 전기차의 1/100 수준), 몇 분만 모터로 달려도 바닥납니다.
+</p>
+<p>그런데도 연비가 좋은 이유는 두 가지입니다.</p>
+<ul>
+<li><strong>브레이크를 밟을 때 버려지던 에너지를 회수</strong>합니다(회생 제동).
+모터를 거꾸로 돌려 발전기로 쓰고, 그 전기를 배터리에 담아뒀다가 나중에 씁니다.</li>
+<li><strong>엔진을 효율 좋은 구간에서만 돌립니다.</strong> 엔진은 저속·저부하에서
+비효율적이라, 그럴 땐 모터가 대신 움직이고 엔진은 꺼 둡니다.</li>
+</ul>
+
+<h2 id="three"><span class="no">1.2</span>매 순간 내려야 하는 세 가지 결정</h2>
+<div class="step"><div class="n">1</div><div class="b">
+<div class="t">엔진을 켤까, 끌까?</div>
+너무 자주 껐다 켜면 연료도 들고(시동에도 연료가 듭니다) 부품도 상합니다.
+너무 안 끄면 비효율 구간에서 연료를 낭비합니다.</div></div>
+<div class="step"><div class="n">2</div><div class="b">
+<div class="t">필요한 힘을 엔진과 모터가 어떻게 나눌까?</div>
+지금 필요한 파워 중 얼마를 엔진이, 얼마를 모터가 낼지 정합니다.
+이것을 <strong>파워 분배(power split)</strong>라고 부릅니다.</div></div>
+<div class="step"><div class="n">3</div><div class="b">
+<div class="t">배터리 잔량을 어느 수준으로 유지할까?</div>
+잔량이 너무 낮으면 정작 필요할 때(추월, 오르막) 모터가 못 돕고,
+너무 높으면 회생 제동으로 들어올 전기를 받을 자리가 없습니다.
+그래서 <strong>중간쯤(이 연구에서는 55% 근처)을 유지</strong>하는 것이 목표입니다.</div></div>
+
+<h2 id="soc"><span class="no">1.3</span>SOC — 이 연구에서 가장 자주 나오는 단어</h2>
+<p>
+배터리 잔량을 <strong>SOC</strong>(State of Charge, 충전 상태)라고 부릅니다.
+휴대폰의 배터리 퍼센트와 같은 개념입니다. 이 연구의 성능 지표는 한마디로
+<strong>"SOC가 목표(55%) 근처에서 얼마나 벗어나지 않게 관리했는가"</strong>입니다.
+</p>
+<div class="box note"><span class="t">왜 연비가 아니라 SOC 관리를 재나요?</span>
+<p>연비만 보면 속임수가 가능하기 때문입니다. 배터리를 다 써버리면 그 구간의 연비는
+좋아 보이지만, 그건 미리 저장해 둔 에너지를 꺼내 쓴 것뿐입니다. 그래서 이 분야에서는
+연비를 잴 때 SOC 변화를 보정하고, SOC 관리 자체를 별도 성능으로 봅니다.
+이 연구는 특히 <strong>SOC가 위험 구간까지 크게 벗어난 순간</strong>(tail risk —
+"꼬리 위험", 평소가 아니라 최악의 순간들)을 주 지표로 삼습니다. 배터리 보호와 주행
+안정성에 직결되기 때문입니다. 연료 소비량은 "나빠지지 않아야 한다"는 감시
+항목(guardrail)으로 함께 봅니다.</p></div>
+
+<h2 id="ems"><span class="no">1.4</span>이 결정을 내리는 소프트웨어 — EMS</h2>
+<p>
+위의 세 가지 결정을 매초 내리는 소프트웨어를 <strong>EMS</strong>(Energy Management
+Strategy, 에너지 관리 전략)라고 합니다. 두 동력원의 지휘자라고 생각하면 됩니다.
+</p>
+<p>
+실제 양산차의 EMS는 AI가 아니라 <strong>규칙과 표(map/rule)</strong>로 되어 있습니다.
+"속도가 이 정도이고 잔량이 이 정도면 엔진을 켠다" 같은 검증된 규칙들의 모음입니다.
+왜 그럴까요? 자동차는 안전 인증을 받아야 하고, 규칙 기반은 <strong>모든 상황에서 어떻게
+동작할지 예측하고 검증할 수 있기 때문</strong>입니다.
+</p>
+
+<h2 id="knob"><span class="no">1.5</span>그리고 "다이얼" — 이 연구의 주인공</h2>
+<p>
+규칙 기반 EMS에는 엔지니어가 조정하는 설정값들이 있습니다.
+"엔진을 켜는 파워 문턱", "배터리 목표 잔량", "엔진을 한번 켜면 최소 몇 초 유지" 같은
+값들입니다. 이런 값을 <strong>캘리브레이션(calibration)</strong>이라 부르고, 우리는
+쉽게 <strong>다이얼(knob)</strong>이라 부르겠습니다. 세탁기의 규칙(코스)은 그대로 두고
+물 온도·탈수 강도 다이얼만 돌리는 것과 같습니다.
+</p>
+<p>
+지금은 엔지니어가 이 다이얼을 <strong>손으로</strong> 튜닝합니다. 그리고 한번 정하면
+대체로 고정입니다. 그런데 최적의 다이얼 값은 상황(정체, 눈길, 짐 무게, 오르막)마다
+다릅니다. 여기서 이 연구의 질문이 나옵니다 — <strong>다음 장에서 계속.</strong>
+</p>
+
+<div class="box key"><span class="t">1장 요약</span>
+<ol>
+<li>하이브리드차는 엔진+모터+작은 배터리로, 매 순간 ①엔진 on/off ②파워 분배 ③잔량(SOC) 관리를 결정한다.</li>
+<li>이 결정은 검증 가능한 규칙 기반 소프트웨어(EMS)가 내리고, 성능은 "SOC를 위험 구간까지 벗어나지 않게 관리했는가"로 잰다.</li>
+<li>EMS에는 엔지니어가 손으로 튜닝하는 다이얼(캘리브레이션)들이 있고, 최적값은 상황마다 다르다.</li>
+</ol></div>
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/02_testbed.html">2장 실험 장치</a> (플랜트 사양, EMS 로직 상세)</p>
+
+<div class="pn">
+  <a class="prev" href="index.html"><span class="dir">← 이전</span><span class="ttl">개요</span></a>
+  <a class="next" href="02_question.html"><span class="dir">다음 →</span><span class="ttl">2. 연구 질문</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

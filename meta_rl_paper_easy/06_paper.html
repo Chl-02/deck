@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. 그래서 논문은 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch cur" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">6장 · 그래서 논문은</p>
+<h1>"이겼다" 논문이 아니라 "정확히 쟀다" 논문</h1>
+<p class="lede">
+결과가 "AI와 공식이 동점"인데 이게 어떻게 논문이 될까요?
+장르를 바꾸면 됩니다 — 그리고 그 장르가 오히려 더 가치 있습니다.
+</p>
+
+<h2 id="genre"><span class="no">6.1</span>측정 논문이라는 장르</h2>
+<p>
+논문에는 두 부류가 있습니다. <strong>"새 방법을 제안하고 이겼다"</strong>는 방법 논문과,
+<strong>"이 분야의 질문 하나를 정확히 재서 답했다"</strong>는 측정 논문입니다.
+우리 결과의 핵심이 동점(null result)이므로 방법 논문으로는 성립하지 않지만,
+측정 논문으로는 오히려 강합니다:
+</p>
+<ul>
+<li>2장에서 봤듯 이 분야의 성적표들은 서로 비교 불가였습니다. 우리는 <strong>공정한
+채점법(같은 다이얼 + 도달 가능한 정답지 분모 + 통계 규약)</strong>을 처음 만들었습니다.</li>
+<li>그 채점법으로 재니 "학습 기반 EMS의 이득에서 <strong>권한·정보·방법의 기여가
+분리</strong>"됐습니다: 권한이 지배적이고, 방법과 정보는 (사람 규칙 이후로는) 기여가 0.</li>
+<li>"그럼 X를 해봤나?"라는 반론 7종을 <strong>전부 실험으로 미리 막아뒀습니다</strong>
+(4장의 천장 두드리기가 그것입니다).</li>
+</ul>
+<p>
+독자에게 남기려는 것: <em>"앞으로 학습 EMS 논문의 개선 숫자를 볼 때, 권한·정보·분모를
+먼저 확인하라."</em> — 개별 방법의 우열이 아니라 <strong>비교의 방법론을 바꾸는 논문</strong>입니다.
+</p>
+
+<h2 id="claims"><span class="no">6.2</span>논문이 주장하는 것 / 절대 주장하지 않는 것</h2>
+<div class="tw"><table>
+<tr><th>주장한다 ✅</th><th>주장하지 않는다 ❌</th></tr>
+<tr><td>학습은 사람 규칙을 크게 이긴다 (+11%p, 확실)</td><td>AI가 지도학습(공식)을 이겼다 — 어느 쪽 우위든 금지, "구분 불가"만</td></tr>
+<tr><td>모든 방법이 격차의 약 1/3에서 멈춘다</td><td>"정답지 성능의 33% 달성" 같은 표현 (분모가 다름)</td></tr>
+<tr><td>천장은 정보·알고리즘·데이터의 문제가 아니다</td><td>보편적 연비 개선, 모든 상황에서의 우위</td></tr>
+<tr><td>운전대 권한의 가격표 (연료 +9.3% vs 위반 13배)</td><td>AI가 파워 분배를 직접 최적화한다</td></tr>
+<tr><td>낯선 복합 상황에선 아직 사람 규칙이 낫다 (정직하게)</td><td>시뮬레이터 연비의 실차 비교 (상대 비교만)</td></tr>
+</table></div>
+<p class="small">이 구분은 취향이 아니라 실험 근거의 경계입니다. 근거가 못 미치는 문장을
+한 줄이라도 쓰면 심사에서 전체 신뢰를 잃기 때문에, 금지 문장 목록을 체크리스트로
+관리합니다 (상세판 7장).</p>
+
+<h2 id="structure"><span class="no">6.3</span>논문의 뼈대 (8개 절을 한 줄씩)</h2>
+<ol>
+<li><strong>서론</strong> — 문헌의 성적표는 비교 불가다; 권한·정보·방법을 분리해 재겠다.</li>
+<li><strong>실험 장치</strong> — 가상 프리우스, 규칙 EMS, 다이얼 9개 (이 보고서 1·3장).</li>
+<li><strong>채점법</strong> — 정답지 분모, capture, 누수 0, 통계 규약 (3장).</li>
+<li><strong>권한의 가격</strong> — 운전대를 주면: +9.3% vs 위반 13배 (5장 보너스).</li>
+<li><strong>주 결과</strong> — 사람 19.5 ≪ 공식 31.7 ≈ AI 30.7 (5장 그림).</li>
+<li><strong>천장은 진짜다</strong> — 데이터 늘려도, 정보 늘려도, 모델을 바꿔도 그대로 (4장 6~7단계).</li>
+<li><strong>돌파 시도 기각 표</strong> — 안전장치·예측·권한·적응속도·시변 5종 전부 무효 (4장 6단계).</li>
+<li><strong>한계와 지침</strong> — 시뮬레이터 단순화 목록, 낯선 상황의 열세, 다음 과제.</li>
+</ol>
+<p>제목 후보(영문)는 <em>"Authority, Information, or Method? — 학습 기반 HEV 에너지 관리의
+이득은 어디서 오는가"</em>라는 질문형입니다.</p>
+
+<h2 id="reviewer"><span class="no">6.4</span>예상 질문에 어떻게 답하나 (심사 대비)</h2>
+<div class="qa">
+<div class="q">"다이얼 9개로 제한했으니 못 이기는 게 당연한 것 아닌가요?"</div>
+<div class="a">그 "당연함"을 처음으로 정량화한 것이 이 논문입니다. 다이얼 제한은 양산 배포의
+현실이고, 그 안의 상한(1/3)과 상한 밖 상금의 가격표(권한의 대가)를 함께 쟀습니다.
+따름정리: 문헌의 큰 개선은 상당 부분 권한으로 산 것입니다.</div>
+<div class="q">"1/3밖에 못 좁힌 게 성과인가요?"</div>
+<div class="a">남은 2/3가 "노력 부족"이 아니라 "누구도 원리적으로 못 가져가는 몫"임을
+7종의 반증 실험으로 보였습니다. 어디까지가 가능하고 왜 거기까지인지를 아는 것이
+공학적으로 더 유용한 정보입니다.</div>
+<div class="q">"훈련을 한 번만 한 결과 아닌가요?"</div>
+<div class="a">AI는 5회 반복 훈련의 평균±편차로, 공식도 데이터 재추출로 흔들림을 쟀습니다.
+이 분야 논문 대부분이 안 하는 일이고, 우리는 이것을 채점법의 일부로 제안합니다.</div>
+</div>
+
+<h2 id="todo"><span class="no">6.5</span>남은 작업</h2>
+<ul>
+<li>문헌 2편의 전문 확보 (서론의 비교표 완성용)</li>
+<li>정답지 재현성 검사 1건 (채점 기준의 안정성 확인 — 계산만 다시 돌리면 됨)</li>
+<li>그리고 집필 자체 — 실험은 끝났습니다.</li>
+</ul>
+<p>다음 논문 후보도 이미 나와 있습니다: 이번에 소거하지 못한 유일한 정보인
+<strong>"내비게이션의 미래 경로 예고(preview)"</strong>를 주면 천장이 움직이는가 —
+"추론한 미래는 무가치했다"(4장)와 "주어진 미래"의 대비가 좋은 질문이 됩니다.</p>
+
+<div class="box key"><span class="t">6장 요약</span>
+<ol>
+<li>동점이라는 결과는 장르를 "측정 논문"으로 바꾸면 결함이 아니라 측정값이 된다.</li>
+<li>기여: 공정한 채점법 + 권한·정보·방법 분해 + 반증 실험 카탈로그 + 배포 가능한 구조(V6).</li>
+<li>실험 종료, 남은 것은 집필과 문헌 2편.</li>
+</ol></div>
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/05_paper.html">5장 논문 설계</a>, <a href="../meta_rl_paper/07_roadmap.html">7장 집필 로드맵</a></p>
+
+<div class="pn">
+  <a class="prev" href="05_findings.html"><span class="dir">← 이전</span><span class="ttl">5. 세 가지 발견</span></a>
+  <a class="next" href="07_glossary.html"><span class="dir">다음 →</span><span class="ttl">7. 용어 사전 · FAQ</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

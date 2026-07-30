@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. 실험 설계 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch cur" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">3장 · 실험 설계</p>
+<h1>공정한 시합 만들기 — 선수, 시험 문제, 채점법</h1>
+<p class="lede">
+이 장만 이해하면 나머지는 전부 쉽게 읽힙니다. 특히 <strong>"정답지(oracle)"</strong>와
+<strong>"capture 점수"</strong> 두 개념이 핵심입니다.
+</p>
+
+<h2 id="car"><span class="no">3.1</span>경기장 — 가상의 프리우스</h2>
+<p>
+실차 대신 시뮬레이터를 씁니다. 공개된 프리우스(2016년형) 사양으로 만든 가상 차로,
+속도 프로파일을 주면 매초 엔진·모터·배터리가 어떻게 움직이고 연료가 얼마나 드는지
+계산합니다. 미국 공인 연비 시험 코스(EPA 사이클)를 돌려 보면 실차 프리우스와 비슷한
+연비가 나오는 것을 확인해서, "장난감이 아니라 현실적인 경기장"임을 검증했습니다.
+</p>
+
+<h2 id="exam"><span class="no">3.2</span>시험 문제 — 120가지 주행 상황</h2>
+<p>
+시험은 <strong>120개의 주행 에피소드</strong>입니다. 도심 정체, 고속 순항, 비·눈길,
+무거운 짐, 오르막, 에어컨 풀가동, 배터리 성능 저하 같은 조건들이 섞여 있습니다.
+</p>
+<div class="box note"><span class="t">족보 유출 방지</span>
+<p>AI가 훈련에 쓴 주행 데이터와 시험 주행은 <strong>완전히 분리</strong>되어 있습니다
+(겹치는 프로파일 0개, 실제로 검증). 즉 시험 문제를 미리 풀어본 참가자는 없습니다.
+그리고 일부 조건(짐 무게, 에어컨 부하, 노면 마찰 같은 "숨겨진 조건")은
+<strong>어떤 참가자에게도 알려주지 않습니다</strong> — 센서로 직접 잴 수 없는 값이라
+실차에서도 모르는 값이기 때문입니다. 이 "숨겨진 조건"은 나중에 반전의 열쇠가 됩니다.</p></div>
+
+<h2 id="players"><span class="no">3.3</span>선수 소개 — 전원 같은 다이얼 9개를 갖는다</h2>
+<p>여섯 참가자 모두 만질 수 있는 것은 <strong>똑같은 다이얼 9개</strong>뿐입니다.
+차이는 오직 "누가 다이얼 값을 정하는가"입니다.</p>
+<div class="tw"><table>
+<tr><th>선수</th><th>정체</th><th>역할</th></tr>
+<tr><td><strong>기본값</strong></td><td>다이얼을 원래 설정대로 두는 기본 규칙</td><td>채점의 0점 기준</td></tr>
+<tr><td><strong>고정 튜닝</strong></td><td>상황 무시하고 "평균적으로 좋은" 값으로 고정</td><td>"상황별 적응이 정말 필요한가?"의 검증용 — 결과는 0점보다 나쁨(−19%). 적응은 필요하다</td></tr>
+<tr><td><strong>사람 규칙</strong></td><td>엔지니어가 경험과 직관으로 짠 "상황 보고 다이얼 돌리기" 규칙</td><td>사람 설계의 대표</td></tr>
+<tr><td><strong>공식 (지도학습)</strong></td><td>연습 문제들의 정답(최적 다이얼)을 미리 계산해 두고, "관측 → 다이얼"을 잇는 <strong>단순한 1차 공식</strong>을 통계로 맞춘 것</td><td>단순한 방법의 대표. "정답지 흉내내기"</td></tr>
+<tr><td><strong>AI (meta-RL)</strong></td><td>5,000여 개 주행에서 수십만 번 시행착오로 배운 강화학습 AI. 최근 주행 패턴을 보고 상황을 추론해 다이얼을 조정</td><td>복잡한 학습의 대표</td></tr>
+<tr><td><strong>정답지 (oracle)</strong></td><td>각 에피소드가 <strong>끝난 뒤</strong>, 그 주행을 다 알고 나서 최적 다이얼을 찾은 것</td><td>채점의 100점 기준</td></tr>
+</table></div>
+
+<h3>"정답지"를 조금 더 정확히</h3>
+<p>
+oracle은 실전에서는 존재할 수 없는 참가자입니다. 시험이 끝난 뒤 문제지를 다 보고 나서
+답을 고르는 것과 같으니까요. 하지만 <strong>"같은 다이얼 9개 권한 안에서 도달 가능한
+최선이 어디까지인가"</strong>를 알려주는 자(尺)로는 완벽합니다. 중요한 것은, 이 정답지도
+다이얼 9개 <em>안에서의</em> 최선이라는 점입니다 — 운전대를 잡을 수 있는 신이 아니라,
+같은 다이얼을 가장 잘 돌린 신입니다.
+</p>
+
+<h2 id="score"><span class="no">3.4</span>채점법 — capture 점수</h2>
+<figure><div class="fig-surface">
+<svg viewBox="0 0 720 150" width="100%" style="max-width:720px" role="img" aria-label="capture 점수 개념도">
+  <line x1="60" y1="70" x2="660" y2="70" stroke="var(--baseline)" stroke-width="2"/>
+  <circle cx="60" cy="70" r="7" fill="var(--muted)"/>
+  <text x="60" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">기본값</text>
+  <text x="60" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">0%</text>
+  <circle cx="660" cy="70" r="7" fill="var(--s7)"/>
+  <text x="660" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">정답지</text>
+  <text x="660" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">100%</text>
+  <circle cx="245" cy="70" r="7" fill="var(--s1)"/>
+  <text x="245" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">어떤 참가자</text>
+  <text x="245" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">여기까지 왔다면 점수 ≈ 31%</text>
+  <line x1="60" y1="122" x2="245" y2="122" stroke="var(--s1)" stroke-width="3"/>
+  <line x1="245" y1="122" x2="660" y2="122" stroke="var(--grid)" stroke-width="3"/>
+  <text x="152" y="141" text-anchor="middle" font-size="11" fill="var(--ink-2)">좁힌 격차</text>
+  <text x="452" y="141" text-anchor="middle" font-size="11" fill="var(--ink-2)">남은 격차</text>
+</svg>
+</div><figcaption>capture 점수 = (그 참가자가 기본값보다 좋아진 만큼) ÷ (기본값과 정답지 사이의 전체 격차).
+"정답지의 31% 성능"이 아니라 <strong>"격차를 31%만큼 좁혔다"</strong>는 뜻입니다.
+0%면 기본값과 같고, 100%면 정답지와 같습니다.</figcaption></figure>
+<p>
+잰 대상은 1장에서 말한 SOC 관리(위험 구간 이탈)입니다. 120문제 각각에서 점수를 내고
+합산합니다. 연료와 엔진 껐다켜기 횟수는 "나빠지지 않았는지" 감시만 합니다.
+</p>
+
+<h2 id="ai"><span class="no">3.5</span>AI 쪽 구성, 두 가지만 알면 됩니다</h2>
+<ul>
+<li><strong>meta-RL(메타 강화학습)</strong> — 그냥 강화학습(시행착오로 배우기)에
+"상황 파악" 능력을 더한 것입니다. 최근 1~2분의 주행 패턴을 보고 "지금 정체구나 /
+짐이 무겁구나"를 스스로 추론해서, 상황에 맞게 다이얼을 다르게 돌리도록 훈련합니다.</li>
+<li><strong>안전장치(confidence gate)</strong> — AI가 "이런 상황은 처음 보는데?"라고
+느끼면(훈련 때 본 분포에서 벗어나면) 개입을 스스로 줄이고, 검증된 기본 공식으로
+돌아갑니다. 신입 조수가 낯선 도로에서는 베테랑에게 다이얼을 돌려주는 것과 같습니다.
+이 장치는 평균 성능을 올리는 도구가 아니라 <strong>사고를 막는 배포용 안전벨트</strong>입니다.</li>
+</ul>
+
+<div class="box key"><span class="t">3장 요약</span>
+<ol>
+<li>가상 프리우스 + 시험 120문제(학습과 완전 분리, 일부 조건은 모두에게 숨김).</li>
+<li>참가자 전원이 같은 다이얼 9개 — 차이는 "누가 값을 정하나"뿐.</li>
+<li>정답지(oracle) = 주행을 다 보고 나서 찾은 사후 최적. capture 점수 = 기본값~정답지 격차 중 좁힌 비율.</li>
+</ol></div>
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/02_testbed.html">2장 실험 장치</a> (arm 상세, capture 수식, 데이터 구성)</p>
+
+<div class="pn">
+  <a class="prev" href="02_question.html"><span class="dir">← 이전</span><span class="ttl">2. 연구 질문</span></a>
+  <a class="next" href="04_story.html"><span class="dir">다음 →</span><span class="ttl">4. 실험 이야기</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

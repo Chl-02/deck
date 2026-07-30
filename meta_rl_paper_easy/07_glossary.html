@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. 용어 사전 · FAQ — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch cur" href="07_glossary.html">7 용어·FAQ</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">7장 · 참고 자료</p>
+<h1>용어 사전과 자주 나오는 질문</h1>
+<p class="lede">
+읽다가 모르는 단어가 나오면 이 페이지로 오세요. 아래 FAQ에는 이 연구를 처음 들은
+사람들이 실제로 묻는 질문들을 모았습니다.
+</p>
+
+<h2 id="glossary"><span class="no">7.1</span>용어 사전 (등장 순)</h2>
+<div class="tw"><table>
+<tr><th>용어</th><th>쉬운 설명</th></tr>
+<tr><td><strong>HEV</strong></td><td>하이브리드 자동차. 엔진 + 모터 + 작은 배터리.</td></tr>
+<tr><td><strong>EMS</strong></td><td>에너지 관리 전략. 엔진 on/off, 파워 분배, 배터리 잔량을 매초 결정하는 소프트웨어.</td></tr>
+<tr><td><strong>SOC</strong></td><td>배터리 잔량(%). 이 연구의 목표는 55% 근처 유지.</td></tr>
+<tr><td><strong>tail risk (꼬리 위험)</strong></td><td>평소가 아니라 "최악의 순간들". 여기서는 SOC가 위험 구간까지 벗어난 정도.</td></tr>
+<tr><td><strong>캘리브레이션 / 다이얼(knob)</strong></td><td>규칙 EMS의 설정값. 엔지니어가 손으로 튜닝하는 대상. 이 연구에서는 9개.</td></tr>
+<tr><td><strong>권한 (authority)</strong></td><td>제어기가 만질 수 있는 범위. 이 연구: 다이얼 9개만(bounded). 문헌 다수: 파워 분배 직접(=운전대).</td></tr>
+<tr><td><strong>강화학습 (RL)</strong></td><td>시행착오와 보상으로 행동을 배우는 AI 학습법.</td></tr>
+<tr><td><strong>meta-RL</strong></td><td>"상황이 바뀌면 빨리 알아채고 적응"까지 배우는 강화학습. 최근 주행 패턴에서 상황을 추론(encoder)해 행동을 바꿈.</td></tr>
+<tr><td><strong>encoder</strong></td><td>meta-RL의 상황 추론 부품. 이 연구의 발견: 평균 점수가 아니라 <em>훈련 안정성</em>에 기여.</td></tr>
+<tr><td><strong>confidence gate</strong></td><td>안전장치. AI가 낯선 상황을 감지하면 개입을 줄이고 검증된 공식으로 복귀.</td></tr>
+<tr><td><strong>지도학습 / fitted rule (공식)</strong></td><td>연습문제의 정답(최적 다이얼)에 "관측 → 다이얼" 1차 식을 통계로 맞춘 것. 이 연구에서 AI와 동점을 이룬 주인공.</td></tr>
+<tr><td><strong>oracle (정답지)</strong></td><td>주행이 끝난 뒤 그 주행을 다 알고 찾은 최적 다이얼. 채점의 100점 기준. 실전에서는 존재 불가.</td></tr>
+<tr><td><strong>CEM</strong></td><td>정답지를 찾는 탐색법. 다이얼 조합을 무작위로 뿌려 보고 좋은 쪽으로 범위를 좁혀가길 반복.</td></tr>
+<tr><td><strong>capture</strong></td><td>채점 점수. (기본값보다 좋아진 만큼) ÷ (기본값~정답지 전체 격차). "격차를 몇 % 좁혔나".</td></tr>
+<tr><td><strong>DP</strong></td><td>미래를 전부 알 때의 이론적 최적을 계산하는 방법. 실전 불가, 진단용 기준.</td></tr>
+<tr><td><strong>seed (주사위)</strong></td><td>훈련의 무작위 초기값. seed마다 성적이 달라지므로 5회 반복해 평균±편차로 보고.</td></tr>
+<tr><td><strong>OOD</strong></td><td>"훈련 분포 밖" — 훈련 때 본 적 없는 낯선 상황. 여기선 아직 사람 규칙이 앞섬.</td></tr>
+<tr><td><strong>숨겨진 조건 (hidden axes)</strong></td><td>에어컨 부하·배터리 열화·노면 마찰·짐 무게처럼 센서로 직접 못 재는 조건. 모든 참가자에게 비공개 — 나중에 "정답을 알려줘도 안 오르는" 결정 실험의 재료.</td></tr>
+<tr><td><strong>V6</strong></td><td>최종 AI 구조의 이름. "공식이 정한 값 + AI의 제한된 미세 보정 + 안전장치". 훈련 실패 0회.</td></tr>
+<tr><td><strong>SUMO</strong></td><td>교통 시뮬레이터. 시험용 주행 프로파일 다수를 여기서 생성.</td></tr>
+<tr><td><strong>p값 / 유의성</strong></td><td>"이 차이가 우연일 확률"의 통계 지표. 이 연구의 핵심 검정: AI vs 공식 차이는 우연과 구분 불가, 숨은 정답 제공의 효과는 p=1.000(완전 무효).</td></tr>
+</table></div>
+
+<h2 id="faq"><span class="no">7.2</span>자주 나오는 질문</h2>
+<div class="qa">
+<div class="q">그래서 AI가 진 건가요?</div>
+<div class="a">아니요. 동점입니다 — 그리고 둘 다 사람 규칙은 크게 이겼습니다.
+"AI가 단순 공식에게 진" 것이 아니라, <strong>둘 다 같은 천장에 닿았고 그 천장이 진짜라는 것을
+발견</strong>한 것입니다. 어느 쪽이 근소하게 앞서는지는 훈련 주사위에 따라 뒤집히므로,
+논문에서도 "어느 쪽이 낫다"는 문장 자체를 금지하고 있습니다.</div>
+
+<div class="q">1/3밖에 못 좁혔으면 실패한 연구 아닌가요?</div>
+<div class="a">남은 2/3의 정체가 이 연구의 최대 기여입니다. "더 열심히 하면 되는 몫"이
+아니라 <strong>정보를 다 줘도, 어떤 방법을 써도 원리적으로 못 가져가는 몫</strong>임을 7종의
+실험으로 보였습니다. 한계의 위치와 이유를 정확히 아는 것은 공학에서 성능 개선만큼 귀한
+정보입니다 — 앞으로 누군가 "다이얼 튜닝으로 50% 좁혔다"고 주장하면 채점법부터 의심해야
+한다는 뜻이기도 합니다.</div>
+
+<div class="q">그럼 AI(meta-RL)는 왜 쓰나요? 공식만 쓰면 되잖아요.</div>
+<div class="a">날카로운 질문이고, 논문도 정면으로 다룹니다. 성능만 보면 공식으로 충분합니다.
+AI의 확인된 잔여 가치는 ① 공식을 만들 정답 데이터가 없는 상황에서도 스스로 배운다는 것,
+② 상황 추론 부품이 훈련 안정성을 만든다는 것, ③ 안전장치와 결합해 배포 가능한 형태(V6)가
+된다는 것입니다. "AI라서 더 높은 점수"는 이 권한에서는 없습니다 — 그게 발견입니다.</div>
+
+<div class="q">다이얼을 더 늘리거나 범위를 넓히면 되지 않나요?</div>
+<div class="a">범위를 넓히는 실험은 해봤고, 동점 유지 + 일부 조건 악화였습니다.
+다이얼 개수 자체를 늘리는 것은 "양산 검증 가능 범위"라는 전제를 허무는 일이라 이 연구의
+질문 밖입니다 — 그 방향의 극단(운전대 전부)이 얼마짜리인지는 가격표(+9.3% vs 위반 13배)로
+제시했습니다.</div>
+
+<div class="q">시뮬레이션 결과인데 믿을 수 있나요?</div>
+<div class="a">두 가지로 방어합니다. ① 가상 차가 공인 시험 코스에서 실차와 비슷한 연비를
+내는 것을 확인했고, ② 절대 수치가 아니라 <strong>같은 조건 안에서의 상대 비교(capture)만</strong>
+주장합니다. 시뮬레이터의 단순화 목록(배터리 손실 생략, 냉간 시동 미모델 등)은 논문 한계
+절에 전부 명시합니다.</div>
+
+<div class="q">천장을 넘을 방법은 정말 없나요?</div>
+<div class="a">이번에 소거하지 못한 유일한 후보가 남아 있습니다 — <strong>미래를 추론하는 게
+아니라 알려주는 것</strong>(내비게이션 경로 예고, preview)입니다. "AI가 추론한 미래는 무가치했다"는
+결과까지는 확인했으니, "진짜로 알려준 미래"는 다른가가 다음 논문의 질문입니다.
+다만 다이얼 9개 인터페이스는 preview를 활용할 여지 자체가 좁아, 그래도 평평할 가능성이
+높다고 보고 있습니다(평평해도 그것대로 강한 결과입니다).</div>
+
+<div class="q">이 쉬운판과 상세판의 숫자가 다르면 어느 쪽이 맞나요?</div>
+<div class="a">둘은 같은 정본 수치를 쓰며, 충돌 시 <a href="../meta_rl_paper/">상세판</a>과
+프로젝트 원본 기록(ledger·CSV)이 우선입니다. 쉬운판은 이해를 위해 반올림하거나 세부를
+생략한 곳이 있습니다.</div>
+</div>
+
+<h2 id="map"><span class="no">7.3</span>더 깊이 — 쉬운판 ↔ 상세판 지도</h2>
+<div class="tw"><table>
+<tr><th>쉬운판</th><th>상세판</th></tr>
+<tr><td>1 하이브리드차 기초 · 3 실험 설계</td><td><a href="../meta_rl_paper/02_testbed.html">2 실험 장치</a></td></tr>
+<tr><td>2 연구 질문</td><td><a href="../meta_rl_paper/01_problem.html">1 문제의식</a>, <a href="../meta_rl_paper/06_literature.html">6 문헌 전략</a></td></tr>
+<tr><td>4 실험 이야기</td><td><a href="../meta_rl_paper/03_journey.html">3 실험 연대기</a></td></tr>
+<tr><td>5 세 가지 발견</td><td><a href="../meta_rl_paper/04_results.html">4 결과와 논증</a></td></tr>
+<tr><td>6 그래서 논문은</td><td><a href="../meta_rl_paper/05_paper.html">5 논문 설계</a>, <a href="../meta_rl_paper/07_roadmap.html">7 집필 로드맵</a></td></tr>
+</table></div>
+
+<div class="pn">
+  <a class="prev" href="06_paper.html"><span class="dir">← 이전</span><span class="ttl">6. 그래서 논문은</span></a>
+  <a class="next" href="index.html"><span class="dir">처음으로 →</span><span class="ttl">개요</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

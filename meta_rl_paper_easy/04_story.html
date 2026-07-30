@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. 실험 이야기 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch cur" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">4장 · 실험 이야기</p>
+<h1>3주간의 시행착오 — 실패가 결론을 만들었다</h1>
+<p class="lede">
+이 연구의 결론은 처음부터 계획된 것이 아니라, 예상이 세 번 깨지면서 만들어졌습니다.
+그 과정을 알아야 결론의 무게가 보입니다. 이야기로 따라가 봅시다.
+</p>
+
+<div class="step"><div class="n">1</div><div class="b">
+<div class="t">첫 충격 — AI가 사람 규칙에게 졌다</div>
+<p>처음에는 다이얼을 2개만 열어 두고 AI를 훈련시켰습니다. 그런데 성적을 채점해 보니,
+엔지니어가 물리 직관으로 짠 <strong>단순한 적응 규칙이 AI보다 나은</strong> 항목이 여럿이었습니다.
+"AI니까 당연히 이기겠지"라는 전제가 첫 주에 깨졌습니다.</p>
+<p>여기서 중요한 결정을 합니다: 약한 비교 상대를 세워 이기는 흔한 길 대신,
+<strong>이 강한 규칙을 채점의 기준(0점)으로 삼기로</strong> 했습니다. 이후 모든 점수는
+"강한 규칙보다 얼마나 나은가"입니다.</p></div></div>
+
+<div class="step"><div class="n">2</div><div class="b">
+<div class="t">진단 — 문제는 AI가 아니라 다이얼 개수였다</div>
+<p>왜 못 이길까? 확인을 위해 극단적인 실험을 했습니다. <strong>미래 주행을 전부 알고 있는
+계산기(DP)</strong>에게 같은 다이얼 2개를 맡겨 본 것입니다. 결과: 미래를 다 알아도
+강한 규칙 대비 개선 여지가 거의 없었습니다(0~1%).</p>
+<p>결론: <strong>다이얼 2개라는 권한 자체가 좁아서 누구도 잘할 수 없는 게임</strong>이었습니다.
+그래서 실제 양산 EMS에 존재하는 캘리브레이션을 조사해 다이얼을 9개로 늘렸고,
+"9개면 개선 여지가 실제로 존재한다"는 것을 정답지 계산으로 먼저 확인한 뒤 진행했습니다.</p></div></div>
+
+<div class="step"><div class="n">3</div><div class="b">
+<div class="t">복불복 — 같은 AI를 5번 훈련시키면 성적이 널뛴다</div>
+<p>다이얼 9개로 AI를 훈련시키자 이번엔 다른 문제가 나왔습니다. 훈련을 5번 반복하면
+(초기값 주사위만 다르게) 어떤 판은 잘하고 어떤 판은 완전히 망했습니다(점수 범위 50%p).
+평균을 내면 사람 규칙과 비슷한 수준 — 이대로는 "AI가 낫다"고 말할 수 없었습니다.</p>
+<p>따라해 본 처방(모범답안 미리 보여주기, 날씨 데이터 추가)은 널뛰기는 잡았지만
+평균 점수를 오히려 낮췄습니다. 몇 세대의 실패가 쌓입니다.</p></div></div>
+
+<div class="step"><div class="n">4</div><div class="b">
+<div class="t">돌파 — "좋은 공식 위에 AI가 살짝 보정만"</div>
+<p>해결책은 구조를 바꾸는 것이었습니다. AI가 다이얼을 처음부터 다 정하게 하지 말고,
+<strong>3장의 '공식(지도학습)'이 정한 값을 출발점으로 삼고, AI는 그 위에 제한된 미세 조정만</strong>
+하게 했습니다. 자신 없으면(안전장치 발동) 공식 값으로 그대로 복귀합니다.</p>
+<p>이 구조(V6라고 부릅니다)가 결정적이었습니다: 훈련 5번 전부 안정적으로 좋은 성적,
+망한 판 0개, 점수는 프로젝트 최고 수준. <strong>여기까지는 성공 이야기입니다.</strong></p></div></div>
+
+<div class="step"><div class="n">5</div><div class="b">
+<div class="t">반전 — 그런데 그 점수가 '단순 공식'과 동점이다</div>
+<p>축하하기 전에 채점표를 자세히 보니 이상한 점이 있었습니다. 수십만 번 시행착오로 훈련한
+AI의 점수(격차의 약 31% 좁힘)가, <strong>연습문제 70개로 만든 1차 공식과 통계적으로
+구분되지 않았습니다.</strong> 이후 공식 쪽 데이터를 10배 이상 늘려도(802개) 마찬가지 —
+심지어 어느 쪽이 근소하게 앞서는지가 훈련 주사위에 따라 뒤집혔습니다.</p>
+<p>이것은 우연한 동점이 아니라 <strong>둘 다 같은 천장에 닿았다</strong>는 신호였습니다.
+질문이 바뀝니다: "어떻게 더 올리지?"에서 <strong>"이 천장의 정체는 무엇인가?"</strong>로.</p></div></div>
+
+<div class="step"><div class="n">6</div><div class="b">
+<div class="t">천장 두드리기 — 떠올릴 수 있는 모든 방법이 실패했다</div>
+<p>천장을 뚫으려는 시도를 하나씩 실험으로 확인했습니다. 결과는 전부 "효과 없음":</p>
+<ul>
+<li><strong>안전장치를 더 똑똑하게?</strong> — 어떤 정보로도 "지금 AI 개입이 이로울지"를
+판별할 수 없었음 (실질 +0.9%p뿐)</li>
+<li><strong>미래 수요를 예측하게 훈련?</strong> — 오히려 성적이 나빠짐 (예측 데이터를
+뺀 대조군이 더 좋았음)</li>
+<li><strong>다이얼 조정 폭을 넓히면?</strong> — 동점 유지 + 일부 조건 크게 악화</li>
+<li><strong>더 빨리 적응하게?</strong> — 상황 전환 구간을 잘라 봐도 차이 없음</li>
+<li><strong>데이터를 더?</strong> — 공식의 데이터를 4배, 11배로 늘려도 천장 그대로</li>
+</ul></div></div>
+
+<div class="step"><div class="n">7</div><div class="b">
+<div class="t">결정타 — 숨겨진 정답을 알려줘도 안 오른다</div>
+<p>마지막으로 남은 용의자는 "정보 부족"이었습니다. 3장에서 말한 <strong>숨겨진 조건</strong>
+(짐 무게, 에어컨 부하, 노면 마찰, 배터리 상태)을 참가자가 모르기 때문에 천장이 있는 것
+아닐까? 시뮬레이션이니 가능한 반칙 실험을 했습니다: <strong>그 숨겨진 조건의 정확한 값을
+몰래 알려주고</strong> 공식을 다시 만들어 본 것입니다.</p>
+<p>결과: <strong>점수가 오르지 않았습니다. 오히려 살짝 내려갔습니다</strong>(통계 검정 결과,
+이 정보가 도움된다는 증거가 전혀 없음 — p=1.000). 시험의 숨은 조건을 다 알려줘도 성적이
+안 오른다면, 남은 격차는 "알 수 있는 정보"의 문제가 아니라는 뜻입니다. 이렇게 마지막
+가설("정보가 병목이다")도 자기 실험으로 폐기됐고, 최종 결론이 확정됐습니다 — 5장에서 봅니다.</p></div></div>
+
+<h2 id="trust"><span class="no">4.1</span>이 결과를 믿어도 되는 이유</h2>
+<p>3주 동안 이 프로젝트는 <strong>유리한 결과일수록 더 세게 의심</strong>했습니다.
+실제로 그 의심이 여러 번 결과를 뒤집었습니다:</p>
+<ul>
+<li>비교 코드의 버그를 두 번 찾아내 유리했던 수치를 스스로 정정했습니다
+(잘못된 설정이 채점 기준을 오염시키는 함정 — 이후 자동 검증 장치를 심었습니다).</li>
+<li>"통계적으로 유의미한 +21%p 개선"으로 보였던 결과 하나는, 훈련 데이터를 다시 뽑아
+재검증하자 +2%p 수준의 잡음으로 판명되어 폐기했습니다.</li>
+<li>최종 수치는 마지막 날 전수 감사로 원본 데이터에서 전부 재계산해 확인했습니다
+(불일치 0건).</li>
+</ul>
+<p>결론이 "우리가 이겼다"가 아니라서 오히려 꾸밀 이유가 없는 결과이기도 합니다.</p>
+
+<div class="box key"><span class="t">4장 요약</span>
+<ol>
+<li>AI가 사람 규칙에 지는 것에서 출발 → 권한(다이얼 2→9개) 문제로 진단 → 구조 개선(공식+보정)으로 안정적 최고 성적 도달.</li>
+<li>그런데 그 성적이 단순 공식과 동점 — 같은 천장의 발견.</li>
+<li>천장을 뚫으려는 모든 시도(장치 개선·예측·권한·데이터·심지어 정답 정보 제공)가 실패 → 천장의 정체가 결론이 됨.</li>
+</ol></div>
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/03_journey.html">3장 실험 연대기</a> (날짜별 전체 기록과 수치)</p>
+
+<div class="pn">
+  <a class="prev" href="03_setup.html"><span class="dir">← 이전</span><span class="ttl">3. 실험 설계</span></a>
+  <a class="next" href="05_findings.html"><span class="dir">다음 →</span><span class="ttl">5. 세 가지 발견</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>
