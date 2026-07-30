@@ -26,7 +26,13 @@
 <p class="lede">
 이 장만 이해하면 나머지는 전부 쉽게 읽힙니다. 특히 <strong>"정답지(oracle)"</strong>와
 <strong>"capture 점수"</strong> 두 개념이 핵심입니다.
+채점법은 이 연구의 기여 그 자체이기도 해서, 3.4~3.7에 걸쳐 단계별로 자세히 설명합니다.
 </p>
+<div class="box note"><span class="t">이 장의 지도</span>
+<p>3.1 경기장 · 3.2 시험 문제 · 3.3 선수 →
+<strong>3.4 원점수(무엇을 재나) · 3.5 백분율 환산(capture) · 3.6 총점 합산 ·
+3.7 읽을 때 주의</strong> → 3.8 AI 구성.
+급하면 3.5의 그림 하나와 3.7의 마지막 요약만 봐도 됩니다.</p></div>
 
 <h2 id="car"><span class="no">3.1</span>경기장 — 가상의 프리우스</h2>
 <p>
@@ -70,33 +76,162 @@ oracle은 실전에서는 존재할 수 없는 참가자입니다. 시험이 끝
 같은 다이얼을 가장 잘 돌린 신입니다.
 </p>
 
-<h2 id="score"><span class="no">3.4</span>채점법 — capture 점수</h2>
+<h2 id="score"><span class="no">3.4</span>채점법 ① — 무엇을 재는가 (원점수)</h2>
+<p>
+채점은 두 단계입니다. 먼저 각 참가자의 <strong>원점수</strong>를 재고(3.4),
+그 원점수를 <strong>백분율 점수(capture)</strong>로 환산합니다(3.5).
+</p>
+<p>
+원점수는 1장에서 말한 <strong>"SOC가 목표에서 얼마나 위험하게 벗어났는가"</strong>입니다.
+정식 이름은 <strong>SOC tail risk</strong>(SOC 꼬리 위험)입니다. 재는 방법은 이렇습니다.
+</p>
+<div class="step"><div class="n">1</div><div class="b">
+<div class="t">매초 목표에서 벗어난 정도를 잰다</div>
+목표는 55%입니다. 지금 잔량이 58%면 오차는 3%p, 47%면 오차는 8%p입니다.
+방향(위/아래)은 따지지 않고 <strong>벗어난 크기만</strong> 봅니다.</div></div>
+<div class="step"><div class="n">2</div><div class="b">
+<div class="t">그 오차를 위험 점수로 바꾼다 — 구간마다 벌점이 다르게</div>
+조금 벗어난 것과 많이 벗어난 것을 같게 취급하면 안 되므로, 구간을 나눠 벌점을 급격히
+올립니다.</div></div>
 <figure><div class="fig-surface">
-<svg viewBox="0 0 720 150" width="100%" style="max-width:720px" role="img" aria-label="capture 점수 개념도">
+<svg viewBox="0 0 720 230" width="100%" style="max-width:720px" role="img" aria-label="SOC 오차 구간별 위험 점수 곡선">
+  <!-- axes: x = err 0~0.13 -> 70..690 ; y = risk 0~2 -> 190..30 -->
+  <line x1="70" y1="190" x2="690" y2="190" stroke="var(--baseline)" stroke-width="1.5"/>
+  <line x1="70" y1="190" x2="70" y2="30" stroke="var(--baseline)" stroke-width="1.5"/>
+  <!-- band separators at 0.03 (x=213), 0.06 (x=356), 0.10 (x=546) -->
+  <line x1="213" y1="30" x2="213" y2="190" stroke="var(--grid)" stroke-width="1"/>
+  <line x1="356" y1="30" x2="356" y2="190" stroke="var(--grid)" stroke-width="1"/>
+  <line x1="546" y1="30" x2="546" y2="190" stroke="var(--grid)" stroke-width="1"/>
+  <!-- band labels -->
+  <text x="141" y="205" text-anchor="middle" font-size="11.5" fill="var(--good-text)">안전 (0~3%p)</text>
+  <text x="284" y="205" text-anchor="middle" font-size="11.5" fill="var(--warning)">주의 (3~6%p)</text>
+  <text x="451" y="205" text-anchor="middle" font-size="11.5" fill="var(--serious)">위험 (6~10%p)</text>
+  <text x="618" y="205" text-anchor="middle" font-size="11.5" fill="var(--critical)">한계 초과</text>
+  <!-- y ticks: risk 0.25 -> y=170, 1.0 -> y=110, 2.0 -> y=30 -->
+  <text x="64" y="194" text-anchor="end" font-size="11" fill="var(--muted)">0</text>
+  <text x="64" y="174" text-anchor="end" font-size="11" fill="var(--muted)">0.25</text>
+  <text x="64" y="114" text-anchor="end" font-size="11" fill="var(--muted)">1.0</text>
+  <text x="64" y="34" text-anchor="end" font-size="11" fill="var(--muted)">2.0</text>
+  <line x1="66" y1="170" x2="70" y2="170" stroke="var(--muted)"/>
+  <line x1="66" y1="110" x2="70" y2="110" stroke="var(--muted)"/>
+  <line x1="66" y1="30" x2="70" y2="30" stroke="var(--muted)"/>
+  <!-- curve: flat 0 until 213; quadratic to 0.25 at 356; quadratic to 1.0 at 546; linear to 2.0 at 690 -->
+  <path d="M70,190 L213,190 Q285,190 356,170 Q451,170 546,110 L690,62"
+        fill="none" stroke="var(--s1)" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="700" y="24" text-anchor="end" font-size="11" fill="var(--muted)">벌점(위험 점수)</text>
+  <text x="690" y="222" text-anchor="end" font-size="11" fill="var(--muted)">목표(55%)에서 벗어난 정도 →</text>
+</svg>
+</div><figcaption>그림 3-1. 벌점 곡선. <strong>3%p 이내는 벌점 0</strong>(정상 운영 범위로 봅니다).
+3~6%p는 제곱으로 서서히 오르다 6%p에서 0.25, 6~10%p 구간에서 다시 제곱으로 올라
+10%p에서 1.0이 됩니다. 그 위(배터리 안전 한계 이탈)는 직선으로 급증합니다.
+<strong>"가끔 살짝 벗어나는 것"은 거의 봐주고, "많이 벗어나는 것"은 강하게 벌준다</strong>는
+설계입니다 — 배터리 보호와 주행 안정성에 실제로 문제가 되는 것은 큰 이탈이기 때문입니다.</figcaption></figure>
+<div class="step"><div class="n">3</div><div class="b">
+<div class="t">주행 전체의 평균을 낸다</div>
+매초 매긴 벌점을 그 주행 내내 평균 냅니다. 이것이 그 참가자의 그 문제에 대한 원점수입니다.
+<strong>낮을수록 좋습니다</strong>(0이면 한 번도 3%p 넘게 안 벗어난 완벽한 관리).</div></div>
+<div class="box note"><span class="t">연료는 왜 원점수가 아닌가</span>
+<p>1장에서 말한 이유(배터리를 소진하면 연비가 좋아 보이는 착시) 때문입니다.
+대신 연료·엔진 껐다켜기 횟수·안전 제약 위반은 <strong>감시 항목(guardrail)</strong>으로
+따로 봅니다 — "점수를 올리려다 이것들을 망가뜨리지 않았는지" 확인하는 용도입니다.
+실제로 최종 AI는 연료가 오히려 0.8% 좋아졌습니다.</p></div>
+
+<h2 id="capture"><span class="no">3.5</span>채점법 ② — 백분율로 바꾸기 (capture 점수)</h2>
+<p>
+원점수(예: 0.42)는 그 자체로는 좋은지 나쁜지 알 수 없습니다. 문제마다 난이도가 다르기
+때문입니다. 그래서 <strong>같은 문제를 푼 두 기준점</strong>과 비교합니다 —
+기본값(0점)과 정답지(100점)입니다.
+</p>
+<figure><div class="fig-surface">
+<svg viewBox="0 0 720 190" width="100%" style="max-width:720px" role="img" aria-label="capture 점수 계산 개념도">
   <line x1="60" y1="70" x2="660" y2="70" stroke="var(--baseline)" stroke-width="2"/>
   <circle cx="60" cy="70" r="7" fill="var(--muted)"/>
-  <text x="60" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">기본값</text>
-  <text x="60" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">0%</text>
+  <text x="60" y="40" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">기본값</text>
+  <text x="60" y="56" text-anchor="middle" font-size="11" fill="var(--muted)">원점수 1.00</text>
+  <text x="60" y="96" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--muted)">0점</text>
   <circle cx="660" cy="70" r="7" fill="var(--s7)"/>
-  <text x="660" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">정답지</text>
-  <text x="660" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">100%</text>
-  <circle cx="245" cy="70" r="7" fill="var(--s1)"/>
-  <text x="245" y="46" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">어떤 참가자</text>
-  <text x="245" y="96" text-anchor="middle" font-size="11" fill="var(--muted)">여기까지 왔다면 점수 ≈ 31%</text>
-  <line x1="60" y1="122" x2="245" y2="122" stroke="var(--s1)" stroke-width="3"/>
-  <line x1="245" y1="122" x2="660" y2="122" stroke="var(--grid)" stroke-width="3"/>
-  <text x="152" y="141" text-anchor="middle" font-size="11" fill="var(--ink-2)">좁힌 격차</text>
-  <text x="452" y="141" text-anchor="middle" font-size="11" fill="var(--ink-2)">남은 격차</text>
+  <text x="660" y="40" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">정답지</text>
+  <text x="660" y="56" text-anchor="middle" font-size="11" fill="var(--muted)">원점수 0.40</text>
+  <text x="660" y="96" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--s7)">100점</text>
+  <circle cx="260" cy="70" r="7" fill="var(--s1)"/>
+  <text x="260" y="40" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">어떤 참가자</text>
+  <text x="260" y="56" text-anchor="middle" font-size="11" fill="var(--muted)">원점수 0.80</text>
+  <text x="260" y="96" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--s1)">33점</text>
+  <line x1="60" y1="126" x2="260" y2="126" stroke="var(--s1)" stroke-width="3"/>
+  <line x1="260" y1="126" x2="660" y2="126" stroke="var(--grid)" stroke-width="3"/>
+  <text x="160" y="145" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">좁힌 격차 0.20</text>
+  <text x="460" y="145" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">남은 격차 0.40</text>
+  <text x="360" y="176" text-anchor="middle" font-size="12.5" fill="var(--ink)">점수 = 0.20 ÷ (1.00 − 0.40) = 0.20 ÷ 0.60 = <tspan font-weight="700">33%</tspan></text>
 </svg>
-</div><figcaption>capture 점수 = (그 참가자가 기본값보다 좋아진 만큼) ÷ (기본값과 정답지 사이의 전체 격차).
-"정답지의 31% 성능"이 아니라 <strong>"격차를 31%만큼 좁혔다"</strong>는 뜻입니다.
-0%면 기본값과 같고, 100%면 정답지와 같습니다.</figcaption></figure>
-<p>
-잰 대상은 1장에서 말한 SOC 관리(위험 구간 이탈)입니다. 120문제 각각에서 점수를 내고
-합산합니다. 연료와 엔진 껐다켜기 횟수는 "나빠지지 않았는지" 감시만 합니다.
-</p>
+</div><figcaption>그림 3-2. capture 점수 계산 (숫자는 이해를 돕기 위한 예시).
+<strong>capture = (기본값 − 참가자) ÷ (기본값 − 정답지)</strong> —
+"기본값과 정답지 사이의 전체 격차 중 몇 %를 좁혔는가"입니다.</figcaption></figure>
+<div class="box warn"><span class="t">가장 흔한 오해</span>
+<p>"capture 31%"는 <strong>"정답지 성능의 31%밖에 못 낸다"는 뜻이 아닙니다.</strong>
+위 예시에서 참가자의 실제 성능(0.80)은 정답지(0.40)의 절반 수준이 아니라, 기본값에서
+정답지로 가는 <em>여정의 33% 지점</em>에 있다는 뜻입니다. 논문에서도
+"격차의 약 1/3을 포착"이라고만 쓰고 "정답지의 33%"라는 표현은 금지합니다.</p></div>
 
-<h2 id="ai"><span class="no">3.5</span>AI 쪽 구성, 두 가지만 알면 됩니다</h2>
+<h2 id="pooling"><span class="no">3.6</span>채점법 ③ — 120문제를 하나의 점수로 합치기</h2>
+<p>
+문제마다 점수가 나왔으면 이제 총점을 내야 합니다. 방법이 두 가지인데,
+어느 쪽을 쓰느냐로 결과가 달라질 수 있어서 <strong>규칙을 하나로 정해 두었습니다</strong>.
+</p>
+<div class="tw"><table>
+<tr><th></th><th>방법 A — 문제별 점수의 평균 <span class="badge warn">안 씀</span></th><th>방법 B — 분자·분모를 각각 합산 <span class="badge ok">채택</span></th></tr>
+<tr><td>계산</td><td>각 문제의 %를 낸 뒤 평균</td><td>120문제의 "좁힌 격차"를 모두 더하고, "전체 격차"도 모두 더한 뒤 나눔</td></tr>
+<tr><td>문제점 / 장점</td><td>격차가 거의 없는 쉬운 문제(0.001 차이)에서 % 가 폭발해 총점을 왜곡</td><td>격차가 큰 문제(개선 여지가 실제로 큰 문제)가 자연히 더 큰 비중을 가짐</td></tr>
+</table></div>
+<p>
+쉽게 말해 <strong>"평균 점수"가 아니라 "전체 격차 중 실제로 좁힌 양의 비율"</strong>입니다.
+시험으로 치면 문항별 정답률의 평균이 아니라, <em>총 배점 중 얻은 점수의 비율</em>에 가깝습니다.
+</p>
+<div class="box note"><span class="t">실제 숫자로 보면</span>
+<p>시험 120문제 전체에서 <strong>기본값과 정답지 사이 격차의 총합은 5.6296</strong>입니다
+(이 숫자는 고정된 값이라, 뒤에서 "채점 기준이 오염되지 않았는지" 확인하는 데도 쓰입니다).
+최종 AI는 이 격차의 <strong>30.7%</strong>를, 사람 규칙은 <strong>19.5%</strong>를 좁혔습니다.</p></div>
+<p class="small">참고로 "문제 단위(120개)"로 합치느냐 "조건 단위(21종류)"로 합치느냐에 따라
+소수점이 조금 달라집니다(예: 30.7% vs 32.9%). 논문은 <strong>문제 단위로 통일</strong>하고
+조건 단위 수치는 각주로만 씁니다. 이 보고서의 숫자도 전부 문제 단위입니다.</p>
+
+<h2 id="reading"><span class="no">3.7</span>채점법 ④ — 점수를 읽을 때의 주의사항</h2>
+<div class="qa">
+<div class="q">0%보다 낮은 점수도 나오나요?</div>
+<div class="a">납니다. 기본값보다 나쁘면 음수입니다. 실제로 "상황 무시 고정 튜닝" 참가자는
+<strong>−19%</strong>였습니다 — 상황을 안 보고 다이얼을 건드리면 안 건드리느니만 못하다는
+뜻이고, 이것이 "상황별 적응이 필요하다"는 증거가 됩니다.</div>
+
+<div class="q">100%를 넘을 수도 있나요?</div>
+<div class="a">드물게 넘습니다. 정답지는 주행 내내 <strong>같은 다이얼 값</strong>을 쓰는데
+(사후 최적이지만 고정값), 참가자는 주행 중에 값을 바꿀 수 있기 때문입니다.
+다만 이런 일은 대개 격차가 아주 작은 문제에서 일어나므로 크게 의미 부여하지 않습니다.</div>
+
+<div class="q">"ice 조건에서 54%"처럼 특정 조건 점수가 유독 높으면요?</div>
+<div class="a">그 조건은 <strong>애초에 격차가 거의 없는 문제</strong>일 수 있습니다.
+분모가 작으면 아주 작은 차이도 큰 %로 뻥튀기됩니다(시험 전체 21개 조건 중 7개가 이런
+소형 격차 조건인데, 이들이 전체 배점에서 차지하는 비중은 5%뿐입니다).
+그래서 이런 조건은 <strong>부호(좋아졌나/나빠졌나)만 읽고 크기는 해석하지 않는다</strong>는
+규칙을 논문에 명시했습니다.</div>
+
+<div class="q">채점 자체가 잘못될 가능성은 없나요?</div>
+<div class="a">실제로 두 번 있었고, 그래서 자동 검사를 넣었습니다. 설정을 잘못 넘기면
+"기본값" 참가자가 몰래 다른 것으로 바뀌어 <strong>채점 기준선 자체가 오염</strong>되는
+함정이 있었습니다. 지금은 채점 프로그램이 실행할 때마다 <strong>격차 총합이
+5.6296인지 먼저 확인</strong>하고, 다르면 "이 결과는 무효"라고 출력하며 멈춥니다.</div>
+
+<div class="q">같은 실험을 다시 하면 같은 점수가 나오나요?</div>
+<div class="a">AI는 훈련할 때마다 조금씩 달라집니다(주사위 요소). 그래서 AI는
+<strong>5번 훈련한 평균과 편차</strong>로 보고합니다(30.7 ± 2.3). 공식 쪽도 학습 데이터를
+다시 뽑아 편차를 쟀습니다(±2.5). 5장 그래프의 오차 막대가 이것입니다 —
+<strong>이 편차를 무시하면 우연한 차이를 실력 차로 착각하게 됩니다.</strong>
+실제로 이 프로젝트에서 그런 일이 한 번 있었고(4장), 그 경험이 채점 규약이 되었습니다.</div>
+</div>
+<div class="box key"><span class="t">채점법 한 줄 정리</span>
+<p><strong>매초 "SOC가 위험하게 벗어난 정도"에 벌점을 매겨 주행 평균을 내고(원점수),
+기본값을 0점·사후 정답지를 100점으로 놓고 그 사이 어디까지 왔는지를 백분율로 환산한 뒤
+(capture), 120문제의 격차를 모두 합산해 총점을 낸다.</strong></p></div>
+
+<h2 id="ai"><span class="no">3.8</span>AI 쪽 구성, 두 가지만 알면 됩니다</h2>
 <ul>
 <li><strong>meta-RL(메타 강화학습)</strong> — 그냥 강화학습(시행착오로 배우기)에
 "상황 파악" 능력을 더한 것입니다. 최근 1~2분의 주행 패턴을 보고 "지금 정체구나 /
@@ -111,7 +246,9 @@ oracle은 실전에서는 존재할 수 없는 참가자입니다. 시험이 끝
 <ol>
 <li>가상 프리우스 + 시험 120문제(학습과 완전 분리, 일부 조건은 모두에게 숨김).</li>
 <li>참가자 전원이 같은 다이얼 9개 — 차이는 "누가 값을 정하나"뿐.</li>
-<li>정답지(oracle) = 주행을 다 보고 나서 찾은 사후 최적. capture 점수 = 기본값~정답지 격차 중 좁힌 비율.</li>
+<li>원점수 = SOC가 위험하게 벗어난 정도의 주행 평균(3%p 이내는 벌점 0, 벗어날수록 급증).</li>
+<li>capture 점수 = 기본값(0점)~정답지(100점) 격차 중 좁힌 비율. 120문제는 격차 합산으로 총점.</li>
+<li>읽는 규칙: 음수 가능, 소형 격차 조건은 부호만, 채점 기준 오염은 자동 검사(5.6296), AI는 5회 훈련 평균±편차.</li>
 </ol></div>
 <p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/02_testbed.html">2장 실험 장치</a> (arm 상세, capture 수식, 데이터 구성)</p>
 

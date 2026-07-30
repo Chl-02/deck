@@ -44,7 +44,10 @@
 <tr><td><strong>지도학습 / fitted rule (공식)</strong></td><td>연습문제의 정답(최적 다이얼)에 "관측 → 다이얼" 1차 식을 통계로 맞춘 것. 이 연구에서 AI와 동점을 이룬 주인공.</td></tr>
 <tr><td><strong>oracle (정답지)</strong></td><td>주행이 끝난 뒤 그 주행을 다 알고 찾은 최적 다이얼. 채점의 100점 기준. 실전에서는 존재 불가.</td></tr>
 <tr><td><strong>CEM</strong></td><td>정답지를 찾는 탐색법. 다이얼 조합을 무작위로 뿌려 보고 좋은 쪽으로 범위를 좁혀가길 반복.</td></tr>
-<tr><td><strong>capture</strong></td><td>채점 점수. (기본값보다 좋아진 만큼) ÷ (기본값~정답지 전체 격차). "격차를 몇 % 좁혔나".</td></tr>
+<tr><td><strong>capture</strong></td><td>채점 점수. (기본값보다 좋아진 만큼) ÷ (기본값~정답지 전체 격차). "격차를 몇 % 좁혔나". 계산 단계는 <a href="03_setup.html#capture">3장 3.5</a>.</td></tr>
+<tr><td><strong>원점수 (SOC tail risk)</strong></td><td>매초 SOC가 목표(55%)에서 벗어난 정도에 벌점을 매겨 주행 평균을 낸 값. 3%p 이내는 0점, 벗어날수록 제곱으로 급증. 낮을수록 좋음. → <a href="03_setup.html#score">3장 3.4</a></td></tr>
+<tr><td><strong>guardrail (감시 항목)</strong></td><td>점수에는 안 들어가지만 "나빠지면 안 되는" 항목 — 연료, 엔진 껐다켜기 횟수, 안전 제약 위반.</td></tr>
+<tr><td><strong>pooling (합산 규칙)</strong></td><td>120문제 점수를 하나로 합치는 방식. 이 연구는 "문제별 % 의 평균"이 아니라 "격차 총합 대비 좁힌 총량"을 씀. → <a href="03_setup.html#pooling">3장 3.6</a></td></tr>
 <tr><td><strong>DP</strong></td><td>미래를 전부 알 때의 이론적 최적을 계산하는 방법. 실전 불가, 진단용 기준.</td></tr>
 <tr><td><strong>seed (주사위)</strong></td><td>훈련의 무작위 초기값. seed마다 성적이 달라지므로 5회 반복해 평균±편차로 보고.</td></tr>
 <tr><td><strong>OOD</strong></td><td>"훈련 분포 밖" — 훈련 때 본 적 없는 낯선 상황. 여기선 아직 사람 규칙이 앞섬.</td></tr>
