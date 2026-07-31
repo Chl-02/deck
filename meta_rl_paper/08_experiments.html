@@ -23,7 +23,7 @@
 
 <main>
 <p class="kicker">8장 · 실험 카드</p>
-<h1>실험 19건 — 왜 했고, 무엇이 나왔고, 무엇을 보여주는가</h1>
+<h1>실험 21건 — 왜 했고, 무엇이 나왔고, 무엇을 보여주는가</h1>
 <p class="lede">
 3장이 <em>시간 순서</em>로, 4장이 <em>최종 수치</em>로 정리한 것을 이 장은 <strong>실험 단위</strong>로
 다시 배열한다. 카드마다 <strong>① 왜 했나 → ② 결과(표·차트) → ③ 무엇을 보여주는가</strong> 세 칸이
@@ -37,7 +37,7 @@
   <span><span class="badge warn">주의</span> 해석 제약 있음</span>
 </div>
 
-<div class="box note"><span class="t">읽는 법 — 이 19건이 논문의 논증 구조 그대로다</span>
+<div class="box note"><span class="t">읽는 법 — 이 21건이 논문의 논증 구조 그대로다</span>
 <p><strong>A(분모·권한)</strong>가 채점 기준과 3요인 중 ③을 만들고, <strong>B(주 결과)</strong>가
 헤드라인을, <strong>C(정보 축)</strong>가 요인 ②를, <strong>D(기각 6건)</strong>가 요인 ①과
 반증 카탈로그를, <strong>E</strong>가 학습의 잔여 가치와 방법론 신뢰성을 담당한다.
@@ -250,13 +250,30 @@ CV R² 0.15는 <em>선형</em> 설명력일 뿐이고, 심사자는 <em>"당신�
 <tr><td>1단계 스크리닝</td><td>기존 라벨 표로 CV R²만 계산 (재학습 0, suite 평가 0)</td></tr>
 <tr><td>2단계 진출 기준</td><td>같은 티어의 ridge를 CV에서 이긴 조합만 suite 평가</td></tr>
 <tr><td><strong>2단계 진출</strong></td><td class="num"><strong>0건</strong></td></tr>
-</table></div></div>
+</table></div>
+<p class="mcap"><strong>2026-07-30 후속 — 마지막 미시험 축(트리 깊이)을 닫음.</strong> 위 6종 중
+부스팅은 <em>깊이 1 스텀프</em>뿐이어서 "특징 간 상호작용을 못 본 것 아닌가"가 남아 있었다.
+깊이 3까지 되는 CART 부스팅(<code>gbtree</code>)을 같은 nested CV에 넣었다.</p>
+<div class="tw"><table>
+<tr><th>티어</th><th class="num">T0</th><th class="num">T0h</th><th class="num">T1</th><th class="num">T2a</th><th class="num">T2b</th></tr>
+<tr><td>ridge (선형 기준)</td><td class="num">0.157</td><td class="num">0.145</td><td class="num">0.164</td><td class="num">0.162</td><td class="num">0.152</td></tr>
+<tr><td>gbtree (깊이 ≤3)</td><td class="num">0.165</td><td class="num">0.170</td><td class="num">0.161</td><td class="num">0.169</td><td class="num">0.169</td></tr>
+<tr><td>차이</td><td class="num">+0.008</td><td class="num">+0.025</td><td class="num neg">−0.003</td><td class="num">+0.008</td><td class="num">+0.017</td></tr>
+<tr><td>fold sd (잡음 폭)</td><td class="num">0.041</td><td class="num">0.043</td><td class="num">0.040</td><td class="num">0.039</td><td class="num">0.041</td></tr>
+</table></div>
+<p class="mcap">최대 개선 <strong>+0.025 &lt; fold sd 0.039~0.043</strong> — 전부 잡음 이하다.
+게다가 내부 CV가 <strong>전 fold에서 깊이 2·최소 라운드</strong>를 골랐다: 데이터가 깊이 3을
+지지하지 않는다는 뜻이다.</p></div>
 <div class="xrow show"><span class="xl">무엇을 보여주는가</span>
 <p><strong>상한은 선형모델의 아티팩트가 아니다.</strong> 정답 라벨을 쥐여주고 유연한 학습기를
 붙여도 선형식을 넘지 못한다 — 알고리즘도 함수 형태도 병목이 아니라는 뜻이다.
-E6(정보)과 짝을 이뤄 요인 ②의 방어를 완성한다.</p></div>
-<footer class="xmeta">2026-07-27 · 라벨 표 <code>fitted_9knob_rule/20260726_infoaxis_*/train_features_superset.csv</code>
-(802 케이스 × 22 특징 + 9 노브 정답 + J_base/J_oracle) 재사용 · 비싼 CEM 탐색은 재실행 없음</footer>
+2026-07-30 gbtree까지 더해 <strong>커널 근사·신경망·국소법·부스팅(깊이 포함)이 모두 실패</strong>했으므로
+함수 클래스 축은 닫혔다. E6(정보)과 짝을 이뤄 요인 ②의 방어를 완성한다.</p></div>
+<footer class="xmeta">2026-07-27 (6종) + <strong>2026-07-30 (gbtree)</strong> ·
+라벨 표 <code>fitted_9knob_rule/20260726_infoaxis_*/train_features_superset.csv</code>
+(802 케이스 × 22 특징 + 9 노브 정답 + J_base/J_oracle) 재사용 · 비싼 CEM 탐색은 재실행 없음 ·
+후속 산출물 <code>function_class_sweep/20260730_gbtree/tier_class_cv.csv</code>
+(재실행에서 ridge 5개 값이 소수점까지 재현 — 검정 하네스 불변 확인)</footer>
 </article>
 </div>
 
@@ -426,12 +443,13 @@ encoder)이 실제로 기여하는가.</strong> 프로젝트 최초로 encoder �
 </table></div>
 <p class="mcap">평균은 <strong>비유의</strong>, 분산은 <strong>유의</strong>(F 검정 p&lt;0.05).</p></div>
 <div class="xrow show"><span class="xl">무엇을 보여주는가</span>
-<p><strong>태스크 추론은 평균 성능이 아니라 seed 안정성을 산다.</strong> encoder를 가리면 평균은
-거의 그대로인데 학습이 망하는 판이 생긴다(5판 중 1판꼴). 이것이 "1/3 벽" 안에서도
-학습 구조가 가지는 실질 가치이고, CEP 2025의 "메타학습은 수렴 속도를 사고 최종 성능은
-동등"과 정확히 같은 모양이다.</p></div>
-<footer class="xmeta">2026-07-27 · 한계: <strong>z=0 완전 제거는 미시험</strong> —
-"두 입력 branch의 결합이 안정성을 만든다"까지만 주장 가능</footer>
+<p><strong>branch를 하나만 가리면 학습이 불안정해진다</strong> — 평균은 거의 그대로인데
+학습이 망하는 판이 생긴다(5판 중 1판꼴). 당시 해석은 "태스크 추론이 seed 안정성을 산다"였으나,
+<strong>2026-07-30 E20이 이 해석을 정정했다</strong>: 완전 제거(z≡0)는 오히려 무해하다.
+따라서 여기서 보이는 것은 <em>태스크 추론의 가치</em>가 아니라 <strong>반쪽짜리(퇴화한) 추론
+신호를 주입하면 해롭다</strong>는 것이다. → <a href="#E20">E20</a></p></div>
+<footer class="xmeta">2026-07-27 · <strong>해석 정정됨(2026-07-30, E20)</strong> —
+당시 명시했던 한계 "z=0 완전 제거는 미시험"이 해소되면서 결론이 바뀌었다</footer>
 </article>
 
 <article class="xcard">
@@ -531,6 +549,67 @@ T0 자체도 부분표본 간 27.7~33.0%로 ±3pt 흔들린다.</p></div>
 <code>decision_records/20260714_checkpoint_selection_tail_first.md</code> ·
 안정성 검사 <code>experiment_suite_v3/stab_{T0,T1g}_s{0..3}/</code></footer>
 </article>
+
+<article class="xcard" id="E20">
+<header><span class="xid">E20</span><h3>encoder 완전 제거 (z≡0) — E15 해석의 정정</h3><span class="badge ok">채택</span><span class="badge warn">기존 서술 교체</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>E15는 branch를 <em>하나씩</em> 가렸을 뿐 <strong>잠재 변수 z 자체는 항상 살아 있었다.</strong>
+따라서 "태스크 추론이 필요한가"라는 질문에는 답하지 못했고, 이 한계는 E15 카드에 명시돼 있었다.
+z를 완전히 0으로 고정하는 모드를 신규 구현해(<code>encoder_mode=zero_z</code>: z=μ=logσ≡0,
+KL 항이 정확히 0) 5 seed × 200k를 재학습했다. 나머지 구조(fitted base, gate, 샘플링, 권한)는 V6와 동일하다.</p></div>
+<div class="xrow"><span class="xl">결과</span>
+<div class="tw"><table>
+<tr><th>arm</th><th class="num">평균 capture</th><th class="num">seed sd</th><th class="num">Welch t vs V6</th><th class="num">F vs V6</th></tr>
+<tr><td>V6 full encoder (기준)</td><td class="num">30.66%</td><td class="num">2.25</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><strong>z≡0 완전 제거</strong></td><td class="num"><strong>31.24%</strong></td><td class="num"><strong>2.71</strong></td><td class="num">+0.37 <span class="small">(ns)</span></td><td class="num">1.44 <span class="small">(ns)</span></td></tr>
+<tr><td>raw_only (E15, 참고)</td><td class="num">28.59%</td><td class="num neg">8.72</td><td class="num">−0.51 <span class="small">(ns)</span></td><td class="num neg">14.99 <span class="small">(p&lt;0.05)</span></td></tr>
+<tr><td>summary_only (E15, 참고)</td><td class="num">28.62%</td><td class="num neg">7.66</td><td class="num">−0.57 <span class="small">(ns)</span></td><td class="num neg">11.58 <span class="small">(p&lt;0.05)</span></td></tr>
+</table></div>
+<p class="mcap">완전 제거는 평균도 분산도 <strong>full encoder와 구분되지 않는다</strong>(둘 다 비유의).
+반면 <em>반쪽만</em> 가린 E15 arm은 분산이 유의하게 나쁘다. 가드레일(연료 −1.35%/switchΔ +0.100)도 회귀 없음.</p></div>
+<div class="xrow show"><span class="xl">무엇을 보여주는가</span>
+<p><strong>이 구조에서 태스크 추론(z)은 평균에도 안정성에도 필요조건이 아니다.</strong>
+E15에서 관찰된 불안정은 "추론을 없애서"가 아니라 <strong>퇴화한 추론 신호를 주입해서</strong>
+생긴 것이다 — 반쪽 입력으로 만든 z는 없는 것만 못하다. 2026-07-23 anticipation probe에서
+z가 미래 수요를 이력 이상으로 설명하지 못했던 것(ΔR² ≈ +0.02)과도 정합한다.
+<strong>논문 함의</strong>: 프레이밍을 "잠재 태스크 추론(PEARL)" 중심에서
+<strong>"구조 + bounded residual 학습기"</strong> 중심으로 옮겨야 하고, §8의 안정성 단락은 교체 대상이다.</p></div>
+<footer class="xmeta">2026-07-30 · 신규 코드 <code>train_meta_rl.py</code> zero_z 모드
+(z_dim은 4로 유지 → 기존 체크포인트·평가 스크립트 전부 무수정 호환) ·
+config <code>configs/meta_rl_v6_zero_z.json</code> ·
+학습 <code>v6_encoder_zero_z/20260730/seed_*</code> · suite <code>experiment_suite_v3/20260730_enc_zero_z/</code>
+(분모 5.6296 확인, 케이스 단위 pooling — E15와 동일 프로토콜)</footer>
+</article>
+
+<article class="xcard" id="E21">
+<header><span class="xid">E21</span><h3>알고리즘 계열 교체 (SAC → TD3) — "SAC라서 되는 것 아닌가"</h3><span class="badge ok">채택</span></header>
+<div class="xrow"><span class="xl">왜 했나</span>
+<p>이 논문의 핵심 주장은 <strong>"성능을 만드는 것은 알고리즘이 아니라 구조"</strong>(강한 fitted base +
+bounded gated residual + gate)다. 그렇다면 학습기를 통째로 바꿔도 결과가 유지돼야 한다.
+off-policy 계열 안에서 가장 다른 축인 <strong>TD3</strong>(결정론 정책 + target policy smoothing +
+지연 정책 갱신, 엔트로피 항 제거)로 교체해 5 seed × 200k를 재학습했다.
+<em>통제</em>: encoder 학습 경로와 타깃 폴리악 주기는 SAC arm과 동일하게 두어 <strong>알고리즘 계열만</strong> 격리했다.</p></div>
+<div class="xrow"><span class="xl">결과</span>
+<div class="tw"><table>
+<tr><th>arm</th><th class="num">평균 capture</th><th class="num">seed sd</th><th class="num">Welch t</th><th class="num">F (임계 9.60)</th></tr>
+<tr><td>V6 = SAC (기준)</td><td class="num">30.66%</td><td class="num">2.25</td><td class="num">—</td><td class="num">—</td></tr>
+<tr><td><strong>TD3</strong></td><td class="num"><strong>25.72%</strong></td><td class="num neg"><strong>9.73</strong></td><td class="num">−1.11 <span class="small">(ns)</span></td><td class="num neg">18.66 <span class="small">(p&lt;0.05)</span></td></tr>
+</table></div>
+<p class="mcap">seed별: 30.35 / <strong>40.68</strong> / 20.47 / 19.66 / 17.42.
+평균 차이는 <strong>학습 추첨 오차에 묻히고</strong>(비유의), 흔들림만 4배 이상 커졌다.
+40.68은 프로젝트 전체 <strong>단일 seed 최고 기록</strong>이다. 가드레일은 SAC와 동등(연료 −1.63%, switchΔ +0.150).</p></div>
+<div class="xrow show"><span class="xl">무엇을 보여주는가</span>
+<p><strong>구조가 평균 성능을 알고리즘 계열 너머로 운반한다</strong> — 학습기를 SAC에서 TD3로 바꿔도
+평균은 통계적으로 같은 자리에 도달한다. 이는 "1/3 벽이 SAC의 한계일 뿐"이라는 반론을 막는다.
+다만 <strong>SAC가 사는 것은 평균이 아니라 seed 신뢰성</strong>이다(sd 2.25 → 9.73). 배포 서사는
+"단일 학습 run을 믿을 수 있어야 한다"이므로, 이 축에서는 SAC를 유지한다.
+E20과 합치면 <strong>학습기 쪽 선택(추론 구조·알고리즘)은 평균을 바꾸지 않고 재현성만 바꾼다</strong>가 된다.</p></div>
+<footer class="xmeta">2026-07-30 · 신규 코드 <code>train_meta_rl.py</code> TD3 경로
+(<code>algorithm</code> 태그를 체크포인트에 저장 → 로더가 자동 분기, 소비 스크립트 8종 무수정) ·
+config <code>configs/meta_rl_v6_td3.json</code> ·
+학습 <code>v6_td3/20260730/seed_*</code> · suite <code>experiment_suite_v3/20260730_td3/</code> ·
+해석 제약: off-policy 계열 내 교체이며 <strong>on-policy(PPO 등)는 미시험</strong></footer>
+</article>
 </div>
 
 <h2 id="map"><span class="no">8.F</span>논문 절 ↔ 실험 매핑</h2>
@@ -542,9 +621,10 @@ T0 자체도 부분표본 간 27.7~33.0%로 ±3pt 흔들린다.</p></div>
 <tr><td>§3 방법 — 통계 규약</td><td>E5, E19</td><td>학습 추첨 오차 · 검정 3종</td></tr>
 <tr><td>§4 권한 축</td><td>E3, E1</td><td>본문 / 부록</td></tr>
 <tr><td>§5 주 결과</td><td>E4, E5</td><td>헤드라인 표 + 부호 역전</td></tr>
-<tr><td>§6 정보 축</td><td>E6, E7, E8</td><td>사다리 / 표본 / 함수 클래스</td></tr>
+<tr><td>§6 정보 축</td><td>E6, E7, E8</td><td>사다리 / 표본 / 함수 클래스(깊이 포함)</td></tr>
 <tr><td>§7 기각 표</td><td>E9~E14</td><td>반증 카탈로그 6건</td></tr>
-<tr><td>§8 논의 — 학습의 가치</td><td>E15, E4(hand 0% 조건)</td><td>안정성 + 자동화 가치</td></tr>
+<tr><td>§8 논의 — 학습의 가치</td><td><strong>E20</strong>, E15, E4(hand 0% 조건)</td><td>⚠ <strong>서술 교체</strong>: 기존 "안정성" 단락(E15)은 E20이 정정 → "구조 + bounded residual" 프레이밍 + 자동화 가치</td></tr>
+<tr><td>§8 논의 — 알고리즘 불변성</td><td><strong>E21</strong></td><td>SAC→TD3에서 평균 유지(구조 주장 방어), SAC는 재현성 담당</td></tr>
 <tr><td>Limitations</td><td>E17, E18, E3(78케이스)</td><td>외삽 실패 / 정차 idle / DP 범위</td></tr>
 </table></div>
 

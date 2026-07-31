@@ -103,7 +103,7 @@
 <tr><th>우선</th><th>항목</th><th>비용</th><th>왜</th></tr>
 <tr><td>1</td><td><strong>thesis 문장 교체</strong> — "관측 병목" 표현을 문서 전체에서 제거</td><td>30분</td><td>흔들린 채 서론을 쓰면 전부 재작성</td></tr>
 <tr><td>2</td><td><strong>oracle 재현성 검사</strong> (CEM 재실행 2회, 재학습 0)</td><td>소</td><td>R4 — 유일한 미방어 급소</td></tr>
-<tr><td>3</td><td>인코더 제거 SAC ablation (z=0 완전 제거)</td><td>5 seed × 200k + 신규 코드</td><td>meta-RL 논문 관례 요구 — #26은 branch 단위 재학습 ablation까지 완료, z=0 완전 제거만 미시험</td></tr>
+<tr><td>3</td><td><s>인코더 제거 SAC ablation (z=0 완전 제거)</s> → <strong>2026-07-30 완료</strong>. 대신 <strong>§8 서술 교체</strong>가 필요</td><td>완료분 반영</td><td>z≡0이 full과 구분 안 됨(31.24/2.71 vs 30.66/2.25, 둘 다 ns) → "encoder가 안정성을 산다" 단락을 "퇴화 z만 해롭다 + 구조 중심" 으로 교체. 함께 완료된 TD3 교체(평균 ns, sd 9.73)는 알고리즘 불변성 근거로 §8 신규 문단 (8장 E20·E21)</td></tr>
 <tr><td>4</td><td>A2·A4 전문 확보 → §1 대조표 6열 완성 (#24b)</td><td>문헌 작업</td><td>서론 P2의 핵심 그림</td></tr>
 <tr><td>5</td><td>함수 클래스 CV 스크리닝 각주 정리</td><td>완료분 정리</td><td>"선형 상한" 반론 — sweep 완료(진출 0건), 서술만</td></tr>
 </table></div>

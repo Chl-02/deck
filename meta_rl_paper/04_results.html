@@ -179,11 +179,18 @@ bounded 9-knob은 그 상금을 포기하고 제약 준수를 산 거래이며, 
 <ul>
 <li><strong>수작업 캘리브레이션의 자동화</strong> — hand rule 대비 +11.2pt(t=11.08)는 견고하다.
 사람이 짠 규칙은 분모가 큰 조건(long_min_timer, low_soc_ref)에서 0%였다.</li>
-<li><strong>학습 안정성 (encoder의 진짜 기여, 확정)</strong> — 재학습 ablation(5 seed × 200k,
-프로젝트 최초): 평균은 비유의(−2.1/−2.0pt, Welch t=−0.51/−0.57)지만
-<strong>분산이 유의</strong>(sd 2.3 → 8.7/7.7, F=14.98/11.58, p&lt;0.05, 실패 seed 각 1개).
-태스크 추론은 평균 성능이 아니라 <em>seed 안정성</em>을 산다. (한계: z=0 완전 제거는 미시험 —
-"두 입력 branch의 결합이 안정성을 만든다"까지만 주장.)</li>
+<li><strong>태스크 추론(encoder)의 기여 — ⚠ 2026-07-30 정정</strong> — branch 재학습
+ablation(5 seed × 200k)은 평균 비유의(−2.1/−2.0pt), 분산 유의(sd 2.3 → 8.7/7.7,
+F=14.98/11.58, p&lt;0.05)였고, 당시 해석은 "추론이 seed 안정성을 산다"였다. 그러나
+<strong>완전 제거(z≡0) arm을 재학습해보니 평균 31.24%·sd 2.71로 full(30.66/2.25)과
+구분되지 않았다</strong>(t=+0.37, F=1.44, 둘 다 비유의). 즉 불안정의 원인은 <em>추론의 부재</em>가
+아니라 <strong>반쪽 입력으로 만든 퇴화 신호의 주입</strong>이다. → 이 구조에서 태스크 추론은
+평균에도 안정성에도 필요조건이 아니며, 학습의 잔여 가치는 아래 자동화 항목과
+<strong>구조 자체</strong>에 있다(8장 E20).</li>
+<li><strong>알고리즘 계열 불변성 (2026-07-30 신규)</strong> — 학습기를 SAC → TD3로 교체해도
+평균 capture는 25.72% vs 30.66%로 <strong>학습 추첨 오차에 묻힌다</strong>(t=−1.11, 비유의;
+단일 seed 최고 40.68% 기록). 다만 seed 분산은 유의하게 악화(sd 9.73, F=18.66, p&lt;0.05)한다.
+<strong>구조가 평균을 알고리즘 너머로 운반하고, SAC는 재현성을 담당한다</strong>(8장 E21).</li>
 <li><strong>gate와 guard는 배포 안전장치</strong> — gate: OOD capture 23.7 vs ungated 7.5
 (조건 단위), nominal guardrail 유지(연료 −0.81%). guard: 표적 조건(high_mass_uphill)
 +5.1pt 한정 — "전체 +2.6pt"는 조건집합 불일치 산물(동일 15조건 +0.1pt)로 정정됨.</li>

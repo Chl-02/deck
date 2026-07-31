@@ -55,13 +55,18 @@ t=+0.16으로 부호 반대). "우리 방법이 이겼다" 구조로 쓰면
 oracle 지도 증류와 통계적으로 구분되지 않으며, 이 약 31% 천장은 특징 확장·함수 클래스·
 게이팅·권한 미세조정·재적응 속도·시변 스케줄 어느 축으로도 오르지 않는다.<br><br>
 ③ 따라서 학습의 잔여 가치는 평균 성능이 아니라 수작업 캘리브레이션의 자동화와
-학습 안정성(encoder ablation으로 확정)에 있다.
+배포 가능한 구조(강한 base + bounded gated residual)에 있다.
 </p></blockquote>
-<div class="box warn"><span class="t">⚠ 갱신 반영 (2026-07-27)</span>
+<div class="box warn"><span class="t">⚠ 갱신 반영 (2026-07-27 → <strong>2026-07-30 재갱신</strong>)</span>
 <p>원래 결정록 ③은 "천장을 정하는 것은 관측 가능성이며 … (예비적으로) seed 안정성"이었다.
-그러나 <strong>"관측 병목" thesis는 정보 축 T0h 실험(순열 p=1.000)이 폐기</strong>했고
-(4장 참조), encoder 재학습 ablation(#26)이 완료되어 <strong>"예비" 딱지도 제거</strong>됐다.
-집필 시 이 갱신판을 따른다. 확정 thesis 전문은 4장 끝의 한 문장 참조.</p></div>
+<strong>"관측 병목" thesis는 정보 축 T0h 실험(순열 p=1.000)이 폐기</strong>했고(4장 참조),
+encoder 재학습 ablation(#26)으로 "예비" 딱지가 제거되면서 한때 ③은 <em>"학습 안정성"</em>이었다.</p>
+<p><strong>2026-07-30 교차검증 3축이 그 안정성 항목을 다시 정정했다.</strong> 완전 제거(z≡0)
+arm이 full encoder와 평균·분산 모두 구분되지 않았고(31.24/2.71 vs 30.66/2.25, 둘 다 ns),
+SAC → TD3 교체에서도 평균은 유지됐다(t=−1.11, ns; 단 sd 9.73). 따라서 ③의 두 번째 항은
+"encoder가 사는 안정성"이 아니라 <strong>"구조 자체"</strong>로 교체했고, seed 재현성은
+<em>SAC라는 학습기 선택</em>이 담당하는 별도 항목으로 분리된다. 집필 시 이 갱신판을 따른다
+(근거: 8장 E20·E21, ledger 2026-07-30).</p></div>
 
 <h2 id="title"><span class="no">5.3</span>제목 후보</h2>
 <div class="tw"><table>
