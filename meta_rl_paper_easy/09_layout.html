@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9. 논문은 이렇게 생깁니다 — Meta-RL 쉬운 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 쉬운 보고서<span class="easy-badge">쉬운판</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_basics.html">1 기초</a>
+    <a class="ch" href="02_question.html">2 질문</a>
+    <a class="ch" href="03_setup.html">3 실험 설계</a>
+    <a class="ch" href="04_story.html">4 이야기</a>
+    <a class="ch" href="05_findings.html">5 발견</a>
+    <a class="ch" href="06_paper.html">6 논문</a>
+    <a class="ch" href="07_glossary.html">7 용어·FAQ</a>
+    <a class="ch" href="08_experiments.html">8 실험 하나하나</a>
+    <a class="ch cur" href="09_layout.html">9 논문의 모습</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">9장 · 논문은 이렇게 생깁니다</p>
+<h1>실험 21가지가 그림 6장과 표 6개로 줄어드는 과정</h1>
+<p class="lede">
+8장에서 실험 21가지를 봤습니다. 그럼 논문이 엄청나게 길어질까요? 아닙니다.
+<strong>실제로 그림이나 표를 따로 갖는 실험은 6가지뿐</strong>이고, 5가지는 표의 한 줄로,
+나머지는 문장 하나로 들어갑니다. 이 장은 그 정리 결과입니다.
+</p>
+
+<div class="box note"><span class="t">먼저 — 논문은 보통 어느 정도인가</span>
+<p>이 연구가 내려는 저널에 올해 실린 비슷한 논문(중국·이탈리아 공동 연구)은
+<strong>14쪽에 그림 15장, 표 9개</strong>였습니다. 그런데 그 논문이 실제로 한 실험은 <strong>5가지</strong>입니다.
+즉 이 분야는 <em>실험은 적고 그림은 많은</em> 편입니다.</p>
+<p>우리는 정반대입니다 — <strong>실험은 21가지인데 그림은 6장</strong>. 많은 게 아니라 오히려 압축된 쪽입니다.</p></div>
+
+<h2 id="flow"><span class="no">9.1</span>논문의 이야기 순서 — 질문 8개</h2>
+<p>논문의 각 장은 <strong>질문 하나에 답하고, 그 답의 증거로 그림이나 표 하나</strong>를 보여줍니다.
+이 순서가 곧 논문의 논리입니다.</p>
+
+<div class="tw"><table>
+<tr><th>장</th><th>이 장이 답하는 질문</th><th>답</th><th>보여주는 것</th></tr>
+<tr><td><strong>1</strong></td><td>기존 연구들의 성적표는 왜 서로 비교가 안 되나?</td>
+<td>채점 기준이 논문마다 다르기 때문</td><td class="num">표 1 · 그림 1</td></tr>
+<tr><td><strong>2</strong></td><td>무엇을 가지고 실험했나?</td>
+<td>양산차와 비슷한 하이브리드 제어기 + 다이얼 9개</td><td class="num">(글)</td></tr>
+<tr><td><strong>3</strong></td><td>공정하게 비교하려면 어떻게 해야 하나?</td>
+<td>모두에게 같은 권한을 주고, 정답지를 만들어 만점 기준으로 삼는다</td><td class="num">그림 2 · 표 2</td></tr>
+<tr><td><strong>4</strong></td><td>운전대까지 주면 어떻게 되나?</td>
+<td>확 좋아지지만 그 차는 팔 수 없다</td><td class="num">그림 3</td></tr>
+<tr><td><strong>5</strong></td><td>권한을 똑같이 주고 방법만 바꾸면?</td>
+<td>학습은 사람을 이기지만, 학습끼리는 구분이 안 된다</td><td class="num">그림 4 · 표 3</td></tr>
+<tr><td><strong>6</strong></td><td>그 한계가 진짜인가?</td>
+<td>데이터·정보·수식·학습법 <strong>네 방향</strong>으로 밀어도 안 움직인다</td><td class="num">그림 5 · 그림 6 · 표 4</td></tr>
+<tr><td><strong>7</strong></td><td>돌파할 방법은 다 해봤나?</td>
+<td>다섯 가지를 하나씩 실험으로 막았다</td><td class="num">표 5</td></tr>
+<tr><td><strong>8</strong></td><td>그럼 남은 2/3는 뭐고, AI는 어디에 쓸모 있나?</td>
+<td>남은 건 그날의 우연. AI의 가치는 사람 손 튜닝 자동화</td><td class="num">표 6</td></tr>
+</table></div>
+
+<div class="box key"><span class="t">한 줄로 이은 이야기</span>
+<p>비교가 공정하지 않았다 <strong>→</strong> 공정하게 재는 자를 만들었다 <strong>→</strong>
+운전대를 주면 확 달라진다 <strong>→</strong> 그런데 권한을 고정하면 방법은 의미가 없다 <strong>→</strong>
+데이터도 정보도 수식도 학습법도 그 자리를 못 옮긴다 <strong>→</strong>
+돌파 시도도 전부 실패한다 <strong>→</strong> 남은 것은 애초에 아무도 못 가져가는 몫이다.</p></div>
+
+<h2 id="figs"><span class="no">9.2</span>그림 6장 — 무엇을 그리나</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">그림 1</span><h3>연구 전체를 한 장으로</h3><span class="badge info">1장</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p>이 연구의 결론을 한 문장으로 그린 그림입니다 —
+<strong>"운전대를 바꾸면 크게 달라지고, 방법이나 정보를 바꾸면 아무 일도 안 일어난다."</strong></p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<p>패널 세 개가 나란히 — <strong>(가)</strong> 운전대를 줬을 때, <strong>(나)</strong> 방법을 바꿨을 때,
+<strong>(다)</strong> 정보를 늘렸을 때. (나)와 (다)에는 <strong>같은 회색 띠</strong>를 깔아서
+"여기서 안 움직인다"가 눈에 바로 들어오게 합니다.</p></div>
+<div class="xrow show"><span class="xl">왜 필요한가</span>
+<p>논문 첫머리에 있어야 독자가 "무슨 얘기를 하려는 논문인지"를 30초 안에 압니다.
+학술지 표지용 그림으로도 그대로 씁니다.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">그림 2</span><h3>채점 방식 설명도</h3><span class="badge info">3장</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p>이 연구가 <strong>새로 만든 것</strong> 그 자체입니다. AI가 만질 수 있는 범위(다이얼 9개)와
+만질 수 없는 범위(운전대)를 선으로 나누고, 점수 눈금(0점=기본, 100점=정답지)을 함께 보여줍니다.</p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<p>왼쪽은 블록도, 오른쪽은 <strong>세로 눈금자</strong>. 눈금자에 참가자를 전부 얹습니다 —
+공장 고정 튜닝(−18.9) · 기본값(0) · 사람 규칙(19.5) · AI(30.7) · 공식(31.7) · 정답지(100).</p></div>
+<div class="xrow show"><span class="xl">왜 필요한가</span>
+<p>이 논문의 핵심 기여는 "새 AI"가 아니라 <strong>"공정하게 재는 자"</strong>입니다.
+그 자를 먼저 보여줘야 뒤의 결과가 의미를 갖습니다.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">그림 3</span><h3>운전대의 가격표 — 얻은 것과 잃은 것</h3><span class="badge info">4장</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p>운전대까지 주면 연료는 <strong>9.3% 아끼지만</strong> 배터리 한계 위반이 <strong>13배</strong>로 늘고
+배터리를 <strong>60% 더</strong> 굴립니다. 이 둘을 <strong>한 그림에서 동시에</strong> 보여주는 게 중요합니다.</p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<p>왼쪽 막대 = 얻은 것(연료), 오른쪽 막대 = 잃은 것(위반·배터리 부담). 나란히 놓아 거래처럼 보이게.</p></div>
+<div class="xrow show"><span class="xl">주의할 점</span>
+<p>이 계산은 <strong>평범한 조건 78개</strong>에서만 가능했습니다(숨겨진 조건은 계산에 못 넣음).
+그림 설명에 이 제한을 반드시 씁니다 — 안 쓰면 심사자가 먼저 지적합니다.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">그림 4</span><h3>본 결과 — 세 참가자, 하나의 벽</h3><span class="badge ok">5장 · 핵심</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p>두 가지가 <strong>동시에</strong> 읽혀야 합니다 —
+(1) 학습 두 참가자가 사람 규칙을 크게 이긴다, (2) 그런데 <strong>그 둘은 서로 구분되지 않는다</strong>.</p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<div class="mbars">
+  <div class="mb dim"><span class="k">공장 고정 튜닝</span><span class="t"></span><span class="v">−18.9%</span></div>
+  <div class="mb"><span class="k">사람 규칙</span><span class="t"><i class="b3" style="width:61.5%"></i></span><span class="v">19.5%</span></div>
+  <div class="mb"><span class="k">AI</span><span class="t"><i class="b1" style="width:96.8%"></i></span><span class="v">30.7</span></div>
+  <div class="mb"><span class="k">공식</span><span class="t"><i class="b2" style="width:100%"></i></span><span class="v">31.7</span></div>
+</div>
+<p class="mcap">위 두 막대에 <strong>같은 오차 띠</strong>를 겹쳐서 "이 둘은 사실상 동점"임을 보이게 합니다.</p></div>
+<div class="xrow show"><span class="xl">그림 설명에 넣을 문장</span>
+<p>"연습문제를 바꾸면 <strong>어느 쪽이 앞서는지가 뒤집힌다</strong>. 순위가 주사위에 달렸다는 것 자체가
+둘이 같은 벽에 닿았다는 증거다."</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">그림 5</span><h3>정보를 늘려도 안 오른다</h3><span class="badge ok">6장 · 핵심</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p>"차가 볼 수 있는 정보를 저자가 일부러 좁게 골랐다"는 의심을 막는 그림입니다.
+가장 중요한 건 <strong>점 하나</strong> — 실제 차라면 절대 알 수 없는 정답을 알려준 그 점이
+<strong>오히려 아래로 떨어진</strong>다는 것.</p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<p>가로축 = 준 정보의 개수(10개 → 22개), 세로축 = 정답을 맞추는 정도.
+정답을 알려준 점만 경고색으로 칠하고 "우연히 이 정도 나올 확률 100%"라는 주석을 답니다.</p></div>
+<div class="xrow show"><span class="xl">왜 필요한가</span>
+<p>이 그림 하나가 이 연구의 결론을 바꿨습니다. 원래는 "정보가 부족해서 한계에 걸렸다"였는데,
+이 실험이 그걸 <strong>스스로 뒤집었습니다.</strong></p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">그림 6</span><h3>네 방향으로 밀어도 벽이 안 움직인다</h3><span class="badge ok">6장 · 새로 제안</span></header>
+<div class="xrow"><span class="xl">무엇을 보여주나</span>
+<p><strong>이 논문에서 가장 설득력 있는 그림이 될 후보입니다.</strong>
+완전히 다른 네 가지를 바꿔봤는데 결과가 전부 같은 자리에 모인다는 것을 <strong>한 그림</strong>에 담습니다.</p></div>
+<div class="xrow"><span class="xl">어떻게 생겼나</span>
+<div class="tw"><table>
+<tr><th>바꾼 것</th><th>어떻게 바꿨나</th><th>결과</th></tr>
+<tr><td>연습문제 양</td><td>70개 → 802개</td><td>차이 없음</td></tr>
+<tr><td>주는 정보</td><td>10개 → 22개 (정답 포함)</td><td>평평 · 정답 준 건 오히려 하락</td></tr>
+<tr><td>수식의 복잡도</td><td>6가지 방식 × 5단계</td><td>1차식을 이긴 조합 0개</td></tr>
+<tr><td>학습 방법</td><td>SAC → TD3</td><td>평균 차이 없음</td></tr>
+</table></div>
+<p class="mcap">네 결과를 세로로 쌓고 기준선에 회색 띠를 깔아서,
+<strong>어느 점도 띠를 벗어나지 못하는 그림</strong>을 만듭니다.</p></div>
+<div class="xrow show"><span class="xl">왜 이 그림이 중요한가</span>
+<p>이걸 네 개의 소절로 따로 쓰면 독자가 <strong>"또 실패 얘기네"</strong>로 읽습니다.
+한 그림에 모으면 <strong>"네 방향으로 밀었는데 벽이 안 움직인다"라는 하나의 주장</strong>이 됩니다.
+실험이 많다는 문제를 그림 하나로 푸는 장치이기도 합니다.</p></div>
+</article>
+</div>
+
+<h2 id="tables"><span class="no">9.3</span>표 6개 — 무엇을 담나</h2>
+<div class="tw"><table>
+<tr><th>표</th><th>장</th><th>담는 내용</th><th class="num">줄 수</th></tr>
+<tr><td><strong>표 1</strong></td><td>1장</td><td>기존 연구들의 채점 기준 비교 — 누가 어떤 권한과 정보를 가졌고, 무엇을 만점으로 삼았나. 맨 아래 줄이 우리 연구</td><td class="num">7</td></tr>
+<tr><td><strong>표 2</strong></td><td>3장</td><td>시험 문제 120개의 구성 — 어떤 상황이 몇 개씩인지</td><td class="num">8</td></tr>
+<tr><td><strong>표 3</strong></td><td>5장</td><td>상황별 성적표 — 전체·날씨·설정 어긋난 차·낯선 조건별로 세 참가자 점수</td><td class="num">6</td></tr>
+<tr><td><strong>표 4</strong></td><td>6장</td><td>정보를 늘린 7단계 각각의 상세 수치</td><td class="num">7</td></tr>
+<tr><td><strong>표 5</strong></td><td>7장</td><td><strong>돌파 시도 5가지와 그 결과</strong> — 실험 다섯 번이 다섯 줄이 된다</td><td class="num">5</td></tr>
+<tr><td><strong>표 6</strong></td><td>8장</td><td>AI 구조를 이리저리 바꿔본 결과 — 평균과 흔들림</td><td class="num">5</td></tr>
+</table></div>
+
+<h3>표 5가 어떻게 생기나 (실험 5개 → 5줄)</h3>
+<div class="tw"><table>
+<tr><th>시도</th><th>어떻게 확인했나</th><th>결과</th></tr>
+<tr><td>안전장치를 더 똑똑하게</td><td>정답까지 주고 판단 가능한지 + 새 데이터로 검증</td><td>실질 <strong>+0.9%p</strong></td></tr>
+<tr><td>미래를 미리 보게</td><td>새 데이터 4,000개 + <strong>대조군</strong></td><td>대조군이 더 나음</td></tr>
+<tr><td>권한을 더 주기</td><td>다이얼을 더 크게 돌릴 수 있게</td><td>차이 없음 + 부작용</td></tr>
+<tr><td>급변 직후 빨리 적응</td><td>급변 시점 160개를 네 구간으로</td><td><strong>전 구간 차이 없음</strong></td></tr>
+<tr><td>주행 중에 다이얼 바꾸기</td><td>3등분 + <strong>탐색량 맞추기</strong></td><td>실질 <strong>+4%</strong></td></tr>
+</table></div>
+<p class="small">가운데 칸에 <strong>"어떻게 확인했나"</strong>를 꼭 씁니다 — 대조군, 새 데이터 검증, 탐색량 맞추기 같은
+장치가 보여야 <strong>"안 해봤겠지"가 아니라 "제대로 해보고 닫았다"</strong>로 읽힙니다.</p>
+
+<div class="box warn"><span class="t">⚠ 8장 내용이 최근에 바뀌었습니다</span>
+<p>AI의 "상황 파악 부품"에 대한 결론이 <strong>뒤집혔습니다.</strong></p>
+<p>예전 결론은 "그 부품이 학습 안정성을 만든다"였는데, 부품을 <strong>완전히</strong> 없앤 실험(실험 20)에서
+평균도 흔들림도 원래와 <strong>구분되지 않았습니다.</strong> 반쪽만 가렸을 때만 나빠졌습니다.</p>
+<p>새 결론: <strong>"반쪽짜리 상황 정보를 넣는 것이 오히려 해롭다"</strong>.
+그래서 논문의 얼굴도 "AI가 상황을 추론한다"에서 <strong>"구조가 성능을 만든다"</strong>로 옮겨야 합니다.</p></div>
+
+<h2 id="count"><span class="no">9.4</span>그래서 실험 21가지는 어디로 가나</h2>
+<div class="tw"><table>
+<tr><th>등급</th><th class="num">개수</th><th>어떤 실험</th><th>지면</th></tr>
+<tr><td><strong>그림이나 표를 따로 가짐</strong></td><td class="num">6</td>
+<td>정답지 만들기 · 운전대 가격표 · 본 결과 · 정보 늘리기 · 견고성(3개 묶음) · 구조 바꾸기(2개 묶음)</td>
+<td>그림 2~6, 표 2·3·4·6</td></tr>
+<tr><td><strong>표의 한 줄</strong></td><td class="num">5</td><td>돌파 시도 5가지</td><td>표 5</td></tr>
+<tr><td><strong>문장 하나</strong></td><td class="num">7</td>
+<td>통계 규칙 · 안전장치 · 부정행위 검사 · 날씨 배선 · 장기 주행 · 사고 기록 등</td><td>3장·8장 본문</td></tr>
+<tr><td>부록으로</td><td class="num">3</td><td>옛 실험 상세, 돌파 시도 상세 등</td><td>부록</td></tr>
+</table></div>
+
+<div class="box key"><span class="t">지켜야 할 규칙 네 가지</span>
+<ol>
+<li><strong>그림 6장 · 표 6개를 상한으로 고정</strong>한다. 넘으면 부록으로 민다.</li>
+<li><strong>실패한 시도는 따로 절을 주지 않는다</strong> — 표 한 줄 + 부록.</li>
+<li><strong>본문에 "우리가 이 순서로 시도했다"를 쓰지 않는다</strong> — 주제별로만 묶는다.</li>
+<li>8장(실험 하나하나)은 논문에 넣지 않고 <strong>온라인 자료로 링크</strong>한다.</li>
+</ol></div>
+
+<h2 id="left"><span class="no">9.5</span>그림 배치로는 못 막는 것 하나</h2>
+<div class="box warn"><span class="t">아직 남은 약점</span>
+<p>"정답지 자체가 상당 부분 운(運) 아닌가"라는 반론은 <strong>그림을 잘 배치해도 막을 수 없습니다.</strong>
+실험이 필요합니다.</p>
+<p>계획: <strong>같은 주행에 정답 찾기를 두 번 돌려보기.</strong> 찾은 답이 서로 다른데 성적은 거의 같다면,
+"정답이 여러 개라서 애초에 맞출 필요가 없었다"가 확인됩니다. AI를 다시 학습시킬 필요도 없습니다.
+이게 되면 <strong>그림 7</strong>이 하나 늘어납니다.</p>
+<p>함께 검토 중인 것 — <strong>상황 21종류마다 정답 다이얼을 하나씩</strong> 만들면
+"상황을 완벽히 알려줬을 때의 최고 점수"가 직접 계산됩니다.
+그 값이 1/3 근처면, 1/3은 <em>관찰된 숫자</em>에서 <strong>설명되는 숫자</strong>가 됩니다.</p></div>
+
+<h2 id="order"><span class="no">9.6</span>쓰는 순서 — 그림부터</h2>
+<p>이런 종류의 논문은 <strong>그림이 곧 주장</strong>이라서, 글보다 그림을 먼저 만드는 게 빠릅니다.</p>
+<div class="timeline">
+<div class="tl-item win"><div class="d">1단계</div><div class="h">결과 그림 3장 (그림 4·5·6)</div>
+<div class="b"><p>데이터가 다 있어서 바로 그릴 수 있습니다. 이게 끝나면 5·6장 글은 그림 설명을 늘리면 됩니다.</p></div></div>
+<div class="tl-item"><div class="d">2단계</div><div class="h">압축 표 2개 (표 5·6)</div>
+<div class="b"><p>표 6은 결론이 바뀐 부분이라 먼저 확정해야 합니다.</p></div></div>
+<div class="tl-item"><div class="d">3단계</div><div class="h">설명 그림 2장 (그림 2·3)</div>
+<div class="b"><p>그림 2는 개념도라 손이 많이 갑니다.</p></div></div>
+<div class="tl-item"><div class="d">4단계</div><div class="h">표 1·2 → 서론</div>
+<div class="b"><p>서론은 <strong>맨 나중에</strong> 씁니다 — 결과 그림이 확정돼야 정확히 쓸 수 있습니다.</p></div></div>
+<div class="tl-item"><div class="d">5단계</div><div class="h">그림 1 (전체 요약)</div>
+<div class="b"><p>다른 그림에서 따와 합치는 것이라 <strong>가장 마지막</strong>. 먼저 그리면 두 번 그립니다.</p></div></div>
+</div>
+
+<p class="deeper">더 깊이 보기 → 상세판 <a href="../meta_rl_paper/09_layout.html">9장 지면 설계</a>
+(정확한 수치, 그림 사양, 실험 ↔ 지면 매핑표)</p>
+
+<div class="pn">
+  <a class="prev" href="08_experiments.html"><span class="dir">← 이전</span><span class="ttl">8. 실험 하나하나</span></a>
+  <a class="next" href="index.html"><span class="dir">처음으로 →</span><span class="ttl">목차</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 쉬운판 · 9장 작성 2026-07-31 ·
+상세판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

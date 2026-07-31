@@ -18,6 +18,7 @@
     <a class="ch" href="06_literature.html">6 문헌 전략</a>
     <a class="ch" href="07_roadmap.html">7 로드맵</a>
     <a class="ch" href="08_experiments.html">8 실험 카드</a>
+    <a class="ch" href="09_layout.html">9 지면 설계</a>
   </div>
 </div></nav>
 
@@ -27,9 +28,12 @@
 <p class="lede">
 앞 장에서 확정된 결과를 실제 논문으로 어떻게 조립하는가.
 장르 결정(방법 논문이 아니라 측정 논문), 중심 주장 3문장, 8절 구조와 절별 실험 매핑,
-서론 5단 구성, 그리고 실험 29종을 본문 11 / 부록 6 / 폐기 12로 나눈 취사선택까지 —
+서론 5단 구성, 그리고 실험 31종을 본문 13 / 부록 6 / 폐기 12로 나눈 취사선택까지 —
 2026-07-27 결정록(<code>docs/decision_records/20260727_paper_scope_storyline.md</code>)을
 갱신 블록(같은 날짜의 ⚠ 갱신 7건)까지 반영해 정리했다.
+<strong>2026-07-30 갱신</strong>: 교차검증 2건(E20 zero_z · E21 TD3)을 §6·§8에 반영했고,
+그에 따라 §8의 encoder 단락은 <strong>전면 교체 대상</strong>이 되었다.
+실제 지면(그림·표) 사양은 <a href="09_layout.html">9장</a>으로 분리했다.
 </p>
 
 <h2 id="genre"><span class="no">5.1</span>왜 "측정 논문"인가 — 장르 결정</h2>
@@ -100,14 +104,17 @@ SAC → TD3 교체에서도 평균은 유지됐다(t=−1.11, ns; 단 sd 9.73). 
 <td>⚠ 정본 교체: <strong>hand 19.5 ≪ fitted(n=802) 31.7 ≈ meta-RL 30.7±2.3</strong> (케이스 단위, ±는 학습 추첨 sd). 차이 −1.1pt = 0.67×결합 SE → 구분 안 됨. "어느 쪽이 앞서는지는 학습 추첨에 따라 뒤집힌다 — 그 자체가 같은 상한에 수렴한다는 증거" + seed 안정성 이력 1문단</td>
 <td>V6 suite — 정본은 <code>20260727_v6_fittedN802</code> (구 20260721의 fitted 30.4%는 n=70 값, 인용 금지)</td></tr>
 <tr><td><strong>§6 천장의 실재성</strong></td>
-<td>(a) 표본 ×4.3/×8.6 무효과 (b) 특징 7-arm — 핵심은 T0h 순열 p=1.000 (c) 함수 클래스 6×5 격자</td>
-<td>n=70/301/602 스케일링 · 정보축 v2 + CV R²/순열 · function_class_sweep(20260727)</td></tr>
+<td>⚠ <strong>4축으로 확장</strong>: (a) 표본 ×4.3/×8.6 무효과 (b) 특징 7-arm — 핵심은 T0h 순열 p=1.000 (c) 함수 클래스 6×5 격자 (d) <strong>알고리즘 계열 SAC→TD3</strong>(평균 30.66 vs 25.72, Welch t=−1.11 ns) — "1/3 벽이 SAC의 한계일 뿐"이라는 반론 차단</td>
+<td>n=70/301/602 스케일링 · 정보축 v2 + CV R²/순열 · function_class_sweep(20260727) · <strong>TD3 5-seed(E21, 20260730)</strong></td></tr>
 <tr><td><strong>§7 돌파 시도 기각</strong></td>
-<td>표 1개, 5행: gate / anticipation / 권한 확대 / 재적응 속도 / 시변 (각 행의 수치는 7.5절 표 참조)</td>
+<td>표 1개, <strong>5행 유지</strong>: gate 재설계 / anticipation / 권한 확대 / 재적응 속도 / 시변.
+⚠ TD3(E21)는 <em>기각이 아니라 확인</em> 실험이므로 §6(d)로 배치 — 이 표에 넣지 않는다</td>
 <td>각 실험 상세는 부록으로</td></tr>
 <tr><td><strong>§8 한계·지침</strong></td>
-<td>플랜트 충실도 3종(검증 결과 포함), 냉시동, 정차 idle(⚠ 표준 사이클로 재서술: 9~10.5 L/100km는 플랜트 결함이 아니라 정차 지배 프로파일 특유), 이득의 조건 특이성, ⚠ encoder 분산 신호(확정 승격), preview=향후</td>
-<td>충실도 검증 · 장기 프로파일 수정판 · encoder ablation(#26 완료)</td></tr>
+<td>플랜트 충실도 3종(검증 결과 포함), 냉시동, 정차 idle(⚠ 표준 사이클로 재서술: 9~10.5 L/100km는 플랜트 결함이 아니라 정차 지배 프로파일 특유), 이득의 조건 특이성, preview=향후.
+⚠ <strong>encoder 단락 전면 교체(E20, 2026-07-30)</strong>: z≡0 완전 제거가 full과 평균·분산 모두 구분 불가(31.24/2.71 vs 30.66/2.25, 둘 다 ns) → "태스크 추론이 안정성을 산다"는 <s>#26 결론</s> 철회.
+새 서술 = <strong>"퇴화한 z 주입만 해롭다"</strong>(반쪽 입력 arm만 sd 7.7~8.7, F 유의). 프레이밍도 "잠재 태스크 추론(PEARL)"에서 <strong>"구조 + bounded residual"</strong> 중심으로 이동</td>
+<td>충실도 검증 · 장기 프로파일 수정판 · encoder ablation(#26) + <strong>zero_z(E20)</strong></td></tr>
 </table></div>
 <p><strong>부록:</strong> 기각 5종 상세 · 장기 프로파일 표 · 정보축 진단(edf/λ/scale) ·
 guard 표적 효과(high_mass_uphill +5.1pt 한정) · UDDS/HWFET 절대 수치표 · 누수 검증 상세.</p>
@@ -121,7 +128,9 @@ preview 품질 연구)와 명확히 구분 — 그것들은 <em>같은 방법 �
 <li><strong>P3</strong> — 분리하려면 (a) 권한 동등화 가능한 인터페이스, (b) 도달 가능 최적 분모,
 (c) 무료·무오차 정보 사다리가 필요 → 본 연구가 이를 구축. DP-% 정규화는 전지적 분모라
 잔여 gap을 분해하지 못함을 동기로 사용.</li>
-<li><strong>P4</strong> — 결과: 방법 축 ≈0 / 정보 축 ≈0 / 권한 축 지배 + 닫힌 문 7개.</li>
+<li><strong>P4</strong> — 결과: 방법 축 ≈0 / 정보 축 ≈0 / 권한 축 지배 + <strong>닫힌 문 9개</strong>
+(gate 재설계 · 미래 예측 · 권한 확대 · 재적응 속도 · 시변 스케줄 · 표본 · 관측 집합 ·
+함수 클래스 · 알고리즘 계열).</li>
 <li><strong>P5</strong> — 기여 4개.</li>
 </ol>
 <div class="box key"><span class="t">기여 목록 (프로토콜이 1번이어야 측정 논문이 된다)</span>
@@ -130,7 +139,9 @@ preview 품질 연구)와 명확히 구분 — 그것들은 <em>같은 방법 �
 <li><strong>3요인 분해</strong> — 권한·정보를 고정하면 방법 기여 ≈0 (n=120 대응 t=−0.34,
 결합 SE 1.61pt; 74배 데이터가 이득 없음)</li>
 <li><strong>정보 가치 곡선</strong> — 7 arm, ECU 관측불가 반사실 포함. 정답을 줘도 오르지 않음</li>
-<li><strong>반증 카탈로그 7종</strong> + 배포 가능한 산출물 (V6 + gate)</li>
+<li><strong>반증 카탈로그 9종</strong> + 배포 가능한 산출물 (V6 + gate).
+⚠ 산출물 서술은 "잠재 태스크 추론"이 아니라 <strong>구조</strong>(강한 base + bounded gated residual)로
+표현할 것 — E20이 z 의존성을 반증했다</li>
 </ol></div>
 
 <h2 id="figure1"><span class="no">5.6</span>그림 1 구상 — 논문 전체를 한 장으로</h2>
@@ -142,17 +153,22 @@ preview 품질 연구)와 명확히 구분 — 그것들은 <em>같은 방법 �
 T0h 하락 강조. 단, 권한 축 수치는 2-action 시절 산출물이 섞이지 않도록 §4의
 Phase A 정합 재실행 값만 쓴다(7장 선행 작업 참조).</p>
 
-<h2 id="selection"><span class="no">5.7</span>실험 취사선택 — 본문 11 / 부록 6 / 폐기 12</h2>
-<p>2026-07-09~27 사이 실험이 세대(V3~V7)·축(정보/함수클래스/권한/gate/예측/적응속도/시변)·
+<h2 id="selection"><span class="no">5.7</span>실험 취사선택 — 본문 13 / 부록 6 / 폐기 12</h2>
+<p>2026-07-09~30 사이 실험이 세대(V3~V7)·축(정보/함수클래스/알고리즘/권한/gate/예측/적응속도/시변)·
 진단(판별 probe, 안정성, 장기 프로파일)으로 누적되어 전부를 한 논문에 담을 수 없다.
 폐기 기준: (a) 후속 세대로 대체 (b) 오염·교란 미교정 (c) 중심 주장과 독립 (d) 진단용 중간물.</p>
 
-<h3>본문에 남는 실험 (11)</h3>
+<h3>본문에 남는 실험 (13)</h3>
 <ul>
 <li>V6 suite (주 결과) · Phase A probe (분모) · 시변 headroom + 예산 대조 · 누수 검증 ·
 학습 재표집(stab) · full-split DP (권한의 대가) · 표본 스케일링 3점 · 정보축 v2 7-arm ·
-함수클래스 6×5 · 기각 5종(표 1개) · encoder masking/ablation · 장기 프로파일(1문단)</li>
+함수클래스 6×5 · 기각 5종(표 1개) · encoder masking/ablation · 장기 프로파일(1문단)
+· <strong>⚠ 신규 2건(2026-07-30): zero_z 완전 제거(E20) · TD3 알고리즘 교체(E21)</strong></li>
 </ul>
+<div class="box note"><span class="t">"본문 13"이 곧 그림 13개가 아니다</span>
+<p>13건 중 <strong>고유 그림/표를 갖는 것은 6건</strong>이고, 5건은 표 한 행, 나머지는 문장 하나로 들어간다.
+실제 지면 소요는 <strong>그림 6 · 표 6</strong>이며 이는 목표 저널 관행(그림 8~14 / 표 3~6)의 하단이다.
+절별 배치와 그림·표 사양은 <a href="09_layout.html">9장 지면 설계</a>에 있다.</p></div>
 
 <h3>폐기하는 실험 (12) — repo에서는 삭제하지 않고 보존</h3>
 <div class="tw"><table>

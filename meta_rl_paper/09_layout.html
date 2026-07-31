@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9. 지면 설계 — Meta-RL 논문 설계 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">Meta-RL 논문 보고서</a>
+  <div class="chapters">
+    <a class="ch" href="01_problem.html">1 문제의식</a>
+    <a class="ch" href="02_testbed.html">2 실험 장치</a>
+    <a class="ch" href="03_journey.html">3 연대기</a>
+    <a class="ch" href="04_results.html">4 결과·논증</a>
+    <a class="ch" href="05_paper.html">5 논문 설계</a>
+    <a class="ch" href="06_literature.html">6 문헌 전략</a>
+    <a class="ch" href="07_roadmap.html">7 로드맵</a>
+    <a class="ch" href="08_experiments.html">8 실험 카드</a>
+    <a class="ch cur" href="09_layout.html">9 지면 설계</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">9장 · 지면 설계</p>
+<h1>논문에 실제로 들어가는 것 — 논증 흐름 · 그림 6 · 표 6</h1>
+<p class="lede">
+5장이 <em>절 구조</em>를, 8장이 <em>실험 21건</em>을 정리했다. 이 장은 그 둘을 합쳐
+<strong>지면에 무엇이 몇 개 들어가는가</strong>를 확정한다. 실험 21건 중 고유 그림·표를 갖는 것은
+<strong>6건</strong>뿐이고, 5건은 표 한 행, 나머지는 문장 하나로 들어간다.
+결과적으로 <strong>그림 6개 · 표 6개</strong> — 목표 저널 관행의 하단이다.
+</p>
+
+<div class="box note"><span class="t">왜 이 장이 따로 필요한가</span>
+<p>"실험을 몇 개 했는가"와 "독자가 몇 개를 봐야 하는가"는 다른 문제다. 참고 기준 —
+투고 목표 저널의 <strong>CEP 2025 (Chen et al.)는 14쪽 · 그림 15 · 표 9</strong>인데
+실제 실험은 5개다(<em>실험은 적고 그림은 많다</em>). 우리는 정반대이므로
+<strong>압축 규칙을 명시적으로 고정</strong>해 두지 않으면 방법 절이 폭발한다.</p></div>
+
+<h2 id="flow"><span class="no">9.1</span>논증 흐름 — 절이 답하는 질문 하나씩</h2>
+<p>각 절은 <strong>질문 하나</strong>에 답하고, 그 답의 증거가 그림 또는 표 하나다.
+이 사슬이 끊기면 절을 지우거나 합친다.</p>
+
+<div class="tw"><table>
+<tr><th>절</th><th>이 절이 답하는 질문</th><th>답</th><th>증거</th></tr>
+<tr><td><strong>§1</strong></td><td>문헌의 개선폭은 왜 서로 비교할 수 없는가?</td>
+<td>분모·SOC 공정성·baseline 정보가 논문마다 다르다 (공통 프로토콜 부재)</td><td class="num">Table 1 · Fig 1</td></tr>
+<tr><td><strong>§2</strong></td><td>무엇 위에서 재는가?</td>
+<td>양산형 map/rule EMS + 9-knob 권한 경계. 플랜트는 EPA 사이클로 정합 확인</td><td class="num">(본문)</td></tr>
+<tr><td><strong>§3</strong></td><td>비교 가능하게 만들려면?</td>
+<td>권한 동등화 + 도달 가능 oracle 분모 + 통계 규약</td><td class="num">Fig 2 · Table 2</td></tr>
+<tr><td><strong>§4</strong></td><td>권한을 바꾸면 무슨 일이 일어나는가?</td>
+<td>자릿수가 바뀐다 — 다만 그 값은 배포 불가</td><td class="num">Fig 3</td></tr>
+<tr><td><strong>§5</strong></td><td>권한을 고정하고 방법만 바꾸면?</td>
+<td>학습은 사람을 이기지만 학습끼리는 구분 불가. 둘 다 약 1/3</td><td class="num">Fig 4 · Table 3</td></tr>
+<tr><td><strong>§6</strong></td><td>그 1/3이 진짜 천장인가?</td>
+<td>표본·정보·함수 클래스·알고리즘 <strong>네 축 모두</strong> 안 움직인다</td><td class="num">Fig 5 · Fig 6 · Table 4</td></tr>
+<tr><td><strong>§7</strong></td><td>돌파 시도는 다 해봤는가?</td>
+<td>다섯 가지를 각각 실험으로 닫았다</td><td class="num">Table 5</td></tr>
+<tr><td><strong>§8</strong></td><td>그럼 남은 2/3는 무엇이고, 학습은 무엇에 쓸모 있나?</td>
+<td>잔여분은 개별 실현 = 인과 정책의 표적 아님. 학습의 가치는 캘리브레이션 자동화</td><td class="num">Table 6</td></tr>
+</table></div>
+
+<div class="box key"><span class="t">한 문장으로 본 사슬</span>
+<p>비교가 교란되어 있다(§1) → 교란을 제거하는 자를 만들었다(§3) →
+<strong>권한을 바꾸면 자릿수가 바뀐다</strong>(§4) → <strong>권한을 고정하면 방법은 무의미하다</strong>(§5) →
+<strong>정보·표본·함수·알고리즘 어느 것도 그 자리를 못 옮긴다</strong>(§6) →
+<strong>돌파 시도도 전부 실패한다</strong>(§7) → <strong>남은 것은 태스크의 함수가 아니다</strong>(§8).</p></div>
+
+<h2 id="figures"><span class="no">9.2</span>그림 6개 — 사양</h2>
+<div class="xcards">
+
+<article class="xcard">
+<header><span class="xid">Fig 1</span><h3>3요인 분해 요약 (graphical abstract)</h3><span class="badge info">§1</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p><strong>"권한을 바꾸면 자릿수가 바뀌고, 방법과 정보를 바꾸면 아무 일도 안 일어난다."</strong>
+논문 전체를 한 장으로 압축한 그림. 초록 옆 graphical abstract로도 재사용.</p></div>
+<div class="xrow"><span class="xl">구성</span>
+<p>3패널 가로 배치 — <strong>(a) 권한</strong>: bounded 9-knob oracle vs full-split DP (연료 +9.3% ↔ 제약 위반 13×),
+<strong>(b) 방법</strong>: hand → fitted → meta-RL capture 막대 (19.5 / 31.7 / 30.7, 오차막대 = 학습 추첨 sd),
+<strong>(c) 정보</strong>: T0→T2b CV R² 평탄선 + T0h 하락 표시.
+(b)와 (c)에 <strong>동일한 회색 밴드</strong>를 깔아 "여기서 안 움직인다"를 시각적으로 연결.</p></div>
+<div class="xrow show"><span class="xl">데이터 출처</span>
+<p>E3(78 케이스 재실행) · E4(<code>20260727_v6_fittedN802</code>) · E6(n=802 7-arm).
+⚠ 권한 패널에 <strong>2-action 시절(E1) 수치를 섞지 말 것.</strong></p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">Fig 2</span><h3>평가 프로토콜 모식도</h3><span class="badge info">§3</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p>이 논문의 방법론적 기여 그 자체. <strong>권한 경계</strong>(meta-RL은 9-knob만, 파워 분배는 map/rule EMS)와
+<strong>capture 눈금</strong>(0% = adaptive base, 100% = 에피소드별 CEM oracle)을 한 그림에.</p></div>
+<div class="xrow"><span class="xl">구성</span>
+<p>왼쪽: 블록도(관측 → 컨트롤러 → 9-knob → map/rule EMS → 플랜트), 권한 경계를 굵은 선으로.
+오른쪽: 수직 눈금자에 arm 6종을 얹음 — static tuned(−18.9) · adaptive(0) · hand(19.5) ·
+meta-RL(30.7) · fitted(31.7) · oracle(100). 수식 1개를 캡션에:</p>
+<pre><code>capture = Σ(J_base − J_ctrl) / Σ(J_base − J_oracle)</code></pre></div>
+<div class="xrow show"><span class="xl">데이터 출처</span><p>E2(분모 정의) · E4(눈금 위치). 개념도이므로 수치는 라벨로만.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">Fig 3</span><h3>권한의 대가 — 산 것과 잃은 것</h3><span class="badge info">§4</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p>파워 분배 권한의 <strong>가격표</strong>. 연료 이득이 실재하지만 제약 위반이 함께 폭증한다는 것을
+한 그림에서 동시에 읽히게 한다 — 둘을 따로 그리면 논증이 약해진다.</p></div>
+<div class="xrow"><span class="xl">구성</span>
+<p>2축 막대 (왼쪽 = 이득, 오른쪽 = 대가):</p>
+<div class="tw"><table>
+<tr><th>지표</th><th class="num">bounded 9-knob</th><th class="num">full-split DP</th><th class="num">변화</th></tr>
+<tr><td>SOC보정 연료 (kg)</td><td class="num">0.1121</td><td class="num">0.1017</td><td class="num pos">+9.3%</td></tr>
+<tr><td>제약 위반 (스텝/에피)</td><td class="num">0.46</td><td class="num">6.05</td><td class="num neg">13×</td></tr>
+<tr><td>배터리 throughput (kWh)</td><td class="num">0.308</td><td class="num">0.492</td><td class="num neg">+60%</td></tr>
+</table></div></div>
+<div class="xrow show"><span class="xl">데이터 출처 · 주의</span>
+<p>E3. ⚠ 캡션에 <strong>all-nominal 78 케이스 제한</strong>을 반드시 명시(DP가 은닉 축·ems_variant 미적용).
+그리고 full-split DP는 <em>diagnostic reference</em>이지 deployable baseline이 아니라고 못 박을 것.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">Fig 4</span><h3>주 결과 — 세 컨트롤러, 하나의 천장</h3><span class="badge ok">§5 · 핵심</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p>논문의 헤드라인. 두 가지가 <strong>동시에</strong> 읽혀야 한다 —
+(1) 학습 2종이 hand를 크게 이긴다, (2) 그 둘이 서로 구분되지 않는다.</p></div>
+<div class="xrow"><span class="xl">구성</span>
+<div class="mbars">
+  <div class="mb dim"><span class="k">static tuned</span><span class="t"></span><span class="v">−18.9%</span></div>
+  <div class="mb"><span class="k">hand rule</span><span class="t"><i class="b3" style="width:61.5%"></i></span><span class="v">19.5%</span></div>
+  <div class="mb"><span class="k">meta-RL (V6)</span><span class="t"><i class="b1" style="width:96.8%"></i></span><span class="v">30.7 ±2.3</span></div>
+  <div class="mb"><span class="k">fitted rule</span><span class="t"><i class="b2" style="width:100%"></i></span><span class="v">31.7 ±2.5</span></div>
+</div>
+<p class="mcap">오차막대 = <strong>학습 추첨 sd</strong>(케이스 부트스트랩 아님 — §3 규약).
+두 학습 arm 위에 결합 SE 1.61pt 밴드를 겹쳐 "구분 불가"를 시각화.</p></div>
+<div class="xrow show"><span class="xl">캡션에 넣을 문장</span>
+<p>"학습 추첨을 바꾸면 <strong>어느 쪽이 앞서는지가 뒤집힌다</strong>(n=70에서는 meta-RL +0.3pt,
+n=802에서는 fitted +1.1pt; 둘 다 비유의). 순위가 추첨에 달렸다는 것 자체가 같은 상한에
+수렴했다는 증거다."</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">Fig 5</span><h3>정보 가치 곡선 — 정답을 줘도 오르지 않는다</h3><span class="badge ok">§6 · 핵심</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p>"관측 집합을 저자가 골랐다"는 반론을 닫는 그림. 핵심 시각 요소는 <strong>T0h 한 점</strong>이다 —
+실차가 알 수 없는 태스크 파라미터의 정답을 줬는데 <em>하락</em>했다는 것.</p></div>
+<div class="xrow"><span class="xl">구성</span>
+<p>가로축 = 특징 수(10→22), 세로축 = oracle knob 라벨에 대한 held-out CV R².
+T0h만 다른 색(경고색) + 순열 p=1.000 주석. 순열 귀무분포를 옅은 밴드로 깔면 더 강해진다.</p></div>
+<div class="xrow show"><span class="xl">데이터 출처</span><p>E6 (n=802, 조건 단위 grouped 5-fold, 순열 120회). 상세 진단은 Table 4.</p></div>
+</article>
+
+<article class="xcard">
+<header><span class="xid">Fig 6</span><h3>천장의 4축 견고성 — 무엇을 바꿔도 같은 자리</h3><span class="badge ok">§6 · 신설</span></header>
+<div class="xrow"><span class="xl">보여줄 것</span>
+<p><strong>이 논문에서 가장 설득력 있는 그림이 될 후보.</strong> 서로 완전히 다른 네 개의 축을
+바꿔가며 얻은 capture를 <strong>하나의 세로선 위</strong>에 얹어, 전부 같은 밴드에 모인다는 것을 보인다.</p></div>
+<div class="xrow"><span class="xl">구성 — forest plot 형식</span>
+<div class="tw"><table>
+<tr><th>바꾼 축</th><th>수준</th><th class="num">capture</th><th>판정</th></tr>
+<tr><td rowspan="2">표본</td><td>n=70 → n=802</td><td class="num">30.4 → 31.7</td><td>차이 비유의</td></tr>
+<tr><td>train R² (n=70→301)</td><td class="num neg">0.343 → 0.231</td><td>오히려 하락</td></tr>
+<tr><td>정보</td><td>T0 → T2b (7 arm)</td><td class="num">CV R² 0.125~0.153</td><td>평탄, T0h 하락</td></tr>
+<tr><td>함수 클래스</td><td>6종 × 5티어 = 30조합</td><td class="num">2단계 진출 0건</td><td>ridge 못 넘음</td></tr>
+<tr><td>알고리즘</td><td>SAC → TD3</td><td class="num">30.66 → 25.72</td><td>Welch t=−1.11 (ns)</td></tr>
+</table></div>
+<p class="mcap">각 축의 대표값을 오차막대와 함께 세로로 쌓고, V6 기준선(30.7)에 회색 밴드(±결합 SE).
+<strong>모든 점이 밴드를 벗어나지 못하는 그림</strong>이 목표.</p></div>
+<div class="xrow show"><span class="xl">왜 이 그림이 필요한가</span>
+<p>§6를 네 개의 소절로 쓰면 독자가 "또 실패 얘기"로 읽는다. <strong>한 그림에 모으면
+"네 방향으로 밀어봤는데 벽이 안 움직인다"라는 하나의 주장</strong>이 된다. 실험 개수 문제를
+서사로 해결하는 장치이기도 하다.</p></div>
+</article>
+</div>
+
+<h2 id="tables"><span class="no">9.3</span>표 6개 — 사양</h2>
+<div class="tw"><table>
+<tr><th>표</th><th>절</th><th>내용</th><th class="num">행</th><th>근거 실험</th></tr>
+<tr><td><strong>Table 1</strong></td><td>§1</td>
+<td><strong>비교 프로토콜 대조표</strong> — 문헌별 [방법 권한 / baseline 권한 / 방법 정보 / baseline 정보 / 분모 / rule baseline 유무]. 마지막 행이 본 연구</td>
+<td class="num">7</td><td>문헌 조사 + #24b 정독 4편</td></tr>
+<tr><td><strong>Table 2</strong></td><td>§3</td>
+<td><strong>평가 조건 구성</strong> — split 8종 × 조건 수 × 케이스 수 = 120. 은닉 축 train/eval 값 범위 병기(외삽 여부 명시)</td>
+<td class="num">8</td><td>E2 manifest · E16 누수 검증</td></tr>
+<tr><td><strong>Table 3</strong></td><td>§5</td>
+<td><strong>주 결과 축별 분해</strong> — 전체/학습weather/ems_variant/OOD/ice/dry × (n, hand, fitted, meta-RL)</td>
+<td class="num">6</td><td>E4</td></tr>
+<tr><td><strong>Table 4</strong></td><td>§6</td>
+<td><strong>정보 티어 진단</strong> — 티어 × (특징 수, edf, CV R², 순열 p, 선택 λ, 출력 scale)</td>
+<td class="num">7</td><td>E6</td></tr>
+<tr><td><strong>Table 5</strong></td><td>§7</td>
+<td><strong>돌파 시도와 결과</strong> — 시도 / 방법 / 결과. 아래 5행 확정</td>
+<td class="num">5</td><td>E10~E14</td></tr>
+<tr><td><strong>Table 6</strong></td><td>§8</td>
+<td><strong>학습 구조 ablation</strong> — arm × (평균 capture, seed sd, Welch t, F). 안정성 서사의 근거</td>
+<td class="num">5</td><td>E15 · E20 · E21</td></tr>
+</table></div>
+
+<h3>Table 5 확정안 (돌파 시도 5행)</h3>
+<div class="tw"><table>
+<tr><th>시도</th><th>방법</th><th>결과</th></tr>
+<tr><td>gate 재설계</td><td>판별 probe(oracle 특징 포함) + 홀드아웃 선택</td><td>AUC&lt;0.5 · 실질 <strong>+0.9pt</strong></td></tr>
+<tr><td>미래 예측</td><td>spike 프로파일 4,000 + <strong>격리 대조군</strong></td><td>대조군이 우세 <strong>(t=−3.83)</strong></td></tr>
+<tr><td>권한 확대</td><td>residual scale 0.5 + SOC ±0.015</td><td>동률 + dry <strong>−18pt</strong></td></tr>
+<tr><td>재적응 속도</td><td>onset 160개 · pre/early/mid/late</td><td><strong>전 창 비유의</strong></td></tr>
+<tr><td>시변 스케줄</td><td>K=3 + <strong>탐색 예산 대조</strong></td><td>실질 <strong>+4%</strong> (70% 착시)</td></tr>
+</table></div>
+<p class="small">각 행의 "방법" 칸에 <strong>대조 장치</strong>(격리 대조군·홀드아웃·예산 대조)를 명시하는 것이 핵심이다 —
+이것이 있어야 "그냥 안 해봤겠지"가 아니라 "제대로 해보고 닫았다"로 읽힌다.</p>
+
+<h3>Table 6 확정안 (학습 구조 ablation)</h3>
+<div class="tw"><table>
+<tr><th>arm</th><th class="num">평균 capture</th><th class="num">seed sd</th><th class="num">Welch t</th><th class="num">F</th><th>판정</th></tr>
+<tr><td>V6 full encoder (기준)</td><td class="num">30.66</td><td class="num">2.25</td><td class="num">—</td><td class="num">—</td><td>—</td></tr>
+<tr><td><strong>z ≡ 0 완전 제거</strong></td><td class="num">31.24</td><td class="num">2.71</td><td class="num">+0.37 ns</td><td class="num">1.44 ns</td><td class="pos">구분 불가</td></tr>
+<tr><td>raw_only (반쪽 입력)</td><td class="num">28.59</td><td class="num neg">8.72</td><td class="num">−0.51 ns</td><td class="num neg">14.99 *</td><td class="neg">분산 악화</td></tr>
+<tr><td>summary_only (반쪽 입력)</td><td class="num">28.62</td><td class="num neg">7.66</td><td class="num">−0.57 ns</td><td class="num neg">11.58 *</td><td class="neg">분산 악화</td></tr>
+<tr><td>TD3 (알고리즘 교체)</td><td class="num">25.72</td><td class="num neg">9.73</td><td class="num">−1.11 ns</td><td class="num neg">18.66 *</td><td>평균 동일·분산 악화</td></tr>
+</table></div>
+<div class="box warn"><span class="t">⚠ 이 표가 §8 서술을 바꾼다</span>
+<p><strong>z를 완전히 없앤 arm이 full과 구분되지 않는다</strong>(평균·분산 모두). 따라서
+"태스크 추론이 안정성을 산다"는 기존 결론(#26)은 <strong>철회</strong>되고, 새 서술은
+<strong>"퇴화한 z를 주입하는 것만 해롭다"</strong>가 된다. 반쪽 입력 arm만 분산이 유의하게 나쁘기 때문이다.</p>
+<p>연쇄 효과: 논문 프레이밍을 <strong>"잠재 태스크 추론(PEARL)"에서 "구조 + bounded residual"로</strong>
+옮겨야 한다. 제목·초록·기여 4번의 산출물 서술이 모두 영향을 받는다.</p></div>
+
+<h2 id="mapping"><span class="no">9.4</span>실험 21건 → 지면 소요</h2>
+<p>같은 21건이라도 지면 소요는 세 등급으로 갈린다. 이 분류가 "실험이 너무 많은 것 아닌가"에 대한 실질적 답이다.</p>
+
+<div class="tw"><table>
+<tr><th>등급</th><th class="num">건수</th><th>실험</th><th>지면</th></tr>
+<tr><td><strong>고유 그림/표</strong></td><td class="num">6</td>
+<td>E2(분모) · E3(권한) · E4(주 결과) · E6(정보) · E8+E7+E21(견고성 공유) · E15+E20(ablation)</td>
+<td>Fig 2~6, Table 2·3·4·6</td></tr>
+<tr><td><strong>표 한 행</strong></td><td class="num">5</td>
+<td>E10 · E11 · E12 · E13 · E14</td><td>Table 5 (5행)</td></tr>
+<tr><td><strong>문장 · 각주</strong></td><td class="num">7</td>
+<td>E5(통계 규약) · E9(gate 보호) · E16(누수) · E17(weather 한계) · E18(정차 idle) · E19(방법론 사고) · E1(부록)</td>
+<td>§3·§8 문단</td></tr>
+<tr><td>부록 이관</td><td class="num">3</td><td>E1 상세 · 기각 5종 상세 · 정보축 진단 확장</td><td>Appendix A~C</td></tr>
+</table></div>
+
+<div class="box key"><span class="t">지면 예산 (목표 저널 12~14쪽 기준)</span>
+<ul>
+<li><strong>그림 6 · 표 6</strong> — 관행(그림 8~14 / 표 3~6)의 하단. 여유가 있으므로 Fig 6을 크게 써도 된다.</li>
+<li><strong>상한 규칙</strong> — 그림 8 / 표 7을 넘으면 부록으로 민다. 추가 실험이 생겨도 이 상한을 먼저 지킨다.</li>
+<li><strong>기각 실험은 개별 절을 갖지 않는다</strong> — 표 한 행 + 부록이 원칙.</li>
+<li><strong>본문에 연대기를 쓰지 않는다</strong> — 축별로만 배열한다(3장은 내부 문서 전용).</li>
+</ul></div>
+
+<h2 id="risk"><span class="no">9.5</span>지면 설계가 막아야 할 것</h2>
+<div class="tw"><table>
+<tr><th>위험</th><th>어떻게 읽히나</th><th>지면 설계의 대응</th></tr>
+<tr><td><strong>산탄총 인상</strong></td><td>"이것저것 21번 해봤는데 다 실패"</td>
+<td>Fig 6이 네 축을 한 그림에 모아 <em>하나의 주장</em>으로 만든다 + 축별 배열(시간순 금지)</td></tr>
+<tr><td><strong>null result 인상</strong></td><td>"새 방법이 없다"</td>
+<td>Fig 2(프로토콜)를 §3 앞머리에 두어 <em>기여가 자(尺)</em>임을 먼저 확정</td></tr>
+<tr><td><strong>분모 불신</strong></td><td>"오라클이 잡음 아닌가"(R4)</td>
+<td>Fig 3 캡션의 78케이스 제한 명시 + §3에 시변 대표성(+4%) 1문단. <strong>미방어 — 아래 참조</strong></td></tr>
+<tr><td><strong>좁은 인터페이스</strong></td><td>"9-knob이면 당연히 못 이긴다"</td>
+<td>Fig 3(권한의 가격표)을 §4로 <em>앞당겨</em> 배치 — 좁음을 결론으로 승격</td></tr>
+</table></div>
+
+<div class="box warn"><span class="t">⚠ 지면 설계로는 못 막는 것 하나 (R4)</span>
+<p>"오라클 분모가 상당 부분 잡음 아닌가"는 그림 배치로 막을 수 없다. <strong>실험이 필요하다.</strong>
+계획: <strong>oracle 재현성 검사</strong>(같은 에피소드에 CEM 다른 seed 2회 → 노브 상관 낮고 J 차이 작으면
+최적 basin이 평평함 확정, 재학습 0회). 성사되면 <strong>Fig 7</strong>로 §8에 추가하고 표 6→7이 된다.</p>
+<p>함께 검토 중: <strong>조건별 오라클</strong>(조건마다 1세트, 21세트) — "조건 식별의 상한"을 직접 계산하므로
+1/3이 <em>관측된 수렴점</em>에서 <strong>유도된 값</strong>으로 격상된다. 이쪽이 성사되면 Fig 2의 눈금자에
+한 눈금이 추가되어 논증이 크게 강해진다.</p></div>
+
+<h2 id="order"><span class="no">9.6</span>집필 순서 — 그림부터 만든다</h2>
+<p>측정 논문은 <strong>그림이 논증이므로</strong> 본문보다 그림을 먼저 확정하는 편이 빠르다.</p>
+<div class="timeline">
+<div class="tl-item win"><div class="d">1단계</div><div class="h">Fig 4 · Fig 5 · Fig 6 (결과 3종)</div>
+<div class="b"><p>데이터가 전부 확정돼 있어 바로 그릴 수 있다. 이 셋이 완성되면 §5·§6 본문은 캡션 확장으로 써진다.</p></div></div>
+<div class="tl-item"><div class="d">2단계</div><div class="h">Table 5 · Table 6 (압축 표 2종)</div>
+<div class="b"><p>§7·§8의 뼈대. Table 6은 E20 반영으로 <strong>서술이 바뀌는 지점</strong>이므로 먼저 확정할 것.</p></div></div>
+<div class="tl-item"><div class="d">3단계</div><div class="h">Fig 2 · Fig 3 (방법·권한)</div>
+<div class="b"><p>Fig 2는 개념도라 손이 많이 간다. Fig 3은 78케이스 제한 문구를 캡션에 확정.</p></div></div>
+<div class="tl-item"><div class="d">4단계</div><div class="h">Table 1 · Table 2 → §1 서론</div>
+<div class="b"><p>Table 1은 미확보 문헌 2편(A2·A4)에 걸려 있다. 서론은 <strong>마지막에</strong> 쓴다 —
+결과 그림이 확정돼야 P4를 정확히 쓸 수 있다.</p></div></div>
+<div class="tl-item"><div class="d">5단계</div><div class="h">Fig 1 (graphical abstract)</div>
+<div class="b"><p>나머지 그림에서 발췌해 합성하므로 <strong>맨 마지막</strong>. 먼저 그리면 두 번 그린다.</p></div></div>
+</div>
+
+<div class="pn">
+  <a class="prev" href="08_experiments.html"><span class="dir">← 이전</span><span class="ttl">8. 실험 카드</span></a>
+  <a class="next" href="index.html"><span class="dir">처음으로 →</span><span class="ttl">목차</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL 프로젝트 · 지면 설계 작성 2026-07-31 · 수치 정본은 <code>docs/meta_rl_living_experiment_ledger_ko.md</code>와 results/ 원본 CSV</footer>
+</body>
+</html>
