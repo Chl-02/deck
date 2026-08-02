@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회계 틀 — G = A + M + O + C — Meta-RL 회계 구조 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">회계 구조 보고서<span class="v2-badge">v2</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_why.html">1 왜 회계인가</a>
+    <a class="ch cur" href="02_ledger.html">2 회계 틀</a>
+    <a class="ch" href="03_authority.html">3 권한 G</a>
+    <a class="ch" href="04_achieved.html">4 A 달성분</a>
+    <a class="ch" href="05_method.html">5 M 방법손실</a>
+    <a class="ch" href="06_observation.html">6 O 관측손실</a>
+    <a class="ch" href="07_causal.html">7 C 인과손실</a>
+    <a class="ch" href="08_novelty.html">8 노벨티·저널</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">2장</p>
+<h1>회계 틀 — G = A + M + O + C</h1>
+<p class="lede">네 항의 정의, 확률계획법 표준 용어와의 대응, 각 항을 어떻게 재는지, 그리고
+이 프로젝트가 사고를 통해 배운 통계 규약.</p>
+
+<h2 id="def"><span class="no">2.1</span>정의</h2>
+<div class="eq">G <span class="op">=</span> A <span class="op">+</span> M <span class="op">+</span> O <span class="op">+</span> C</div>
+<div class="tw"><table>
+<tr><th>항</th><th>구간</th><th>뜻</th><th>측정</th></tr>
+<tr><td><strong>G</strong></td><td>기준선 → 사후 최적(WS)</td><td>전체 격차 (capture의 분모)</td><td>Phase A probe · 완료</td></tr>
+<tr><td><strong>A</strong></td><td>기준선 → 학습 정책</td><td>학습이 실제로 먹은 것</td><td>V6 suite · 완료</td></tr>
+<tr><td><strong>M</strong></td><td>학습 정책 → RP(관측)</td><td>같은 정보로 더 갈 수 있었는데 못 간 것</td><td class="neg">RP 필요 · 미완</td></tr>
+<tr><td><strong>O</strong></td><td>RP(관측) → RP(태스크)</td><td>상황을 다 알면 더 먹는 것</td><td>정보축 7 arm · ≈0 시사</td></tr>
+<tr><td><strong>C</strong></td><td>RP(태스크) → WS</td><td><strong>EVPI</strong> — 미래를 알아야만 먹는 것</td><td>나머지 (간접)</td></tr>
+</table></div>
+
+<h2 id="sp"><span class="no">2.2</span>확률계획법 용어와의 대응</h2>
+<p>이 사다리는 발명이 아니다. 확률계획법의 60년 된 표준 개념이며, 용어가 정확히 대응한다.</p>
+<div class="tw"><table>
+<tr><th>문헌 용어</th><th>뜻</th><th>본 연구</th></tr>
+<tr><td><strong>WS</strong> (wait-and-see)</td><td>시나리오를 알고 나서 결정</td><td>에피소드별 CEM 오라클 = 분모</td></tr>
+<tr><td><strong>RP</strong> (here-and-now, 비예견)</td><td>미래를 모른 채의 최적</td><td class="neg">★ 미측정</td></tr>
+<tr><td><strong>EEV</strong></td><td>기댓값 해 하나를 고정</td><td>≈ <code>global_static_tuned</code> (−18.9%)</td></tr>
+</table></div>
+<pre><code>WS ≤ RP ≤ EEV        (증명된 관계)
+EVPI = WS − RP       미래를 아는 것의 가치  = 본 회계의 C
+VSS  = EEV − RP      확률해의 가치</code></pre>
+<p>문헌 용어 <strong>"anticipatory gap"</strong>(최적 온라인 정책의 clairvoyant 대비 손실)이
+곧 C다. 채택 이유는 두 가지다 — 심사자가 아는 언어이고, 부등식이 이미 증명돼 있다.</p>
+
+<h2 id="rp"><span class="no">2.3</span>RP를 어떻게 재는가</h2>
+<p>RP는 <strong>하나의 숫자가 아니라 관측 집합의 함수</strong>다. 실무적으로는 분할(partition)로 근사한다.</p>
+<pre><code>① 관측으로 에피소드를 셀로 묶는다
+② 각 셀에 노브 1세트를 배정한다            (= 룩업 테이블 정책)
+③ 셀의 J 평균을 직접 최소화한다             ← 노브 오차가 아니라 J
+④ 학습 802로 ③을 하고, 평가 120으로 잰다   ← 승자의 저주 차단</code></pre>
+<p><strong>③이 결정적이다.</strong> fitted rule은 <em>노브 MSE</em>를 최소화하는데,
+Zeng et al.(ISA Trans. 2024)이 MSE가 best-P-lowest-C조차 아님을 HEV EMS에서 증명했다.
+따라서 fitted rule은 상한이 될 수 없다.</p>
+<p>셀 개수 k가 곧 정보량이다 — k=1이 EEV, k=120이 WS. <strong>산출물은 숫자가 아니라 곡선</strong>이고,
+교차검증이 멈추는 지점이 상한이다.</p>
+
+<div class="box note"><span class="t">조건 레이블 분할이 불가능한 이유</span>
+<p>학습 802는 8조건, 평가 120은 20조건이다. 다만 <strong>weather는 프로파일로 학습에 들어가 있다</strong>
+(280/802) — 레이블만 다를 뿐이다. 진짜 held-out은 <strong>ems_variant 6종</strong>(학습 전부 nominal)과
+<strong>은닉축 극단값</strong>(train 2.5/0.85/0.8 vs eval 4.0/0.7/0.6)이다.
+어느 쪽이든 조건 레이블은 정책이 못 보는 특혜 정보이므로,
+<strong>관측 특징 분할이 유일하면서 더 정직한 길</strong>이다.</p></div>
+
+<h2 id="stat"><span class="no">2.4</span>통계 규약 (사고에서 배운 것)</h2>
+<ul>
+<li><strong>학습 추첨 오차 병기</strong> — 케이스 부트스트랩은 평가 표집만 반영한다.
+T1g 사고: Holm 통과 +21.6pt → 학습 80% 부분표본 4회에서 <strong>+2.2±2.6</strong>.
+학습이 1회뿐인 arm(fitted 포함)도 부분표본 sd(≈2.5)를 병기한다.</li>
+<li><strong>null은 동등성 검정으로</strong> — "차이 없음"이 아니라 "±δ 넘는 차이는 배제".
+검정력이 낮은 arm(TD3 ±14pt)은 그 한계를 명시한다.</li>
+<li><strong>pooling 명시</strong> — 케이스 단위로 통일. 조건 단위 값과 병렬 비교 금지.</li>
+<li><strong>소형 분모 조건</strong> — gap&lt;0.02인 7개 조건(분모 기여 5.4%)은 부호만 해석.</li>
+</ul>
+
+<div class="pn"><a class="prev" href="01_why.html"><span class="dir">← 이전</span><span class="ttl">1. 왜 회계인가</span></a><a class="next" href="03_authority.html"><span class="dir">다음 →</span><span class="ttl">3. 권한</span></a></div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 회계 구조판 작성 2026-08-02 ·
+수치 정본 <code>docs/meta_rl_living_experiment_ledger_ko.md</code> ·
+기존 구조판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>

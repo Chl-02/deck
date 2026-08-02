@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A · 달성분 — 학습은 얼마나 따라잡는가 — Meta-RL 회계 구조 보고서</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">회계 구조 보고서<span class="v2-badge">v2</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_why.html">1 왜 회계인가</a>
+    <a class="ch" href="02_ledger.html">2 회계 틀</a>
+    <a class="ch" href="03_authority.html">3 권한 G</a>
+    <a class="ch cur" href="04_achieved.html">4 A 달성분</a>
+    <a class="ch" href="05_method.html">5 M 방법손실</a>
+    <a class="ch" href="06_observation.html">6 O 관측손실</a>
+    <a class="ch" href="07_causal.html">7 C 인과손실</a>
+    <a class="ch" href="08_novelty.html">8 노벨티·저널</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">4장</p>
+<h1>A · 달성분 — 학습은 얼마나 따라잡는가</h1>
+<p class="lede">권한을 동등하게 맞춘 뒤, 사람 설계·지도 증류·meta-RL이 각각 격차의 몇 %를 먹는가.
+이 장이 회계의 첫 칸을 채운다.</p>
+
+<h2 id="main"><span class="no">4.1</span>주 결과</h2>
+<div class="tiles">
+  <div class="tile"><div class="lb">태스크 무관 고정 튜닝</div><div class="v">−18.9%</div><div class="sub">기준선보다 나쁨 (조건 단위)</div></div>
+  <div class="tile"><div class="lb">hand rule</div><div class="v">19.5%</div><div class="sub">사람 설계</div></div>
+  <div class="tile"><div class="lb">meta-RL (V6)</div><div class="v">30.7%</div><div class="sub">±2.3 · 5 seed</div></div>
+  <div class="tile"><div class="lb">fitted rule</div><div class="v">31.7%</div><div class="sub">±2.5 · n=802</div></div>
+</div>
+<p>케이스 단위 pooling, n=120, suite <code>experiment_suite_v3/20260727_v6_fittedN802</code>.
+0% = adaptive base, 100% = 에피소드별 CEM 오라클.</p>
+
+<h2 id="two"><span class="no">4.2</span>두 가지가 동시에 나온다</h2>
+<ul>
+<li><strong>학습은 사람 규칙을 크게 이긴다</strong> — +11~12pt, 케이스 대응 t=11.08.
+분모를 지배하는 두 조건(long_min_timer 20.5%, low_soc_ref 14.9%)에서 hand는 <strong>0%</strong>다.</li>
+<li><strong>그러나 학습 2종은 서로 구분되지 않는다</strong> — 차이 −1.1pt = 0.67 × 결합 SE 1.61pt,
+케이스 대응 t=−0.34.</li>
+</ul>
+<div class="box key"><span class="t">순위가 학습 추첨에 따라 뒤집힌다</span>
+<p>fitted 학습 표본을 n=70 → n=802로 바꾸자 <strong>어느 쪽이 앞서는지가 역전</strong>했다
+(meta +0.3pt → fitted +1.1pt, 둘 다 비유의). 순위가 추첨에 달렸다는 것 자체가
+<strong>같은 지점에 수렴했다는 증거</strong>이며, "비겼다"보다 강한 서술이다.</p></div>
+
+<h2 id="axes"><span class="no">4.3</span>축별 분해</h2>
+<div class="tw"><table>
+<tr><th>축</th><th class="num">n</th><th class="num">hand</th><th class="num">fitted</th><th class="num">meta-RL</th><th>해석</th></tr>
+<tr><td>전체</td><td class="num">120</td><td class="num">19.5</td><td class="num">31.7</td><td class="num">30.7</td><td>구분 불가</td></tr>
+<tr><td>학습 weather</td><td class="num">18</td><td class="num">19.9</td><td class="num">22.6</td><td class="num">29.3</td><td>차이 비유의</td></tr>
+<tr><td>ems_variant</td><td class="num">18</td><td class="num neg">−2.0</td><td class="num">39.2</td><td class="num">38.4</td><td>hand 무력 — 학습의 최강 축</td></tr>
+<tr><td>OOD (hidden+stress)</td><td class="num">48</td><td class="num">29.5</td><td class="num">34.2</td><td class="num neg">22.9</td><td>meta-RL이 hand에도 뒤짐</td></tr>
+<tr><td>ice (미학습)</td><td class="num">6</td><td class="num">27.9</td><td class="num">70.6</td><td class="num">53.8</td><td>gap 0.015 — 부호만</td></tr>
+</table></div>
+<p class="small">ems_variant는 <strong>meta-RL이 사람 규칙을 압도하는 유일한 축</strong>이다
+(38.4 vs −2.0). 학습에 없던 조건이므로 held-out으로서의 가치도 가장 크다 —
+평가에서 빼면 논문이 약해진다.</p>
+
+<h2 id="value"><span class="no">4.4</span>A가 말하는 것</h2>
+<p>학습의 확실한 가치는 <strong>수작업 캘리브레이션의 자동화</strong>다. 사람이 손을 못 대는
+조건(오보정 EMS, 타이머 오설정)에서 학습이 30%대를 먹는다. 이것이 A의 실질이다.</p>
+<p>반면 <strong>meta-RL과 단순 선형식이 구분되지 않는다</strong>는 것은 A를 더 늘릴 여지가
+방법 쪽에 없을 수 있음을 시사한다. 그 여지가 실제로 얼마인지가 <a href="05_method.html">다음 장(M)</a>이다.</p>
+
+<div class="pn"><a class="prev" href="03_authority.html"><span class="dir">← 이전</span><span class="ttl">3. 권한</span></a><a class="next" href="05_method.html"><span class="dir">다음 →</span><span class="ttl">5. M 방법손실</span></a></div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 회계 구조판 작성 2026-08-02 ·
+수치 정본 <code>docs/meta_rl_living_experiment_ledger_ko.md</code> ·
+기존 구조판: <a href="../meta_rl_paper/">chl02.com/meta_rl_paper/</a></footer>
+</body>
+</html>
