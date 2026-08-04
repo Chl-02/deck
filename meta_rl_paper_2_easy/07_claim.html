@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7. 주장과 뼈대 — 쉬운 회계판</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">쉬운 회계판<span class="easy-badge">easy</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_question.html">1 질문</a>
+    <a class="ch" href="02_stage.html">2 무대</a>
+    <a class="ch" href="03_ledger.html">3 봉투 넷</a>
+    <a class="ch" href="04_onesided.html">4 자의 한계</a>
+    <a class="ch" href="05_sandwich.html">5 샌드위치</a>
+    <a class="ch" href="06_findings.html">6 결과</a>
+    <a class="ch cur" href="07_claim.html">7 주장·뼈대</a>
+    <a class="ch" href="08_exhibits.html">8 실험 개수</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">7장</p>
+<h1>주장과 뼈대</h1>
+<p class="lede">무엇을 주장할 수 있고 무엇은 못 하는지, 그리고 논문을 어떤 순서로 배열할지.</p>
+
+<h2 id="cant">하면 안 되는 주장</h2>
+
+<blockquote><p>"손실을 네 항으로 분해했다."</p></blockquote>
+
+<p><strong>절반만 채웠다.</strong> A와 M은 쟀지만 O와 C는 합쳐서 상한만 있다.
+네 항 분해를 표방하고 2.5항을 재면 리뷰어가 그 지점을 정확히 짚는다.
+<em>"분해한다더니 안 했다"</em>는 <em>"하나를 제대로 쟀다"</em>보다 훨씬 심하게 평가된다.</p>
+
+<h2 id="can">해도 되는 주장</h2>
+
+<blockquote><p><strong>"회계 틀을 세우고, 그중 방법 항을 측정해 위아래로 가뒀다.
+나머지는 합쳐서 유계."</strong></p></blockquote>
+
+<p>작아 보이지만 <strong>닫혀 있다.</strong> 지금 상태로 가면 크지만 열려 있다.
+열린 논문은 리뷰에서 그 구멍으로 들어온다.</p>
+
+<div class="box key"><span class="t">한 문장으로</span>
+<p><strong>"AI가 사람을 이긴 것보다, 제대로 최적화한 단순 공식이 AI를 이긴 게 더 중요한 발견이다.
+그리고 그 차이가 얼마인지 위아래로 가뒀다."</strong></p></div>
+
+<h2 id="tradeoff">이 선택의 대가</h2>
+
+<p>기존 <a href="../meta_rl_paper_v2/">회계 구조판</a>의 골격은 <strong>네 항 분해</strong>로 짜여 있다.
+그 프레임을 바꿔야 한다.</p>
+
+<div class="vs">
+  <div><span class="h">이전 프레임</span>
+    <div class="q">"손실을 네 항으로 분해한다"</div>
+    <div class="n">범위는 넓지만 절반이 빈다.</div></div>
+  <div class="on"><span class="h">새 프레임</span>
+    <div class="q">"방법 항을 측정하고<br>위아래로 가둔다"</div>
+    <div class="n">범위는 좁지만 완결된다.</div></div>
+</div>
+
+<h2 id="skeleton">논문 뼈대</h2>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="d">§1</div>
+    <div class="h">왜</div>
+    <div class="b"><p>보정 다이얼 9개. <em>"얼마나 따라잡았나"</em>가 아니라
+    <em>"못 따라잡은 건 어디로 갔나"</em>를 묻는다.</p></div>
+  </div>
+  <div class="tl-item">
+    <div class="d">§2</div>
+    <div class="h">자</div>
+    <div class="b"><p>만점과 0점의 정의. 그리고 <strong>만점이 진짜 최적인지 먼저 검증한다.</strong>
+    자가 엉터리면 뒤가 전부 무의미하므로 순서가 여기여야 한다.</p></div>
+  </div>
+  <div class="tl-item">
+    <div class="d">§3</div>
+    <div class="h">틀</div>
+    <div class="b"><p>A + M + O + C = 100의 정의. 그리고 <strong>만드는 방식은 아래로만 잰다</strong>는
+    구조적 한계를 여기서 선언한다. 이걸 미리 말해야 뒤의 방법론이 필연으로 읽힌다.</p></div>
+  </div>
+  <div class="tl-item">
+    <div class="d">§4</div>
+    <div class="h">A — 달성분</div>
+    <div class="b"><p>사람 19.5 / AI 30.7 / 공식 31.7. 그리고 어느 상황에서 이기고 지는지.</p></div>
+  </div>
+  <div class="tl-item win">
+    <div class="d">§5</div>
+    <div class="h">M — 방법 손실 <span class="badge info">핵심</span></div>
+    <div class="b"><p>기존 공식이 틀린 것을 맞추고 있었다 → 고치니 37.9 → 샌드위치로 [4.7, 11.8].
+    <strong>방법론 기여도 여기 있다</strong> — 교차적합으로 천장 가두기.</p></div>
+  </div>
+  <div class="tl-item">
+    <div class="d">§6</div>
+    <div class="h">남은 것</div>
+    <div class="b"><p>O+C ≤ 62. <strong>왜 못 갈랐는지 정직하게</strong> 쓴다.
+    무대가 두 개라서 한 표에 못 올린다는 구조적 이유를 밝히고 future work로 넘긴다.</p></div>
+  </div>
+  <div class="tl-item">
+    <div class="d">§7</div>
+    <div class="h">뜻</div>
+    <div class="b"><p><strong>"대리 지표 말고 제어 성능을 직접 최적화하라."</strong>
+    실무자가 내일 적용할 수 있는 형태의 한 줄.</p></div>
+  </div>
+</div>
+
+<h2 id="defense">예상 반론과 답</h2>
+
+<div class="tw"><table>
+<thead><tr><th>리뷰어가 물을 것</th><th>준비된 답</th></tr></thead>
+<tbody>
+<tr><td>만점 기준이 탐색 잡음 아닌가</td><td>두 번 독립 탐색해서 확인. 교차 적용 손실 3.4%</td></tr>
+<tr><td>단일 실행의 운 아닌가</td><td>시드 3개, 방향 뒤집힘 0회, p = 0.025</td></tr>
+<tr><td>더 좋은 알고리즘이 있지 않나</td><td>그 주장은 하지 않는다. 클래스 안에서의 상한만 말한다</td></tr>
+<tr><td>남은 62점 중 정보 몫은 얼마인가</td><td>못 갈랐음을 명시. 왜 구조적으로 어려운지 설명</td></tr>
+<tr><td>실험이 너무 많다</td><td>본문 5개, 나머지 부록 (<a href="08_exhibits.html">8장</a>)</td></tr>
+</tbody></table></div>
+
+<div class="pn">
+  <a class="prev" href="06_findings.html"><span class="dir">← 이전</span><span class="ttl">6. 실제로 나온 것</span></a>
+  <a class="next" href="08_exhibits.html"><span class="dir">다음 →</span><span class="ttl">8. 실험이 20개인 문제</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 쉬운 회계판 · 2026-08-03</footer>
+</body>
+</html>
