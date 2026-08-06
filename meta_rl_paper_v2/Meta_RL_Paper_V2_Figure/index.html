@@ -2,7 +2,24 @@
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Figure — 실험 구성</title>
-<link rel="stylesheet" href="../assets/style.css"></head><body>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.axis-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:0; margin:20px 0;
+  border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.axis-grid > div { padding:9px 14px; border-bottom:1px solid var(--grid); font-size:14px; }
+.axis-grid > div:nth-child(3n+1) { background:var(--surface); }
+.axis-grid > div:nth-child(3n+2) { text-align:center; color:var(--muted); font-size:12px;
+  background:var(--page); white-space:nowrap; }
+.axis-grid > div:nth-child(3n) { background:color-mix(in srgb, var(--s2) 9%, var(--surface));
+  color:var(--critical); font-weight:600; }
+.axis-grid > div:nth-last-child(-n+3) { border-bottom:none; }
+.axis-grid .hd { font-weight:700; font-size:12px; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--muted) !important; background:var(--page) !important; }
+.ladder { font-family:ui-monospace,Menlo,monospace; font-size:12.5px; color:var(--ink-2);
+  line-height:2; word-spacing:.35em; }
+@media (max-width:640px) { .axis-grid { grid-template-columns:1fr; }
+  .axis-grid > div:nth-child(3n+2) { display:none; } }
+</style></head><body>
 <nav class="topnav"><div class="inner">
   <a class="home" href="../index.html">회계 구조 보고서<span class="v2-badge">v2</span></a>
   <div class="chapters">
@@ -14,8 +31,19 @@
 <main>
 <p class="kicker">Figure · 2026-08-06</p>
 <h1>실험 구성</h1>
-<p class="lede">V10(주행 중 조건 변경 실험)의 에피소드 길이 분포와 환경별 프로파일 구성.
+<p class="lede">V10(주행 중 조건 변경 실험)의 에피소드 길이와 환경 구성.
 이후 figure가 이 페이지에 누적된다.</p>
+
+<div class="tiles">
+  <div class="tile"><div class="lb">학습 에피소드</div><div class="v">4,166</div>
+    <div class="sub">평균 10분 팔 · 5시드</div></div>
+  <div class="tile"><div class="lb">평가 케이스</div><div class="v">96 <span style="font-size:15px;color:var(--muted)">× 2팔</span></div>
+    <div class="sub">6조건 × 16</div></div>
+  <div class="tile"><div class="lb">조립 프로파일</div><div class="v">768 <span style="font-size:15px;color:var(--muted)">× 2팔</span></div>
+    <div class="sub">학습 512 · 검증 128 · 평가 128</div></div>
+  <div class="tile"><div class="lb">학습/평가 소스 겹침</div><div class="v" style="color:var(--good-text)">0</div>
+    <div class="sub">조립기가 assert로 강제</div></div>
+</div>
 
 <h2 id="f1">Figure 1 · 학습 에피소드 길이 분포</h2>
 <figure><div class="fig-surface"><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="학습 에피소드 길이 분포">
@@ -28,57 +56,67 @@
 <text x="14" y="141.0" text-anchor="middle" font-size="12" fill="var(--ink-2)" transform="rotate(-90 14 141.0)">에피소드 수</text>
 </svg></div>
 <figcaption><b>평균 10분 팔, 5시드 실측 4,166에피소드.</b> 매 에피소드가 [400, 800]초에서
-균등 추첨된다. 실측 평균 599.8초 · 중앙값 600초로 설계값 600초와 일치한다.
+균등 추첨된다 — 실측 평균 599.8초 · 중앙값 600초로 설계값 600초와 일치.
 고정 길이로 학습하면 종단 SOC 보상이 매번 같은 지점에 떨어져 정책이 그 거리에 맞춰질 수 있어,
-길이를 흩뜨려 <em>항상</em> SOC를 건전하게 유지하도록 만든다. 평균 30분 팔은 [1200, 2400]초이며
-학습 진행 중이라 아직 미집계.</figcaption></figure>
+길이를 흩뜨려 <em>항상</em> SOC를 건전하게 유지하도록 만든다.
+평균 30분 팔([1200, 2400]초)은 학습 진행 중이라 아직 미집계.</figcaption></figure>
 
-<div class="box note"><span class="t">평가는 추첨이 아니라 사다리</span>
-<p>평가 길이는 무작위가 아니라 <strong>16종 고정 사다리</strong>이고, 6개 조건이
-<strong>동일한 길이 집합</strong>을 나눠 갖는다. 무작위로 뿌리면 어느 조건이 우연히 짧은
-에피소드만 받아 유리해질 수 있기 때문이다.</p>
-<div class="tw"><table><thead><tr><th>팔</th><th>평가 길이 (초)</th></tr></thead><tbody>
-<tr><td>평균 10분</td><td class="small">400 · 427 · 453 · 480 · 507 · 533 · 560 · 587 · 613 · 640 · 667 · 693 · 720 · 747 · 773 · 800</td></tr>
-<tr><td>평균 30분</td><td class="small">1200 · 1280 · 1360 · 1440 · 1520 · 1600 · 1680 · 1760 · 1840 · 1920 · 2000 · 2080 · 2160 · 2240 · 2320 · 2400</td></tr>
-</tbody></table></div>
-<p class="small">중간 변경 시점도 절대 스텝이 아니라 <b>길이 비례</b>다 — 400초 에피소드는 200초에,
-2400초 에피소드는 1200초에 전환(모두 50% 지점).</p></div>
+<div class="box note"><span class="t">평가 길이는 추첨이 아니라 고정 사다리</span>
+<p class="ladder">평균 10분 &nbsp;400 427 453 480 507 533 560 587 613 640 667 693 720 747 773 800<br>
+평균 30분 &nbsp;1200 1280 1360 1440 1520 1600 1680 1760 1840 1920 2000 2080 2160 2240 2320 2400</p>
+<p>16종을 <strong>6개 조건이 똑같이 나눠 갖는다.</strong> 무작위로 뿌리면 어느 조건이 우연히
+짧은 에피소드만 받아 유리해질 수 있기 때문이다. 변경 시점도 절대 스텝이 아니라 길이 비례다 —
+400초 에피소드는 200초에, 2400초 에피소드는 1200초에 전환(모두 50% 지점).</p></div>
 
-<h2 id="t1">Table 1 · 평가 에피소드의 환경 구성</h2>
-<div class="tw"><table>
-<thead><tr><th>조건</th><th>내용</th><th class="num">10분 팔</th><th class="num">30분 팔</th><th class="num">하위유형</th></tr></thead>
-<tbody><tr><td>정적 · 기준</td><td class="small">조건 변화 없음</td><td class="num">16</td><td class="num">16</td><td class="num">1</td></tr><tr><td>정적 · 스트레스</td><td class="small">저SOC 0.42 / 고중량 1.25·오르막 +4%</td><td class="num">16</td><td class="num">16</td><td class="num">2</td></tr><tr><td><b>중간 변경 · 학습됨</b></td><td class="small">마찰 1.0→0.8 · 보조 1.05→2.5</td><td class="num">16</td><td class="num">16</td><td class="num">2</td></tr><tr><td><b>중간 변경 · 미학습</b></td><td class="small">빙판 →0.6 · 보조 →4.0 · 다축동시 · 늦은전환</td><td class="num">16</td><td class="num">16</td><td class="num">4</td></tr><tr><td>정적 · 극단 숨은축</td><td class="small">보조 4.0 / 열화 0.7 / 마찰 0.6 / 복합</td><td class="num">16</td><td class="num">16</td><td class="num">4</td></tr><tr><td>정적 · EMS 변형</td><td class="small">제어기 6종 (학습 미노출)</td><td class="num">16</td><td class="num">16</td><td class="num">6</td></tr></tbody></table></div>
-<p class="small">두 팔 모두 96케이스. 평가 프로파일은 전부 <code>heldout_evaluation</code> 소스에서
-조립되어 학습 소스와 겹치지 않는다(조립기가 assert로 강제).</p>
+<h2 id="f2">Figure 2 · 평가 96케이스의 구성</h2>
+<figure><div class="fig-surface"><svg viewBox="0 0 720 298" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="평가 96케이스 구성">
+<text x="196" y="16" font-size="11.5" fill="var(--s1)" font-weight="600">■ 학습 분포 내</text>
+<text x="306" y="16" font-size="11.5" fill="var(--s2)" font-weight="600">■ 학습에 없음 (held out)</text>
+<text x="466" y="16" font-size="11.5" fill="var(--s7)" font-weight="600">↻ 주행 중 조건 변경</text>
+<text x="174" y="52" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="500">기준</text>
+<rect x="196.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="222.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="249.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="275.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="302.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="328.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="355.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="381.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="408.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="434.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="461.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="487.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="514.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="540.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="567.0" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="593.5" y="38" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/>
+<text x="636" y="52" font-size="11" fill="var(--muted)">16케이스 · 1종</text><text x="174" y="94" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="500">스트레스</text>
+<rect x="196.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="222.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="249.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="275.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="302.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="328.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="355.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="381.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="408.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="434.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="461.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="487.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="514.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="540.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="567.0" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="593.5" y="80" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/>
+<text x="636" y="94" font-size="11" fill="var(--muted)">16케이스 · 2종</text><text x="174" y="136" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="500">중간 변경 · 학습됨</text>
+<text x="182" y="136" font-size="11" fill="var(--s7)" font-weight="700">↻</text><rect x="196.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="222.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="249.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="275.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="302.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="328.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="355.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="381.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="408.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="434.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="461.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="487.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="514.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="540.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="567.0" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/><rect x="593.5" y="122" width="23.5" height="18" rx="2" fill="var(--s1)" opacity="0.55"/>
+<text x="636" y="136" font-size="11" fill="var(--muted)">16케이스 · 2종</text><text x="174" y="178" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="700">중간 변경 · 미학습</text>
+<text x="182" y="178" font-size="11" fill="var(--s7)" font-weight="700">↻</text><rect x="196.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="222.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="249.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="275.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="302.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="328.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="355.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="381.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="408.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="434.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="461.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="487.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="514.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="540.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="567.0" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="593.5" y="164" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/>
+<text x="636" y="178" font-size="11" fill="var(--muted)">16케이스 · 4종</text><text x="174" y="220" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="700">극단 숨은축</text>
+<rect x="196.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="222.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="249.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="275.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="302.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="328.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="355.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="381.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="408.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="434.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="461.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="487.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="514.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="540.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="567.0" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="593.5" y="206" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/>
+<text x="636" y="220" font-size="11" fill="var(--muted)">16케이스 · 4종</text><text x="174" y="262" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="700">EMS 변형 6종</text>
+<rect x="196.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="222.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="249.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="275.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="302.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="328.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="355.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="381.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="408.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="434.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="461.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="487.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="514.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="540.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="567.0" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/><rect x="593.5" y="248" width="23.5" height="18" rx="2" fill="var(--s2)" opacity="0.9"/>
+<text x="636" y="262" font-size="11" fill="var(--muted)">16케이스 · 6종</text></svg></div>
+<figcaption>사각형 하나가 케이스 하나. 두 팔 모두 동일 구조다.
+<b style="color:var(--s2)">주황</b>은 학습에 없는 조건 — 절반(48케이스)이 held-out이다.
+<b style="color:var(--s7)">↻</b>는 주행 중 조건이 바뀌는 조건.</figcaption></figure>
 
-<div class="box key"><span class="t">핵심 대비</span>
-<p><strong>중간 변경 · 학습됨</strong>과 <strong>중간 변경 · 미학습</strong>이 이 실험의 축이다.
+<div class="box key"><span class="t">이 실험의 축</span>
+<p><strong>중간 변경 · 학습됨</strong> vs <strong>중간 변경 · 미학습</strong> —
 전자는 "가르친 변화에 적응하는가", 후자는 "안 가르친 변화로 일반화하는가"를 가른다.
-<b>정적 · 스트레스</b>는 대조군 — 어렵지만 주행 내내 일정해서 다이얼 하나로 대응된다.</p></div>
+<b>스트레스</b>는 대조군이다: 어렵지만 주행 내내 일정해서 다이얼 하나로 대응된다
+(적응 헤드룸 0.6%, 학습된 변경은 31%).</p></div>
 
-<h2 id="t2">Table 2 · 조립 프로파일 풀</h2>
-<div class="tw"><table>
-<thead><tr><th>팔</th><th>용도</th><th class="num">에피소드</th><th class="num">구간/에피소드</th><th>주행 성격 구성</th></tr></thead>
-<tbody><tr><td>평균 10분</td><td>학습</td><td class="num">512</td><td class="num">2~4</td><td class="small">arterial_mixed 590 · freeway_cruise 622 · urban_stop_go 525</td></tr><tr><td>평균 10분</td><td>검증</td><td class="num">128</td><td class="num">2~4</td><td class="small">arterial_mixed 153 · freeway_cruise 146 · urban_stop_go 120</td></tr><tr><td>평균 10분</td><td>평가</td><td class="num">128</td><td class="num">2~4</td><td class="small">arterial_mixed 102 · freeway_cruise 119 · suburban_cruise 114 · urban_stop_go 79</td></tr><tr><td>평균 30분</td><td>학습</td><td class="num">512</td><td class="num">7~9</td><td class="small">arterial_mixed 1525 · freeway_cruise 1553 · urban_stop_go 1300</td></tr><tr><td>평균 30분</td><td>검증</td><td class="num">128</td><td class="num">7~9</td><td class="small">arterial_mixed 379 · freeway_cruise 381 · urban_stop_go 349</td></tr><tr><td>평균 30분</td><td>평가</td><td class="num">128</td><td class="num">7~9</td><td class="small">arterial_mixed 277 · freeway_cruise 288 · suburban_cruise 303 · urban_stop_go 208</td></tr></tbody></table></div>
-<p class="small">구간 목표 길이를 300초로 고정했기 때문에 긴 에피소드일수록 구간이 많다 —
-전환 <em>밀도</em>가 길이와 무관하게 일정해져 두 팔의 비교가 공정해진다.
-평가 풀에만 <code>suburban_cruise</code>가 있는데, 이것이 held-out 주행 도메인이다.</p>
+<h2 id="f3">Figure 3 · 주행 성격 구성</h2>
+<figure><div class="fig-surface"><svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="주행 성격 구성"><rect x="110" y="4" width="10" height="10" rx="2" fill="var(--s3)"/><text x="125" y="13" font-size="11" fill="var(--ink-2)">urban_stop_go</text><rect x="260" y="4" width="10" height="10" rx="2" fill="var(--s1)"/><text x="275" y="13" font-size="11" fill="var(--ink-2)">arterial_mixed</text><rect x="410" y="4" width="10" height="10" rx="2" fill="var(--s7)"/><text x="425" y="13" font-size="11" fill="var(--ink-2)">freeway_cruise</text><rect x="560" y="4" width="10" height="10" rx="2" fill="var(--s2)"/><text x="575" y="13" font-size="11" fill="var(--ink-2)">suburban_cruise</text><text x="102" y="43" text-anchor="end" font-size="12" fill="var(--ink)">평균10분 학습</text><rect x="110.0" y="28" width="163.2" height="20" fill="var(--s3)" opacity="0.85"><title>urban_stop_go: 525 (30%)</title></rect><rect x="273.2" y="28" width="183.4" height="20" fill="var(--s1)" opacity="0.85"><title>arterial_mixed: 590 (34%)</title></rect><rect x="456.6" y="28" width="193.4" height="20" fill="var(--s7)" opacity="0.85"><title>freeway_cruise: 622 (36%)</title></rect><text x="658" y="43" font-size="11" fill="var(--muted)">512개</text><text x="102" y="77" text-anchor="end" font-size="12" fill="var(--ink)">평균10분 평가</text><rect x="110.0" y="62" width="103.0" height="20" fill="var(--s3)" opacity="0.85"><title>urban_stop_go: 79 (19%)</title></rect><rect x="213.0" y="62" width="133.0" height="20" fill="var(--s1)" opacity="0.85"><title>arterial_mixed: 102 (25%)</title></rect><rect x="346.1" y="62" width="155.2" height="20" fill="var(--s7)" opacity="0.85"><title>freeway_cruise: 119 (29%)</title></rect><rect x="501.3" y="62" width="148.7" height="20" fill="var(--s2)" opacity="0.85"><title>suburban_cruise: 114 (28%)</title></rect><text x="658" y="77" font-size="11" fill="var(--muted)">128개</text><text x="102" y="111" text-anchor="end" font-size="12" fill="var(--ink)">평균30분 학습</text><rect x="110.0" y="96" width="160.3" height="20" fill="var(--s3)" opacity="0.85"><title>urban_stop_go: 1300 (30%)</title></rect><rect x="270.3" y="96" width="188.1" height="20" fill="var(--s1)" opacity="0.85"><title>arterial_mixed: 1525 (35%)</title></rect><rect x="458.4" y="96" width="191.6" height="20" fill="var(--s7)" opacity="0.85"><title>freeway_cruise: 1553 (35%)</title></rect><text x="658" y="111" font-size="11" fill="var(--muted)">512개</text><text x="102" y="145" text-anchor="end" font-size="12" fill="var(--ink)">평균30분 평가</text><rect x="110.0" y="130" width="104.4" height="20" fill="var(--s3)" opacity="0.85"><title>urban_stop_go: 208 (19%)</title></rect><rect x="214.4" y="130" width="139.0" height="20" fill="var(--s1)" opacity="0.85"><title>arterial_mixed: 277 (26%)</title></rect><rect x="353.4" y="130" width="144.5" height="20" fill="var(--s7)" opacity="0.85"><title>freeway_cruise: 288 (27%)</title></rect><rect x="497.9" y="130" width="152.1" height="20" fill="var(--s2)" opacity="0.85"><title>suburban_cruise: 303 (28%)</title></rect><text x="658" y="145" font-size="11" fill="var(--muted)">128개</text></svg></div>
+<figcaption>구간 목표 길이를 300초로 고정해 <b>긴 에피소드일수록 구간이 많다</b> —
+10분 팔은 2~4구간, 30분 팔은 7~9구간. 전환 <em>밀도</em>가 길이와 무관해져 두 팔 비교가 공정해진다.
+<b style="color:var(--s2)">suburban_cruise</b>가 평가에만 있는데, 이것이 held-out 주행 도메인이다.</figcaption></figure>
 
-<h2 id="t3">Table 3 · 학습에서 보는 값과 평가 전용 값</h2>
-<div class="tw"><table>
-<thead><tr><th>축</th><th>학습에서 보는 값</th><th>평가 전용 (held out)</th></tr></thead>
-<tbody>
-<tr><td>보조 부하 (kW)</td><td>1.05 · 2.5</td><td class="neg">4.0</td></tr>
-<tr><td>마찰 계수</td><td>1.0 · 0.8</td><td class="neg">0.6 (빙판)</td></tr>
-<tr><td>배터리 열화</td><td>1.0 · 0.85</td><td class="neg">0.7</td></tr>
-<tr><td>중간 변경 — 마찰</td><td>1.0 → 0.8</td><td class="neg">→ 0.6, 늦은 전환</td></tr>
-<tr><td>중간 변경 — 보조부하</td><td>1.05 → 2.5</td><td class="neg">→ 4.0, 다축 동시</td></tr>
-<tr><td>EMS 제어기</td><td>nominal 만</td><td class="neg">변형 6종 전부</td></tr>
-<tr><td>주행 도메인</td><td>meta_train 소스</td><td class="neg">heldout 소스 + suburban_cruise</td></tr>
-</tbody></table></div>
-<p class="small">학습 에피소드의 50%가 숨은 축을 nominal로 두고 나머지 50%가 완만한 값을 뽑는다.
-그와 별개로 50%가 주행 중 1~2회 조건이 바뀐다. <b>배터리 열화는 중간 변경에서 제외</b>했다 —
-이 모델에 열(thermal) 상태가 없어 주행 중에 바꾸면 원인 없는 계단이 된다.</p>
+<h2 id="t1">Table 1 · 학습이 보는 값과 평가 전용 값</h2>
+<div class="axis-grid">
+  <div class="hd">학습에서 보는 값</div><div class="hd">축</div><div class="hd">평가 전용 · held out</div>
+  <div>1.05 · 2.5</div><div>보조 부하 kW</div><div>4.0</div>
+  <div>1.0 · 0.8</div><div>마찰 계수</div><div>0.6 (빙판)</div>
+  <div>1.0 · 0.85</div><div>배터리 열화</div><div>0.7</div>
+  <div>1.0 → 0.8</div><div>변경 · 마찰</div><div>→ 0.6 · 늦은 전환</div>
+  <div>1.05 → 2.5</div><div>변경 · 보조부하</div><div>→ 4.0 · 다축 동시</div>
+  <div>nominal 만</div><div>EMS 제어기</div><div>변형 6종 전부</div>
+  <div>meta_train 소스 3성격</div><div>주행 도메인</div><div>heldout 소스 + suburban</div>
+</div>
+<p class="small">학습 에피소드의 50%는 숨은 축을 nominal로 두고 나머지 50%가 완만한 값을 뽑는다.
+그와 별개로 50%가 주행 중 1~2회 조건이 바뀐다.
+<b>배터리 열화는 중간 변경에서 제외</b>했다 — 이 모델에 열 상태가 없어 주행 중에 바꾸면
+원인 없는 계단이 된다.</p>
 
 <div class="pn"><a class="prev" href="../index.html"><span class="dir">← 이전</span><span class="ttl">회계 구조 보고서</span></a><span class="spacer"></span></div>
 </main>
