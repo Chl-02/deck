@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. 샌드위치 — 쉬운 회계판</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">쉬운 회계판<span class="easy-badge">easy</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_question.html">1 질문</a>
+    <a class="ch" href="02_stage.html">2 무대</a>
+    <a class="ch" href="03_ledger.html">3 봉투 넷</a>
+    <a class="ch" href="04_onesided.html">4 자의 한계</a>
+    <a class="ch cur" href="05_sandwich.html">5 샌드위치</a>
+    <a class="ch" href="06_findings.html">6 결과</a>
+    <a class="ch" href="07_claim.html">7 주장·뼈대</a>
+    <a class="ch" href="08_exhibits.html">8 실험 개수</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">5장</p>
+<h1>샌드위치 — 위아래를 동시에 막는다</h1>
+<p class="lede">천장을 짚을 수 없다는 벽을 넘는 방법. <strong>논문의 방법론 기여가 여기서 나온다.</strong>
+아이디어 자체는 통계학의 오래된 상식이고, 어려운 건 이걸 이 문제에 맞게 세우는 일이었다.</p>
+
+<h2 id="idea">아이디어</h2>
+
+<p>다이얼을 맞추고 채점하는 방식을 <strong>두 가지로 갈라본다.</strong></p>
+
+<div class="vs">
+  <div><span class="h">① 부풀린 점수</span>
+    <div class="q">100번의 주행으로 다이얼을 맞추고,<br><strong>그 100번으로</strong> 채점한다.</div>
+    <div class="n">우연까지 맞춰버렸으므로 점수가 부풀려진다.<br>→ <strong>진짜 천장보다 위</strong>에 있다.</div></div>
+  <div><span class="h">② 정직한 점수</span>
+    <div class="q">같은 다이얼을<br><strong>처음 보는 100번으로</strong> 채점한다.</div>
+    <div class="n">정직하지만, 다이얼 하나의 성적이다.<br>→ <strong>진짜 천장보다 아래</strong>에 있다.</div></div>
+</div>
+
+<p>두 점수가 <strong>천장을 위아래에서 가둔다.</strong> 만든 적 없는 "최고의 컨트롤러"를
+직접 만들지 않고도 그것의 위치를 좁힐 수 있다.</p>
+
+<h2 id="result">실제로 나온 구간</h2>
+
+<div class="sandwich">
+  <div class="cap">학습셋 802개를 5조각으로 나눠, 641개로 맞추고 161개로 채점 — 5번 반복</div>
+  <div class="end hi"><span class="ar">▲</span>
+    <span class="lb"><b>부풀린 점수</b> — 맞춘 데이터로 채점</span><span class="vv">39.18</span></div>
+  <div class="mid">진짜 천장은 이 사이 어딘가 · 폭 <b>7.10점</b></div>
+  <div class="end lo"><span class="ar">▼</span>
+    <span class="lb"><b>정직한 점수</b> — 안 본 데이터로 채점</span><span class="vv">32.08</span></div>
+</div>
+
+<p>같은 무대(학습셋)에서 기존 공식은 <strong>27.34점</strong>이다. 그러므로</p>
+
+<div class="eq">M <span class="op">=</span> 4.7 <span class="op">~</span> 11.8 점</div>
+
+<p><strong>하한만 있던 상태에서 처음으로 위아래가 다 막혔다.</strong>
+그리고 아래쪽 끝 32.08이 기존 공식 27.34보다 높으므로 —
+<strong>M이 0이 아니라는 것도 같은 무대에서 재확인됐다.</strong></p>
+
+<div class="box note"><span class="t">기준선을 27.34로 쓴 이유</span>
+<p>같은 공식이 시험셋에서는 31.7점이다. <a href="02_stage.html#two">2장</a>에서 짚었듯
+두 무대는 난이도가 다르다. 샌드위치는 학습셋에서 만들어졌으므로
+<strong>비교 기준선도 학습셋 점수(27.34)</strong>여야 한다.
+31.7과 비교하면 M이 4점쯤 부풀려진다.</p></div>
+
+<h2 id="enabler">제약이 있어서 가능했다</h2>
+
+<p>이 논증이 성립하는 데는 조건이 하나 있다. <strong>다이얼이 9개로 제한돼 있다는 것.</strong></p>
+
+<p>컨트롤러가 무엇이든 될 수 있었다면 천장 자체가 위로 열려 있어서
+"이 이상은 안 된다"를 말할 대상이 아예 없다. 범위가 유한하게 묶여 있기 때문에
+비로소 <em>가둘 대상</em>이 생긴다.</p>
+
+<div class="box key"><span class="t">논문에 쓸 수 있는 포인트</span>
+<p><strong>제약처럼 보였던 9노브가, 회계를 가능하게 만드는 조건이다.</strong>
+현장 수용성을 위해 넣은 제약이 측정 가능성을 낳았다는 구도는 그 자체로 할 말이 된다.</p></div>
+
+<h2 id="assume">가정과 한계 — 정직하게</h2>
+
+<h3>가정 하나: 탐색이 최댓값을 찾는다</h3>
+<p>위쪽 끝이 상한이 되려면 <strong>탐색이 실제로 최고점을 찾아야</strong> 한다.
+못 찾으면 위쪽 끝은 상한이 아니다. 아래쪽 끝은 이 가정과 무관하게 항상 유효하다.</p>
+
+<p>5조각 중 <strong>1조각에서 탐색이 실패했다.</strong> 9세대 동안 28.27점에 정체하다 겨우 움직였다.
+그 조각은 위쪽 끝 계산에서 <strong>뺐다.</strong> 포함하면 위쪽 끝이 37.08로 <em>내려가서</em>
+구간이 실제보다 좁아 보이기 때문이다 — 빼는 쪽이 보수적이다.</p>
+
+<h3>한계: 폭 7.1점은 넓다</h3>
+<p>641개로 18개 값을 정하기에는 데이터가 부족하다는 뜻이다.
+같은 신호가 다른 데서도 나왔다 — <strong>학습셋을 잘 맞출수록 시험셋 점수가 떨어졌다</strong>(상관 −0.88).
+좁히려면 데이터를 늘리고(부풀림 축소) 탐색 예산을 늘려야(위쪽 끝 확보) 한다.</p>
+
+<h3>덤으로 나온 발견: 안전 규칙도 일반화되지 않는다</h3>
+<p>연료·스위칭 가드레일을 맞춘 데이터에서는 지켰는데,
+<strong>안 본 데이터에서는 샜다</strong>(기준 0.915 → 0.888, 0.887).
+M과는 별개의 발견이고 논문의 권한 항목에 들어갈 재료다.</p>
+
+<div class="pn">
+  <a class="prev" href="04_onesided.html"><span class="dir">← 이전</span><span class="ttl">4. 자가 한쪽만 있다</span></a>
+  <a class="next" href="06_findings.html"><span class="dir">다음 →</span><span class="ttl">6. 실제로 나온 것</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 쉬운 회계판 · 2026-08-03</footer>
+</body>
+</html>
