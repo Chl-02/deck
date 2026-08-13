@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. 질문을 바꾼다 — 쉬운 회계판</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">쉬운 회계판<span class="easy-badge">easy</span></a>
+  <div class="chapters">
+    <a class="ch cur" href="01_question.html">1 질문</a>
+    <a class="ch" href="02_stage.html">2 무대</a>
+    <a class="ch" href="03_ledger.html">3 봉투 넷</a>
+    <a class="ch" href="04_onesided.html">4 자의 한계</a>
+    <a class="ch" href="05_sandwich.html">5 샌드위치</a>
+    <a class="ch" href="06_findings.html">6 결과</a>
+    <a class="ch" href="07_claim.html">7 주장·뼈대</a>
+    <a class="ch" href="08_exhibits.html">8 실험 개수</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">1장</p>
+<h1>질문을 바꾼다</h1>
+<p class="lede">이 논문이 남과 다른 지점은 알고리즘이 아니라 <strong>질문</strong>이다.
+같은 실험 결과를 놓고도, 무엇을 물었느냐에 따라 나오는 답의 쓸모가 완전히 달라진다.</p>
+
+<h2 id="usual">보통은 이렇게 쓴다</h2>
+
+<blockquote><p>"제안 기법은 기존 대비 5% 개선되었다."</p></blockquote>
+
+<p>이 문장은 <strong>순위</strong>를 알려준다. 그런데 실무자가 진짜 알고 싶은 건 순위가 아니다.
+5% 개선이 <em>남은 것을 거의 다 먹은 것</em>인지, <em>아직 60%가 바닥에 굴러다니는 것</em>인지를 모른다.
+전자면 이 방향은 끝난 것이고, 후자면 지금 당장 더 투자해야 한다. <strong>정반대의 의사결정인데
+논문은 어느 쪽인지 말해주지 않는다.</strong></p>
+
+<h2 id="ours">이 논문의 질문</h2>
+
+<div class="vs">
+  <div><span class="h">순위 질문</span>
+    <div class="q">"누가 더 잘했나?"</div>
+    <div class="n">답: 30점 &gt; 25점.<br>→ 그래서 뭘 해야 하는지는 모름.</div></div>
+  <div class="on"><span class="h">회계 질문</span>
+    <div class="q">"못 받은 70점은<br>어디로 갔나?"</div>
+    <div class="n">답: 방법 때문에 X점, 정보 때문에 Y점, 원래 불가능해서 Z점.<br>→ 다음에 뭘 할지가 나옴.</div></div>
+</div>
+
+<h2 id="why">왜 이게 실무에 쓸모 있나</h2>
+
+<p>못 받은 점수를 봉투에 나눠 담고 나면, <strong>봉투 크기가 곧 처방</strong>이 된다.</p>
+
+<div class="tw"><table>
+<thead><tr><th>어느 봉투가 큰가</th><th>그러면 무엇을 해야 하는가</th></tr></thead>
+<tbody>
+<tr><td><strong>M</strong> — 방법이 부족해서</td><td>알고리즘에 돈을 쓴다. 지금 쓰는 방법이 재료를 못 살리고 있다.</td></tr>
+<tr><td><strong>O</strong> — 상황을 몰라서</td><td>센서에 돈을 쓴다. 알고리즘을 아무리 바꿔도 안 오른다.</td></tr>
+<tr><td><strong>C</strong> — 미래를 몰라서</td><td>아무것도 하지 않는다. 원리적으로 불가능한 몫이다.</td></tr>
+</tbody></table></div>
+
+<p><strong>"30점 vs 25점"은 이 표의 어느 행에도 답하지 못한다.</strong> 회계는 답한다.
+그게 이 논문이 존재하는 이유다.</p>
+
+<div class="box note"><span class="t">비유 — 가계부</span>
+<p>월급 300만 원인데 통장에 50만 원 남았다. "50만 원 남았다"는 정보만으로는 아무 결정도 못 한다.
+<strong>250만 원이 어디로 갔는지 항목을 적어야</strong> 월세를 줄일지, 외식을 줄일지, 아니면
+줄일 게 없는지 알 수 있다. 이 논문이 하는 일이 정확히 그것이다.</p></div>
+
+<h2 id="cost">이 질문의 대가</h2>
+
+<p>순위 질문은 쉽다. 두 개 돌려서 비교하면 끝난다.
+회계 질문은 <strong>"가능했던 최대치"를 알아야</strong> 답이 된다. 그리고 그게 이 프로젝트에서
+가장 어려웠던 부분이다 — <a href="04_onesided.html">4장</a>에서 왜 그런지 다룬다.</p>
+
+<div class="pn">
+  <a class="prev" href="index.html"><span class="dir">← 이전</span><span class="ttl">표지</span></a>
+  <a class="next" href="02_stage.html"><span class="dir">다음 →</span><span class="ttl">2. 무대 — 다이얼 9개</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 쉬운 회계판 · 2026-08-03</footer>
+</body>
+</html>
