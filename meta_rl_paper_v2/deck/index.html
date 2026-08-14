@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>논문 아이디어와 구조 — 최종판 · Meta-RL HEV EMS</title>
+<style>
+:root{
+  color-scheme: light;
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s7:#4a3aa7;
+  --good:#0ca30c; --good-text:#006300; --warning:#fab219; --critical:#d03b3b;
+  --note-bg:#eef4fc; --warn-bg:#fdf0ec; --key-bg:#f2f7f1; --dead-bg:#f4f3f0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --page:#141413; --surface:#1c1c1a; --ink:#f2f1ec; --ink-2:#c3c1b8; --muted:#8e8c84;
+    --grid:#33322e; --border:rgba(242,241,236,.14);
+    --s1:#6aa5e8; --s2:#f2916a; --s3:#4ecfa1; --s7:#9a8ce0;
+    --good:#4ec24e; --good-text:#7fd67f; --warning:#e5b24a; --critical:#e86b6b;
+    --note-bg:#17242f; --warn-bg:#2c1f19; --key-bg:#18241a; --dead-bg:#222220;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --page:#141413; --surface:#1c1c1a; --ink:#f2f1ec; --ink-2:#c3c1b8; --muted:#8e8c84;
+  --grid:#33322e; --border:rgba(242,241,236,.14);
+  --s1:#6aa5e8; --s2:#f2916a; --s3:#4ecfa1; --s7:#9a8ce0;
+  --good:#4ec24e; --good-text:#7fd67f; --warning:#e5b24a; --critical:#e86b6b;
+  --note-bg:#17242f; --warn-bg:#2c1f19; --key-bg:#18241a; --dead-bg:#222220;
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s7:#4a3aa7;
+  --good:#0ca30c; --good-text:#006300; --warning:#fab219; --critical:#d03b3b;
+  --note-bg:#eef4fc; --warn-bg:#fdf0ec; --key-bg:#f2f7f1; --dead-bg:#f4f3f0;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",
+    "Noto Sans KR","Malgun Gothic",Segoe UI,Roboto,sans-serif;
+  line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+
+/* ---- deck shell ---- */
+.deck{scroll-snap-type:y mandatory; overflow-y:auto; height:100dvh}
+.slide{
+  scroll-snap-align:start; min-height:100dvh; display:flex; flex-direction:column;
+  justify-content:center; padding:clamp(28px,5vw,72px); position:relative;
+  border-bottom:1px solid var(--border);
+}
+.slide-inner{width:100%; max-width:1000px; margin:0 auto}
+.num{
+  position:absolute; top:clamp(16px,3vw,28px); right:clamp(20px,4vw,40px);
+  font-size:12px; letter-spacing:.12em; color:var(--muted);
+  font-family:ui-monospace,monospace;
+}
+.kicker{
+  font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 14px; font-weight:600;
+}
+h1{font-size:clamp(30px,5.2vw,54px); line-height:1.18; margin:0 0 20px; letter-spacing:-.02em}
+h2{font-size:clamp(24px,3.6vw,38px); line-height:1.25; margin:0 0 22px; letter-spacing:-.015em}
+h3{font-size:clamp(15px,1.7vw,18px); margin:26px 0 10px; color:var(--ink-2); font-weight:700}
+p{margin:0 0 14px; font-size:clamp(14px,1.55vw,17px); color:var(--ink-2)}
+p.big{font-size:clamp(16px,2vw,21px); color:var(--ink)}
+strong{color:var(--ink); font-weight:700}
+em{font-style:normal; color:var(--s2); font-weight:600}
+ul{margin:0 0 14px; padding-left:1.15em}
+li{margin:0 0 8px; font-size:clamp(14px,1.55vw,17px); color:var(--ink-2)}
+a{color:var(--s1)}
+
+.lede{
+  font-size:clamp(16px,2.1vw,22px); color:var(--ink); line-height:1.5;
+  border-left:3px solid var(--s2); padding-left:18px; margin:0 0 24px;
+}
+.claim{
+  background:var(--key-bg); border:1px solid var(--border); border-radius:10px;
+  padding:clamp(18px,2.6vw,28px); margin:20px 0;
+}
+.claim .q{font-size:clamp(17px,2.3vw,24px); line-height:1.5; color:var(--ink); font-weight:600; margin:0}
+.note{background:var(--note-bg); border-left:3px solid var(--s1); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0}
+.warn{background:var(--warn-bg); border-left:3px solid var(--critical); padding:14px 18px; border-radius:0 8px 8px 0; margin:16px 0}
+.note p,.warn p{margin:0; font-size:clamp(13px,1.45vw,15px)}
+
+/* equation */
+.eq{
+  font-family:ui-monospace,monospace; font-size:clamp(22px,3.4vw,40px);
+  text-align:center; margin:26px 0; letter-spacing:.02em; color:var(--ink);
+}
+.eq .op{color:var(--muted); margin:0 .3em}
+.eq .tA{color:var(--s3)} .eq .tM{color:var(--s2)} .eq .tO{color:var(--s1)} .eq .tC{color:var(--s7)}
+
+/* accounting rows */
+.acct{display:flex; flex-direction:column; gap:8px; margin:18px 0}
+.acct .r{
+  display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center;
+  background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:12px 16px;
+}
+.acct .sym{
+  font-family:ui-monospace,monospace; font-size:20px; font-weight:700; text-align:center;
+}
+.acct .r.a .sym{color:var(--s3)} .acct .r.m .sym{color:var(--s2)}
+.acct .r.o .sym{color:var(--s1)} .acct .r.c .sym{color:var(--s7)}
+.acct .r.m{border-color:var(--s2); box-shadow:0 0 0 1px var(--s2) inset}
+.acct .t{display:block; font-weight:700; color:var(--ink); font-size:clamp(14px,1.5vw,16px)}
+.acct .s{display:block; font-size:clamp(12px,1.3vw,14px); color:var(--muted); line-height:1.45}
+.acct .val{font-family:ui-monospace,monospace; font-weight:700; font-size:clamp(15px,1.9vw,20px); white-space:nowrap}
+
+/* tables */
+table{width:100%; border-collapse:collapse; margin:16px 0; font-size:clamp(12.5px,1.4vw,15px)}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--grid)}
+th{color:var(--muted); font-weight:600; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase}
+td.n,th.n{text-align:right; font-family:ui-monospace,monospace; white-space:nowrap}
+tr.hi td{background:var(--key-bg)}
+tr.dead td{color:var(--muted)}
+.tw{overflow-x:auto; -webkit-overflow-scrolling:touch}
+
+/* code block */
+pre{
+  background:var(--surface); border:1px solid var(--border); border-radius:9px;
+  padding:16px 18px; overflow-x:auto; margin:16px 0;
+  font-family:ui-monospace,monospace; font-size:clamp(12px,1.35vw,14.5px); line-height:1.7;
+  color:var(--ink-2);
+}
+pre b{color:var(--ink)}
+
+/* stat row */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:20px 0}
+.stat{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px}
+.stat .v{font-family:ui-monospace,monospace; font-size:clamp(21px,3vw,30px); font-weight:700; line-height:1.1; color:var(--ink)}
+.stat .k{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.4}
+.stat.acc .v{color:var(--s2)}
+
+/* chain */
+.chain{display:flex; flex-direction:column; gap:0; margin:14px 0}
+.chain .step{display:grid; grid-template-columns:58px 1fr; gap:14px; padding:10px 0}
+.chain .cid{font-family:ui-monospace,monospace; font-weight:700; color:var(--s1); font-size:14px; padding-top:2px}
+.chain .step.heart .cid{color:var(--s2)}
+.chain .step.heart .ct{color:var(--ink)}
+.chain .ct{font-size:clamp(13.5px,1.5vw,16px); color:var(--ink-2)}
+.chain .arrow{color:var(--muted); font-size:12px; padding-left:72px; line-height:1}
+
+/* section map */
+.secs{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px; margin:18px 0}
+.sec{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:13px 15px}
+.sec .sn{font-family:ui-monospace,monospace; font-size:12px; color:var(--muted); font-weight:700}
+.sec .st{font-weight:700; font-size:14.5px; margin:3px 0 4px; color:var(--ink)}
+.sec .sd{font-size:12.5px; color:var(--muted); line-height:1.45}
+.sec.heart{border-color:var(--s2); box-shadow:0 0 0 1px var(--s2) inset}
+.sec.heart .st{color:var(--s2)}
+
+/* pills */
+.pill{
+  display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.04em;
+  padding:3px 9px; border-radius:99px; margin-right:6px; vertical-align:middle;
+}
+.pill.ok{background:var(--key-bg); color:var(--good-text); border:1px solid var(--good)}
+.pill.open{background:var(--warn-bg); color:var(--critical); border:1px solid var(--critical)}
+.pill.prov{background:var(--dead-bg); color:var(--muted); border:1px solid var(--border)}
+
+/* nav */
+.hud{
+  position:fixed; left:0; right:0; bottom:0; height:3px; background:transparent; z-index:20;
+}
+.hud .bar{height:100%; background:var(--s2); width:0%; transition:width .15s ease}
+.help{
+  position:fixed; bottom:14px; right:16px; z-index:21; font-size:11.5px; color:var(--muted);
+  background:var(--surface); border:1px solid var(--border); border-radius:99px; padding:5px 12px;
+  font-family:ui-monospace,monospace;
+}
+.themebtn{
+  position:fixed; top:14px; left:16px; z-index:21; font-size:11.5px; color:var(--muted);
+  background:var(--surface); border:1px solid var(--border); border-radius:99px;
+  padding:5px 12px; cursor:pointer; font-family:inherit;
+}
+@media print{
+  .deck{height:auto; overflow:visible}
+  .slide{min-height:auto; page-break-after:always; border-bottom:none}
+  .hud,.help,.themebtn{display:none}
+}
+@media (max-width:640px){
+  .acct .r{grid-template-columns:34px 1fr; }
+  .acct .val{grid-column:2; text-align:left}
+  .chain .step{grid-template-columns:46px 1fr}
+  .chain .arrow{padding-left:56px}
+}
+</style>
+</head>
+<body>
+
+<button class="themebtn" id="tbtn">테마</button>
+<div class="help">← → / space</div>
+<div class="hud"><div class="bar" id="bar"></div></div>
+
+<div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide"><span class="num">01</span><div class="slide-inner">
+  <p class="kicker">HEV MetaEMS · 논문 아이디어와 구조 · 최종판</p>
+  <h1>학습된 에너지 관리가<br>자기 천장에 못 가는 이유</h1>
+  <p class="lede">정보도 권한도 알고리즘도 아니다 — <em>목적함수와 정책 함수의 모양</em>이다.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">19.5<span style="font-size:.6em">%</span></div><div class="k">사람 손 규칙</div></div>
+    <div class="stat"><div class="v">30.7<span style="font-size:.6em">%</span></div><div class="k">meta-RL</div></div>
+    <div class="stat"><div class="v">31.7<span style="font-size:.6em">%</span></div><div class="k">지도 증류 (fitted)</div></div>
+    <div class="stat acc"><div class="v">37.9<span style="font-size:.6em">%</span></div><div class="k">같은 재료·같은 정보로<br>목적함수만 바꾼 값</div></div>
+  </div>
+  <p>장르는 <strong>응용 측정 논문</strong>이다. "우리 방법이 낫다"가 아니라 "무엇이 천장을 정하는가".</p>
+</div></section>
+
+<!-- 2 -->
+<section class="slide"><span class="num">02</span><div class="slide-inner">
+  <p class="kicker">문제</p>
+  <h2>문헌의 개선폭은 서로 비교할 수 없다</h2>
+  <p class="big">학습 기반 EMS 논문들은 5~20% 개선을 보고한다. 그런데 각자 <strong>다른 권한</strong>(엔진 출력을 직접 제어 vs 캘리브레이션 다이얼만), <strong>다른 정보</strong>, <strong>다른 기준선</strong>을 쓴다.</p>
+  <p>그래서 보고된 개선폭이 <em>방법이 좋아서</em>인지 <em>권한이 넓어서</em>인지 <em>기준선이 약해서</em>인지 분리되지 않는다.
+  최근 리뷰들도 "표준 벤치마크 기준선과 통일 평가지표의 부재"를 스스로 문제로 제기한다.</p>
+  <div class="note"><p><strong>따라서</strong> 필요한 것은 또 하나의 방법이 아니라, 격차를 항으로 쪼개어 각각을 측정하는 <strong>회계</strong>다.</p></div>
+</div></section>
+
+<!-- 3 -->
+<section class="slide"><span class="num">03</span><div class="slide-inner">
+  <p class="kicker">접근</p>
+  <h2>격차를 네 항으로 쪼갠다</h2>
+  <div class="eq">G <span class="op">=</span> <span class="tA">A</span> <span class="op">+</span> <span class="tM">M</span> <span class="op">+</span> <span class="tO">O</span> <span class="op">+</span> <span class="tC">C</span></div>
+  <div class="acct">
+    <div class="r a"><span class="sym">A</span><span><span class="t">달성분</span><span class="s">기준선 → 학습 정책. 학습이 실제로 먹은 것</span></span><span class="val">31%</span></div>
+    <div class="r m"><span class="sym">M</span><span><span class="t">방법 손실</span><span class="s">학습 정책 → RP. 같은 정보로 더 갈 수 있었는데 못 간 것</span></span><span class="val">+6pt</span></div>
+    <div class="r o"><span class="sym">O</span><span><span class="t">관측 손실</span><span class="s">RP(관측) → RP(정보 추가). 정보를 더 주면 오르는 몫</span></span><span class="val">≈ 0</span></div>
+    <div class="r c"><span class="sym">C</span><span><span class="t">인과 손실</span><span class="s">RP → WS. 미래를 알아야만 먹을 수 있는 몫 (EVPI)</span></span><span class="val">잔여</span></div>
+  </div>
+  <p>용어는 확률계획법 표준이다 — WS(wait-and-see) / RP(비예견 최적) / EEV, 그리고 <span class="mono">EVPI = WS − RP</span>.
+  <strong>회계 틀 자체는 우리 발명이 아니다.</strong> 우리 것은 이 틀을 <em>양산 캘리브레이션 층에서, 학습 arm을 같은 권한에 올려</em> 채운 것이다.</p>
+</div></section>
+
+<!-- 4 -->
+<section class="slide"><span class="num">04</span><div class="slide-inner">
+  <p class="kicker">무대</p>
+  <h2>측정은 양산이 실제로 여는 자리에서 한다</h2>
+  <p class="big">제어 경계는 고정돼 있다. 학습은 엔진·모터 출력을 직접 만지지 않는다.</p>
+<pre>meta-RL / 지도증류 / 규칙  →  <b>bounded 9-knob 캘리브레이션 잔차</b>
+map·rule EMS               →  엔진 상태 · 모드 · 파워 분배 · 최종 지령</pre>
+  <p>9개 노브는 SOC 기준점·복원 이득, 엔진 기동 문턱과 그 SOC 기울기, 이력·타이머, 배터리/회생 여유다.
+  <strong>모든 arm이 정확히 같은 9개를 받는다</strong> — 규칙도, 지도 증류도, meta-RL도.</p>
+  <div class="note"><p>이 권한 동등화가 회계의 전제다. arm마다 권한이 다르면 A·M·O·C를 분리할 수 없다.</p></div>
+</div></section>
+
+<!-- 5 -->
+<section class="slide"><span class="num">05</span><div class="slide-inner">
+  <p class="kicker">분모</p>
+  <h2>100%를 무엇으로 삼는가</h2>
+  <p>각 주행에 대해 <strong>사후에 정답을 알고</strong> 9노브를 최적화한 값이 WS(=100%)다.
+  기준선(무조정 rule)에서 WS까지가 전체 격차 G이고, 모든 arm은 <em>G의 몇 %를 먹었나</em>로 보고된다.</p>
+  <div class="tw"><table>
+    <tr><th>사다리</th><th>뜻</th><th>본 연구에서</th></tr>
+    <tr><td class="mono">WS</td><td>시나리오를 알고 나서 결정</td><td>주행별 CEM 오라클 <strong>= 분모</strong></td></tr>
+    <tr class="hi"><td class="mono">RP</td><td>미래를 모른 채의 최적</td><td>도달 가능한 진짜 천장</td></tr>
+    <tr><td class="mono">EEV</td><td>기댓값 해 하나를 고정</td><td>태스크 무관 고정 튜닝</td></tr>
+  </table></div>
+  <p><strong>이 사다리 없이 "31%가 상한"이라 말할 수 없다.</strong> RP를 재는 것이 이 논문의 핵심 측정이다.</p>
+</div></section>
+
+<!-- 6 -->
+<section class="slide"><span class="num">06</span><div class="slide-inner">
+  <p class="kicker">§4 · 권한</p>
+  <h2>권한이 격차 G의 크기를 정한다</h2>
+  <p class="big">다이얼 9개 대신 엔진·모터 출력을 직접 제어하게 하면?</p>
+  <div class="stats">
+    <div class="stat"><div class="v" style="color:var(--good-text)">+9.3%</div><div class="k">SOC 보정 연비 개선</div></div>
+    <div class="stat"><div class="v" style="color:var(--critical)">13×</div><div class="k">제약 위반 증가 — 배포 불가</div></div>
+  </div>
+  <p>좁은 권한은 우리가 편의로 고른 것이 아니라 <strong>배포 조건이 강제한 것</strong>이다.
+  그 거래의 가격표를 먼저 붙이고, 그 안에서 격차를 분해한다.</p>
+</div></section>
+
+<!-- 7 -->
+<section class="slide"><span class="num">07</span><div class="slide-inner">
+  <p class="kicker">§5 · A 달성분</p>
+  <h2>학습은 사람을 크게 이기고, 지도 증류와 구분되지 않는다</h2>
+  <div class="tw"><table>
+    <tr><th>arm</th><th class="n">capture</th><th>학습 자원</th></tr>
+    <tr><td>사람 손 규칙</td><td class="n">19.5%</td><td>—</td></tr>
+    <tr class="hi"><td>지도 증류 (선형 fitted)</td><td class="n">31.7%</td><td>802개 라벨</td></tr>
+    <tr class="hi"><td>meta-RL</td><td class="n">30.7% ±2.3</td><td>5,187 프로필 × 200k 스텝</td></tr>
+  </table></div>
+  <p>차이 −1.1pt는 결합 SE 1.61pt의 0.67배다. <strong>구분되지 않는다.</strong>
+  어느 쪽이 앞서는지는 학습 추첨에 따라 뒤집힌다 — 그 자체가 같은 지점에 수렴한다는 증거다.</p>
+  <div class="note"><p>여기서 물어야 할 것: 31%는 <em>학습의 실패</em>인가, <em>도달 가능한 전부</em>인가?</p></div>
+</div></section>
+
+<!-- 8 -->
+<section class="slide"><span class="num">08</span><div class="slide-inner">
+  <p class="kicker">§6 · M 방법손실 — 논문의 심장</p>
+  <h2>도달 가능한 전부가 아니었다</h2>
+  <p class="big">같은 99차원 선형 클래스, 같은 정보, 같은 평가. <strong>목적함수만</strong> 노브 MSE에서 제어 성능으로 바꿨다.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">31.7<span style="font-size:.6em">%</span></div><div class="k">노브 MSE 적합 (fitted)</div></div>
+    <div class="stat acc"><div class="v">37.9<span style="font-size:.6em">%</span></div><div class="k">제어 성능 직접 최적화</div></div>
+    <div class="stat acc"><div class="v">+6.1<span style="font-size:.6em">pt</span></div><div class="k">M &gt; 0 · 95% CI [+1.9, +10.4] · p = 0.025</div></div>
+  </div>
+  <p>양방향 구간(샌드위치 5-fold)으로도 RP* ∈ <span class="mono">[32.1, 39.2]</span>.
+  <strong>학습은 자기 천장에 못 갔고, 못 간 이유는 알고리즘이 아니다.</strong></p>
+  <div class="note"><p>이론적 근거: 예측 정확도 지표(MSE·로그우도)는 제어 성능과 단조 관계가 아니다
+  — 노브 MSE는 "더 좋은 예측기 = 더 낮은 비용"조차 만족하지 않는다.</p></div>
+</div></section>
+
+<!-- 9 -->
+<section class="slide"><span class="num">09</span><div class="slide-inner">
+  <p class="kicker">§7 · O 관측손실</p>
+  <h2>정보를 더 줘도 오르지 않는다</h2>
+  <p>은닉 태스크 축의 <strong>정답을 그대로 주입</strong>했다. 그리고 무오차 미래 미리보기도 주었다.</p>
+  <div class="tw"><table>
+    <tr><th>추가 정보</th><th class="n">노브 1개</th><th class="n">3개</th><th class="n">7개</th><th class="n">9개</th></tr>
+    <tr><td>태스크 정답</td><td class="n">+3.7</td><td class="n">+1.6</td><td class="n">+1.3</td><td class="n">+2.8</td></tr>
+    <tr><td>미래 미리보기</td><td class="n">−1.4</td><td class="n">+0.8</td><td class="n">+2.7</td><td class="n">+1.2</td></tr>
+    <tr class="hi"><td>기본 관측</td><td class="n">+5.5</td><td class="n">+14.1</td><td class="n">—</td><td class="n">+22.7</td></tr>
+  </table></div>
+  <p>기본 관측만 단조 증가하고, <strong>태스크 정답과 미래 정보는 ±3pt 안에서 부호까지 오간다.</strong>
+  장치가 정보를 못 잡는 것이 아니다 — 기본 관측에서 +22.7pt를 잡는다.</p>
+</div></section>
+
+<!-- 10 -->
+<section class="slide"><span class="num">10</span><div class="slide-inner">
+  <p class="kicker">§7 · O 관측손실 — 기전</p>
+  <h2>알아낼 값어치가 있는 축이 하나뿐이었다</h2>
+  <p>은닉 축 네 개를 하나씩 검사했다 — <strong>난이도를 만드는가 · 최적점을 옮기는가 · 관측에 흔적을 남기는가 · 적응하면 이득인가.</strong></p>
+  <div class="tw"><table>
+    <tr><th>축</th><th>난이도</th><th>관측 흔적</th><th>적응 이득</th><th>판정</th></tr>
+    <tr class="hi"><td><strong>보조부하</strong></td><td class="n">+164.6%</td><td class="n">+1.45 kW 정확</td><td class="n">p &lt; 0.0001</td><td><span class="pill ok">진짜 축</span></td></tr>
+    <tr class="dead"><td>마찰</td><td class="n">nominal 동급</td><td class="n">0.0000</td><td class="n">ns</td><td>관측 불가</td></tr>
+    <tr class="dead"><td>질량·경사</td><td class="n">−22 ~ −43%</td><td>—</td><td class="n">ns</td><td>오히려 쉬워짐</td></tr>
+    <tr class="dead"><td>배터리 열화</td><td class="n">±0.5% (p=0.76)</td><td>—</td><td class="n">ns</td><td>축이 아님</td></tr>
+  </table></div>
+  <p><strong>네 개 중 진짜는 하나였다.</strong> 그리고 이 한 줄이 이 프로젝트의 모든 null을 설명한다 —
+  태스크 정답을 줘도 안 오르고, 태스크 추론 모듈을 통째로 제거해도 무해하며, 잠재 변수가 조건 전환에 반응하지 않는다.</p>
+  <div class="note"><p>가혹한 조건 ≠ SOC 관리가 어려운 조건. <em>난이도와 적응 가치는 별개의 양이다.</em></p></div>
+</div></section>
+
+<!-- 11 -->
+<section class="slide"><span class="num">11</span><div class="slide-inner">
+  <p class="kicker">§8 · C 인과손실</p>
+  <h2>남는 것은 미래를 알아야만 먹는 몫</h2>
+  <p>학습 정책은 10초마다 노브를 재결정한다. 이 시간 가변 능력의 값어치를 직접 쟀다.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">≤ 4<span style="font-size:.6em">pt</span></div><div class="k">10초 재결정 vs 60초 후 고정</div></div>
+    <div class="stat"><div class="v">~0</div><div class="k">주행 중 노브 전환의 순 가치<br>(귀무 대조 공제 후)</div></div>
+  </div>
+  <p>미래를 안다면 <strong>상수 하나로 충분하다.</strong> 목표는 궤적이 아니라 운전점 하나이며,
+  조건이 바뀌면 그 운전점이 한 번 옮겨갈 뿐이다.</p>
+  <div class="warn"><p><strong>선행 인정 필수:</strong> "예측의 한계 가치가 지수적으로 감소한다"는 온라인 제어 이론에서 이미 정리로 증명돼 있다(NeurIPS 2020).
+  우리 결과는 <em>발견이 아니라 양산 권한이 걸린 실제 문제에서의 실증</em>이다.</p></div>
+</div></section>
+
+<!-- 12 -->
+<section class="slide"><span class="num">12</span><div class="slide-inner">
+  <p class="kicker">§4 보강 · 권한의 내부 구조</p>
+  <h2>9개 다이얼 중 2개가 성능의 80%를 낸다</h2>
+  <p>노브를 EMS 결정식에서 <strong>들어가는 자리</strong>로 묶어 기능 그룹 4종을 만들고, 조합 15개를 전수 측정했다.</p>
+  <div class="tw"><table>
+    <tr><th>그룹</th><th>노브</th><th class="n">단독</th><th class="n">한계 기여 (8맥락 평균)</th></tr>
+    <tr class="hi"><td><strong>G1soc</strong></td><td>SOC 기준점, 복원 이득</td><td class="n">27.4</td><td class="n">+21.5</td></tr>
+    <tr><td>G3cht</td><td>이력, min on/off 타이머</td><td class="n">14.5</td><td class="n">+8.1</td></tr>
+    <tr><td>G4bat</td><td>배터리·회생 여유</td><td class="n">6.3</td><td class="n">+4.8</td></tr>
+    <tr class="dead"><td>G2thr</td><td>엔진 기동 문턱, SOC 기울기</td><td class="n">−1.1</td><td class="n">−0.0</td></tr>
+    <tr><td colspan="2">전체 9노브</td><td class="n">34.5</td><td class="n">—</td></tr>
+  </table></div>
+  <p>SOC 목표와 복원 강도 <strong>둘만으로 전체의 80%</strong>에 도달한다. 엔진 기동 문턱은 단독으로는 오히려 해롭다.
+  실무 언어로 바로 읽히는 결과다 — <em>어느 캘리브레이션 기능을 여는 것이 값어치 있는가.</em></p>
+  <p><span class="pill prov">잠정</span> 순서 감사(포함관계 50쌍)에서 위반 5건 — 넓은 조합의 탐색이 아직 덜 됐다. 재측정 진행 중.</p>
+</div></section>
+
+<!-- 13 -->
+<section class="slide"><span class="num">13</span><div class="slide-inner">
+  <p class="kicker">§3 · 방법 기여</p>
+  <h2>오라클을 분모로 쓸 때 무엇이 잘못되는가</h2>
+  <p>"DP 대비 몇 %" 관행에는 검사 규칙이 없다. 이 논문은 <strong>감사 가능한 프로토콜</strong>을 함께 제시한다.</p>
+  <div class="tw"><table>
+    <tr><th>규약</th><th>내용</th><th>없으면</th></tr>
+    <tr class="hi"><td><strong>귀무 대조</strong></td><td>구간을 하나만 준 오라클 — 효과가 0이어야 하는 조건</td><td>최적화만으로 3~8%가 "이득"으로 계상</td></tr>
+    <tr><td>짝비교</td><td>정보단 차이를 같은 시드 안에서 뺀다</td><td>가독 문턱 3.4pt → 실제 신호를 놓침</td></tr>
+    <tr><td>유효성 필터</td><td>가드 미달·기준 티어 음수 칸은 평균에서 제외</td><td>"회복"을 "개선"으로 오계상</td></tr>
+    <tr><td>감사 규칙</td><td>순서 위반·미수렴·가드 미달 = 고장 신호</td><td>탐색 실패를 "권한이 해롭다"로 오독</td></tr>
+    <tr><td>탐색 예산</td><td>개체수 = 6 × 유효차원</td><td>권한 축과 탐색 난이도가 교락</td></tr>
+  </table></div>
+  <div class="warn"><p>실제 사례: 귀무 대조를 넣기 전 "적응 헤드룸 43.7%"였던 값이 <strong>공제 후 0</strong>이 되었다.</p></div>
+</div></section>
+
+<!-- 14 -->
+<section class="slide"><span class="num">14</span><div class="slide-inner">
+  <p class="kicker">논증 사슬</p>
+  <h2>각 화살표가 "따라서"로 읽혀야 한다</h2>
+  <div class="chain">
+    <div class="step"><span class="cid">C1</span><span class="ct">문헌의 개선폭은 권한·정보·방법이 뒤섞여 해석 불가하다</span></div>
+    <div class="arrow">↓ 따라서 격차를 분해할 회계가 필요하다</div>
+    <div class="step"><span class="cid">C2</span><span class="ct">회계 틀 G = A + M + O + C (확률계획법 표준 용어)</span></div>
+    <div class="arrow">↓ 회계를 하려면 먼저 G의 크기를 알아야 한다</div>
+    <div class="step"><span class="cid">C3</span><span class="ct">권한이 G의 크기를 정한다 — 파워분배는 연비 +9.3%지만 위반 13배</span></div>
+    <div class="arrow">↓ 권한을 고정했으니 그 안의 격차를 분해한다</div>
+    <div class="step"><span class="cid">C4</span><span class="ct">[A] 학습은 사람을 크게 이기고 지도 증류와 구분되지 않는다</span></div>
+    <div class="arrow">↓ 31%는 실패인가 도달 가능한 전부인가?</div>
+    <div class="step heart"><span class="cid">C5</span><span class="ct"><strong>[M] M &gt; 0. 목적함수만 바꾸면 +6pt — 학습은 자기 천장에 못 갔다</strong></span></div>
+    <div class="arrow">↓ 그럼 무엇이 막고 있나 — 정보인가?</div>
+    <div class="step"><span class="cid">C6</span><span class="ct">[O] 태스크 정보는 성능 단위로도 0. 알아낼 값어치가 있는 축이 하나뿐이었다</span></div>
+    <div class="arrow">↓ 정보도 아니라면, 남은 것은 정책이 정보를 쓰는 방식이다</div>
+    <div class="step heart"><span class="cid">C7</span><span class="ct"><strong>[열린 고리] 표현력인가 정보의 성질인가 — 판정 게이트가 걸려 있다</strong></span></div>
+    <div class="arrow">↓</div>
+    <div class="step"><span class="cid">C8</span><span class="ct">[C] 나머지는 EVPI. 시간 가변의 값어치는 4pt 이내</span></div>
+    <div class="arrow">↓</div>
+    <div class="step"><span class="cid">C9</span><span class="ct">실무 결론 — 아래 슬라이드</span></div>
+  </div>
+</div></section>
+
+<!-- 15 -->
+<section class="slide"><span class="num">15</span><div class="slide-inner">
+  <p class="kicker">논문 구조</p>
+  <h2>9절</h2>
+  <div class="secs">
+    <div class="sec"><div class="sn">§1</div><div class="st">서론</div><div class="sd">비교 프로토콜 부재 + 기여 5개</div></div>
+    <div class="sec"><div class="sn">§2</div><div class="st">관련 연구</div><div class="sd">정보 사다리·SDP·EVPI·예측가치 정리 — 먼저 인정</div></div>
+    <div class="sec"><div class="sn">§3</div><div class="st">테스트베드 · 회계 · 감사 프로토콜</div><div class="sd">방법 기여가 여기 놓인다</div></div>
+    <div class="sec"><div class="sn">§4</div><div class="st">권한의 대가</div><div class="sd">가격표 + 그룹별 기여</div></div>
+    <div class="sec"><div class="sn">§5</div><div class="st">A 달성분</div><div class="sd">19.5 / 31.7 / 30.7</div></div>
+    <div class="sec heart"><div class="sn">§6</div><div class="st">M 방법 손실 ★</div><div class="sd">목적함수 + 표현력 — 논문의 심장</div></div>
+    <div class="sec"><div class="sn">§7</div><div class="st">O 관측 손실</div><div class="sd">측정 + 축 실재성이라는 기전</div></div>
+    <div class="sec"><div class="sn">§8</div><div class="st">C 인과 손실</div><div class="sd">EVPI · 선행 정리의 실증</div></div>
+    <div class="sec"><div class="sn">§9</div><div class="st">논의 · 한계</div><div class="sd">실무 지침 + 모델 유효 범위</div></div>
+  </div>
+  <p>v1과의 차이: <strong>§6이 새로 생기며 논문의 심장이 되고</strong>, §2는 커지고(인정할 선행이 늘었다) §8은 작아진다.</p>
+</div></section>
+
+<!-- 16 -->
+<section class="slide"><span class="num">16</span><div class="slide-inner">
+  <p class="kicker">기여</p>
+  <h2>우리 것과 우리 것이 아닌 것</h2>
+  <h3>우리 것</h3>
+  <div class="tw"><table>
+    <tr><td class="n">①</td><td>양산 rule 정박 + <strong>학습 arm 동일 권한</strong> — 선행 사다리에는 A 항 자체가 없다</td></tr>
+    <tr><td class="n">②</td><td><strong>캘리브레이션 층에서의 회계</strong> — 사례 없음. 선행은 전부 파워분배 층</td></tr>
+    <tr><td class="n">③</td><td><strong>반사실 정보 arm</strong> — 은닉 태스크 축의 정답을 직접 주입</td></tr>
+    <tr><td class="n">④</td><td><strong>목적함수 불일치의 실증</strong> — 이론을 이 층에서 잰 첫 사례</td></tr>
+    <tr><td class="n">⑤</td><td><strong>감사 프로토콜</strong> — "DP 대비 %" 관행에 대한 검사 규칙</td></tr>
+  </table></div>
+  <h3>우리 것이 아닌 것 — §2에서 먼저 인정한다</h3>
+  <p>정보 사다리(Johannesson 2007) · EMS에서의 RP 계산(SDP 계보 2004–2011) · EVPI/WS/RP 회계(확률계획법 60년) ·
+  양방향 구간(SAA 최적성 간극 1999) · 예측 가치의 지수적 소진(NeurIPS 2020) · 예측 정확도 ≠ 제어 성능(2024–25) · 부분관측 인과 하한(2026).</p>
+  <div class="warn"><p><strong>절대 쓰지 않는 말:</strong> "EMS에서 처음으로 RP를 잰다" · "정보 사다리를 처음 만들었다" ·
+  "미래 정보의 한계가치 소진을 처음 관찰했다" · "샌드위치를 고안했다".</p></div>
+</div></section>
+
+<!-- 17 -->
+<section class="slide"><span class="num">17</span><div class="slide-inner">
+  <p class="kicker">남은 판정</p>
+  <h2>결과를 보고 옮기지 않기 위해 미리 박아둔 게이트</h2>
+  <div class="tw"><table>
+    <tr><th>게이트</th><th>재는 것</th><th>판정</th></tr>
+    <tr><td><strong>G-A</strong> 순서 감사</td><td>포함관계에서 넓은 조합 ≥ 좁은 조합</td><td>위반 0건이라야 권한을 가로지르는 비교가 유효 <span class="pill open">재측정 중</span></td></tr>
+    <tr class="hi"><td><strong>G-B1</strong> 높이</td><td>표현력을 키웠을 때 점수가 오르는가</td><td>회계의 M<sub>class</sub> 항 <span class="pill open">미착수</span></td></tr>
+    <tr class="hi"><td><strong>G-B2</strong> 기울기</td><td><strong>정보로 오르는 폭</strong>이 표현력에 따라 커지는가</td><td><strong>C7의 답 — 논문 중심을 정한다</strong> <span class="pill open">미착수</span></td></tr>
+    <tr><td><strong>G-C</strong> 누수</td><td>폴드를 프로파일 그룹으로 재분할</td><td>M &gt; 0가 유지되는지 확인</td></tr>
+  </table></div>
+  <p>G-B2를 <strong>미래 정보</strong>와 <strong>태스크 정보</strong>로 나눠 걸면 한 실험이 두 가설을 동시에 판정한다 —
+  축 실재성이 맞다면 표현력을 키워도 <em>미래 정보 기울기만 살아나고 태스크 기울기는 평평해야</em> 한다.</p>
+</div></section>
+
+<!-- 18 -->
+<section class="slide"><span class="num">18</span><div class="slide-inner">
+  <p class="kicker">§9 · 결론</p>
+  <h2>어디에 투자해야 하는가</h2>
+  <div class="claim"><p class="q">캘리브레이션 층에서 <strong>더 나은 알고리즘</strong>이나 <strong>더 많은 관측</strong>을 사는 것은 수익이 없다.</p></div>
+  <div class="tw"><table>
+    <tr class="hi"><td class="n">①</td><td><strong>목적함수를 제어 성능으로 바꾼다</strong></td><td class="n">+6pt</td><td>즉시 · 추가 데이터 불필요</td></tr>
+    <tr><td class="n">②</td><td>정책 함수의 표현력을 키운다</td><td class="n">?</td><td>G-B2 확정 시</td></tr>
+    <tr><td class="n">③</td><td>권한을 넓힌다</td><td class="n">+9.3%</td><td>제약 위반 13배 — 대가 명시</td></tr>
+    <tr class="dead"><td class="n">✗</td><td>센서·태스크 정보를 늘린다</td><td class="n">≈ 0</td><td>알아낼 축이 하나뿐</td></tr>
+    <tr class="dead"><td class="n">✗</td><td>더 빠른 적응·더 복잡한 meta-RL</td><td class="n">≈ 0</td><td>시간 가변의 값어치 ≤ 4pt</td></tr>
+  </table></div>
+  <p class="big" style="margin-top:22px">학습의 실제 값어치는 평균 성능이 아니라
+  <strong>수작업 캘리브레이션의 자동화</strong>에 있다.</p>
+</div></section>
+
+<!-- 19 -->
+<section class="slide"><span class="num">19</span><div class="slide-inner">
+  <p class="kicker">한 문장</p>
+  <h1 style="font-size:clamp(24px,3.8vw,42px)">양산 HEV EMS의 캘리브레이션 층에서<br>
+  학습이 자기 천장에 도달하지 못하는 이유는<br>
+  <span style="color:var(--s2)">알고리즘·정보·권한이 아니라<br>목적함수와 정책 함수의 모양이다.</span></h1>
+  <p style="margin-top:26px; color:var(--muted); font-size:14px">
+  HEV MetaEMS / Meta-RL · 논문 논리 설계 v2 기준 · 수치는 living ledger가 우선한다</p>
+</div></section>
+
+</div>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck'), bar=document.getElementById('bar');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  function idx(){
+    var t=deck.scrollTop, best=0, d=1e9;
+    slides.forEach(function(s,i){var x=Math.abs(s.offsetTop-t); if(x<d){d=x;best=i;}});
+    return best;
+  }
+  function go(n){
+    n=Math.max(0,Math.min(slides.length-1,n));
+    deck.scrollTo({top:slides[n].offsetTop,behavior:'smooth'});
+  }
+  deck.addEventListener('scroll',function(){
+    var max=deck.scrollHeight-deck.clientHeight;
+    bar.style.width=(max>0?(deck.scrollTop/max*100):0)+'%';
+  },{passive:true});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown'){e.preventDefault();go(idx()+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp'){e.preventDefault();go(idx()-1);}
+    else if(e.key==='Home'){e.preventDefault();go(0);}
+    else if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+  });
+  var btn=document.getElementById('tbtn');
+  btn.addEventListener('click',function(){
+    var r=document.documentElement;
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
