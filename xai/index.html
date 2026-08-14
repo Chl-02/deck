@@ -1,264 +1,98 @@
 <!DOCTYPE html>
-<html class="staticrypt-html" lang="ko">
-    <head>
-        <meta charset="utf-8" />
-        <title>XAI</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html class="staticrypt-html">
+<head>
+<meta charset="utf-8" />
+<title>XAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<style>
+:root{ --accent:#333; --ink:#111; --muted:#666; --line:#ccc; }
+*{ box-sizing:border-box; }
+.staticrypt-html,.staticrypt-body{ height:100%; margin:0; }
+.staticrypt-content{
+  height:100%; margin:0;
+  font-family:-apple-system,"Helvetica Neue","Segoe UI","맑은 고딕",sans-serif;
+  background:#f4f4f4; color:var(--ink);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.staticrypt-page{ width:100%; max-width:360px; }
+.staticrypt-form{
+  background:#fff; border:1px solid #ddd; border-radius:6px;
+  padding:36px 32px 30px; text-align:left;
+}
+.staticrypt-title{ font-size:18px; font-weight:600; color:var(--ink); margin:0 0 6px; }
+.staticrypt-instructions p:not(.staticrypt-title){ font-size:13px; color:var(--muted); margin:0 0 22px; line-height:1.5; }
+.staticrypt-hr{ display:none; }
+.staticrypt-password-container{
+  position:relative; background:#fff; border:1px solid var(--line);
+  border-radius:5px; margin:0 0 14px;
+}
+.staticrypt-password-container:focus-within{ border-color:#888; }
+.staticrypt-form input[type="password"], .staticrypt-form input[type="text"]{
+  background:transparent; border:0; outline:0; width:100%;
+  font-size:15px; color:var(--ink); padding:13px 44px 13px 14px;
+}
+.staticrypt-toggle-password-visibility{
+  cursor:pointer; height:18px; width:18px; opacity:.45; padding:0;
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+}
+.staticrypt-form .staticrypt-decrypt-button{
+  text-transform:none; outline:0; width:100%; border:0;
+  padding:13px; border-radius:5px; color:#fff; font-size:15px; font-weight:600;
+  cursor:pointer; background:#333; transition:background .12s;
+}
+.staticrypt-form .staticrypt-decrypt-button:hover{ background:#000; }
+label.staticrypt-remember{ display:flex; align-items:center; font-size:13px; color:var(--muted); margin:14px 0 4px; }
+.staticrypt-remember input[type="checkbox"]{ transform:scale(1.2); margin-right:9px; }
+.hidden{ display:none !important; }
+.staticrypt-spinner-container{ height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; }
+.staticrypt-spinner{ display:inline-block; width:2rem; height:2rem; border:0.25em solid #ccc;
+  border-right-color:transparent; border-radius:50%; animation:spinner-border .75s linear infinite; }
+@keyframes spinner-border{ 100%{ transform:rotate(360deg); } }
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  .staticrypt-form input[type="password"], .staticrypt-form input[type="text"]{ font-size:16px; }
+}
+</style>
+</head>
+<body class="staticrypt-body">
+<div id="staticrypt_loading" class="staticrypt-spinner-container">
+  <div class="staticrypt-spinner"></div>
+</div>
 
-        <!-- do not cache this page -->
-        <meta http-equiv="cache-control" content="max-age=0" />
-        <meta http-equiv="cache-control" content="no-cache" />
-        <meta http-equiv="expires" content="0" />
-        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-        <meta http-equiv="pragma" content="no-cache" />
+<div id="staticrypt_content" class="staticrypt-content hidden">
+  <div class="staticrypt-page">
+    <div class="staticrypt-form">
+      <div class="staticrypt-instructions">
+        <p class="staticrypt-title">XAI</p>
+        <p>비밀번호를 입력하세요.</p>
+      </div>
 
-        <style>
-            :root {
-                --bg: #f3f4f6;
-                --accent: #2563eb;
-                --accent-hover: #1d4ed8;
-                --ink: #111827;
-                --muted: #6b7280;
-                --field: #f9fafb;
-                --field-focus: #ffffff;
-                --border: #e5e7eb;
-            }
+      <hr class="staticrypt-hr" />
 
-            * { box-sizing: border-box; }
-
-            .staticrypt-html { height: 100%; }
-
-            .staticrypt-body {
-                height: 100%;
-                margin: 0;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "맑은 고딕",
-                    "Apple SD Gothic Neo", Roboto, sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            .staticrypt-content {
-                height: 100%;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 24px;
-                background: var(--bg);
-            }
-
-            .staticrypt-page {
-                width: 100%;
-                max-width: 380px;
-                margin: 0;
-                padding: 0;
-            }
-
-            .staticrypt-form {
-                position: relative;
-                z-index: 1;
-                background: #ffffff;
-                border-radius: 18px;
-                padding: 40px 36px 34px;
-                text-align: center;
-                border: 1px solid var(--border);
-                box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06),
-                    0 8px 24px -12px rgba(17, 24, 39, 0.12);
-            }
-
-            .staticrypt-lock {
-                width: 56px;
-                height: 56px;
-                margin: 0 auto 18px;
-                border-radius: 16px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: var(--accent);
-            }
-            .staticrypt-lock svg { width: 26px; height: 26px; fill: #fff; }
-
-            .staticrypt-instructions { margin: 0 0 4px; }
-
-            .staticrypt-title {
-                font-size: 1.35em;
-                font-weight: 700;
-                color: var(--ink);
-                margin: 0 0 6px;
-                letter-spacing: -0.01em;
-            }
-            .staticrypt-instructions p:not(.staticrypt-title) {
-                font-size: 0.9em;
-                color: var(--muted);
-                margin: 0;
-                line-height: 1.5;
-            }
-
-            .staticrypt-hr {
-                margin: 22px 0;
-                border: 0;
-                border-top: 1px solid var(--border);
-            }
-
-            .staticrypt-password-container {
-                position: relative;
-                background: var(--field);
-                width: 100%;
-                border: 1.5px solid var(--border);
-                border-radius: 12px;
-                margin: 0 0 16px;
-                transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
-            }
-            .staticrypt-password-container:focus-within {
-                border-color: var(--accent);
-                background: var(--field-focus);
-                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-            }
-
-            .staticrypt-form input[type="password"],
-            .staticrypt-form input[type="text"] {
-                background: transparent;
-                border: 0;
-                font-size: 15px;
-                outline: 0;
-                padding: 15px 46px 15px 16px;
-                width: 100%;
-                color: var(--ink);
-                border-radius: 12px;
-            }
-            .staticrypt-form input::placeholder { color: var(--muted); }
-
-            .staticrypt-toggle-password-visibility {
-                cursor: pointer;
-                height: 20px;
-                width: 20px;
-                opacity: 0.5;
-                padding: 14px;
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                transition: opacity 0.15s;
-            }
-            .staticrypt-toggle-password-visibility:hover { opacity: 0.85; }
-
-            label.staticrypt-remember {
-                display: flex;
-                align-items: center;
-                margin-bottom: 18px;
-                font-size: 0.88em;
-                color: var(--muted);
-                cursor: pointer;
-            }
-            .staticrypt-remember input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                margin-right: 10px;
-                accent-color: var(--accent);
-                cursor: pointer;
-            }
-
-            .staticrypt-form .staticrypt-decrypt-button {
-                outline: 0;
-                background: var(--accent);
-                width: 100%;
-                border: 0;
-                border-radius: 12px;
-                padding: 15px;
-                color: #ffffff;
-                font-size: 15px;
-                font-weight: 600;
-                letter-spacing: 0.02em;
-                cursor: pointer;
-                transition: background 0.15s, transform 0.05s;
-            }
-            .staticrypt-form .staticrypt-decrypt-button:hover {
-                background: var(--accent-hover);
-            }
-            .staticrypt-form .staticrypt-decrypt-button:active { transform: translateY(1px); }
-
-            .hidden { display: none !important; }
-
-            .staticrypt-spinner-container {
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: var(--bg);
-            }
-            .staticrypt-spinner {
-                display: inline-block;
-                width: 2.4rem;
-                height: 2.4rem;
-                border: 0.28em solid rgba(37, 99, 235, 0.25);
-                border-right-color: var(--accent);
-                border-radius: 50%;
-                animation: spinner-border 0.75s linear infinite;
-            }
-            @keyframes spinner-border {
-                100% { transform: rotate(360deg); }
-            }
-
-            @media screen and (-webkit-min-device-pixel-ratio: 0) {
-                .staticrypt-form input[type="password"],
-                .staticrypt-form input[type="text"] { font-size: 16px; }
-            }
-        </style>
-    </head>
-
-    <body class="staticrypt-body">
-        <div id="staticrypt_loading" class="staticrypt-spinner-container">
-            <div class="staticrypt-spinner"></div>
+      <form id="staticrypt-form" action="#" method="post">
+        <div class="staticrypt-password-container">
+          <input id="staticrypt-password" type="password" name="password" placeholder="비밀번호" autofocus />
+          <img class="staticrypt-toggle-password-visibility" alt="Show password" title="Show password"
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48cGF0aCBkPSJNMzguOCA1LjFDMjguNC0zLjEgMTMuMy0xLjIgNS4xIDkuMlMtMS4yIDM0LjcgOS4yIDQyLjlsNTkyIDQ2NGMxMC40IDguMiAyNS41IDYuMyAzMy43LTQuMXM2LjMtMjUuNS00LjEtMzMuN0w1MjUuNiAzODYuN2MzOS42LTQwLjYgNjYuNC04Ni4xIDc5LjktMTE4LjRjMy4zLTcuOSAzLjMtMTYuNyAwLTI0LjZjLTE0LjktMzUuNy00Ni4yLTg3LjctOTMtMTMxLjFDNDY1LjUgNjguOCA0MDAuOCAzMiAzMjAgMzJjLTY4LjIgMC0xMjUgMjYuMy0xNjkuMyA2MC44TDM4LjggNS4xek0yMjMuMSAxNDkuNUMyNDguNiAxMjYuMiAyODIuNyAxMTIgMzIwIDExMmM3OS41IDAgMTQ0IDY0LjUgMTQ0IDE0NGMwIDI0LjktNi4zIDQ4LjMtMTcuNCA2OC43TDQwOCAyOTQuNWM4LjQtMTkuMyAxMC42LTQxLjQgNC44LTYzLjNjLTExLjEtNDEuNS00Ny44LTY5LjQtODguNi03MS4xYy01LjgtLjItOS4yIDYuMS03LjQgMTEuN2MyLjEgNi40IDMuMyAxMy4yIDMuMyAyMC4zYzAgMTAuMi0yLjQgMTkuOC02LjYgMjguM2wtOTAuMy03MC44ek0zNzMgMzg5LjljLTE2LjQgNi41LTM0LjMgMTAuMS01MyAxMC4xYy03OS41IDAtMTQ0LTY0LjUtMTQ0LTE0NGMwLTYuOSAuNS0xMy42IDEuNC0yMC4yTDgzLjEgMTYxLjVDNjAuMyAxOTEuMiA0NCAyMjAuOCAzNC41IDI0My43Yy0zLjMgNy45LTMuMyAxNi43IDAgMjQuNmMxNC45IDM1LjcgNDYuMiA4Ny43IDkzIDEzMS4xQzE3NC41IDQ0My4yIDIzOS4yIDQ4MCAzMjAgNDgwYzQ3LjggMCA4OS45LTEyLjkgMTI2LjItMzIuNUwzNzMgMzg5Ljl6Ii8+PC9zdmc+" />
         </div>
 
-        <div id="staticrypt_content" class="staticrypt-content hidden">
-            <div class="staticrypt-page">
-                <div class="staticrypt-form">
-                    <div class="staticrypt-lock">
-                        <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M144 144v48h160v-48a80 80 0 1 0-160 0zM80 192v-48a144 144 0 1 1 288 0v48h16c35.3 0 64 28.7 64 64v160c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64h16z"/>
-                        </svg>
-                    </div>
+        <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
+          <input id="staticrypt-remember" type="checkbox" name="remember" />
+          로그인 유지
+        </label>
 
-                    <div class="staticrypt-instructions">
-                        <p class="staticrypt-title">XAI</p>
-                        <p>비밀번호를 입력하세요.</p>
-                    </div>
+        <input type="submit" class="staticrypt-decrypt-button" value="로그인" />
+      </form>
+    </div>
+  </div>
+</div>
 
-                    <hr class="staticrypt-hr" />
-
-                    <form id="staticrypt-form" action="#" method="post">
-                        <div class="staticrypt-password-container">
-                            <input
-                                id="staticrypt-password"
-                                type="password"
-                                name="password"
-                                placeholder="비밀번호"
-                                autofocus
-                            />
-
-                            <img
-                                class="staticrypt-toggle-password-visibility"
-                                alt="Show password"
-                                title="Show password"
-                                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg=="
-                            />
-                        </div>
-
-                        <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
-                            <input id="staticrypt-remember" type="checkbox" name="remember" checked />
-                            로그인 유지
-                        </label>
-
-                        <input type="submit" class="staticrypt-decrypt-button" value="로그인" />
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            // these variables will be filled when generating the file - the template format is 'variable_name'
-            const staticryptInitiator = ((function(){
+<script>
+const staticryptInitiator = ((function(){
   const exports = {};
   const cryptoEngine = ((function(){
   const exports = {};
@@ -854,77 +688,47 @@ exports.init = init;
 
   return exports;
 })());
-            const templateError = "비밀번호가 올바르지 않습니다",
-                templateToggleAltShow = "Show password",
-                templateToggleAltHide = "Hide password",
-                isRememberEnabled = true,
-                staticryptConfig = {"staticryptEncryptedMsgUniqueVariableName":"dc9f3d10ff8a37053e9590f0fce6b5fa6d22ebbf5fb2799b4f03ef9707d9cfe4c180d802212a89f587bb365bd8eafa4e180841f981b1a447a0d8607dc2250199d979db89cedb57fa70a6214fbe6748471426e5a446f135b3149d014278aa250ec49cf2d1046110fc4d1e71081f385ed8b9529f74d301e91779263ff916cd56af84e3c48d937307a3e55ee7f20e26361144fcd6fc2d514e4535ef58d722294665c2c49e3bbbbb6245390203ba7713a3850a3b9b3568f4164eb10bcd99189c6f277da12fa6f709655b80d0b593efc4fbc1315f8795c1a78a7389bcd8c86e480aafa58396318778d319c283183cc013c76df118b3b157eecacc2c0a6603929b4d252d448b509425cb625530bfdbfad6e7e0e06704d64ad10bf6bb6cad4651da8f35c5756e50064f2feb8cb413d90c189dd13e0fe8e02bd947a88dd3ee8ade352ff91c6a4d8bb063f7663856966fc7fbb6ab2213e294fd94e6b3c1e0534ce7ee48ac89230df8d56412f4ce27688b3c41ea118796a70cacd060dd995ce16e5bdf8312b633bc2586062a8bf14c3c10fafdc5bef382f1416bc7ca25d6f3a1ad19efa22271759d571d9f1f5ef560c43d30eaeae9bca4a64042a7deca4674a8e5bbda303d53ff8a78df48ef09d90e3b6b6d8ecb582bdc02e920060fd5b3cd77fe22c3fd3b0167c9a0b5df8064a4b8fc7fd28ad458273742c5e894051010f7b685e823cf3f23ddfff3471e311dc1914f3630af6f6f99831aa02b88e744ffbc1603c6ccee6fcbf6774826b26e9f32cdb27ca826e210e59a202e41f9c3ad1847217f9f3504b8adc8dcd2cb2911acdaabbb50364951bba2032a7f3158b42c46768426b8e0e2e24aaedfe339b2e486f436ed3235059e0599e9a643afb03b98f54f249dfceee76847abb53b1af91a5627d45ecc767bd029c656c126df416839a488f5bc3e77fd02fd3dd0cd223c5ac3a3896d5e70145c53392015079aa869eefd28ee92d33c2c420e00a4478fb44cad5106c6eab00d95b65ebdd5c9af23c3654bdfb0e7bff21a5a31acade0974fd498f428864be6859b23f50f01e7fe9e75d005b319d703b208f443c9873ea7de717202a3f1f225e6db07984b50165d25b2a2b1b0a9fec98d3571342d54d9f45aa844bba848382a4ada20d34c704a36af2af55905aff1f0fb84c934bde1656ea05769b32ffcd6cd1939d61474c90f95739237ef08b36d5bc86740ba52b0842fe04847bdad99138b8221e83e5c95089f08f6b2465cd2714a63bd32ccd0512b4dfdac91b1fe387a2375723558a8fb98264718050754def47fa6d6acd7a5906564309324190f17302404db6b169b02b4a8db3701a1c00a5559e7059330be98db238cc7cdd5531dd95815ac46df2a5bf088a6acd9d10424c34d7c3f4bbf94bb0fa6953f4d271558f5ecaabe4ef24033e3dd6bc3a7c695bcf925fcd1b0b9df7e3927d0de60632d0b2dc68e2512b912949f012a725d7d1c7f855d1df98e84342be472328a334bab39ccb2cf80325fb63af6e7a2cd347544f0905b1a1a50d46c91df89e92a7a19d511cec3b3b01b787e084747f04451d916a57b1e2394f2db02f5a245369ef2f9d89a719e4a5bb538bd6fbe8d35023e0e847b18797a946381e752067f21fbd73ee42269eec2c4d46abecfb6305423670f1cc8581add3ca1305c8521813d82b1a8512d68acc4fa0b77d841cd7083ae083be4bf865903ee817921ab97782292871d76929b18205dade6b50f46c800ef02da5730fd28e93ee0a0af4527cc6e8a15e639648a42d5dd42d6d37b59f02935c47d693bdcef9ae40ba26bc5607d338646c8b03740b31d47b92b39b872a018c75129a0d40d47432b98ffc56485c89e5a04fa4ed53414ad62d8cd0e252a81e8ead5ba6f469f4740ca205467dcda2877a33a2a94c4c4e09a295d489d84b5b32fa3e43b9b0f8703269299b2b2c39e8ff9a3f0abf4985e25026de16fa72f03056244b008c2014ecad62cb7d9fee6fb704fe65b5d07cc8949df1bffed6a5ea62ba99e2dc2f46c11d73ed26a32424040a34dd7e431074ed200ec51fd20adeff362ede400e2539e2e4277a98b4445380256f3a71ee88c7cdfdc84daae0c63e9cc89a40f9ed074182799ad4af6c043ca00f6f4862707654534e8db70db1ffb941eb64257245a6bee3a351ed62e0f7bb8bb1dce4942a49422ff5e5c2a9da0fb683b7bb060f6d7bb1e9db7a23b01f02403142eff435741b78217a510576a9d5da74599f0701c4a6743798512e08b434d89ef622ab08ad851aff362f029d33f584ee4066e01f385b67df6e437c1f493b0082d47ecea6d9ea4e7848a33dcefd39db2a8623977ee39cfc630b2bbb250ff5b07a46b4cebc8604a118a37a1f7c6838e46c3c39e0cc12da6e738286eecc7bae7bf584003b8a80b3c7f527c02bcd74af04bf0fab799596e948dfa62f23f3a9e565dd4a8c122ad65f33c9fc680f2e37ef5a7ee6e21d65942b711254aee71125d228af472b76f8f0857adc35465423fcf0771d17b5ff3a716870c4a829f2c65f293f08084daaac51b0f13a715e7072f57036405d8a9670aacf254224a66da13d52fa639788416afdd2da4f00763684a16622d16f9c9c792f70ba1bd83d3968c23d7e76dbe9f19d7ba90a9608cd51d6b0b6df3a8a27c933d2a5e07949e3593f60e4e44a5bbe7a16f028c574c440c09f16a712dab43484871d440ef6e374bb6f2fb1ef0e06204c6baf459d3721072f3470541c233c221266d5f0594d75f044ebf14580e794b013b82dbfc2d80239a1677a74c99623b671959163a9b1ff7d4c2bdfb1f4f433e5efb24bd3b08a3f46b5c814528c2932a8e78f9d60bb49fc7057e79b991d499fd4bc94e2036a30e02eb6a7f454e62431c7816686ace9a1c6cd11162d15207e6f45e203272f29e5aebe43746ec01007b633b201fa322bf2b68a9aa4743e97c567a4440d4b8e23e3e72fa64b95529fb8bc15f3889ca1f36443395819ccf23093b0074c6c6f8098a5a71a3c2f5efa05302e8622784bb49dc192af311feff2b6fe7df606ec5d43b6d2dbed32a2b4fb7889691dfa499134154e00c5d6aed4c51a2bf5c4dcedbc7c692fab0360f278bb9ca4c9bcb977ec13aa39d9f81eb119c55466715d5ca4a6e050eddab621115a696a5b1f3d5b27e2ad0412e164fbd4af527a7e8aa5fb8bda6641f3a7d6a1ec2fc05f53b15fa52c0392c70353336cca705abd13239a26567cf39f75c8bce16496b7a2c14c251ceeec1e60e8d3bc7efb8f6d44f12a56dd452566c405f8fb288596f7af315b5e3559451575d84c369301eaff0638c336736ce1b2c2bd4d98bac739ebe23707e2c3bb8b9052a82bd4130969ef443fd6f0c3c29a9035832599dbfa327949a7e943c8c130944ec3f833fba4af25dc01c12988a03a404063ee24880a7ddc3a201efa836c9de1ddbfd99c32d11a5a155e597fcad77912c3badb46147d0854658c97890fddbce15caaee6b4b2c3f93a9bcd794fac39cc0ad42ef9f2828d774f92af6d31303fe28ca171355c1fb8d91eb0eb3c38fcb64d54a3cb17a82ce0c5717b08ea4458d89f68ca458cf0ca2d8bdbab5bd7e33f1ca6d8457ba47b4dac0c6293ca49ca220f4a4af42917f5e8b8ffe76dade51e12fccc6703b176efe6a78752d76d1fbd15c159838394809b582345740797b90297778e8b7b16581670e44b23d48774a4702b2571b0c155bac7a7c49ffe706e4f2a8b5108b70126d864946fc8b4a2205af8b5cb2696827e28dabae2475ea3c6002469248c1abb289c5cf5361c36327b2a7c19ceddffa234ff90468fc995e2696d2c7099e5e84dd1edd352792fb9c4f55b4993f2864652a20a33c363f6b65db2013ccf56cef962874bb69afa5807cf0b3f2e2ce3752f01aae3ad53e1178f908aee49e92637bedd81990ad3be2471a98ed008707ff80b4f86fc897c375d36b93431643c11c6ab8d5cfa0f0c63142c2f5419d0b25e52c5d421b01fd471d3d2c8ceeaa01ea8c8a1060289b54c01bb3c928527e40f461e1c1546b748a04f5fb2915355d01e1bf7cc05ee9876fc32f42b415cd52aaf89444d0b32d58336d807ca51610eccee320867db0c1f76f78c2d9e36bc0d10ff172ae4af91a94895ea12cfbb3e03d7132b4acf0233c7f12af238316cd0dfb9aa1423300593c18a267dd1ef0d9a3dc0fb1730375e855f7bb6cc37e7db9fcc21e168b590d0873f8fc6e095e23c3c397be4b4a6ac6d8d933918dd7e18dea4856d830406b6aa43f2fc7f4d0539f0799f375ae4309027c98241dd139df93cab961b49c8ac5d0e5730958bdfa723acfa087883a48d7b0611e406bc41074a7dc0b6808603dbdc9fd34f289320c29a210843f0117a4aef200cc5f85ee0cd74711b06d720e96f6ad104420d9192ee305bb752b0b6bee64e31c459edb5c0bcb6af2170ed6dad58935c8498311e0bed99eb0c70c53d8feb9a3cd768105c3bfdfc8b8566b955793b8b8b913529c17088cd627321466f691c1177ca0cf4b823071857418d4df3feb99c5bc6395e010c1bf7c9edc61fe57591926eb1b36d722f9b350633776aa356260db097d0b98fc928cc72a63a550d215cd3a39bb43e13a8985dfdedf03fe9973c9e0011c45559537bfc0030fb8842a8b4c4df1da9d493dc2432787b065d46ffc4bbef214fc98fc36aab088b049dcdff7cd62e7e669ef37467fed6b51ec5c0d78aadc3b4bd69ddeb4f7d29148c40896ad7ae8c5f0aa0aa1126fbe6bd54a634e7864f3298115ad4f579acb5bffa4e209e49bddd6865e1b92284cc5e8799dd42d0190a4b9b4d705569f5e9fac3792a219dade43af4f8b65ea4f6b532ffaa021b31b2eac93052b9a5f586868e82bf7c146f82e9a1cebd5125ab67d7777acfa724a5ec11940a7018ad38ed1592448b85d2fa404f37df247c3c98a74b9a3d5871825bdc3d94ade2a890ffdbc67ba859b1805c8d2b5e5a6ba2fb357518279e5bcffab59418b86f60ca7d7b18b9274089c4f584cafd92ae8593b3021a76a822f402050eda56a0f08baf3f0f3581290dcf4ef26e667f3f72bc3413b8f8a395e3066e39f0054ce0c5b3d5d8cb3e4b77099126d10e1463b1dfcf21df58364739ca79e3064584b518d7f6dd6651b85d9309f366fd6f4f144603401a8842cdc247f6a74eff896f6da170ee88aa0d11f37a6d8216a451cb8abe909137e03235cdf8d032629e4f72b529add5cbe6317844167ba07a05bb925be81892cd111f1246799edc85c33d495c570d2465290f2f5da2f1aca798b60028154d43f8b9e771e8a9fceb08de22813147db5a29f72e85d038c5f10de2e388bff67efb4c5c9afbfba1fa657dc76d07fbf7f65223b72c2c201d9c6f864633df0ba5636413c4cf94ec6c35f6fc87dd89a7654bd7939d6013b69524b22357973172426d9f2fa9a1a6c4bcc7a772f830ae1f41f3d92576cdc6f0cb0ad94e10f08ef0e124530db870170a364101e41513a13ea8269300142c0b2ce21a506b8db2e83bf8b68b40a13b031b5c8600708fa03f99ba0161dc803dd6b77577fb581f19467d248642e6c30660a6e8c8b9edcd7b540a5f05caf629509154216385cdab297db4edf1cf9c669ca164bb91eeba238bb94bd93c554118f5a76bc9a05c83e359b8a7312719b4643ed0b760aadaa9b01697419fe412fb949b916f9748abf1254664d3c2538d825348c8f4d5c88db71fbd998137491b4df19a395c7721d2cda2a228d7a1d89c9875fa2581da6edee4c55fbde53a079963e62ccca4bcf8ce1b7abed279d0979042e3a9aee64af2974345a3a523fa321747b777ec7596995bb780cb39ee8e0364636a870c78734b43b74ef7959e8452561bdcc9ddbb75ac29310047bb669866765c2cd1d42a5724d2292701101811f4f669a6ddf30bac1751d65568c48117fac6f9201ad65444ea3cf9c21afcf3dbefa805f431cf4cff0fbe2245963d02167419dfb007950c4816799d01b1bf9accbdba84d926cbf4dfc40a4b1bcbd0143d9e08a7a2728ea25d3bdd72554c314d92f1f2b1cd417abd4eae5508da26593bd2d46bbc064965ec93807164456750fa3ce43283a434b4eb28c94360aa29b8b949f54142a86e452e214b9ce197e48fe15ff608dd716cb893c719d53a5dcd72f928fec04b61b8938c7ca1ceb9d137c06e6f7126f164d1488ca74fe9d37c2ef12872aed68df92a42943311e5e44859b29ec0142e7e8597c93e985fac7c5f622715cd019e18f2de943441d4c85084d4dc17ad9c36525a97512c4298cd20af9eb9a01a15bf3225e14ca02b236b54113987f556e3f0c9c82fbc323119f9c183027ab3f140e1ebd54333ab835ea32b7d0190ae5f2362bb7247a1a23b5e3ab45d13becd916b7d69b63aaa5ad521e0f9608e8e2b0968cd224ae07df9b0a541c2321aab16b8d86119521982d7cf89ca87cfe95d197369c77b30e35d53bae96d16ccab6b945de44038048698c0126481dad2551bc38e7a10c05b8b204f6c24f84480cec5aeea8c6271ec8f0a71d34869c30f91dd45e30482c7c16f115759a46b52e69135132c6411e2d464e34240985461eb1ef9c2a1b395b691847c37cec0524c5015af4137706277575cbf52d89c1cadc028d01f80a81571ae41ebf6fded98f1a032e76ca7a9e86e3664b39cef5dfd9c19aaba913f1040ede6efdbfc2da0678325635262a020ef59d31bbfdb1bc72461918f38e43419c63717dad4836a084e787ebae11f373805db3aa27b5a22ab17f9a6dff8495a78d1630efe13cc6360ed49a0b334c39c467357faf23ddb2f97866a51ca03eea3867938f9034e77e67479934cd250eb6039773eb05f7bebd20f27338997368faf59e7cc1d91f552df608b73b52d38c2f5a2a41f06e60d9443f7513a7e0bfa61d8063aca0d","isRememberEnabled":true,"rememberDurationInDays":30,"staticryptSaltUniqueVariableName":"f0740cbf4e61f094b3fcc0083cc60ca5"};
+const templateError = "비밀번호가 올바르지 않습니다",
+  templateToggleAltShow = "Show password",
+  templateToggleAltHide = "Hide password",
+  isRememberEnabled = true,
+  staticryptConfig = {"staticryptEncryptedMsgUniqueVariableName":"e5ed69b759219856b10de294b0931696e67c90f761cad9c1b644e3dac6aaf94929422fec6cb1a2962bd02f2c8b99bf86b25664533182f563df40388b73be975ee6a0640fdceae43f922c3c86493f46a50165d7b1b7497ab1e981a615492f2648b57e09e0a5e5bd202b92ad628ef63fd427cfc1bf07bc0efbb9cdb8b4b84583a2ee66df5b3ad53800d26f4c9838bd76ba453d346399dbbbaf124caa65f21b4135493f10d01057274bbf44f81f482e0cab7d3e2ff8f99d9a2e1208053faed86d9ca64d8f134b8160b3abc95a9f7badd214674331343043de70761f027e9d025bbbc5b76796542858b59254da98ee62f41b6f9128933813e40a631d3f183f5f0036bb6afc20691b270a075b6afa366487c6e06e33c897d5d918c64a1815a42e6c06fbd916a5b01e47c1da1397ffe21c6e0c5480544368a9fe98e1dba09a12f53e5eb38979679d70cd129e35529887ed68b0a5b19d47f421037321bc1a6025066981103218bf8e3055fecdb568f1914af0bd90874396a956bd2e9ee480cc95a7040c5cffa1c0204eee93251c38070c34c1ffe75251c7f48e51c0c2214274d346a6b1dce1a389e5b753ada0db59340b845c463883e7cfdc756b9ed57f13368554794d958578c93775c5832563c2eac19898f75161df7a9182b1e476a07270bcc122a17362e8837a47471697b834df1545ad99d115eb69f2e6b612d48ece3abde6f60c8f3c06d601c145589b03abb0afe4fe0b3f76e6a5df7fcd8b952bf2233655b4a5ebba9ba513af34b48408b1ac4fac9d0437dc2b62a7146fcd4a3d0a7293455a1a571a4604eb3ff090f8689c1dcdecc4aaac73d889cf8a4ab6b9c40c23966bbe60d7ff22fe57cd11db7dd1fac09ad9be04ed3b8aaede4ca9b6372d4b55b5630183c3278d974e71b5ec120f5dacb58c242929f31fb4ddfcd05d5e9ce69217fbd5d7be68a04df86ea4a39da3933060fd09d15f710c4eb78144fe85a9cab645205974a1f3fd565b00c05df7909c47ec727b876dc54e7419cc3a436f15aeff208c949da4912e4d95fc70caa06bd8e646411799b3fce8b8ddb098b3349852e69849f68ca96b74bdf83671736313950147b5f6d9f84d53941f6d20322757459bb750e6b06c3efe876a6f4a6b559030779cecab515e9e244885cbb66deb4ed319bab1ba3b13eadfe62c69afe40f88a5e625f6efac1655d0d4e73a42aa94e0bd47a4540136d480379f5846d10b907530d071d3cafb8bb687d179ceedbabe450e1f704d83f305881d5e3d86f7afdb3806c60c753bca39392a6b677d1952d9def53ba9b07b4cf9ced9c67ea540f2466dda1656d23cd5e1479e1d98649879a9b7307cb18a049f493ab5a6403322acbb7edc9e010ee485a00b85de899011579b6e098ef73d8f91","isRememberEnabled":true,"rememberDurationInDays":30,"staticryptSaltUniqueVariableName":"918c80641d1435e73b974a8830c20931"};
+const templateConfig = {
+  rememberExpirationKey: "staticrypt_expiration",
+  rememberPassphraseKey: "staticrypt_passphrase",
+  replaceHtmlCallback: null,
+  clearLocalStorageCallback: null,
+};
+const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
+window.onload = async function () {
+  const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
+  if (!isSuccessful) {
+    document.getElementById("staticrypt_loading").classList.add("hidden");
+    document.getElementById("staticrypt_content").classList.remove("hidden");
+    document.getElementById("staticrypt-password").focus();
+    if (isRememberEnabled) {
+      document.getElementById("staticrypt-remember-label").classList.remove("hidden");
+    }
+  }
+};
+function staticryptTogglePasswordView() {
+  var oldType = document.getElementById("staticrypt-password").getAttribute("type");
+  var newType = oldType === "password" ? "text" : "password";
+  document.getElementById("staticrypt-password").setAttribute("type", newType);
+}
+document.querySelector(".staticrypt-toggle-password-visibility")
+  .addEventListener("click", staticryptTogglePasswordView);
 
-            // you can edit these values to customize some of the behavior of StatiCrypt
-            const templateConfig = {
-                rememberExpirationKey: "staticrypt_expiration",
-                rememberPassphraseKey: "staticrypt_passphrase",
-                replaceHtmlCallback: null,
-                clearLocalStorageCallback: null,
-            };
-
-            // init the staticrypt engine
-            const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
-
-            // try to automatically decrypt on load if there is a saved password
-            window.onload = async function () {
-                const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
-
-                // if we didn't decrypt anything on load, show the password prompt. Otherwise the content has already been
-                // replaced, no need to do anything
-                if (!isSuccessful) {
-                    // hide loading screen
-                    document.getElementById("staticrypt_loading").classList.add("hidden");
-                    document.getElementById("staticrypt_content").classList.remove("hidden");
-                    document.getElementById("staticrypt-password").focus();
-
-                    // show the remember me checkbox
-                    if (isRememberEnabled) {
-                        document.getElementById("staticrypt-remember-label").classList.remove("hidden");
-                    }
-                }
-            };
-
-            // toggle password visibility
-            const toggleIcon = document.querySelector(".staticrypt-toggle-password-visibility");
-            // these two icons are coming from FontAwesome
-            const imgSrcEyeClosed =
-                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTM4LjggNS4xQzI4LjQtMy4xIDEzLjMtMS4yIDUuMSA5LjJTLTEuMiAzNC43IDkuMiA0Mi45bDU5MiA0NjRjMTAuNCA4LjIgMjUuNSA2LjMgMzMuNy00LjFzNi4zLTI1LjUtNC4xLTMzLjdMNTI1LjYgMzg2LjdjMzkuNi00MC42IDY2LjQtODYuMSA3OS45LTExOC40YzMuMy03LjkgMy4zLTE2LjcgMC0yNC42Yy0xNC45LTM1LjctNDYuMi04Ny43LTkzLTEzMS4xQzQ2NS41IDY4LjggNDAwLjggMzIgMzIwIDMyYy02OC4yIDAtMTI1IDI2LjMtMTY5LjMgNjAuOEwzOC44IDUuMXpNMjIzLjEgMTQ5LjVDMjQ4LjYgMTI2LjIgMjgyLjcgMTEyIDMyMCAxMTJjNzkuNSAwIDE0NCA2NC41IDE0NCAxNDRjMCAyNC45LTYuMyA0OC4zLTE3LjQgNjguN0w0MDggMjk0LjVjOC40LTE5LjMgMTAuNi00MS40IDQuOC02My4zYy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM2MwIDEwLjItMi40IDE5LjgtNi42IDI4LjNsLTkwLjMtNzAuOHpNMzczIDM4OS45Yy0xNi40IDYuNS0zNC4zIDEwLjEtNTMgMTAuMWMtNzkuNSAwLTE0NC02NC41LTE0NC0xNDRjMC02LjkgLjUtMTMuNiAxLjQtMjAuMkw4My4xIDE2MS41QzYwLjMgMTkxLjIgNDQgMjIwLjggMzQuNSAyNDMuN2MtMy4zIDcuOS0zLjMgMTYuNyAwIDI0LjZjMTQuOSAzNS43IDQ2LjIgODcuNyA5MyAxMzEuMUMxNzQuNSA0NDMuMiAyMzkuMiA0ODAgMzIwIDQ4MGM0Ny44IDAgODkuOS0xMi45IDEyNi4yLTMyLjVMMzczIDM4OS45eiIvPjwvc3ZnPg==";
-            const imgSrcEyeOpened =
-                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNS4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTI4OCAzMmMtODAuOCAwLTE0NS41IDM2LjgtMTkyLjYgODAuNkM0OC42IDE1NiAxNy4zIDIwOCAyLjUgMjQzLjdjLTMuMyA3LjktMy4zIDE2LjcgMCAyNC42QzE3LjMgMzA0IDQ4LjYgMzU2IDk1LjQgMzk5LjRDMTQyLjUgNDQzLjIgMjA3LjIgNDgwIDI4OCA0ODBzMTQ1LjUtMzYuOCAxOTIuNi04MC42YzQ2LjgtNDMuNSA3OC4xLTk1LjQgOTMtMTMxLjFjMy4zLTcuOSAzLjMtMTYuNyAwLTI0LjZjLTE0LjktMzUuNy00Ni4yLTg3LjctOTMtMTMxLjFDNDMzLjUgNjguOCAzNjguOCAzMiAyODggMzJ6TTE0NCAyNTZhMTQ0IDE0NCAwIDEgMSAyODggMCAxNDQgMTQ0IDAgMSAxIC0yODggMHptMTQ0LTY0YzAgMzUuMy0yOC43IDY0LTY0IDY0Yy03LjEgMC0xMy45LTEuMi0yMC4zLTMuM2MtNS41LTEuOC0xMS45IDEuNi0xMS43IDcuNGMuMyA2LjkgMS4zIDEzLjggMy4yIDIwLjdjMTMuNyA1MS4yIDY2LjQgODEuNiAxMTcuNiA2Ny45czgxLjYtNjYuNCA2Ny45LTExNy42Yy0xMS4xLTQxLjUtNDcuOC02OS40LTg4LjYtNzEuMWMtNS44LS4yLTkuMiA2LjEtNy40IDExLjdjMi4xIDYuNCAzLjMgMTMuMiAzLjMgMjAuM3oiLz48L3N2Zz4=";
-            toggleIcon.addEventListener("click", function () {
-                const passwordInput = document.getElementById("staticrypt-password");
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    toggleIcon.src = imgSrcEyeOpened;
-                    toggleIcon.alt = templateToggleAltHide;
-                    toggleIcon.title = templateToggleAltHide;
-                } else {
-                    passwordInput.type = "password";
-                    toggleIcon.src = imgSrcEyeClosed;
-                    toggleIcon.alt = templateToggleAltShow;
-                    toggleIcon.title = templateToggleAltShow;
-                }
-            });
-
-            // handle password form submission
-            document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
-                e.preventDefault();
-
-                const password = document.getElementById("staticrypt-password").value,
-                    isRememberChecked = document.getElementById("staticrypt-remember").checked;
-
-                const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
-
-                if (!isSuccessful) {
-                    alert(templateError);
-                }
-            });
-        </script>
-    </body>
+// handle password form submission (prevent real POST → avoids 405 on static host)
+document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const password = document.getElementById("staticrypt-password").value,
+    isRememberChecked = document.getElementById("staticrypt-remember").checked;
+  const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
+  if (!isSuccessful) {
+    alert(templateError);
+  }
+});
+</script>
+</body>
 </html>
