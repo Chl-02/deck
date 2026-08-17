@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3. 봉투 넷 — 쉬운 회계판</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">쉬운 회계판<span class="easy-badge">easy</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_question.html">1 질문</a>
+    <a class="ch" href="02_stage.html">2 무대</a>
+    <a class="ch cur" href="03_ledger.html">3 봉투 넷</a>
+    <a class="ch" href="04_onesided.html">4 자의 한계</a>
+    <a class="ch" href="05_sandwich.html">5 샌드위치</a>
+    <a class="ch" href="06_findings.html">6 결과</a>
+    <a class="ch" href="07_claim.html">7 주장·뼈대</a>
+    <a class="ch" href="08_exhibits.html">8 실험 개수</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">3장</p>
+<h1>봉투 넷</h1>
+<p class="lede">여기가 논문의 심장이다. 못 받은 점수가 사라진 이유는 <strong>정확히 네 가지</strong>뿐이고,
+그 넷은 반드시 더해서 100이 된다.</p>
+
+<div class="eq">A <span class="op">+</span> M <span class="op">+</span> O <span class="op">+</span> C <span class="op">=</span> 100</div>
+
+<h2 id="four">넷을 사람 말로</h2>
+
+<h3>C — 미래를 몰라서</h3>
+<p>똑같이 출발한 두 주행이 5분 뒤에 완전히 달라질 수 있다.
+앞차가 급정거할지, 신호가 걸릴지, 오르막이 나올지 <strong>지금은 알 수 없다.</strong>
+만점짜리는 그걸 이미 다 보고 다이얼을 맞췄고, 나는 못 봤다.</p>
+<div class="box dead"><span class="t">성격</span>
+<p><strong>아무리 똑똑해도 못 메운다.</strong> 알고리즘을 바꿔도, 센서를 달아도 안 줄어든다.
+확률계획법에서 <em>완전정보의 가치(EVPI)</em>라고 부르는 것이 이 봉투다.</p></div>
+
+<h3>O — 지금 상황을 몰라서</h3>
+<p>차 무게, 도로 경사, 날씨, 제어기 보정이 어긋나 있는지 — 이런 건 직접 못 잰다.
+주행 중 신호를 보고 <strong>추측</strong>만 한다. 추측이 빗나간 만큼 잃는다.</p>
+<div class="box note"><span class="t">성격</span>
+<p><strong>센서를 늘리면 줄어든다.</strong> 알고리즘 문제가 아니라 정보 문제다.</p></div>
+
+<h3>M — 방법이 부족해서</h3>
+<p>가진 정보는 그대로인데 <strong>더 잘 쓰는 방법이 있었던</strong> 경우다.
+같은 재료로 더 잘 요리할 수 있었다는 뜻.</p>
+<div class="box key"><span class="t">성격</span>
+<p><strong>알고리즘을 고치면 줄어든다.</strong> 이 봉투가 이 논문이 실제로 측정에 성공한 곳이다
+(<a href="06_findings.html">6장</a>).</p></div>
+
+<h3>A — 실제로 받은 점수</h3>
+<p>설명이 필요 없다. 지금 값은 <strong>30.7점</strong>이다.</p>
+
+<h2 id="identity">왜 반드시 더해서 100인가</h2>
+
+<p>이건 <strong>증명할 정리가 아니라 정의</strong>다.</p>
+
+<p>남는 게 없도록 봉투를 정의했으니 당연히 맞는다.
+"기준선에서 만점까지의 거리"를 잘라 나가는 방식이라, 잘린 조각을 다 더하면 원래 길이다.</p>
+
+<div class="box warn"><span class="t">그래서 어려운 건 다른 데 있다</span>
+<p>합이 100인 건 공짜다. <strong>어려운 건 각 봉투에 얼마가 들었는지 재는 것</strong>이고,
+바로 그 지점에서 이 프로젝트는 벽을 만났다. <a href="04_onesided.html">다음 장</a>이 그 벽이다.</p></div>
+
+<h2 id="ladder">봉투의 순서에는 의미가 있다</h2>
+
+<p>넷은 아무렇게나 나열된 게 아니라 <strong>정보의 사다리</strong>다. 아래에서 위로 올라갈수록
+더 많이 아는 상태가 된다.</p>
+
+<div class="env">
+  <div class="scale"><span>정보가 많아지는 방향 ↑</span></div>
+  <div class="e c"><span class="sym">4</span><span><span class="t">미래까지 안다</span>
+    <span class="s">= 만점. 여기서 아래로 내려온 거리가 C.</span></span><span class="v">100</span></div>
+  <div class="e o"><span class="sym">3</span><span><span class="t">지금 상황을 정확히 안다</span>
+    <span class="s">무게·경사·날씨를 정답으로 받는다. 여기서 아래로 내려온 거리가 O.</span></span><span class="v">?</span></div>
+  <div class="e m"><span class="sym">2</span><span><span class="t">관측만으로 최선을 다한다</span>
+    <span class="s">가진 정보로 도달 가능한 최고. 여기서 아래로 내려온 거리가 M.</span></span><span class="v">?</span></div>
+  <div class="e a"><span class="sym">1</span><span><span class="t">실제 학습 결과</span>
+    <span class="s">meta-RL이 도달한 곳.</span></span><span class="v">30.7</span></div>
+</div>
+
+<p>사다리로 보면 각 봉투는 <strong>"한 칸 올라가면 얼마나 더 먹나"</strong>이다.
+그리고 <strong>2번 칸(관측만으로 도달 가능한 최고)</strong>이 이 논문에서 가장 중요한 미지수다.
+그것만 알면 M이 나오고, 나머지가 O+C로 확정된다.</p>
+
+<div class="pn">
+  <a class="prev" href="02_stage.html"><span class="dir">← 이전</span><span class="ttl">2. 무대 — 다이얼 9개</span></a>
+  <a class="next" href="04_onesided.html"><span class="dir">다음 →</span><span class="ttl">4. 자가 한쪽만 있다</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 쉬운 회계판 · 2026-08-03</footer>
+</body>
+</html>
