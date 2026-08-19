@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. 자가 한쪽만 있다 — 쉬운 회계판</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav"><div class="inner">
+  <a class="home" href="index.html">쉬운 회계판<span class="easy-badge">easy</span></a>
+  <div class="chapters">
+    <a class="ch" href="01_question.html">1 질문</a>
+    <a class="ch" href="02_stage.html">2 무대</a>
+    <a class="ch" href="03_ledger.html">3 봉투 넷</a>
+    <a class="ch cur" href="04_onesided.html">4 자의 한계</a>
+    <a class="ch" href="05_sandwich.html">5 샌드위치</a>
+    <a class="ch" href="06_findings.html">6 결과</a>
+    <a class="ch" href="07_claim.html">7 주장·뼈대</a>
+    <a class="ch" href="08_exhibits.html">8 실험 개수</a>
+  </div>
+</div></nav>
+
+<main>
+<p class="kicker">4장</p>
+<h1>자가 한쪽만 있다</h1>
+<p class="lede">이 프로젝트에서 가장 중요한 깨달음이고, 논문의 방법론 기여가 여기서 출발한다.
+<strong>이 벽을 모르면 증명할 수 없는 것을 증명했다고 쓰게 된다.</strong></p>
+
+<h2 id="only">재는 방법은 하나뿐이다</h2>
+
+<p><strong>컨트롤러를 만들어서 돌려본다.</strong> 그게 전부다.
+만들어 돌렸더니 38점이 나왔다면, 거기서 알게 되는 건 딱 하나다.</p>
+
+<div class="vs">
+  <div class="on"><span class="h">알게 됨</span>
+    <div class="q">"38점은 가능하다"</div>
+    <div class="n">직접 만들어서 받았으니 확실하다.</div></div>
+  <div><span class="h">못 알게 됨</span>
+    <div class="q">"40점 넘는 건 불가능하다"</div>
+    <div class="n">더 좋은 컨트롤러가 어딘가 있을지 절대 배제 못 한다.</div></div>
+</div>
+
+<p>만드는 방식은 <strong>아래에서만 밀어 올린다.</strong> 천장을 짚을 수는 없다.
+예산을 더 써도, 더 오래 돌려도 마찬가지다 — <strong>돈 문제가 아니라 구조 문제</strong>다.</p>
+
+<h2 id="fatal">이게 왜 치명적인가</h2>
+
+<div class="tw"><table>
+<thead><tr><th>주장</th><th>뜻</th><th></th></tr></thead>
+<tbody>
+<tr><td>"M은 <strong>최소</strong> 7점이다"</td><td>방법이 부족했다</td><td><span class="badge ok">증명 가능</span></td></tr>
+<tr><td>"M은 <strong>겨우</strong> 7점이다"</td><td>정보가 병목이다</td><td><span class="badge warn">증명 불가</span></td></tr>
+</tbody></table></div>
+
+<p>하한만으로는 <strong>"M이 작다"를 절대 만들 수 없다.</strong>
+그런데 이 논문이 원래 하고 싶었던 말이 바로 후자였다 —
+<em>"남은 손실은 정보 때문이지 방법 때문이 아니다."</em></p>
+
+<div class="box warn"><span class="t">그 주장은 폐기했다</span>
+<p>더 열심히 실험해서 될 일이 아니다. <strong>도구의 종류가 그 주장에 도달할 수 없다.</strong>
+초기 설계에 있던 <em>"학습이 도달 가능한 전부를 먹었다"</em>는 문장은 이 이유로 버렸다.</p></div>
+
+<h2 id="how">어떻게 알게 됐나</h2>
+
+<p>실패한 실험이 알려줬다. <strong>"최적화 없이 상한을 구성해 보자"</strong>는 시도를 두 번 했고
+둘 다 무너졌다.</p>
+
+<div class="timeline">
+  <div class="tl-item dead">
+    <div class="d">시도 1</div>
+    <div class="h">이미 아는 정답들을 후보로 놓고 고르기</div>
+    <div class="b"><p>결과가 <strong>0점, 그리고 −19점</strong>이 나왔다. 이미 가지고 있는 컨트롤러보다도 나빴다.
+    상한은커녕 하한으로도 쓸모가 없었다.</p></div>
+  </div>
+  <div class="tl-item dead">
+    <div class="d">시도 2</div>
+    <div class="h">상황을 칸으로 나눠 칸마다 최적 다이얼 찾기</div>
+    <div class="b"><p>최대 <strong>19.9점.</strong> 칸으로 나누는 방식은 새로운 상황에 대응을 못 한다.
+    역시 기존 컨트롤러보다 낮았다.</p></div>
+  </div>
+  <div class="tl-item win">
+    <div class="d">깨달음</div>
+    <div class="h">둘 다 "만들어서 재는" 방식이었다</div>
+    <div class="b"><p>실패의 원인이 <em>기법이 나빠서</em>가 아니었다. <strong>구성적 방법은 원리적으로
+    하한만 준다.</strong> 아무리 좋은 구성을 찾아도 천장은 안 나온다. 방향 자체가 틀렸다.</p></div>
+  </div>
+</div>
+
+<div class="box key"><span class="t">그래서 무엇이 필요했나</span>
+<p><strong>만들지 않고도 "이 이상은 안 된다"를 말하는 방법.</strong>
+그게 <a href="05_sandwich.html">다음 장</a>이고, 논문에서 새로운 부분이다.</p></div>
+
+<div class="pn">
+  <a class="prev" href="03_ledger.html"><span class="dir">← 이전</span><span class="ttl">3. 봉투 넷</span></a>
+  <a class="next" href="05_sandwich.html"><span class="dir">다음 →</span><span class="ttl">5. 샌드위치</span></a>
+</div>
+</main>
+<footer class="site">HEV MetaEMS / Meta-RL · 쉬운 회계판 · 2026-08-03</footer>
+</body>
+</html>
